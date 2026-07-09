@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  ::selection { background: #002A5C; color: #F6F6F5; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes heroWaft { 0% { background-position: 0% 0%; } 50% { background-position: 100% 100%; } 100% { background-position: 0% 0%; } }
+  @keyframes heroRevealTop { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes heroRevealBottom { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes heroRevealLeft { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes heroRevealRight { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes heroTextUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes heroSparkIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes heroSlitGrow { from { transform: translateX(-50%) scaleY(0); } to { transform: translateX(-50%) scaleY(1); } }
+  @keyframes heroBeamPulse { 0%, 100% { opacity: .82; } 50% { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero-panel], [data-hero-text] { animation-duration: .001s !important; animation-delay: 0s !important; }
+  }
+  #einsatzfelder image-slot::part(ring) { display: none; }
+  @media (min-width: 900px) {
+    #home-root > div > section,
+    #home-root > div > footer { margin: 0 !important; padding-left: 64px !important; padding-right: 64px !important; }
+    #ueber-panel { width: calc(100% + 128px) !important; margin-left: -64px !important; margin-right: -64px !important; }
+    #home-root > div > section { min-height: 100vh; }
+    #home-root > div > section#arbeiten { min-height: 60vh !important; }
+    #home-root > div > section#kontakt { min-height: auto !important; }
+    #home-root > div > section#stimme { min-height: auto !important; }
+    #home-root > div > section#portrait-bleed,
+    #home-root > div > section#ansatz,
+    #home-root > div > section#arbeiten { padding-left: 0 !important; padding-right: 0 !important; }
+  }
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div id="home-root" style="--bg:#F6F6F5;--section:#E4E3E1;--card:#EDECEA;--navy:#002A5C;--on-navy:#EAE8E1;--slate:#384352;--ink:#1A222A;--muted:#8C9198;--line:#D5D4D1;--btn:#E4E2DE;--accent:#002A5C;--serif:'Source Serif 4','Source Serif Pro',Georgia,serif;--sans:'Helvetica Neue',Helvetica,Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;background:var(--bg);color:var(--slate);font-family:var(--sans);min-height:100vh;-webkit-font-smoothing:antialiased;">
+<div style="display: block; position: relative">
+
+<!-- ============ HERO ============ -->
+<section style="position:relative;overflow:hidden;background:linear-gradient(90deg,#E7E8E9 0%,#F1F1F2 46%,#ECEDEE 100%);padding:clamp(40px,5vw,68px) clamp(20px,5vw,72px) clamp(72px,9vw,120px);min-height:88vh;display:flex;flex-direction:column;">
+
+  <!-- Zwei ineinandergreifende Winkel-Flächen (1:1 Referenz). Dahinter weißer Gradient rechts->links; Lichtstrahl in der Lücke. -->
+  <div aria-hidden="true" style="position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;">
+    <!-- weißer Gradient von rechts (100%) nach links (0%), hinter den Flächen -->
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(255,255,255,0) 34%, rgba(255,255,255,0.85) 74%, rgba(255,255,255,0.45) 100%);"></div>
+
+    <!-- Fläche A (oben) — baut sich entlang der langen Seite von oben auf -->
+    <div data-hero-panel style="position:absolute;left:4.4%;top:0%;width:74.6%;height:76%;animation:heroRevealTop 1.25s cubic-bezier(.4,0,.2,1) .35s both;">
+      <svg viewBox="0 0 1152 662" preserveAspectRatio="none" width="100%" height="100%" style="display:block;"><path d="M889.45 387.587L889.45 0.475333L1151.68 0.475367L1151.68 661.225L-985.808 661.225L-985.808 -848.006L-723.575 -848.006L-723.575 387.587L889.45 387.587Z" fill="url(#hgA)" fill-opacity="0.4"></path><defs><linearGradient id="hgA" x1="1057.98" y1="38.6935" x2="51.8871" y2="466.83" gradientUnits="userSpaceOnUse"><stop stop-color="#384352"></stop><stop offset="1" stop-color="#F9F9F9" stop-opacity="0"></stop><animateTransform attributeName="gradientTransform" type="translate" values="0 0;44 26;0 0" dur="13s" repeatCount="indefinite"></animateTransform></linearGradient></defs></svg>
+    </div>
+
+    <!-- Fläche B (unten-rechts) — baut sich entlang der langen Seite von unten auf, trifft A in der Mitte -->
+    <div data-hero-panel style="position:absolute;left:11.1%;top:32%;width:90%;height:118%;animation:heroRevealBottom 1.25s cubic-bezier(.4,0,.2,1) .35s both;">
+      <svg viewBox="0 0 1152 662" preserveAspectRatio="none" width="100%" height="100%" style="display:block;"><path d="M889.45 387.587L889.45 0.475333L1151.68 0.475367L1151.68 661.225L-985.808 661.225L-985.808 -848.006L-723.575 -848.006L-723.575 387.587L889.45 387.587Z" fill="url(#hgB)" fill-opacity="0.4"></path><defs><linearGradient id="hgB" x1="1057.98" y1="38.6935" x2="51.8871" y2="466.83" gradientUnits="userSpaceOnUse"><stop stop-color="#384352"></stop><stop offset="1" stop-color="#F9F9F9" stop-opacity="0"></stop><animateTransform attributeName="gradientTransform" type="translate" values="0 0;-38 30;0 0" dur="15s" repeatCount="indefinite"></animateTransform></linearGradient></defs></svg>
+    </div>
+
+    <!-- dunkle Spalt-Vertiefung, damit der Lichtstrahl kontrastiert -->
+    <div data-hero-text style="position:absolute;left:79.8%;top:30%;width:2.4%;height:48%;transform:translateX(-50%);background:linear-gradient(to bottom, rgba(22,30,44,0) 0%, rgba(22,30,44,0.34) 15%, rgba(22,30,44,0.34) 85%, rgba(22,30,44,0) 100%);filter:blur(4px);opacity:0;animation:heroSparkIn 1s ease 1.35s both;"></div>
+
+    <!-- Lichtspalt (additiv): breiter Glow + schmaler weißer Strahl, oben/unten in Lichtkegel aufstrahlend -->
+    <div data-hero-text style="position:absolute;inset:0;mix-blend-mode:screen;opacity:0;animation:heroSparkIn 1s ease 1.5s both, heroBeamPulse 6s ease-in-out 2.5s infinite;">
+      <div style="position:absolute;left:56.8%;top:-2%;width:46%;height:36%;clip-path:polygon(50% 100%, 6% 0%, 94% 0%);background:radial-gradient(ellipse 52% 88% at 50% 100%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 26%, rgba(255,255,255,0) 62%);filter:blur(7px);"></div>
+      <div style="position:absolute;left:56.8%;top:76%;width:46%;height:36%;clip-path:polygon(50% 0%, 6% 100%, 94% 100%);background:radial-gradient(ellipse 52% 88% at 50% 0%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 26%, rgba(255,255,255,0) 62%);filter:blur(7px);"></div>
+      <div style="position:absolute;left:79.8%;top:32%;width:5%;height:44%;transform:translateX(-50%);background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 16%, rgba(255,255,255,0.55) 84%, rgba(255,255,255,0) 100%);filter:blur(9px);"></div>
+      <div style="position:absolute;left:79.8%;top:32%;width:0.85%;height:44%;transform-origin:center;background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffff 12%, #ffffff 88%, rgba(255,255,255,0) 100%);filter:blur(1.2px);border-radius:40px;animation:heroSlitGrow 1.1s cubic-bezier(.4,0,.2,1) 1.5s both;"></div>
+    </div>
+  </div>
+
+  <div style="position:relative;z-index:2;">
+    <div style="width:46px;height:40px;border:2.5px solid var(--navy);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:700;font-size:23px;color:var(--navy);line-height:1;">m</div>
+  </div>
+  <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;gap:clamp(30px,4.5vw,52px);padding:clamp(28px,5vw,60px) 0;max-width:min(58%,860px);">
+    <h1 data-hero-text style="font-family: var(--serif); font-weight: 400; font-size: clamp(38px,5.6vw,78px); line-height: 1.08; letter-spacing: -0.01em; color: var(--navy); margin: 0; width: 100%; max-width: none; opacity: 0; animation: heroTextUp 1s cubic-bezier(.2,.7,.2,1) 2.0s both;">Wenn Software entscheidend für Ihren Geschäftserfolg ist braucht sie Menschen, die Verantwortung übernehmen.</h1>
+    <a data-hero-text href="#kontakt" style="text-decoration:none;background:linear-gradient(90deg, rgba(214, 214, 214, 0.00) 19.56%, #D6D6D6 100%);color:var(--navy);font-family:var(--sans);font-weight:700;font-size:14px;padding:14px 24px;opacity:0;animation:heroTextUp .8s cubic-bezier(.2,.7,.2,1) 2.55s both, heroRevealRight .7s ease 2.55s both;" style-hover="background:#D6D6D6;filter:none">Projektlage klären</a>
+  </div>
+</section>
+
+<!-- ============ EINSATZFELDER GRID ============ -->
+<section id="einsatzfelder" style="background: linear-gradient(388deg, #FFFFFF, #E4E3E1); padding: clamp(48px,6vw,88px) clamp(20px,5vw,72px); padding-top: 200px; padding-bottom: 200px">
+  
+  <div style="{{ gridStyle }}">
+
+    <sc-for list="{{ cards }}" as="item" hint-placeholder-count="5">
+      <div onMouseEnter="{{ item.onEnter }}" onMouseLeave="{{ item.onLeave }}" style="{{ item.outerStyle }}">
+        <image-slot id="{{ item.slot }}" style="{{ item.imgStyle }}" shape="rect" fit="cover" placeholder="{{ item.ph }}"></image-slot>
+        <div style="{{ item.overlayStyle }}"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;padding:24px;z-index:3;pointer-events:none;">
+          <div style="{{ item.numStyle }}">{{ item.n }}</div>
+          <div style="{{ item.descStyle }}">{{ item.card }}</div>
+        </div>
+      </div>
+    </sc-for>
+
+  </div>
+</section>
+
+<!-- ============ FULL-BLEED PORTRAIT ============ -->
+<section id="portrait-bleed" style="position: relative; background: var(--bg); width: 100%; height: 1612px">
+  <image-slot id="portrait_full" style="display: block; width: 100%; height: 100%" shape="rect" fit="cover" placeholder="Grossformat — echte Arbeitssituation"></image-slot>
+  <div style="position: absolute; left: 0; bottom: 0; color: #E4E3E1; padding: 14px 22px; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; width: 312px; height: 82px; background-color: #FEFEFE; top: 0px"><br></div>
+</section>
+
+<!-- ============ ANSATZ (Section 04 — pinned scroll, 3-point fade) ============ -->
+<section id="ansatz" data-screen-label="Ansatz" style="position: relative; height: 300vh">
+  <div style="position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; background: conic-gradient(from 0deg at 34.05% var(--ansatz-cy,25.64%), #D6D6D6 0deg, #EDEDED 360deg); padding: clamp(48px,6vw,96px) clamp(20px,5vw,72px); box-sizing: border-box; justify-content: center">
+    <div style="display: grid; grid-template-columns: {{ ansatzCols }}; gap: clamp(36px,7vw,110px); align-items: center; justify-content: space-between">
+
+      <div>
+        <span style="font-family:var(--mono);font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);">Arbeitsweise</span>
+        <h2 style="font-family: var(--serif); font-weight: 400; font-size: clamp(38px,6.6vw,90px); line-height: 1.04; letter-spacing: -0.01em; color: var(--slate); margin: 16px 0 0; height: 180px">Wo mischok <br>konkret ansetzt</h2>
+        <div style="margin-top:clamp(28px,4vw,46px);display:flex;gap:10px;">
+          <sc-for list="{{ ansatzBars }}" as="b" hint-placeholder-count="3">
+            <div style="{{ b.style }}"></div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="position:relative;min-height:clamp(280px,36vh,360px);">
+        <sc-for list="{{ ansatzPoints }}" as="pt" hint-placeholder-count="3">
+          <div style="{{ pt.style }}">
+            <div style="font-family: var(--serif); font-size: clamp(30px,3vw,42px); line-height: 1; font-weight: 400; color: var(--navy); height: 49px; width: 100%">{{ pt.n }}</div>
+            <h3 style="font-family:var(--sans);font-weight:700;font-size:clamp(22px,2.6vw,31px);line-height:1.22;color:var(--slate);margin:18px 0 0;max-width:22ch;">{{ pt.title }}</h3>
+            <p style="font-family:var(--mono);font-size:clamp(14px,1.4vw,15.5px);line-height:1.75;color:var(--slate);margin:22px 0 34px;max-width:46ch;">{{ pt.detail }}</p>
+            <a href="#kontakt" style="text-decoration:none;background:linear-gradient(90deg, rgba(214, 214, 214, 0.00) 19.56%, #D6D6D6 100%);color:var(--navy);font-family:var(--sans);font-weight:700;font-size:14px;padding:14px 24px;display:inline-block;" style-hover="background:#D6D6D6;filter:none">Projektlage klären</a>
+          </div>
+        </sc-for>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ STIMME / QUOTE ============ -->
+<section id="stimme" style="background: var(--section); padding: clamp(56px,7vw,104px) clamp(20px,5vw,72px); display: block">
+  <div style="width:100%;display:grid;grid-template-columns:{{ quoteCols }};gap:clamp(32px,5vw,72px);align-items:stretch;">
+    <div style="position:relative;align-self:end;height:clamp(400px,48vw,640px);margin:calc(-1 * clamp(56px,7vw,104px)) 0 calc(-1 * clamp(90px,11vw,170px)) 0;z-index:2;">
+      <image-slot id="quote_portrait" style="position: absolute; inset: 0; width: 797px; height: 100%; border-radius: 0" shape="rect" fit="cover" placeholder="Portrait — konzentriert, nahbar"></image-slot>
+    </div>
+    <div>
+      <blockquote style="font-family:var(--sans);font-weight:600;font-size:clamp(20px,2.5vw,29px);line-height:1.42;letter-spacing:-0.005em;color:var(--ink);margin:0;">„In anspruchsvollen Softwareprojekten zeigt sich oft erst im Detail, was wirklich entschieden werden muss. Deshalb ist uns wichtig, nicht zu früh zu vereinfachen, technische Fragen nicht von organisatorischen zu trennen und auch dann klar zu bleiben, wenn eine Einschätzung unbequem wird."</blockquote>
+      <div style="margin-top:26px;font-family:var(--mono);font-size:14px;color:var(--slate);">— Julius Mischok</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THEMEN ============ -->
+<section id="themen" style="background:var(--bg);padding:clamp(120px,15vw,230px) clamp(20px,5vw,72px) clamp(64px,8vw,120px);">
+  <div style="width:100%;">
+    <h2 style="font-family:var(--serif);font-weight:500;font-size:clamp(30px,4.6vw,60px);line-height:1.08;letter-spacing:-0.01em;color:var(--navy);margin:0;">Themen, über die wir nachdenken</h2>
+    <p style="font-family:var(--sans);font-size:clamp(15px,1.5vw,17px);line-height:1.6;color:var(--navy);margin:clamp(20px,2.5vw,30px) 0 clamp(40px,5vw,58px);max-width:92ch;">Viele Fragen aus unseren Projekten tauchen auch in Vorträgen, Fachbeiträgen, Workshops und eigenen Veranstaltungen auf. Hier zeigen wir, womit wir uns bei MISCHOK fachlich beschäftigen — von gewachsenen Softwaresystemen über Spring Boot und Testing bis zu KI in der Softwareentwicklung.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+      <sc-for list="{{ topics }}" as="t" hint-placeholder-count="3">
+        <a href="#themen" style="text-decoration:none;position:relative;display:block;overflow:hidden;border-radius:5px;aspect-ratio:3/4.1;" style-hover="transform:translateY(-4px)">
+          <image-slot id="{{ t.slot }}" style="position:absolute;inset:0;width:100%;height:100%;" shape="rect" fit="cover" placeholder="{{ t.ph }}"></image-slot>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(30,34,40,.08) 30%, rgba(30,34,40,.86) 100%);pointer-events:none;"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:26px;z-index:2;color:#fff;pointer-events:none;">
+            <div style="font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:rgba(255,255,255,.82);">{{ t.kind }}</div>
+            <h3 style="font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.4vw,30px);line-height:1.14;margin:16px 0 14px;">{{ t.title }}</h3>
+            <p style="font-family:var(--mono);font-size:13px;line-height:1.55;color:rgba(255,255,255,.82);margin:0;">{{ t.desc }}</p>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ZUSAMMENARBEIT (horizontal accordion) ============ -->
+<section id="zusammenarbeit" data-screen-label="Zusammenarbeit" style="background: conic-gradient(from 90deg at 34.54% 17.7%, #D6D6D6 0deg, #EDEDED 360deg); padding: clamp(48px,6vw,96px) clamp(20px,5vw,72px)">
+  <div style="width:100%;">
+    <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.6vw,60px);line-height:1.08;letter-spacing:-0.01em;color:var(--navy);margin:0 0 clamp(32px,4vw,52px);">Was uns in der Zusammenarbeit wichtig ist</h2>
+
+    <div style="{{ accWrapStyle }}">
+      <sc-for list="{{ accCards }}" as="c" hint-placeholder-count="3">
+        <div onClick="{{ c.onOpen }}" style="{{ c.cardStyle }}">
+          <image-slot id="{{ c.slot }}" src="{{ c.src }}" style="{{ c.imgStyle }}" shape="rect" fit="cover" placeholder="{{ c.ph }}"></image-slot>
+          <div style="{{ c.overlayStyle }}"></div>
+
+          <div style="{{ c.bodyStyle }}">
+            <sc-if value="{{ c.open }}" hint-placeholder-val="{{ true }}">
+              <div style="{{ c.glassStyle }}">
+                {{ c.iconImg }}
+                <div style="margin-top:auto;width:100%;">
+                  <h3 style="font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.4vw,32px);line-height:1.14;color:#fff;margin:0;overflow-wrap:break-word;">{{ c.title }}</h3>
+                  <p style="font-family:var(--sans);font-size:clamp(14px,1.4vw,16px);line-height:1.6;color:rgba(255,255,255,.92);margin:20px 0 0;max-width:38ch;overflow-wrap:break-word;">{{ c.text }}</p>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ c.closed }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ c.glassStyle }}">
+                {{ c.iconImg }}
+                <button onClick="{{ c.onOpen }}" aria-label="Öffnen" style="{{ c.plusStyle }}" style-hover="transform:rotate(90deg) scale(1.08)">
+                  <img src="./assets/icon-plus.svg" alt="" style="width:100%;height:100%;display:block;">
+                </button>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ÜBER MISCHOK ============ -->
+<section id="ueber" data-screen-label="Über MISCHOK" style="background:var(--section);position:relative;overflow:hidden;padding:0 0 clamp(40px,6vw,90px);">
+
+  <!-- Navy panel -->
+  <div id="ueber-panel" style="position: relative; background: var(--navy); width: 100%; padding: clamp(52px,6vw,96px) clamp(40px,5vw,80px) clamp(60px,7vw,104px); box-sizing: border-box">
+    <div style="position: absolute; top: 0; right: 0; width: clamp(150px,16%,240px); height: clamp(44px,5vw,66px); background-color: #D9D9D9"></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,4vw,72px);align-items:start;">
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(52px,8.5vw,120px);line-height:0.98;letter-spacing:-0.01em;color:var(--on-navy);margin:0;">Über<br>mischok</h2>
+      <p style="font-family: var(--sans); font-size: clamp(14px,1.15vw,15.5px); line-height: 1.55; color: color-mix(in srgb, var(--on-navy) 88%, transparent); margin: clamp(6px,1vw,14px) 0 0; width: 569px; height: 100%">Wir sind MISCHOK, ein Familienunternehmen mit Sitz in Augsburg. Seit 2010 begleiten wir Unternehmen, deren Geschäftserfolg von Software abhängt. Bei uns arbeiten mehr als 35 Menschen in Entwicklung, Architektur, Projektleitung und Beratung. Unsere Projekte entstehen dort, wo Software nicht isoliert betrachtet werden kann, sondern Teil des laufenden Geschäfts ist.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,72px);justify-content:space-between;margin-top:clamp(56px,8vw,132px);">
+      <div style="flex:0 1 auto;">
+        <div style="font-family:var(--sans);font-size:clamp(16px,1.4vw,20px);color:color-mix(in srgb, var(--on-navy) 82%, transparent);margin-bottom:clamp(8px,1vw,16px);">Seit</div>
+        <div style="font-family:var(--serif);font-weight:400;font-size:clamp(46px,6vw,88px);line-height:1;color:var(--on-navy);white-space:nowrap;">2010</div>
+      </div>
+      <div style="flex:0 1 auto;">
+        <div style="font-family:var(--sans);font-size:clamp(16px,1.4vw,20px);color:color-mix(in srgb, var(--on-navy) 82%, transparent);margin-bottom:clamp(8px,1vw,16px);">Sitz in</div>
+        <div style="font-family:var(--serif);font-weight:400;font-size:clamp(46px,6vw,88px);line-height:1;color:var(--on-navy);white-space:nowrap;">Augsburg</div>
+      </div>
+      <div style="flex:0 1 auto;">
+        <div style="font-family:var(--sans);font-size:clamp(16px,1.4vw,20px);color:color-mix(in srgb, var(--on-navy) 82%, transparent);margin-bottom:clamp(8px,1vw,16px);">Mehr als</div>
+        <div style="font-family:var(--serif);font-weight:400;font-size:clamp(46px,6vw,88px);line-height:1;color:var(--on-navy);white-space:nowrap;">35</div>
+        <div style="font-family:var(--sans);font-size:clamp(16px,1.4vw,20px);color:color-mix(in srgb, var(--on-navy) 82%, transparent);margin-top:clamp(8px,1vw,16px);">Mitarbeiter</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portrait + quote -->
+  <div style="position:relative;z-index:2;margin-top:clamp(-40px,-3vw,-24px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,5vw,72px);align-items:center;padding-right:clamp(20px,5vw,72px);">
+    <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);position:relative;overflow:hidden;width:100%;height:clamp(360px,44vw,740px);">
+      <image-slot id="ueber_portrait" src="./assets/acc-2.jpg" style="position:absolute;inset:0;width:100%;height:100%;" shape="rect" fit="cover" placeholder="Portrait — Virgil Mischok"></image-slot>
+    </div>
+    <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease .1s, transform .7s cubic-bezier(.2,.7,.2,1) .1s;">
+      <blockquote style="font-family: var(--sans); font-weight: 700; font-size: clamp(20px,2.3vw,28px); line-height: 1.4; letter-spacing: -0.005em; color: var(--ink); margin: 0; width: 100%">„In einem Familienunternehmen kann man sich nicht hinter Abteilungen verstecken. Entscheidungen haben Namen. Das macht vieles direkter — manchmal auch unbequemer."</blockquote>
+      <div style="margin-top:clamp(20px,2.4vw,32px);font-family:var(--mono);font-size:14px;color:var(--slate);">— Virgil Mischok</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ ARBEITEN BEI MISCHOK ============ -->
+<section id="kontakt" data-screen-label="Kontakt" style="position: relative; overflow: hidden; background: linear-gradient(135deg, #D7D7D3 0%, #FFFFFFEB, #FFFFFFEB); padding: clamp(56px,7vw,104px) clamp(28px,5vw,80px) clamp(48px,6vw,80px)">
+  
+
+  <div style="position: relative; max-width: none; margin: 0; width: 100%">
+
+    <!-- Top: headline + intro -->
+    
+
+    <!-- Bottom: contact blocks -->
+    <div style="display: block; grid-template-columns: {{ kontaktCols }}; align-items: stretch">
+      <h2 style="font-family: var(--serif); font-weight: 400; font-size: clamp(44px,7.5vw,80px); line-height: 1.04; letter-spacing: -0.01em; color: var(--navy); margin: 0; width: 100%">Der nächste Schritt ist ein Gespräch.</h2>
+      <p style="font-family: var(--sans); font-size: clamp(16px,1.5vw,19px); line-height: 1.6; color: var(--navy); margin: clamp(28px,5vw,110px) 0 0; margin-top: 0px">Softwareprojekte lassen sich nicht über ein Formular erklären. Erzählen Sie uns, wo Ihr Projekt steht — wir ordnen gemeinsam ein, was als Nächstes sinnvoll ist.</p>
+    </div><div style="display:grid;grid-template-columns:{{ kontaktCols }};gap:clamp(40px,6vw,96px);align-items:start;margin-top:clamp(56px,9vw,150px);">
+
+      <!-- Left: Ansprechpartner -->
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,3vw,44px);align-items:start;">
+        <div style="position:relative;overflow:hidden;border-radius:5px;width:clamp(120px,12vw,168px);aspect-ratio:1/1.08;flex:none;">
+          <image-slot id="kontakt_portrait" src="./assets/acc-2.jpg" style="position:absolute;inset:0;width:100%;height:100%;" shape="rect" fit="cover" placeholder="Ansprechpartner"></image-slot>
+        </div>
+        <div>
+          <h3 style="font-family: var(--sans); font-weight: 700; font-size: clamp(20px,2.2vw,30px); line-height: 1.14; color: var(--navy); margin: 0">Ihr Ansprechpartner</h3>
+          <div style="font-family:var(--sans);font-size:clamp(16px,1.5vw,19px);color:var(--navy);margin-top:clamp(28px,3vw,44px);">[Name Nachname]</div>
+          <div style="font-family:var(--sans);font-size:clamp(16px,1.5vw,19px);color:var(--navy);margin-top:clamp(14px,1.6vw,22px);">[Position / Rolle]</div>
+          <a href="mailto:[E-Mail-Adresse]" style="text-decoration:none;display:inline-block;color:var(--navy);font-family:var(--sans);font-weight:500;font-size:clamp(14px,1.4vw,16px);padding:12px 40px 12px 0;margin-top:clamp(30px,3.4vw,48px);background:linear-gradient(90deg, rgba(214,214,214,0.00) 19.56%, #D6D6D6 100%);" style-hover="background:#D6D6D6;filter:none">Projektlage klären</a>
+        </div>
+      </div>
+
+      <!-- Right: Direktkontakt -->
+      <div>
+        <h3 style="font-family: var(--sans); font-weight: 700; font-size: clamp(20px,2.2vw,30px); line-height: 1.14; color: var(--navy); margin: 0">Oder direkt Kontakt aufnehmen:</h3>
+        <div style="font-family:var(--sans);font-size:clamp(16px,1.5vw,19px);color:var(--navy);margin-top:clamp(28px,3vw,44px);">Telefon: [Telefonnummer]</div>
+        <div style="font-family:var(--sans);font-size:clamp(16px,1.5vw,19px);color:var(--navy);margin-top:clamp(14px,1.6vw,22px);">E-Mail: [E-Mail-Adresse]</div>
+        <a href="#kontakt" style="text-decoration:none;display:inline-block;color:var(--navy);font-family:var(--sans);font-weight:500;font-size:clamp(14px,1.4vw,16px);padding:12px 40px 12px 0;margin-top:clamp(30px,3.4vw,48px);background:linear-gradient(90deg, rgba(214,214,214,0.00) 19.56%, #D6D6D6 100%);" style-hover="background:#D6D6D6;filter:none">Rückruf anfragen</a>
+      </div>
+
+    </div>
+  </div>
+</section><section id="arbeiten" data-screen-label="Arbeiten bei MISCHOK" style="position:relative;background:var(--navy);overflow:hidden;">
+  <image-slot id="arbeiten_img" src="./assets/arbeiten.jpg" style="position:absolute;inset:0;width:100%;height:100%;" shape="rect" fit="cover" placeholder="Team / Arbeitssituation"></image-slot>
+  <div style="position:relative;display:grid;grid-template-columns:{{ arbeitenCols }};min-height:60vh;">
+    
+    <div style="position: relative"><div style="position: absolute; top: -9px; width: 303px; height: 85px; background-color: #EEEEEE; left: 1px"></div></div><div style="position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,110px) clamp(28px,5vw,96px);">
+      <img src="./assets/arbeiten.jpg" alt="" aria-hidden="true" style="position:absolute;top:0;right:0;width:200%;height:100%;object-fit:cover;object-position:50% 50%;filter:blur(9px);transform:scale(1.06);pointer-events:none;">
+      <div style="position:absolute;inset:0;background:rgba(255,255,255,0.20);pointer-events:none;"></div>
+      <div style="position:relative;z-index:2;display:flex;flex-direction:column;">
+        <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.6vw,50px);line-height:1.08;letter-spacing:-0.005em;color:#fff;margin:0;">Arbeiten bei MISCHOK</h2>
+        <p style="font-family:var(--sans);font-size:clamp(15px,1.35vw,18px);line-height:1.6;color:#fff;margin:clamp(24px,3vw,38px) 0 0;max-width:52ch;">Bei MISCHOK arbeiten Menschen, die Softwareprojekte verstehen, begleiten und umsetzen. Vor Ort in Augsburg, nah am Team und nah an den Projekten unserer Kunden.</p>
+        <p style="font-family:var(--sans);font-size:clamp(15px,1.35vw,18px);line-height:1.6;color:#fff;margin:clamp(18px,2vw,26px) 0 0;max-width:52ch;">Wir suchen immer wieder Menschen, die fachlich stark sind, Verantwortung übernehmen wollen und zu unserer Arbeitsweise passen.</p>
+        <a href="#kontakt" style="text-decoration:none;align-self:flex-start;color:var(--navy);font-family:var(--sans);font-weight:700;font-size:clamp(14px,1.4vw,16px);padding:14px 44px 14px 22px;margin-top:clamp(32px,4vw,52px);background:linear-gradient(90deg, rgba(214,214,214,0.00) 19.56%, #D6D6D6 100%);" style-hover="background:#D6D6D6;filter:none">Karriere bei MISCHOK</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KONTAKT ============ -->
+
+
+<!-- ============ FOOTER ============ -->
+<footer id="footer" style="background:var(--section);border-top:1px solid var(--line);padding:clamp(48px,6vw,80px) clamp(20px,5vw,72px) 40px;">
+  <div style="width:100%;display:grid;grid-template-columns:{{ footCols }};gap:40px;align-items:start;">
+    <div style="max-width:40ch;">
+      <div style="width:42px;height:36px;border:2.5px solid var(--navy);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:700;font-size:20px;color:var(--navy);line-height:1;">m</div>
+      <p style="font-family:var(--mono);font-size:13.5px;line-height:1.65;color:var(--slate);margin:20px 0 0;">Erfahrene Projektführung für geschäftskritische Software im Bestand.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);">Kontakt</div>
+      <a href="tel:+493412254900" style="text-decoration:none;font-family:var(--mono);font-size:15px;color:var(--slate);" style-hover="color:var(--navy)">+49 341 22 54 900</a>
+      <a href="mailto:kontakt@mischok.de" style="text-decoration:none;font-family:var(--mono);font-size:15px;color:var(--slate);" style-hover="color:var(--navy)">kontakt@mischok.de</a>
+    </div>
+    <div style="justify-self:{{ ctaJustify }};">
+      <a href="mailto:kontakt@mischok.de" style="text-decoration:none;background:var(--navy);color:var(--bg);font-family:var(--sans);font-weight:700;font-size:14px;padding:15px 26px;display:inline-block;" style-hover="filter:brightness(1.2)">Erstgespräch vereinbaren</a>
+    </div>
+  </div>
+  <div style="width:100%;margin:44px 0 0;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--muted);">
+    <span>© 2026 Mischok GmbH</span>
+    <span>Impressum · Datenschutz</span>
+  </div>
+</footer>
+
+</div>
+</div>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002A5C"/><rect x="30" y="34" width="40" height="32" fill="none" stroke="#EAE8E1" stroke-width="3"/><text x="50" y="59" font-family="Georgia, serif" font-size="26" fill="#EAE8E1" text-anchor="middle">m</text></svg></template></x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Hell&quot;,&quot;Dunkel&quot;],&quot;default&quot;:&quot;Hell&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Visuelle Varianten&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#002A5C&quot;,&quot;options&quot;:[&quot;#002A5C&quot;,&quot;#384352&quot;,&quot;#1A4C8B&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Visuelle Varianten&quot;},&quot;heroAlign&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Zentriert&quot;,&quot;Links&quot;],&quot;default&quot;:&quot;Zentriert&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Visuelle Varianten&quot;}}">
+class Component extends DCLogic {
+  state = { active: 0, vw: 1280, hovered: -1, ansatzStep: 0, accOpen: 0 };
+
+  componentDidMount() {
+    this._onResize = () => this.setState({ vw: window.innerWidth });
+    this._onResize();
+    window.addEventListener('resize', this._onResize);
+
+    // rAF loop reads scroll fresh each frame; instance-var guard avoids the
+    // stale this.state read that was stranding the step.
+    this._lastStep = -1;
+    this._tick = () => {
+      const sec = document.getElementById('ansatz');
+      if (sec) {
+        const rect = sec.getBoundingClientRect();
+        const total = sec.offsetHeight - window.innerHeight;
+        const scrolled = Math.min(Math.max(-rect.top, 0), total);
+        const progress = total > 0 ? scrolled / total : 0;
+        // Move the conic-gradient centre down as we scroll so the vertical
+        // edge grows longer toward the bottom (start → end).
+        const sticky = sec.firstElementChild;
+        if (sticky) sticky.style.setProperty('--ansatz-cy', (25.64 + progress * 52).toFixed(2) + '%');
+        const step = Math.max(0, Math.min(2, Math.floor(progress * 2.9999)));
+        if (step !== this._lastStep) {
+          this._lastStep = step;
+          this.setState({ ansatzStep: step });
+        }
+      }
+      this._raf = requestAnimationFrame(this._tick);
+    };
+    this._raf = requestAnimationFrame(this._tick);
+
+    // Scroll reveal for [data-reveal] elements (fade + rise).
+    setTimeout(() => {
+      const els = document.querySelectorAll('[data-reveal]');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+        return;
+      }
+      this._revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'none';
+            this._revealObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(el => this._revealObs.observe(el));
+    }, 60);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._revealObs) this._revealObs.disconnect();
+  }
+
+  select(i) {
+    this.setState({ active: i }, () => {
+      const el = document.getElementById('ansatz');
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 40;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
+  }
+
+  renderVals() {
+    const FIELDS = [
+      { n: '01', title: 'Bestehende Software weiterentwickeln', card: 'Ihre Software ist Teil des laufenden Betriebs.',
+        detail: 'Gewachsene Systeme müssen oft weiterlaufen, während sie verändert werden. Wir prüfen, was bleiben kann, wo Risiken liegen und wie Entwicklung möglich bleibt, ohne den Betrieb unnötig zu gefährden.' },
+      { n: '02', title: 'Festgefahrene Projekte lösen', card: 'Anforderungen verändern sich: Neue Ziele kommen dazu, bestehende Systeme bleiben, die technische Ausgangslage wird komplexer.',
+        detail: 'Manchmal steckt ein Projekt fest, ohne dass klar ist, woran es liegt — am Code, am Prozess, am Team oder am ursprünglichen Ziel. Wir ordnen die Lage, benennen das eigentliche Problem und machen den Weg zum nutzbaren Ergebnis wieder sichtbar.' },
+      { n: '03', title: 'Systeme modernisieren', card: 'Technik und Zielbild passen nicht mehr sauber zusammen.',
+        detail: 'Ein bestehendes System soll modernisiert werden, aber der laufende Betrieb darf nicht kippen. Wir planen den Umbau in Schritten, die tragen — mit klarer Einschätzung, was jetzt sinnvoll ist und was warten kann.' },
+      { n: '04', title: 'Fachbereich und IT verbinden', card: 'Mehr Entwicklungskapazität hilft nur, wenn die Richtung stimmt.',
+        detail: 'Fachabteilung und Entwicklung sprechen oft über dasselbe Projekt, meinen aber unterschiedliche Dinge. Wir übersetzen zwischen den Ebenen, trennen technische von organisatorischen Fragen und bringen beide Seiten auf eine gemeinsame Grundlage.' },
+      { n: '05', title: 'Architektur ordnen', card: 'Wir klären die Lage, ordnen die Optionen und schaffen die Grundlage für eine passende Entscheidung.',
+        detail: 'Eine technische Entscheidung aus der Vergangenheit bremst heute Qualität, Tempo oder Weiterentwicklung. Wir prüfen die Architektur, bereiten tragfähige Entscheidungen vor und zeigen, welcher nächste Schritt Risiken senkt statt sie zu verschieben.' },
+    ];
+
+    const active = this.state.active;
+    const vw = this.state.vw;
+    const isMobile = vw < 820;
+    const dark = (this.props.theme || 'Hell') === 'Dunkel';
+    const accent = this.props.accent || '#002A5C';
+    const heroLeft = (this.props.heroAlign || 'Zentriert') === 'Links';
+
+    const themeStyle = dark
+      ? { '--bg': '#10151C', '--section': '#171E28', '--card': '#1B232F', '--navy': '#7FA8E0', '--slate': '#C4CBD4', '--ink': '#EEF1F4', '--muted': '#69727E', '--line': '#2A3340', '--btn': '#232C39', '--accent': accent, background: 'var(--bg)', color: 'var(--slate)' }
+      : { '--accent': accent };
+
+    const hovered = this.state.hovered;
+    const placeholders = [
+      'Portrait — Julius Mischok', 'Team bei der Arbeit', 'Legacy-System / Screen',
+      'Fachbereich & IT im Gespräch', 'Architektur-Skizze',
+    ];
+    // desktop: closed rectangle — 01 spans both rows in col1, the other four
+    // fill the 2×2 on the right so there are no gaps.
+    //   [ 01 | 02 | 04 ]
+    //   [ 01 | 03 | 05 ]
+    const cols = vw < 640 ? 1 : (vw < 1000 ? 2 : 3);
+    const desktop = cols === 3;
+    const place = [
+      { c: '1', r: '1 / span 2' },
+      { c: '2', r: '1' },
+      { c: '2', r: '2' },
+      { c: '3', r: '1' },
+      { c: '3', r: '2' },
+    ];
+    const rowH = 317;
+    const gridStyle = desktop
+      ? { display: 'grid', width: '100%', height: '80vh', gridTemplateColumns: 'repeat(3,1fr)', gridTemplateRows: '1fr 1fr', gap: '18px' }
+      : { display: 'grid', width: '100%', gridTemplateColumns: 'repeat(' + cols + ',1fr)', gap: '18px', alignItems: 'start' };
+
+    // Card 01 ist default aktiv (scharf); sobald eine andere Card gehovert wird,
+    // wird diese aktiv und der Rest (inkl. 01) unscharf.
+    const activeIdx = this.state.hovered >= 0 ? this.state.hovered : 0;
+    const cards = FIELDS.map((f, i) => {
+      const isHover = i === activeIdx;
+      const p = place[i];
+      const placement = desktop
+        ? { gridColumn: p.c, gridRow: p.r, alignSelf: 'stretch', height: '100%' }
+        : { height: (i === 0 ? 450 : 360) + 'px' };
+      return {
+        n: f.n, card: f.card, slot: 'card_0' + (i + 1), ph: placeholders[i],
+        onEnter: () => this.setState({ hovered: i }),
+        onLeave: () => this.setState({ hovered: -1 }),
+        outerStyle: {
+          width: '100%', position: 'relative', overflow: 'hidden',
+          border: '1px solid var(--line)',
+          background: 'var(--card)', padding: 0,
+          textAlign: 'left', display: 'block', ...placement,
+          borderRadius: '5px', fontFamily: 'inherit',
+          transform: isHover ? 'translateY(-3px)' : 'none',
+          transition: 'transform .2s ease',
+        },
+        imgStyle: {
+          position: 'absolute', inset: 0, width: '100%', height: '100%',
+          opacity: 1,
+          filter: isHover ? 'blur(0px)' : 'blur(9px)',
+          transform: isHover ? 'scale(1)' : 'scale(1.12)',
+          transition: 'filter .4s ease, transform .5s ease',
+        },
+        overlayStyle: {
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: isHover
+            ? 'linear-gradient(0deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.00) 56.48%)'
+            : 'linear-gradient(0deg, rgba(237,236,234,0.55) 0%, rgba(237,236,234,0.10) 60%)',
+          transition: 'background .4s ease',
+        },
+        numStyle: {
+          fontFamily: 'var(--serif)', fontSize: '80px', lineHeight: 1, fontWeight: 400,
+          color: isHover ? '#fff' : 'var(--muted)', transition: 'color .3s ease',
+        },
+        descStyle: {
+          fontFamily: 'var(--mono)', fontSize: '28px', lineHeight: 1.5, marginTop: '20px',
+          maxWidth: '26ch', color: isHover ? '#fff' : 'var(--slate)',
+          filter: isHover ? 'blur(0)' : 'blur(3.5px)',
+          transition: 'filter .3s ease, color .3s ease',
+        },
+      };
+    });
+
+    // Section 04 — 3 Content-Punkte (PLATZHALTER: bitte 1:1 durch den Docs-Text
+    // "Wo mischok konkret ansetzt" ersetzen).
+    const POINTS = [
+      { n: '01', title: 'Zuerst verstehen, was wirklich entschieden werden muss',
+        detail: 'Bevor wir Lösungen vorschlagen, steigen wir tief in System, Code und Kontext ein. Wir trennen technische von organisatorischen Fragen und benennen das eigentliche Problem — auch wenn es unbequem ist.' },
+      { n: '02', title: 'Einen Weg vorschlagen, der im Betrieb trägt',
+        detail: 'Wir planen Veränderung in Schritten, die der laufende Betrieb aushält. Sie bekommen eine ehrliche Einschätzung, was jetzt sinnvoll ist, was warten kann und welches Risiko jede Option mit sich bringt.' },
+      { n: '03', title: 'Verantwortung bis zum nutzbaren Ergebnis übernehmen',
+        detail: 'Wir begleiten die Umsetzung mit erfahrenen Köpfen, die persönlich einstehen — bis zu dem Punkt, an dem die Software wieder verlässlich das tut, was Ihr Geschäft von ihr braucht.' },
+    ];
+    const step = this.state.ansatzStep;
+    const ansatzPoints = POINTS.map((p, i) => ({
+      n: p.n, title: p.title, detail: p.detail,
+      style: {
+        position: 'absolute', top: 0, left: 0, width: '100%',
+        opacity: i === step ? 1 : 0,
+        transform: i === step ? 'translateY(0)' : 'translateY(16px)',
+        transition: 'opacity .55s ease, transform .55s ease',
+        pointerEvents: i === step ? 'auto' : 'none',
+      },
+    }));
+    // ---- Zusammenarbeit: horizontal accordion ----
+    const ACC = [
+      { icon: './assets/icon-list.svg', slot: 'acc_1', src: './assets/acc-1.jpg', ph: 'Meeting / Einordnung',
+        title: 'Klare Einordnung statt später Korrektur',
+        text: 'Ein Projekt wird nicht besser, wenn Risiken zu lange offenbleiben. Wenn ein Ziel technisch, zeitlich oder organisatorisch nicht trägt, muss das früh auf den Tisch. Nicht als Problem, sondern als Grundlage für eine Entscheidung, die später noch Bestand hat.' },
+      { icon: './assets/icon-brain.svg', slot: 'acc_2', src: './assets/acc-3.jpg', ph: 'Konzentrierte Analyse',
+        title: 'Fachliche Tiefe vor schnellen Antworten',
+        text: 'Gewachsene Systeme versteht man nicht aus der Distanz. Wir wollen nachvollziehen, warum etwas so geworden ist, welche Abhängigkeiten bestehen und wo Veränderung realistisch möglich ist. Erst dann lässt sich beurteilen, welcher Weg trägt.' },
+      { icon: './assets/icon-people.svg', slot: 'acc_3', src: './assets/acc-2.jpg', ph: 'Sichtbare Verantwortung',
+        title: 'Verantwortliche Menschen bleiben sichtbar',
+        text: 'Vertrauen entsteht nicht zu Prozessen, sondern zu Menschen. Deshalb bleibt bei uns sichtbar, wer eine Lage einschätzt, Entscheidungen mit vorbereitet und ein Projekt fachlich begleitet. Gerade dann, wenn aus einer ersten Einschätzung echte Verantwortung wird.' },
+    ];
+    const accStack = vw < 760;
+    const accOpen = this.state.accOpen;
+    const accWrapStyle = {
+      display: 'flex', flexDirection: accStack ? 'column' : 'row',
+      gap: '16px', width: '100%',
+      height: accStack ? 'auto' : '60vh',
+    };
+    const accCards = ACC.map((c, i) => {
+      const open = i === accOpen;
+      return {
+        slot: c.slot, src: c.src, ph: c.ph, title: c.title, text: c.text,
+        iconImg: React.createElement('img', { src: c.icon, alt: '', style: { width: 'clamp(104px,8vw,128px)', height: 'auto', flex: 'none' } }),
+        open, closed: !open,
+        onOpen: () => this.setState({ accOpen: i }),
+        cardStyle: {
+          position: 'relative', overflow: 'hidden', borderRadius: '5px',
+          cursor: open ? 'default' : 'pointer',
+          flex: accStack ? 'none' : (open ? '3.4 1 0' : '1 1 0'),
+          height: accStack ? (open ? '520px' : '150px') : '100%',
+          minWidth: 0, background: 'var(--navy)',
+          transition: 'flex-grow .55s cubic-bezier(.4,0,.2,1), height .5s ease',
+        },
+        imgStyle: {
+          position: 'absolute', inset: 0, width: '100%', height: '100%',
+          filter: open ? 'blur(0px)' : 'blur(7px)',
+          transform: open ? 'scale(1)' : 'scale(1.12)',
+          transition: 'filter .5s ease, transform .6s ease',
+        },
+        overlayStyle: {
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: open
+            ? 'linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 34%, rgba(0,0,0,0.55) 74%)'
+            : 'linear-gradient(180deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 45%, rgba(0,0,0,0.30) 100%)',
+          transition: 'background .5s ease',
+        },
+        bodyStyle: { position: 'absolute', inset: 0, zIndex: 2 },
+        glassStyle: open
+          ? {
+              position: 'absolute',
+              top: 'clamp(20px,2.2vw,32px)', bottom: 'clamp(20px,2.2vw,32px)', right: 'clamp(20px,2.2vw,32px)',
+              left: accStack ? 'clamp(20px,2.2vw,32px)' : 'auto',
+              width: accStack ? 'auto' : 'clamp(300px,44%,440px)',
+              boxSizing: 'border-box', borderRadius: '5px',
+              background: 'rgba(255,255,255,0.10)',
+              backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.18)',
+              padding: 'clamp(26px,2.6vw,40px)',
+              display: 'flex', flexDirection: 'column', alignItems: 'center',
+            }
+          : {
+              position: 'absolute', inset: 'clamp(14px,1.4vw,20px)',
+              boxSizing: 'border-box', borderRadius: '5px',
+              background: 'rgba(255,255,255,0.10)',
+              backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.18)',
+              padding: 'clamp(26px,2.6vw,36px) clamp(16px,1.6vw,22px)',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            },
+        plusStyle: {
+          position: 'absolute', bottom: 'clamp(22px,2.2vw,32px)', left: 0, right: 0, margin: '0 auto',
+          width: 'clamp(46px,3.6vw,56px)', height: 'clamp(46px,3.6vw,56px)',
+          background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+          transition: 'transform .3s ease',
+        },
+      };
+    });
+    const accVals = { accWrapStyle, accCards };
+
+    const ansatzBars = POINTS.map((p, i) => ({
+      style: {
+        height: '3px', borderRadius: '2px',
+        width: i === step ? '48px' : '22px',
+        background: i === step ? 'var(--navy)' : 'rgba(0,42,92,0.22)',
+        transition: 'width .35s ease, background .35s ease',
+      },
+    }));
+
+    const topics = [
+      { slot: 'topic_1', kind: 'Vortrag', ph: 'Vortragssituation',
+        title: 'Retten oder Reimplementieren?',
+        desc: 'Julius Mischok spricht darüber, wann bestehende Software weiterentwickelt werden kann — und wann ein Neustart fachlich sinnvoller ist.' },
+      { slot: 'topic_2', kind: 'Fachartikel', ph: 'Team bei der Arbeit',
+        title: 'Wenn Kapazität zu Komplexität wird',
+        desc: 'Warum zusätzliche Entwickler ein Projekt nicht automatisch schneller machen — und was in gewachsenen Systemen stattdessen hilft.' },
+      { slot: 'topic_3', kind: 'Vortrag', ph: 'Fachpublikum / Bühne',
+        title: 'KI im Bestand: Werkzeug, kein Wundermittel',
+        desc: 'Wo KI in geschäftskritischen Systemen wirklich Zeit spart — und wo sie neue Risiken schafft, die man früh einordnen muss.' },
+    ];
+
+    return {
+      themeStyle,
+      cards, topics,
+      ansatzPoints, ansatzBars,
+      ...accVals,
+      heroItems: heroLeft ? 'flex-start' : 'center',
+      heroText: heroLeft ? 'left' : 'center',
+      gridStyle,
+      ansatzCols: isMobile ? '1fr' : '1fr 1fr',
+      quoteCols: isMobile ? '1fr' : '0.85fr 1.15fr',
+      kontaktCols: isMobile ? '1fr' : '1fr 1fr',
+      arbeitenCols: isMobile ? '1fr' : '1fr 1fr',
+      ueberCols: isMobile ? '1fr' : '0.95fr 1.05fr',
+      ueberQuoteCols: isMobile ? '1fr' : '0.7fr 1.3fr',
+      ueberStats: [
+        { value: 'Seit 2010', label: 'Am Markt' },
+        { value: '35+', label: 'Menschen im Team' },
+        { value: 'Augsburg', label: 'Familienunternehmen' },
+      ],
+      footCols: isMobile ? '1fr' : '1.6fr 1fr auto',
+      ctaJustify: isMobile ? 'start' : 'end',
+    };
+  }
+}
+</script>
+</body>
+</html>

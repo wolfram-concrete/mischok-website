@@ -1,0 +1,41 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# env files
+.env
+.env*.local
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# local design references / large source material (kept locally, not in repo)
+/uploads
+/screenshots
+/design-reference/MISCHOK Website.html
+/design-reference/.image-slots.state.json
+/design-reference/.thumbnail
+
+# root asset sources are duplicated into public/assets (served copy)
+/assets
