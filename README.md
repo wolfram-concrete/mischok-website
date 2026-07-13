@@ -6,6 +6,10 @@ Produktionsfähige One-Page-Website der **Mischok GmbH** (Augsburg) — umgesetz
 Die Umsetzung folgt 1:1 der Design-Referenz (`design-reference/MISCHOK Home.dc.html`)
 und der Handoff-Spezifikation (`design-reference/HANDOFF-CLAUDE-CODE.md`).
 
+## Voraussetzungen
+
+- **Node.js ≥ 20** und npm
+
 ## Entwicklung
 
 ```bash
@@ -30,18 +34,23 @@ components/
                     SectionLabel, Reveal
 lib/content.ts      Verbindliche Inhaltstexte (FIELDS, POINTS, ACC, TOPICS)
 public/assets/      Bilder & Icons
+public/video/       Hero-Hintergrundvideo (WebM + MP4-Fallback + Poster)
 design-reference/   Original-Design-Component & Handoff (nicht Teil der Website)
 ```
 
 ## Interaktionen
 
-- **Hero** — reine CSS-Keyframe-Animationen (Winkelflächen, Lichtstrahl, Reveal).
+- **Hero** — vollflächiges Hintergrund-Video (loop, stumm, autoplay, `playsInline`)
+  mit dezentem Scrim; Text-Reveal als CSS-Keyframes.
 - **EinsatzfelderGrid** — Hover schärft die Karte (`"use client"`).
 - **Ansatz** — Pin-Scroll über 300vh mit `requestAnimationFrame`, blendet 3 Punkte durch.
 - **Zusammenarbeit** — horizontales Accordion (`"use client"`).
 - **Reveal** — Scroll-Reveal via `IntersectionObserver`.
 
 Alle Animationen respektieren `prefers-reduced-motion: reduce`.
+
+Das Hero-Video wurde auf 1080p komprimiert und liegt als WebM (~451 KB) mit
+MP4-Fallback (~659 KB) und Poster-Frame in `public/video/`.
 
 ## Offene Punkte
 
