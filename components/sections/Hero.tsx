@@ -1,5 +1,3 @@
-import LogoMark from "@/components/ui/LogoMark";
-
 /**
  * Hero — vollflächiges Hintergrund-Video (loop, stumm, autoplay), darüber
  * Logo-Mark, Serif-Headline und CTA. Die Text-Reveal-Animationen laufen als
@@ -54,10 +52,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Logo */}
-      <div style={{ position: "relative", zIndex: 2 }}>
-        <LogoMark />
-      </div>
+      {/* Logo liegt jetzt in der persistenten Top-Navigation (components/layout/Header) */}
 
       {/* Headline + CTA */}
       <div
@@ -88,7 +83,7 @@ export default function Hero() {
             width: "100%",
             maxWidth: "none",
             opacity: 0,
-            animation: "heroTextUp 1s cubic-bezier(.2,.7,.2,1) 2.0s both",
+            animation: "heroTextUp 1s cubic-bezier(.2,.7,.2,1) .25s both",
           }}
         >
           Wenn Software entscheidend für Ihren Geschäftserfolg ist braucht sie
@@ -106,7 +101,7 @@ export default function Hero() {
             padding: "14px 24px",
             opacity: 0,
             animation:
-              "heroTextUp .8s cubic-bezier(.2,.7,.2,1) 2.55s both, heroRevealRight .7s ease 2.55s both",
+              "heroTextUp .8s cubic-bezier(.2,.7,.2,1) .5s both, heroRevealRight .7s ease .5s both",
           }}
         >
           Projektlage klären

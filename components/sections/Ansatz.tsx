@@ -175,7 +175,7 @@ export default function Ansatz() {
                   >
                     {p.detail}
                   </p>
-                  <CtaButton href="#kontakt">Projektlage klären</CtaButton>
+                  <CtaButton href="/referenzen">Zur Referenz</CtaButton>
                 </div>
               );
             })}

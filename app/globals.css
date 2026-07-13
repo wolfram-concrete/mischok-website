@@ -18,8 +18,9 @@
   --btn: #e4e2de;
   --accent: #002a5c;
   --serif: var(--font-serif), "Source Serif Pro", Georgia, serif;
-  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --mono: var(--font-mono), ui-monospace, monospace;
+  --sans: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* Alle nicht-Serif-Texte nutzen Calibre — auch die ehemaligen „Mono"-Labels */
+  --mono: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -28,6 +29,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Anker-Sprünge nicht hinter der fixierten Top-Navigation verstecken */
+  scroll-padding-top: 84px;
 }
 
 body {
@@ -102,6 +105,209 @@ button:focus-visible {
 }
 .cta-solid:hover {
   filter: brightness(1.2);
+}
+
+/* ===================================================================
+   Top-Navigation
+   =================================================================== */
+.nav-desktop {
+  display: none;
+  align-items: center;
+}
+.nav-burger {
+  display: inline-flex;
+}
+@media (min-width: 900px) {
+  .nav-desktop {
+    display: flex;
+  }
+  .nav-burger {
+    display: none;
+  }
+}
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  color: var(--navy);
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+.nav-link:hover {
+  opacity: 0.55;
+}
+.nav-item {
+  position: relative;
+}
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: 14px;
+}
+.nav-item:hover .nav-dropdown,
+.nav-item:focus-within .nav-dropdown {
+  display: block;
+}
+.nav-dropdown-inner {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 8px;
+  min-width: 210px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nav-dropdown-inner a {
+  text-decoration: none;
+  color: var(--navy);
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 9px 12px;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+.nav-dropdown-inner a:hover {
+  background: var(--card);
+}
+
+/* ===================================================================
+   Referenzen-Karten (Unterseite /referenzen)
+   =================================================================== */
+/* Intro: Headline und Body horizontal nebeneinander (Desktop) */
+.ref-intro {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: end;
+}
+@media (min-width: 820px) {
+  .ref-intro {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+/* Desktop: eine Spalte (Karten volle Breite, horizontal aufgeteilt) */
+.ref-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.ref-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  background: var(--navy);
+  min-height: clamp(440px, 48vw, 580px);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+/* Bild: standardmäßig unscharf, bei Hover ODER geöffnet scharf (wie Section 02) */
+.ref-media img,
+.ref-media [role="img"] {
+  filter: blur(9px);
+  transform: scale(1.06);
+  transition: filter 0.45s ease, transform 0.5s ease;
+}
+.ref-card:hover .ref-media img,
+.ref-card:hover .ref-media [role="img"],
+.ref-card.is-open .ref-media img,
+.ref-card.is-open .ref-media [role="img"] {
+  filter: blur(0);
+  transform: scale(1);
+}
+.ref-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 14, 20, 0.1) 0%,
+    rgba(10, 14, 20, 0.55) 50%,
+    rgba(10, 14, 20, 0.9) 100%
+  );
+  transition: background 0.5s ease;
+}
+.ref-card.is-open .ref-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 14, 20, 0.5) 0%,
+    rgba(10, 14, 20, 0.84) 55%,
+    rgba(10, 14, 20, 0.96) 100%
+  );
+}
+/* Inhalt: links bis Projektlage, rechts ab Beschreibungstext */
+.ref-content-grid {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  width: 100%;
+  padding: clamp(26px, 2.6vw, 40px);
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr; /* Mobile: eine Spalte, rechts klappt unten aus */
+  align-items: start;
+}
+/* rechte Spalte (ab Beschreibungstext): kollabiert über grid-template-rows,
+   damit sie im geschlossenen Zustand keine Höhe beansprucht */
+.ref-right {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  min-width: 0;
+  opacity: 0;
+  margin-top: 0;
+  transition: grid-template-rows 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s ease, margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ref-card.is-open .ref-right {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.ref-right > .ref-right-inner {
+  overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+}
+/* Mobile: rechts klappt unter links aus */
+@media (max-width: 759px) {
+  .ref-card.is-open .ref-right {
+    margin-top: clamp(16px, 3vw, 22px);
+  }
+}
+/* Desktop: horizontale Aufteilung – rechte Spalte wächst zusätzlich in der Breite */
+@media (min-width: 760px) {
+  .ref-content-grid {
+    grid-template-columns: 1fr 0fr;
+    column-gap: 0;
+    transition: grid-template-columns 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+      column-gap 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .ref-card.is-open .ref-content-grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: clamp(28px, 4vw, 64px);
+  }
+}
+
+/* CTA auf dunkler Karte: weiße Schrift im Default */
+.cta-grad-light {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 19.56%,
+    rgba(255, 255, 255, 0.22) 100%
+  );
+  color: #fff;
+  transition: background 0.25s ease;
+}
+.cta-grad-light:hover {
+  background: rgba(255, 255, 255, 0.16);
 }
 
 /* Themen-Karten heben sich beim Hover leicht an */
@@ -181,11 +387,6 @@ button:focus-visible {
     margin: 0;
     padding-left: 64px;
     padding-right: 64px;
-  }
-  #ueber-panel {
-    width: calc(100% + 128px);
-    margin-left: -64px;
-    margin-right: -64px;
   }
   #home-root > div > section {
     min-height: 100vh;

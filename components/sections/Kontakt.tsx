@@ -4,7 +4,7 @@ import CtaButton from "@/components/ui/CtaButton";
 const infoLine = {
   fontFamily: "var(--sans)",
   fontSize: "clamp(16px,1.5vw,19px)",
-  color: "var(--navy)",
+  color: "color-mix(in srgb, var(--on-navy) 88%, transparent)",
 } as const;
 
 const heading = {
@@ -12,7 +12,7 @@ const heading = {
   fontWeight: 700,
   fontSize: "clamp(20px,2.2vw,30px)",
   lineHeight: 1.14,
-  color: "var(--navy)",
+  color: "var(--on-navy)",
   margin: 0,
 } as const;
 
@@ -30,11 +30,21 @@ export default function Kontakt() {
         position: "relative",
         overflow: "hidden",
         background: "linear-gradient(135deg, #D7D7D3 0%, #FFFFFFEB, #FFFFFFEB)",
-        padding:
-          "clamp(56px,7vw,104px) clamp(28px,5vw,80px) clamp(48px,6vw,80px)",
+        padding: "90px",
       }}
     >
-      <div style={{ position: "relative", width: "100%" }}>
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          background: "var(--navy)",
+          borderRadius: "5px",
+          padding: "40px",
+          boxSizing: "border-box",
+        }}
+      >
         {/* Headline + Intro */}
         <div>
           <h2
@@ -44,7 +54,7 @@ export default function Kontakt() {
               fontSize: "clamp(44px,7.5vw,80px)",
               lineHeight: 1.04,
               letterSpacing: "-0.01em",
-              color: "var(--navy)",
+              color: "var(--on-navy)",
               margin: 0,
               width: "100%",
             }}
@@ -56,7 +66,7 @@ export default function Kontakt() {
               fontFamily: "var(--sans)",
               fontSize: "clamp(16px,1.5vw,19px)",
               lineHeight: 1.6,
-              color: "var(--navy)",
+              color: "color-mix(in srgb, var(--on-navy) 88%, transparent)",
               marginTop: 0,
             }}
           >
@@ -113,8 +123,12 @@ export default function Kontakt() {
                 href="mailto:[E-Mail-Adresse]"
                 weight={500}
                 fontSize="clamp(14px,1.4vw,16px)"
-                padding="12px 40px 12px 0"
-                style={{ marginTop: "clamp(30px,3.4vw,48px)" }}
+                padding="12px 24px"
+                style={{
+                  marginTop: "clamp(30px,3.4vw,48px)",
+                  alignSelf: "flex-start",
+                  background: "#D6D6D6",
+                }}
               >
                 Projektlage klären
               </CtaButton>
@@ -134,8 +148,12 @@ export default function Kontakt() {
               href="#kontakt"
               weight={500}
               fontSize="clamp(14px,1.4vw,16px)"
-              padding="12px 40px 12px 0"
-              style={{ marginTop: "clamp(30px,3.4vw,48px)" }}
+              padding="12px 24px"
+              style={{
+                marginTop: "clamp(30px,3.4vw,48px)",
+                alignSelf: "flex-start",
+                background: "#D6D6D6",
+              }}
             >
               Rückruf anfragen
             </CtaButton>

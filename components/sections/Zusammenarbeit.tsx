@@ -81,41 +81,38 @@ export default function Zusammenarbeit() {
                 : "linear-gradient(180deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 45%, rgba(0,0,0,0.30) 100%)",
               transition: "background .5s ease",
             };
-            const glassStyle: CSSProperties = open
-              ? {
-                  position: "absolute",
-                  top: "clamp(20px,2.2vw,32px)",
-                  bottom: "clamp(20px,2.2vw,32px)",
-                  right: "clamp(20px,2.2vw,32px)",
-                  left: accStack ? "clamp(20px,2.2vw,32px)" : "auto",
-                  width: accStack ? "auto" : "clamp(300px,44%,440px)",
-                  boxSizing: "border-box",
-                  borderRadius: "5px",
-                  background: "rgba(255,255,255,0.10)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
-                  border: "1px solid rgba(255,255,255,0.18)",
-                  padding: "clamp(26px,2.6vw,40px)",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }
-              : {
-                  position: "absolute",
-                  inset: "clamp(14px,1.4vw,20px)",
-                  boxSizing: "border-box",
-                  borderRadius: "5px",
-                  background: "rgba(255,255,255,0.10)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
-                  border: "1px solid rgba(255,255,255,0.18)",
-                  padding:
-                    "clamp(26px,2.6vw,36px) clamp(16px,1.6vw,22px)",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                };
+            // Einheitliches Panel: die Geometrie morpht zwischen offen/geschlossen
+            // (transitionable top/right/bottom/left/padding) statt hart zu wechseln.
+            const insetClosed = "clamp(14px,1.4vw,20px)";
+            const insetOpen = "clamp(20px,2.2vw,32px)";
+            const glassStyle: CSSProperties = {
+              position: "absolute",
+              boxSizing: "border-box",
+              borderRadius: "5px",
+              background: "rgba(255,255,255,0.10)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              border: "1px solid rgba(255,255,255,0.18)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              overflow: "hidden",
+              top: open ? insetOpen : insetClosed,
+              bottom: open ? insetOpen : insetClosed,
+              right: open ? insetOpen : insetClosed,
+              left: accStack
+                ? open
+                  ? insetOpen
+                  : insetClosed
+                : open
+                  ? "calc(100% - clamp(300px,44%,440px))"
+                  : insetClosed,
+              padding: open
+                ? "clamp(26px,2.6vw,40px)"
+                : "clamp(26px,2.6vw,36px) clamp(16px,1.6vw,22px)",
+              transition:
+                "top .55s cubic-bezier(.4,0,.2,1), bottom .55s cubic-bezier(.4,0,.2,1), left .55s cubic-bezier(.4,0,.2,1), right .55s cubic-bezier(.4,0,.2,1), padding .55s cubic-bezier(.4,0,.2,1), background .5s ease",
+            };
 
             return (
               <div
@@ -138,6 +135,18 @@ export default function Zusammenarbeit() {
 
                 <div style={{ position: "absolute", inset: 0, zIndex: 2 }}>
                   <div style={glassStyle}>
+                    {/* Top-Spacer: im geschlossenen Zustand = 1 (Icon zentriert),
+                        im offenen = 0 → Icon wandert smooth nach oben */}
+                    <div
+                      aria-hidden="true"
+                      style={{
+                        width: "100%",
+                        flexGrow: open ? 0 : 1,
+                        flexShrink: 0,
+                        flexBasis: 0,
+                        transition: "flex-grow .55s cubic-bezier(.4,0,.2,1)",
+                      }}
+                    />
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={c.icon}
@@ -149,67 +158,95 @@ export default function Zusammenarbeit() {
                         flex: "none",
                       }}
                     />
-                    {open ? (
-                      <div style={{ marginTop: "auto", width: "100%" }}>
-                        <h3
-                          style={{
-                            fontFamily: "var(--serif)",
-                            fontWeight: 400,
-                            fontSize: "clamp(24px,2.4vw,32px)",
-                            lineHeight: 1.14,
-                            color: "#fff",
-                            margin: 0,
-                            overflowWrap: "break-word",
-                          }}
-                        >
-                          {c.title}
-                        </h3>
-                        <p
-                          style={{
-                            fontFamily: "var(--sans)",
-                            fontSize: "clamp(14px,1.4vw,16px)",
-                            lineHeight: 1.6,
-                            color: "rgba(255,255,255,.92)",
-                            margin: "20px 0 0",
-                            maxWidth: "38ch",
-                            overflowWrap: "break-word",
-                          }}
-                        >
-                          {c.text}
-                        </p>
-                      </div>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setAccOpen(i);
-                        }}
-                        aria-label={`Öffnen: ${c.title}`}
-                        className="acc-plus"
+                    {/* Bottom-Spacer: füllt den Rest (Icon oben bzw. zentriert) */}
+                    <div
+                      aria-hidden="true"
+                      style={{
+                        width: "100%",
+                        flexGrow: 1,
+                        flexShrink: 0,
+                        flexBasis: 0,
+                      }}
+                    />
+
+                    {/* Titel/Text — immer im DOM, gleiten/blenden sanft ein */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: "clamp(26px,2.6vw,40px)",
+                        right: "clamp(26px,2.6vw,40px)",
+                        bottom: "clamp(26px,2.6vw,40px)",
+                        opacity: open ? 1 : 0,
+                        transform: open ? "translateY(0)" : "translateY(14px)",
+                        transition:
+                          "opacity .45s ease .08s, transform .5s cubic-bezier(.2,.7,.2,1) .08s",
+                        pointerEvents: open ? "auto" : "none",
+                      }}
+                    >
+                      <h3
                         style={{
-                          position: "absolute",
-                          bottom: "clamp(22px,2.2vw,32px)",
-                          left: 0,
-                          right: 0,
-                          margin: "0 auto",
-                          width: "clamp(46px,3.6vw,56px)",
-                          height: "clamp(46px,3.6vw,56px)",
-                          background: "none",
-                          border: "none",
-                          padding: 0,
-                          cursor: "pointer",
+                          fontFamily: "var(--serif)",
+                          fontWeight: 400,
+                          fontSize: "clamp(24px,2.4vw,32px)",
+                          lineHeight: 1.14,
+                          color: "#fff",
+                          margin: 0,
+                          overflowWrap: "break-word",
                         }}
                       >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src="/assets/icon-plus.svg"
-                          alt=""
-                          aria-hidden="true"
-                          style={{ width: "100%", height: "100%", display: "block" }}
-                        />
-                      </button>
-                    )}
+                        {c.title}
+                      </h3>
+                      <p
+                        style={{
+                          fontFamily: "var(--sans)",
+                          fontSize: "clamp(14px,1.4vw,16px)",
+                          lineHeight: 1.6,
+                          color: "rgba(255,255,255,.92)",
+                          margin: "20px 0 0",
+                          maxWidth: "38ch",
+                          overflowWrap: "break-word",
+                        }}
+                      >
+                        {c.text}
+                      </p>
+                    </div>
+
+                    {/* Plus-Button — immer im DOM, blendet beim Öffnen aus */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setAccOpen(i);
+                      }}
+                      aria-label={`Öffnen: ${c.title}`}
+                      aria-hidden={open}
+                      tabIndex={open ? -1 : 0}
+                      className="acc-plus"
+                      style={{
+                        position: "absolute",
+                        bottom: "clamp(22px,2.2vw,32px)",
+                        left: 0,
+                        right: 0,
+                        margin: "0 auto",
+                        width: "clamp(46px,3.6vw,56px)",
+                        height: "clamp(46px,3.6vw,56px)",
+                        background: "none",
+                        border: "none",
+                        padding: 0,
+                        cursor: open ? "default" : "pointer",
+                        opacity: open ? 0 : 1,
+                        pointerEvents: open ? "none" : "auto",
+                        transition: "opacity .3s ease, transform .3s ease",
+                      }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src="/assets/icon-plus.svg"
+                        alt=""
+                        aria-hidden="true"
+                        style={{ width: "100%", height: "100%", display: "block" }}
+                      />
+                    </button>
                   </div>
                 </div>
               </div>

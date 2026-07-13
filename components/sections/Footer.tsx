@@ -1,5 +1,3 @@
-import LogoMark from "@/components/ui/LogoMark";
-
 /**
  * Footer — Logo-Mark, Claim, Kontakt, CTA „Erstgespräch vereinbaren",
  * © 2026 Mischok GmbH, Impressum · Datenschutz.
@@ -19,10 +17,17 @@ export default function Footer() {
         style={{ width: "100%", gap: "40px", alignItems: "start" }}
       >
         <div style={{ maxWidth: "40ch" }}>
-          <LogoMark width={42} height={36} fontSize={20} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/assets/logo.svg"
+            alt="MISCHOK"
+            width={42}
+            height={36}
+            style={{ display: "block", height: "40px", width: "auto" }}
+          />
           <p
             style={{
-              fontFamily: "var(--mono)",
+              fontFamily: "var(--sans)",
               fontSize: "13.5px",
               lineHeight: 1.65,
               color: "var(--slate)",

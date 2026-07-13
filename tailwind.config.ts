@@ -24,8 +24,8 @@ const config: Config = {
       },
       fontFamily: {
         serif: ["var(--font-serif)", "Georgia", "serif"],
-        sans: ['"Helvetica Neue"', "Helvetica", "Arial", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+        sans: ["var(--font-sans)", '"Helvetica Neue"', "Helvetica", "Arial", "sans-serif"],
+        mono: ["var(--font-sans)", '"Helvetica Neue"', "Helvetica", "Arial", "sans-serif"],
       },
       borderRadius: {
         card: "5px",

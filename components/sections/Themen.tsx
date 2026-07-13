@@ -68,7 +68,8 @@ export default function Themen() {
               }}
             >
               <ImageFrame
-                alt={t.placeholder}
+                src={t.image}
+                alt={t.title}
                 placeholder={t.placeholder}
                 sizes="(max-width:640px) 100vw, 33vw"
               />

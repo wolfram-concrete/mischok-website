@@ -128,7 +128,7 @@ export default function ArbeitenBeiMischok() {
             </p>
             <CtaButton
               href="#kontakt"
-              padding="14px 44px 14px 22px"
+              padding="14px 24px"
               fontSize="clamp(14px,1.4vw,16px)"
               style={{ alignSelf: "flex-start", marginTop: "clamp(32px,4vw,52px)" }}
             >

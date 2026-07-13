@@ -26,8 +26,8 @@ export default function Ueber() {
           position: "relative",
           background: "var(--navy)",
           width: "100%",
-          padding:
-            "clamp(52px,6vw,96px) clamp(40px,5vw,80px) clamp(60px,7vw,104px)",
+          marginInline: 0,
+          padding: "clamp(52px,6vw,96px) 64px clamp(60px,7vw,104px)",
           boxSizing: "border-box",
         }}
       >

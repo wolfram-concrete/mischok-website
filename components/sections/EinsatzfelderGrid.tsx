@@ -93,7 +93,8 @@ export default function EinsatzfelderGrid() {
               }}
             >
               <ImageFrame
-                alt={f.placeholder}
+                src={f.image}
+                alt={f.title}
                 placeholder={f.placeholder}
                 sizes="(max-width:640px) 100vw, (max-width:1000px) 50vw, 33vw"
                 imgStyle={{

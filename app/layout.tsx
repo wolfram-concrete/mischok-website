@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Source_Serif_4, IBM_Plex_Mono } from "next/font/google";
+import { Source_Serif_4 } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import Header from "@/components/layout/Header";
 
 const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
@@ -10,11 +12,15 @@ const sourceSerif = Source_Serif_4({
   variable: "--font-serif",
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
+// Sans-Serif der Marke: Calibre (lokale Web-Fonts, app/fonts)
+const calibre = localFont({
+  src: [
+    { path: "./fonts/CalibreWeb-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/CalibreWeb-Medium.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/CalibreWeb-Bold.woff2", weight: "700", style: "normal" },
+  ],
   display: "swap",
-  variable: "--font-mono",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -43,8 +49,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="de" className={`${sourceSerif.variable} ${ibmPlexMono.variable}`}>
-      <body>{children}</body>
+    <html
+      lang="de"
+      className={`${sourceSerif.variable} ${calibre.variable}`}
+    >
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
