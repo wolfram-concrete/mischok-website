@@ -7,9 +7,34 @@ die Versionierung an [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
-_Offene Punkte:_ Kontakt-Platzhalter füllen (`[Name Nachname]`, `[Position / Rolle]`,
-`[E-Mail-Adresse]`, `[Telefonnummer]`); finale Bilder für Einsatzfelder- und
-Themen-Karten; Impressum & Datenschutz als echte Seiten; Karriere-CTA-Ziel festlegen.
+_Offene Punkte:_ Kontakt-Platzhalter füllen; CTA „Zur Referenz" braucht ein Ziel;
+projektspezifische Bilder statt Stockfotos; weitere Unterseiten (Über uns, Insights,
+Karriere, Impressum, Datenschutz) aus der Sitemap umsetzen.
+
+## [0.3.0] – 2026-07-13
+
+### Hinzugefügt
+- **Top-Navigation** (`components/layout/Header`): sticky, über dem Hero transparent
+  und ab dem Scrollen mit hellem Hintergrund, Referenzen-Dropdown, Mobile-Burger.
+  Menüpunkte aus der Sitemap (`Mischok-Website.pdf`).
+- **Referenzen-Unterseite** (`/referenzen`): Full-Screen-Hero mit stark
+  eingezoomtem Motion-Visual (Fade nach rechts) und aufklappbaren Karten —
+  geschlossen (Nummer/Headline/Projektlage, Bild unscharf), Hover (Bild scharf),
+  offen (horizontale Aufteilung mit Fließtext, Basisinfos, CTA). Single-Open,
+  Scroll-Zentrierung beim Öffnen. Inhalte 1:1 aus dem PDF.
+- Echtes MISCHOK-Logo als SVG in Hero & Footer (`public/assets/logo.svg`).
+- Echte Fotos in den Einsatzfelder- und Themen-Karten.
+
+### Geändert
+- **Typografie:** Sans/Mono auf **Calibre** umgestellt (lokale Web-Fonts via
+  `next/font/local`, `app/fonts/`); IBM Plex Mono entfernt. Nur noch
+  **Source Serif 4 + Calibre** für alle Texte.
+- **Zusammenarbeit-Accordion:** Übergang von geschlossen ↔ offen morpht jetzt
+  smooth (Panel-Geometrie, wanderndes Icon, ein-/ausblendende Inhalte) statt zu springen.
+- **Über** volle Breite mit 64px Content-Padding; **Kontakt**-Inhalt in einer
+  Card mit Navy-Farbschema.
+- Feinere Icon-Strichstärke; symmetrische CTA-Paddings; diverse Text- und
+  Größenanpassungen. Hero-Logo in die Navigation verlagert.
 
 ## [0.2.0] – 2026-07-10
 
@@ -49,5 +74,6 @@ Themen-Karten; Impressum & Datenschutz als echte Seiten; Karriere-CTA-Ziel festl
 - Bilder & Icons nach `public/assets/`, eingebunden über `next/image`.
 
 [Unreleased]: https://github.com/wolfram-concrete/mischok-website/compare/main...HEAD
+[0.3.0]: https://github.com/wolfram-concrete/mischok-website/commits/main
 [0.2.0]: https://github.com/wolfram-concrete/mischok-website/commits/main
 [0.1.0]: https://github.com/wolfram-concrete/mischok-website/commits/main
