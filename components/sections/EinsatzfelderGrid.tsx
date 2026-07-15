@@ -24,12 +24,23 @@ const PLACE = [
 export default function EinsatzfelderGrid() {
   const [vw, setVw] = useState(1280);
   const [hovered, setHovered] = useState(-1);
+  // Geräte ohne echten Hover (Touch) können die Karten nicht „aufdecken".
+  // Dort werden alle Karten dauerhaft scharf gezeigt, sonst bleibt der Text unlesbar.
+  const [canHover, setCanHover] = useState(true);
 
   useEffect(() => {
     const onResize = () => setVw(window.innerWidth);
     onResize();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const update = () => setCanHover(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
   }, []);
 
   const cols = vw < 640 ? 1 : vw < 1000 ? 2 : 3;
@@ -65,7 +76,8 @@ export default function EinsatzfelderGrid() {
     >
       <div style={gridStyle}>
         {FIELDS.map((f, i) => {
-          const isHover = i === activeIdx;
+          // Touch/No-Hover: alle Karten scharf & lesbar. Sonst nur die aktive.
+          const isHover = canHover ? i === activeIdx : true;
           const p = PLACE[i];
           const placement: CSSProperties = desktop
             ? { gridColumn: p.c, gridRow: p.r, alignSelf: "stretch", height: "100%" }

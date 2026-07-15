@@ -54,12 +54,10 @@ export default function Themen() {
           }}
         >
           {TOPICS.map((t) => (
-            <a
+            <article
               key={t.slot}
-              href="#themen"
               className="topic-card"
               style={{
-                textDecoration: "none",
                 position: "relative",
                 display: "block",
                 overflow: "hidden",
@@ -127,7 +125,7 @@ export default function Themen() {
                   {t.desc}
                 </p>
               </div>
-            </a>
+            </article>
           ))}
         </div>
       </div>

@@ -7,6 +7,12 @@ const infoLine = {
   color: "color-mix(in srgb, var(--on-navy) 88%, transparent)",
 } as const;
 
+const contactLink = {
+  ...infoLine,
+  textDecoration: "none",
+  transition: "color .2s ease",
+} as const;
+
 const heading = {
   fontFamily: "var(--sans)",
   fontWeight: 700,
@@ -17,9 +23,9 @@ const heading = {
 } as const;
 
 /**
- * Kontakt — Headline, Intro und zwei Kontaktblöcke. Die Platzhalter
- * [Name Nachname], [Position / Rolle], [E-Mail-Adresse], [Telefonnummer]
- * bleiben bewusst als sichtbare Platzhalter erhalten (offene Punkte, §9).
+ * Kontakt — Headline, Intro und zwei Kontaktblöcke mit echten Kontaktdaten:
+ * Ansprechpartner Kajetan Mischok (Geschäftsführer), Telefon, E-Mail und Anschrift
+ * der Mischok GmbH. Telefon/E-Mail als klickbare tel:/mailto:-Links.
  */
 export default function Kontakt() {
   return (
@@ -113,14 +119,14 @@ export default function Kontakt() {
             </div>
             <div>
               <h3 style={heading}>Ihr Ansprechpartner</h3>
-              <div style={{ ...infoLine, marginTop: "clamp(28px,3vw,44px)" }}>
-                [Name Nachname]
+              <div style={{ ...infoLine, marginTop: "clamp(28px,3vw,44px)", color: "var(--on-navy)", fontWeight: 500 }}>
+                Kajetan Mischok
               </div>
-              <div style={{ ...infoLine, marginTop: "clamp(14px,1.6vw,22px)" }}>
-                [Position / Rolle]
+              <div style={{ ...infoLine, marginTop: "clamp(10px,1.2vw,16px)" }}>
+                Geschäftsführer
               </div>
               <CtaButton
-                href="mailto:[E-Mail-Adresse]"
+                href="mailto:info@mischok.de"
                 weight={500}
                 fontSize="clamp(14px,1.4vw,16px)"
                 padding="12px 24px"
@@ -139,13 +145,29 @@ export default function Kontakt() {
           <div>
             <h3 style={heading}>Oder direkt Kontakt aufnehmen:</h3>
             <div style={{ ...infoLine, marginTop: "clamp(28px,3vw,44px)" }}>
-              Telefon: [Telefonnummer]
+              <a href="tel:+4982149815881" className="contact-link" style={contactLink}>
+                +49 821 49 81 58 81
+              </a>
             </div>
             <div style={{ ...infoLine, marginTop: "clamp(14px,1.6vw,22px)" }}>
-              E-Mail: [E-Mail-Adresse]
+              <a href="mailto:info@mischok.de" className="contact-link" style={contactLink}>
+                info@mischok.de
+              </a>
             </div>
+            <address
+              style={{
+                ...infoLine,
+                marginTop: "clamp(14px,1.6vw,22px)",
+                fontStyle: "normal",
+                lineHeight: 1.6,
+              }}
+            >
+              Mischok GmbH
+              <br />
+              Karlstr. 12, 86150 Augsburg
+            </address>
             <CtaButton
-              href="#kontakt"
+              href="tel:+4982149815881"
               weight={500}
               fontSize="clamp(14px,1.4vw,16px)"
               padding="12px 24px"

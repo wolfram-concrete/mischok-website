@@ -165,6 +165,49 @@ export const TOPICS: Topic[] = [
   },
 ];
 
+/**
+ * Aus der Praxis — kuratierte Trust-/Sichtbarkeits-Karten (kein LinkedIn-Embed).
+ * Inhalte an die realen MISCHOK-Projektthemen angelehnt (Mischok-Website.pdf,
+ * Referenz 9 Levels). Verlinken auf das LinkedIn-Profil von Kajetan Mischok,
+ * solange keine konkreten Beitrags-URLs vorliegen.
+ */
+export const PRAXIS_LINKEDIN = "https://www.linkedin.com/in/kajetan-mischok/";
+
+export type PraxisCard = {
+  kind: string;
+  title: string;
+  teaser: string;
+  author: string;
+  href: string;
+};
+
+export const PRAXIS: PraxisCard[] = [
+  {
+    kind: "LinkedIn Beitrag",
+    title: "Wann sich der Umbau lohnt – und wann nicht",
+    teaser:
+      "Nicht jedes gewachsene System muss ersetzt werden. Woran wir erkennen, ob Weiterentwicklung trägt oder ein Neuaufbau die ehrlichere Entscheidung ist.",
+    author: "Kajetan Mischok",
+    href: PRAXIS_LINKEDIN,
+  },
+  {
+    kind: "Fachbeitrag",
+    title: "Was 8.500 Tests mit Verantwortung zu tun haben",
+    teaser:
+      "Test Driven Development ist für uns kein Selbstzweck: Es hält geschäftskritische Systeme veränderbar — auch dann, wenn es im laufenden Betrieb ernst wird.",
+    author: "MISCHOK",
+    href: PRAXIS_LINKEDIN,
+  },
+  {
+    kind: "LinkedIn Beitrag",
+    title: "KI im Bestand, ohne Illusionen",
+    teaser:
+      "Wo KI in unseren Projekten wirklich hilft — bei Features, Bugfixing und Ticket-Refinement — und warum wir Architekturentscheidungen bewusst nicht an sie abgeben.",
+    author: "Kajetan Mischok",
+    href: PRAXIS_LINKEDIN,
+  },
+];
+
 /** Referenzen-Unterseite — Intro + Projekte (Texte 1:1 aus Mischok-Website.pdf) */
 export const REFERENZEN_INTRO = {
   kicker: "Referenzen",
@@ -181,6 +224,122 @@ export type Referenz = {
   text: string[];
   facts: { label: string; value: string }[];
   image: string;
+  /** Ziel einer echten Detailseite; nur gesetzt, wo eine Detailseite existiert. */
+  detailHref?: string;
+};
+
+/**
+ * Referenz-Detailseite — 9 Levels. Inhalt 1:1 aus Mischok-Website.pdf,
+ * Abschnitt „REFERENZ 01 / 9 Levels". Die Kundenstimme ist real, muss vor
+ * finaler Veröffentlichung aber noch von 9 Levels freigegeben werden.
+ */
+export const REFERENZ_9LEVELS = {
+  slug: "9-levels",
+  name: "9 Levels",
+  kunde: "9 Levels of Value Systems GmbH",
+  projektlage: "Plattform-Relaunch / Geschäftsmodell weiterentwickeln",
+  headline:
+    "Eine Plattform neu aufgebaut, damit das Geschäftsmodell weiter wachsen kann",
+  image: "/assets/acc-1.jpg",
+  hero: [
+    "9 Levels wollte seine Kunden langfristiger begleiten, Auswertungen flexibler machen und die Plattform als Grundlage für weitere Angebote nutzen. Die bestehende Software setzte dafür zu enge technische Grenzen.",
+    "MISCHOK hat die technische Ausgangslage analysiert, die Anforderungen neu geordnet und die Plattform so aufgebaut, dass neue Produkte, flexiblere Auswertungen und langfristige Kundenbegleitung möglich werden.",
+  ],
+  facts: [
+    { label: "Kunde", value: "9 Levels of Value Systems GmbH" },
+    { label: "Branche", value: "HR-Tech, Organisationsentwicklung, Beratung / Coaching" },
+    { label: "Projektart", value: "Relaunch einer Softwareplattform" },
+    { label: "Rolle von MISCHOK", value: "Konzeption, UX/UI Design, Softwareentwicklung, Projektmanagement" },
+    { label: "Umfang", value: "1.606 Stunden Entwicklung, ohne Konzeption und Design" },
+    { label: "Qualitätssicherung", value: "97 % Testabdeckung im Backend (TDD), insgesamt 8.500 Tests" },
+    { label: "MISCHOK-Team", value: "8 Personen: Projektleitung, UX/UI, Softwarearchitektur, Tech Lead, Frontend Lead sowie Senior und Junior Software Engineering" },
+    { label: "Technologie", value: "Spring Boot, React, PostgreSQL, STACKIT, Stripe, Spring Security" },
+  ] as { label: string; value: string }[],
+  sections: [
+    {
+      title: "Ausgangslage",
+      body: [
+        "9 Levels arbeitet mit einer digitalen Plattform, über die Analysen ausgespielt, Ergebnisse ausgewertet und Kundenprojekte gesteuert werden. Die Plattform ist damit kein Nebenprodukt, sondern ein zentraler Teil des Geschäftsmodells.",
+        "Über die Jahre war das System gewachsen. Was lange funktioniert hatte, wurde für die nächsten Schritte zunehmend eng: Änderungen wurden aufwendiger, technische Abhängigkeiten nahmen zu und neue fachliche Anforderungen ließen sich nicht mehr sauber auf der bestehenden Grundlage abbilden.",
+        "Gleichzeitig sollte die Plattform künftig mehr leisten. Sie sollte flexiblere Auswertungen ermöglichen, Kund:innen länger im Prozess begleiten und Raum für neue digitale Angebote schaffen.",
+        "Damit war klar: Eine weitere Anpassung der bestehenden Lösung hätte nur kurzfristig geholfen. Für die nächste Entwicklungsstufe brauchte 9 Levels eine neue technische Grundlage.",
+      ],
+    },
+    {
+      title: "Was zuerst geklärt werden musste",
+      body: [
+        "Es ging nicht darum, noch eine weitere Änderung in die bestehende Plattform zu bekommen. Die wichtigere Frage war: Welche technische Grundlage braucht 9 Levels, damit die Plattform auch die nächsten Schritte des Geschäftsmodells tragen kann?",
+        "Wenn man in so einer Lage einfach weiterbaut, wird kurzfristig vielleicht etwas fertig. Das eigentliche Problem bleibt aber bestehen. Deshalb mussten wir zuerst klären, welche Teile des Systems noch tragen, welche Komplexität raus muss und wo ein neuer Aufbau die bessere Entscheidung ist.",
+      ],
+    },
+    {
+      title: "Rolle von MISCHOK",
+      body: [
+        "MISCHOK hat die technische Ausgangslage eingeordnet und die fachlichen Anforderungen so strukturiert, dass daraus eine tragfähige Richtung für den Relaunch entstehen konnte.",
+        "Im ersten Schritt entstand eine vollständige Konzeption der neuen Plattform. Nach der Schätzung wurde deutlich, dass die Lösung noch zu groß gedacht war. Statt daraus direkt ein umfangreiches Entwicklungsprojekt zu machen, ging das Projektteam noch einmal zurück in die Konzeption.",
+        "Funktionen wurden priorisiert, Komplexität reduziert und der Aufbau geschärft. So entstand eine Plattformlogik, die besser zum tatsächlichen Bedarf, zum Budget und zur weiteren Entwicklung von 9 Levels passte.",
+      ],
+    },
+    {
+      title: "Projektteam",
+      body: [
+        "Für MISCHOK war ein festes Team aus 8 Personen beteiligt. Die Rollen lagen in Projektleitung, UX/UI, Softwarearchitektur, Tech Lead, Frontend Lead sowie Senior und Junior Software Engineering.",
+        "Die Schlüsselrollen blieben über den Projektverlauf stabil. Dadurch blieb das technische Verständnis im Team und Entscheidungen mussten nicht immer wieder neu aufgebaut werden.",
+      ],
+    },
+    {
+      title: "Vorgehen",
+      body: [
+        "Zu Beginn standen Discovery, User Journey Mapping und Feature-Definition. Daraus entstand die Konzeption der neuen Plattform.",
+        "Nach der Überarbeitung folgten UI/UX-Ausarbeitung, Umsetzung und paralleles Testing. Technisch wurde auf eine Grundlage gesetzt, die langfristig betreibbar bleibt.",
+      ],
+      list: [
+        "Spring Boot im Backend",
+        "React im Frontend",
+        "PostgreSQL als relationale Datenbank",
+        "STACKIT für Hosting in Deutschland",
+        "Stripe für Zahlungen",
+        "Spring Security für die eigene User-Verwaltung",
+      ],
+      after: [
+        "Eine fertige Authentifizierungslösung wurde geprüft, aber nicht übernommen. Zu viele Sonderfälle und Datenschutzanforderungen hätten später neue Grenzen erzeugt. Stattdessen wurde die User-Verwaltung selbst mit Spring Security aufgebaut. Das war aufwendiger, aber für diese Plattform die bessere Entscheidung.",
+      ],
+    },
+    {
+      title: "Qualitätssicherung",
+      body: [
+        "Die Qualitätssicherung lief während der Entwicklung mit. Im Backend wurde konsequent mit Test Driven Development gearbeitet. Am Ende standen 97 % Testabdeckung und rund 8.500 Tests.",
+        "Dazu kamen internes Review durch das Projektmanagement und paralleles Testing durch 9 Levels während der Sprints.",
+        "Auch KI wurde im Projekt eingesetzt: nicht für Architektur oder Grundentscheidungen, sondern unterstützend bei Features, Bugfixing, Anpassungen und Ticket-Refinement.",
+      ],
+    },
+    {
+      title: "Ergebnis",
+      body: [
+        "Mit der neuen Plattform kann 9 Levels Auswertungen flexibler konfigurieren, Ergebnisse differenzierter betrachten und Kundenprojekte langfristiger begleiten.",
+        "Die technische Abhängigkeit von geteilter Infrastruktur wurde beendet. Das Hosting auf STACKIT unterstützt Gespräche mit Datenschutzverantwortlichen und Betriebsräten. Neue digitale Angebote können auf der neuen Grundlage entwickelt werden.",
+        "Die Plattform ist damit wieder anschlussfähig an das, was 9 Levels fachlich und geschäftlich als Nächstes vorhat.",
+      ],
+    },
+  ] as { title: string; body: string[]; list?: string[]; after?: string[] }[],
+  kundenstimme: {
+    quote:
+      "Was die Zusammenarbeit sehr ausgezeichnet hat, ist dieses Grundvertrauen: Ich habe mehrfach erlebt, dass jemand aus dem Team sagt, das ist eine komplizierte Sache, das dauert schon anderthalb bis zwei Tage. Dann schläft er eine Nacht drüber und sagt am nächsten Tag: Ich habe noch eine andere Idee, und mit zwei bis drei Stunden lösen wir das anders. Ich habe wirklich das Gefühl, dass wir ein Projektteam sind und gemeinsam die besten Lösungen für das Projekt suchen.",
+    author: "Sonja Wittig",
+    role: "Managing Partner, 9 Levels",
+  },
+  mitnehmen: {
+    title: "Was wir aus diesem Projekt mitnehmen",
+    body: [
+      "Der wichtigste Moment lag vor der Umsetzung. Die erste Lösung war fachlich nachvollziehbar, aber noch zu groß. Statt daraus einfach ein großes Entwicklungsprojekt zu machen, wurde die Konzeption noch einmal geschärft. Genau dadurch wurde die spätere Umsetzung klarer.",
+      "Für uns zeigt dieses Projekt sehr gut, wann MISCHOK besonders hilfreich ist: wenn eine bestehende Software für das Geschäft wichtig bleibt, aber die technische Grundlage nicht mehr zu den nächsten Anforderungen passt. Dann reicht es nicht, neue Funktionen zu bauen. Zuerst muss klar werden, welche Entscheidung das System wieder beweglich macht.",
+    ],
+  },
+  cta: {
+    title: "Ähnliche Projektlage besprechen",
+    text: "Bestehende Plattformen lassen sich selten über eine kurze Anfrage erklären. In einem Gespräch lässt sich meist schnell klären, wo die technischen Grenzen liegen und welcher nächste Schritt sinnvoll ist.",
+    button: "Projektlage klären",
+  },
 };
 
 export const REFERENZEN: Referenz[] = [
@@ -202,6 +361,7 @@ export const REFERENZEN: Referenz[] = [
       { label: "Besonderheit", value: "97 % Testabdeckung im Backend" },
     ],
     image: "/assets/acc-1.jpg",
+    detailHref: "/referenzen/9-levels",
   },
   {
     n: "02",

@@ -172,26 +172,25 @@ export default function ReferenzenGrid() {
                     ))}
                   </ul>
 
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                    className="cta-grad-light"
-                    style={{
-                      textDecoration: "none",
-                      display: "inline-block",
-                      fontFamily: "var(--mono)",
-                      fontWeight: 500,
-                      fontSize: "17px",
-                      letterSpacing: "0.04em",
-                      padding: "12px 24px",
-                      marginTop: "clamp(22px,2.4vw,30px)",
-                    }}
-                  >
-                    Zur Referenz
-                  </a>
+                  {r.detailHref && (
+                    <a
+                      href={r.detailHref}
+                      onClick={(e) => e.stopPropagation()}
+                      className="cta-grad-light"
+                      style={{
+                        textDecoration: "none",
+                        display: "inline-block",
+                        fontFamily: "var(--mono)",
+                        fontWeight: 500,
+                        fontSize: "17px",
+                        letterSpacing: "0.04em",
+                        padding: "12px 24px",
+                        marginTop: "clamp(22px,2.4vw,30px)",
+                      }}
+                    >
+                      Referenz ansehen →
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

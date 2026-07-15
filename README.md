@@ -22,10 +22,11 @@ npm run start    # Produktions-Server (nach build)
 
 ## Routen
 
-| Route         | Inhalt                                                       |
-|---------------|--------------------------------------------------------------|
-| `/`           | One-Pager mit allen Sektionen (Anker-Navigation)             |
-| `/referenzen` | Referenzen-Unterseite (Full-Screen-Hero + aufklappbare Karten) |
+| Route                  | Inhalt                                                        |
+|------------------------|---------------------------------------------------------------|
+| `/`                    | One-Pager mit allen Sektionen (Anker-Navigation)              |
+| `/referenzen`          | Referenzen-Übersicht (Full-Screen-Hero + aufklappbare Karten) |
+| `/referenzen/9-levels` | Referenz-Detailseite 9 Levels (Case Study)                    |
 
 ## Projektstruktur
 
@@ -35,17 +36,18 @@ app/
                       Calibre via next/font/local), Header, Metadata
   globals.css         Design-Tokens, Keyframes, responsive Regeln, reduced-motion
   page.tsx            One-Pager: alle Sektionen in Scroll-Reihenfolge
-  referenzen/page.tsx Referenzen-Unterseite
+  referenzen/page.tsx Referenzen-Übersicht
+  referenzen/9-levels/page.tsx  Referenz-Detailseite 9 Levels
   fonts/              Calibre Web-Fonts (Regular/Medium/Bold, woff2 + woff)
 components/
   layout/Header.tsx   Sticky Top-Navigation (Dropdown, Mobile-Burger)
   sections/           Eine Datei pro Sektion (Hero, EinsatzfelderGrid, PortraitBleed,
-                      Ansatz, Stimme, Themen, Zusammenarbeit, Ueber, Kontakt,
-                      ArbeitenBeiMischok, Footer, ReferenzenGrid)
+                      Ansatz, Stimme, Themen, Zusammenarbeit, Ueber, AusDerPraxis,
+                      Kontakt, ArbeitenBeiMischok, Footer, ReferenzenGrid)
   ui/                 Geteilte Komponenten: LogoMark, CtaButton, ImageFrame,
                       SectionLabel, Reveal
-lib/content.ts        Verbindliche Inhaltstexte (FIELDS, POINTS, ACC, TOPICS,
-                      REFERENZEN_INTRO, REFERENZEN)
+lib/content.ts        Verbindliche Inhaltstexte (FIELDS, POINTS, ACC, TOPICS, PRAXIS,
+                      REFERENZEN_INTRO, REFERENZEN, REFERENZ_9LEVELS)
 public/assets/        Bilder, Icons, Logo (SVG)
 public/video/         Hero-Hintergrundvideo (WebM + MP4-Fallback + Poster)
 design-reference/     Original-Design-Component & Handoff (nicht Teil der Website)
@@ -64,12 +66,16 @@ Zwei Schriften: **Source Serif 4** (Headlines/Nummern, `next/font/google`) und
   hellem Hintergrund; Referenzen-Dropdown; Mobile-Burger-Menü (`"use client"`).
 - **Hero** — vollflächiges Hintergrund-Video (loop, stumm, autoplay, `playsInline`)
   mit dezentem Scrim; Text-Reveal als CSS-Keyframes.
-- **EinsatzfelderGrid** — Hover schärft die Karte (`"use client"`).
+- **EinsatzfelderGrid** — Hover schärft die Karte; auf Touch-/No-Hover-Geräten
+  sind alle Karten dauerhaft scharf (`(hover: hover)`-Erkennung, `"use client"`).
 - **Ansatz** — Pin-Scroll über 300vh mit `requestAnimationFrame`, blendet 3 Punkte durch.
 - **Zusammenarbeit** — horizontales Accordion mit smoothem Morph-Übergang (`"use client"`).
 - **ReferenzenGrid** — Karten: geschlossen (Nummer/Headline/Projektlage, Bild
   unscharf) · Hover (Bild scharf) · offen (horizontale Aufteilung mit Fließtext,
-  Basisinfos, CTA). Nur eine Karte offen; beim Öffnen zentriert sie sich im Viewport.
+  Basisinfos). Nur eine Karte offen; beim Öffnen zentriert sie sich im Viewport.
+  Die 9-Levels-Karte verlinkt per „Referenz ansehen →" auf `/referenzen/9-levels`.
+- **AusDerPraxis** — Trust-Section vor dem Kontaktbereich: drei kuratierte
+  Teaser-Karten, die extern (neuer Tab) auf LinkedIn verweisen — kein Embed.
 - **Reveal** — Scroll-Reveal via `IntersectionObserver`.
 
 Alle Animationen respektieren `prefers-reduced-motion: reduce`.
@@ -77,14 +83,17 @@ Alle Animationen respektieren `prefers-reduced-motion: reduce`.
 Das Hero-Video wurde auf 1080p komprimiert und liegt als WebM (~451 KB) mit
 MP4-Fallback (~659 KB) und Poster-Frame in `public/video/`.
 
-## Offene Punkte
+## Scope & offene Punkte
 
-- Kontakt-Platzhalter füllen: `[Name Nachname]`, `[Position / Rolle]`,
-  `[E-Mail-Adresse]`, `[Telefonnummer]`.
-- CTA „Zur Referenz" (Referenzen-Karten) braucht noch ein Ziel.
-- Themen-/Referenz-Karten nutzen Platzhalter-/Stockfotos statt projektspezifischer Bilder.
-- Weitere Unterseiten aus der Sitemap (Über uns, Insights, Karriere, Impressum,
-  Datenschutz) sind noch Anker/Stubs.
+Bewusst begrenzter Scope: **Home + 9-Levels-Referenzdetail** sollen fertig wirken —
+nicht die komplette Website. Über uns, Insights und Karriere bleiben Home-Anker.
+
+- **Kundenstimme** auf `/referenzen/9-levels` ist real, aber vor Veröffentlichung
+  final mit 9 Levels freizugeben (leicht anonymisiert/gekürzt).
+- **„Aus der Praxis"** verlinkt mangels konkreter Beitrags-URLs auf das
+  LinkedIn-Profil von Kajetan Mischok — bei Bedarf durch echte Post-Links ersetzen.
+- Themen-/Referenz-Karten nutzen Stockfotos statt projektspezifischer Bilder.
+- Impressum & Datenschutz sind noch nicht als eigene Seiten umgesetzt (Footer-Text).
 
 ## Deployment (Vercel)
 

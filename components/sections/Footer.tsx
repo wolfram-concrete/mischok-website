@@ -50,7 +50,7 @@ export default function Footer() {
             Kontakt
           </div>
           <a
-            href="tel:+493412254900"
+            href="tel:+4982149815881"
             className="foot-link"
             style={{
               textDecoration: "none",
@@ -59,10 +59,10 @@ export default function Footer() {
               color: "var(--slate)",
             }}
           >
-            +49 341 22 54 900
+            +49 821 49 81 58 81
           </a>
           <a
-            href="mailto:kontakt@mischok.de"
+            href="mailto:info@mischok.de"
             className="foot-link"
             style={{
               textDecoration: "none",
@@ -71,12 +71,25 @@ export default function Footer() {
               color: "var(--slate)",
             }}
           >
-            kontakt@mischok.de
+            info@mischok.de
           </a>
+          <address
+            style={{
+              fontFamily: "var(--mono)",
+              fontSize: "15px",
+              fontStyle: "normal",
+              lineHeight: 1.6,
+              color: "var(--slate)",
+            }}
+          >
+            Mischok GmbH
+            <br />
+            Karlstr. 12, 86150 Augsburg
+          </address>
         </div>
         <div className="foot-cta">
           <a
-            href="mailto:kontakt@mischok.de"
+            href="/#kontakt"
             className="cta-solid"
             style={{
               textDecoration: "none",

@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { REFERENZEN } from "@/lib/content";
 
 /**
- * Header — sticky Top-Navigation. Struktur & Unterseiten aus der Sitemap
- * (Mischok-Website.pdf): Einsatzfelder, Referenzen (Referenz 1–5), Über uns,
- * Insights, Karriere, plus CTA „Erstgespräch". Über der Hero transparent,
- * ab dem Scrollen mit hellem Hintergrund. Mobil als Burger-Menü.
+ * Header — sticky Top-Navigation. Struktur aus der Sitemap (Mischok-Website.pdf):
+ * Einsatzfelder, Referenzen (konkrete Projektnamen; 9 Levels führt auf die
+ * Detailseite, die übrigen auf Anker der Übersicht), Über uns, Insights, Karriere,
+ * plus CTA „Erstgespräch". Über der Hero transparent, ab dem Scrollen mit hellem
+ * Hintergrund. Mobil als Burger-Menü.
  */
 
 type NavItem = {
@@ -21,11 +23,11 @@ const NAV: NavItem[] = [
     label: "Referenzen",
     href: "/referenzen",
     children: [
-      { label: "Referenz 1", href: "/referenzen#referenz-1" },
-      { label: "Referenz 2", href: "/referenzen#referenz-2" },
-      { label: "Referenz 3", href: "/referenzen#referenz-3" },
-      { label: "Referenz 4", href: "/referenzen#referenz-4" },
-      { label: "Referenz 5", href: "/referenzen#referenz-5" },
+      { label: "Alle Referenzen", href: "/referenzen" },
+      ...REFERENZEN.map((r) => ({
+        label: r.name,
+        href: r.detailHref ?? `/referenzen#${r.slug}`,
+      })),
     ],
   },
   { label: "Über uns", href: "/#ueber" },

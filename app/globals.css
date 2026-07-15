@@ -333,6 +333,63 @@ button:focus-visible {
   color: var(--navy);
 }
 
+/* Kontaktlinks auf der Navy-Card: heller beim Hover */
+.contact-link:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ===================================================================
+   Aus der Praxis — Trust-Karten
+   =================================================================== */
+.grid-praxis-head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(18px, 3vw, 40px);
+}
+@media (min-width: 820px) {
+  .grid-praxis-head {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: end;
+  }
+}
+.praxis-card {
+  transition: transform 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.praxis-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--navy);
+  box-shadow: 0 14px 34px rgba(0, 42, 92, 0.1);
+}
+.praxis-arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+.praxis-card:hover .praxis-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* ===================================================================
+   Referenz-Detailseite — „Auf einen Blick"-Faktengrid
+   =================================================================== */
+.blick-grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(20px, 2.4vw, 30px) clamp(32px, 4vw, 64px);
+}
+@media (min-width: 720px) {
+  .blick-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.blick-row {
+  border-top: 1px solid rgba(234, 232, 225, 0.16);
+  padding-top: clamp(14px, 1.6vw, 18px);
+}
+
 /* ===================================================================
    Keyframes ported 1:1 from the original <helmet>
    =================================================================== */
@@ -395,7 +452,8 @@ button:focus-visible {
     min-height: 60vh;
   }
   #home-root > div > section#kontakt,
-  #home-root > div > section#stimme {
+  #home-root > div > section#stimme,
+  #home-root > div > section#praxis {
     min-height: auto;
   }
   #home-root > div > section#portrait-bleed,

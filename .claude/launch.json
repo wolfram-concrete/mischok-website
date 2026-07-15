@@ -3,9 +3,10 @@
   "configurations": [
     {
       "name": "mischok-dev",
-      "runtimeExecutable": "/Users/daniel/Web-Projekte/Mischok_Website/.claude/dev-server.sh",
-      "runtimeArgs": [],
-      "port": 3000
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000,
+      "autoPort": true
     }
   ]
 }

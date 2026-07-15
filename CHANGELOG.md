@@ -7,9 +7,39 @@ die Versionierung an [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
-_Offene Punkte:_ Kontakt-Platzhalter füllen; CTA „Zur Referenz" braucht ein Ziel;
-projektspezifische Bilder statt Stockfotos; weitere Unterseiten (Über uns, Insights,
-Karriere, Impressum, Datenschutz) aus der Sitemap umsetzen.
+_Offene Punkte:_ Kundenstimme auf der 9-Levels-Detailseite vor Veröffentlichung
+final mit 9 Levels freigeben; projektspezifische Bilder statt Stockfotos; konkrete
+LinkedIn-Beitrags-URLs in „Aus der Praxis" ergänzen (aktuell Profil-Link);
+Impressum & Datenschutz als eigene Seiten; weitere Referenz-Detailseiten bei Bedarf.
+
+## [0.4.0] – 2026-07-14
+
+### Hinzugefügt
+- **Referenz-Detailseite `/referenzen/9-levels`**: vollständige Case Study
+  (Hero, „Auf einen Blick", Ausgangslage, Vorgehen, Qualitätssicherung, Ergebnis,
+  Kundenstimme, „Was wir mitnehmen", CTA). Inhalt 1:1 aus `Mischok-Website.pdf`
+  (REFERENZ 01). Ruhiger, konkreter Ton ohne Werbe-Duktus.
+- **Trust-Section „Aus der Praxis"** (`AusDerPraxis`, vor dem Kontaktbereich):
+  drei kuratierte Teaser-Karten (kein LinkedIn-Embed) zu MISCHOK-Themen, Autor
+  Kajetan Mischok / MISCHOK, CTA „Auf LinkedIn lesen" — extern in neuem Tab.
+
+### Geändert
+- **Echte Kontaktdaten** in Kontakt-Sektion und Footer: Mischok GmbH,
+  Karlstr. 12, 86150 Augsburg, Tel. `+49 821 49 81 58 81` (`tel:`-Link),
+  `info@mischok.de` (`mailto:`-Link), Ansprechpartner Kajetan Mischok
+  (Geschäftsführer). Sämtliche `[…]`-Platzhalter entfernt; falsche Footer-Nummer
+  `+49 341…` und veraltete `kontakt@`-Adresse korrigiert.
+- **Referenzübersicht:** 9-Levels-Karte verlinkt per „Referenz ansehen →" auf die
+  neue Detailseite; übrige Karten ohne Detail-CTA (keine `href="#"` mehr).
+- **Navigation:** Referenzen-Dropdown zeigt konkrete Projektnamen (9 Levels führt
+  auf die Detailseite, übrige auf Anker der Übersicht) statt „Referenz 1–5".
+
+### Behoben
+- **Einsatzfelder-Karten auf Touch-Geräten:** ohne Hover blieben Karten 02–05
+  dauerhaft unscharf/unlesbar. Auf Geräten ohne Hover werden jetzt alle Karten
+  scharf dargestellt (`(hover: hover)`-Erkennung).
+- **Themen-Karten** waren `href="#themen"`-Selbstanker (Klick ohne Ziel) — jetzt
+  nicht-klickbare Karten (subtiler Hover-Effekt bleibt).
 
 ## [0.3.0] – 2026-07-13
 
@@ -74,6 +104,7 @@ Karriere, Impressum, Datenschutz) aus der Sitemap umsetzen.
 - Bilder & Icons nach `public/assets/`, eingebunden über `next/image`.
 
 [Unreleased]: https://github.com/wolfram-concrete/mischok-website/compare/main...HEAD
+[0.4.0]: https://github.com/wolfram-concrete/mischok-website/commits/main
 [0.3.0]: https://github.com/wolfram-concrete/mischok-website/commits/main
 [0.2.0]: https://github.com/wolfram-concrete/mischok-website/commits/main
 [0.1.0]: https://github.com/wolfram-concrete/mischok-website/commits/main

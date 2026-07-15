@@ -6,6 +6,7 @@ import Stimme from "@/components/sections/Stimme";
 import Themen from "@/components/sections/Themen";
 import Zusammenarbeit from "@/components/sections/Zusammenarbeit";
 import Ueber from "@/components/sections/Ueber";
+import AusDerPraxis from "@/components/sections/AusDerPraxis";
 import Kontakt from "@/components/sections/Kontakt";
 import ArbeitenBeiMischok from "@/components/sections/ArbeitenBeiMischok";
 import Footer from "@/components/sections/Footer";
@@ -23,6 +24,7 @@ export default function Home() {
         <Themen />
         <Zusammenarbeit />
         <Ueber />
+        <AusDerPraxis />
         <Kontakt />
         <ArbeitenBeiMischok />
         <Footer />
