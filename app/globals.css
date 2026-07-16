@@ -3,20 +3,57 @@
 @tailwind utilities;
 
 /* ===================================================================
-   Design tokens as CSS variables (mirror tailwind.config.ts + DC file)
+   OFFIZIELLE MISCHOK-FARBPALETTE
+   Quelle: „Mischok CI-Manual" (Stand 2020-05-14), Seite 17–18.
+   Einzige verbindliche Quelle für Marken-Farbwerte.
+
+   FARBLOGIK (CI-Manual S.18):
+   • Einfarbige Flächen sind „Bühne" für zusammengehörige Inhalte — sie
+     gliedern, strukturieren und geben einen Stimmungsrahmen. Nur Vollflächen,
+     KEINE Verläufe, Muster oder Hintergrundbilder. Schatten sind erlaubt.
+   • „Change" (#002a5c) hat eine Sonderrolle: Bühne fürs Logo sowie für
+     Kapitelmarker und Navigation — immer als Verweis auf Richtung/Struktur.
+   • Die Akzentfarben brechen das nüchterne Grau/Blau bewusst auf und werden
+     je nach Zielgruppe/Kontext gewählt — NUR für Details, nie für große
+     Flächen, und stets mit ausreichendem Kontrast:
+       – Portfolio (Limette)  → Referenzen / Projekte
+       – Karriere  (Amber)    → Karriere / „Arbeiten bei MISCHOK"
+       – About     (Hellblau) → Über uns / Unternehmen
+       – Warning   (Pink)     → Hinweise / Warnungen
    =================================================================== */
 :root {
-  --bg: #f6f6f5;
-  --section: #e4e3e1;
-  --card: #edecea;
-  --navy: #002a5c;
-  --on-navy: #eae8e1;
-  --slate: #384352;
-  --ink: #1a222a;
-  --muted: #8c9198;
-  --line: #d5d4d1;
+  /* — Neutrale „Bühnen"-Farben (Grau-/Blautöne) — */
+  --white: #ffffff; /* WHITE   · 255,255,255 */
+  --snow: #f9f9f9; /* SNOW    · 249,249,249 */
+  --paper: #ededed; /* PAPER   · 237,237,237 */
+  --stone: #a5a5a5; /* STONE   · Pantone Cool Gray 6 C */
+  --ocean: #657383; /* OCEAN   · Pantone 4136 C */
+  --metal: #4f5b6a; /* METAL   · Pantone 4139 C */
+  --raven: #384352; /* RAVEN   · Pantone 8605 C */
+  --panther: #27323f; /* PANTHER · Pantone 7546 C */
+  --midnight: #1a222a; /* MIDNIGHT· Pantone 532 C */
+  --change: #002a5c; /* CHANGE  · Pantone 648 C — Markenblau (Logo/Kapitel/Navigation) */
+
+  /* — Akzentfarben (bunt · nur für Details) — */
+  --portfolio: #ccff99; /* Pantone 2282 C — Referenzen / Projekte */
+  --karriere: #ffcc66; /* Pantone 134 C  — Karriere / Arbeiten bei MISCHOK */
+  --about: #99ccff; /* Pantone 291 C  — Über uns / Unternehmen */
+  --warning: #ff6698; /* Pantone 190 C  — Hinweise / Warnungen */
+
+  /* ===================================================================
+     Semantische Tokens — auf die Palette gemappt (mirror tailwind.config.ts)
+     =================================================================== */
+  --bg: #f6f6f5; /* Seitenhintergrund (warmes Off-White, zwischen SNOW & PAPER) */
+  --section: #e4e3e1; /* Sektionsflächen */
+  --card: #edecea; /* Karten (≈ PAPER) */
+  --navy: var(--change); /* Primär / Akzent = CHANGE */
+  --on-navy: #eae8e1; /* Text auf Navy */
+  --slate: var(--raven); /* Fließtext = RAVEN */
+  --ink: var(--midnight); /* Zitate = MIDNIGHT */
+  --muted: #8c9198; /* Sekundärtext (zwischen STONE & OCEAN) */
+  --line: #d5d4d1; /* Trennlinien / Rahmen */
   --btn: #e4e2de;
-  --accent: #002a5c;
+  --accent: var(--change);
   --serif: var(--font-serif), "Source Serif Pro", Georgia, serif;
   --sans: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* Alle nicht-Serif-Texte nutzen Calibre — auch die ehemaligen „Mono"-Labels */
@@ -110,20 +147,12 @@ button:focus-visible {
 /* ===================================================================
    Top-Navigation
    =================================================================== */
+/* Navigation als Burger auf allen Breakpoints — Links & CTA im Burger-Panel */
 .nav-desktop {
   display: none;
-  align-items: center;
 }
 .nav-burger {
   display: inline-flex;
-}
-@media (min-width: 900px) {
-  .nav-desktop {
-    display: flex;
-  }
-  .nav-burger {
-    display: none;
-  }
 }
 .nav-link {
   position: relative;
@@ -391,6 +420,234 @@ button:focus-visible {
 }
 
 /* ===================================================================
+   Box-Hero (HeroBoxes) — Split-Layout + Karten-Wand mit subtilem 3D-Look
+   =================================================================== */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(40px, 6vw, 72px);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .hero-split {
+    grid-template-columns: 0.92fr 1.08fr;
+    gap: clamp(48px, 5vw, 88px);
+  }
+}
+
+/* Karten-Wand: 1 Spalte mobil, 2 Spalten ab 640px mit versetzter rechter Spalte */
+.hero-wall {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(14px, 1.4vw, 20px);
+}
+@media (min-width: 640px) {
+  .hero-wall {
+    grid-template-columns: 1fr 1fr;
+  }
+  /* rechte Spalte nach unten versetzt → „Wand aus Boxen"-Anmutung */
+  .hero-wall .hero-box:nth-child(even) {
+    margin-top: clamp(24px, 4vw, 56px);
+  }
+}
+
+.hero-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.4vw, 20px);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: clamp(20px, 1.9vw, 30px);
+  /* subtiler 3D-/Extrusions-Look: harter Offset-Block + weicher Ambient-Schatten */
+  box-shadow: 9px 11px 0 -2px #ecebe7, 0 20px 42px rgba(26, 34, 42, 0.12);
+  opacity: 0;
+  transform: translateY(48px);
+  animation: boxRise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hero-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 11px 13px 0 -2px #ecebe7, 0 28px 56px rgba(26, 34, 42, 0.18);
+}
+.hero-box-num {
+  font-family: var(--serif);
+  font-size: clamp(38px, 3.4vw, 54px);
+  line-height: 1;
+  font-weight: 400;
+  color: var(--muted);
+}
+.hero-box-text {
+  font-family: var(--sans);
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.45;
+  color: var(--navy);
+  margin: 0;
+}
+
+@keyframes boxRise {
+  from {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================================================================
+   Bento-Hero (HeroBento) — asymmetrisches Bento mit CGI-Haptik
+   • Ecken an das Logo angelehnt: scharf, nur unten-rechts gerundet
+   • kein Steg (Haarspalt), asymmetrischer Umriss (Notch oben-rechts)
+   =================================================================== */
+.bento {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(4px, 0.4vw, 6px);
+  max-width: 1240px;
+  margin: 0 auto;
+}
+/* Tablet: 2 Spalten, natürlicher Fluss */
+@media (min-width: 680px) {
+  .bento {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+/* Desktop: 6×4-Bento mit benannten Feldern (diagonale Headline, Notch o.r.) */
+@media (min-width: 1000px) {
+  .bento {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, clamp(122px, 11.5vw, 158px));
+    grid-template-areas:
+      "n1 n1 c1 c2 c3 ."
+      "n1 n1 c1 c2 c3 p1"
+      "p2 p2 c4 c5 n2 n2"
+      "p2 p2 c4 c5 n2 n2";
+  }
+  .b-n1 { grid-area: n1; }
+  .b-n2 { grid-area: n2; }
+  .b-c1 { grid-area: c1; }
+  .b-c2 { grid-area: c2; }
+  .b-c3 { grid-area: c3; }
+  .b-c4 { grid-area: c4; }
+  .b-c5 { grid-area: c5; }
+  .b-p1 { grid-area: p1; }
+  .b-p2 { grid-area: p2; }
+}
+
+/* — Brick-Grundform: scharfe Kanten, nur unten-rechts gerundet (Logo-Anlehnung) — */
+.bento-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 clamp(16px, 1.8vw, 24px) 0 0;
+  overflow: hidden;
+  background: var(--white);
+  min-height: clamp(190px, 42vw, 240px);
+  padding: clamp(20px, 1.7vw, 28px);
+  box-shadow: 0 1px 2px rgba(20, 28, 40, 0.05), 0 12px 24px rgba(20, 28, 40, 0.1),
+    0 26px 48px rgba(20, 28, 40, 0.08);
+  opacity: 0;
+  transform: translateY(20px) scale(0.985);
+  animation: bentoRise 0.85s cubic-bezier(0.2, 0.72, 0.2, 1) both;
+  transition: transform 0.32s ease, box-shadow 0.32s ease;
+  will-change: transform;
+}
+@media (min-width: 1000px) {
+  .bento-tile {
+    min-height: 0;
+  }
+}
+.bento-tile--photo {
+  padding: 0;
+}
+.bento-tile--navy {
+  background: var(--navy);
+  justify-content: space-between;
+  gap: clamp(16px, 1.6vw, 22px);
+}
+
+/* CGI-Haptik: heller Grund + heller Deckel, nur der Schatten trennt.
+   „unterschiedlich hohe" Deckel über die Schattentiefe. */
+.b-elev-hi {
+  box-shadow: 0 2px 4px rgba(20, 28, 40, 0.06), 0 20px 34px rgba(20, 28, 40, 0.14),
+    0 42px 66px rgba(20, 28, 40, 0.11);
+}
+.bento-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 3px 6px rgba(20, 28, 40, 0.07), 0 26px 46px rgba(20, 28, 40, 0.16),
+    0 50px 80px rgba(20, 28, 40, 0.13);
+}
+
+/* Navy-Headline-Bricks — linksbündig */
+.bento-head {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(23px, 2.15vw, 33px);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--on-navy);
+  margin: 0;
+}
+.bento-cta {
+  align-self: flex-end; /* CTA rechts unten im 2. Headline-Brick */
+  text-decoration: none;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 11px 20px;
+  border-radius: 3px;
+}
+
+/* Content-Bricks: linksbündig, Icon oben, Nummer + Volltext unten */
+.bento-tile--content {
+  align-items: flex-start;
+  text-align: left;
+  justify-content: flex-start;
+}
+.bento-icon-wrap {
+  display: inline-flex;
+  color: var(--navy);
+}
+.bento-icon {
+  width: clamp(30px, 2.4vw, 36px);
+  height: clamp(30px, 2.4vw, 36px);
+}
+.bento-cbody {
+  margin-top: auto;
+  padding-top: clamp(20px, 2.4vw, 34px);
+}
+.bento-num {
+  display: block;
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: clamp(8px, 1vw, 12px);
+}
+.bento-text {
+  font-family: var(--sans);
+  font-size: clamp(14px, 1.02vw, 16px);
+  line-height: 1.4;
+  color: var(--slate);
+  margin: 0;
+  max-width: 26ch;
+}
+
+@keyframes bentoRise {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===================================================================
    Keyframes ported 1:1 from the original <helmet>
    =================================================================== */
 @keyframes fadeUp {
@@ -467,12 +724,363 @@ button:focus-visible {
 /* Reduced motion: disable hero reveal/looping animations */
 @media (prefers-reduced-motion: reduce) {
   [data-hero-panel],
-  [data-hero-text] {
+  [data-hero-text],
+  [data-hero-box],
+  [data-bento],
+  [data-hero-col] {
     animation-duration: 0.001s !important;
     animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
   }
+  /* Karten ohne Rise sofort sichtbar */
+  [data-hero-box],
+  [data-bento],
+  [data-hero-col] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
   html {
     scroll-behavior: auto;
   }
+}
+
+/* ===================================================================
+   Druck-Styles — druckbare Seitenübersicht (Chrome print-to-pdf)
+   =================================================================== */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  /* Erzwungene 100vh-Höhen aufheben → kompakter Fluss */
+  #home-root > div > section,
+  section {
+    min-height: auto !important;
+  }
+  /* Sticky-Header nicht auf jeder Druckseite wiederholen */
+  header {
+    position: absolute !important;
+  }
+  /* Hero-Video im Druck ausblenden (kein sinnvoller Frame) */
+  video {
+    display: none !important;
+  }
+  /* Animationen: Endzustand sicherstellen */
+  [data-bento],
+  [data-hero-box],
+  [data-hero-text],
+  [data-hero-panel] {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  /* Next.js Dev-Overlay ausblenden */
+  nextjs-portal {
+    display: none !important;
+  }
+  /* Karten möglichst nicht über den Seitenumbruch zerreißen */
+  .bento,
+  .ref-card,
+  article {
+    break-inside: avoid;
+  }
+}
+
+/* ===================================================================
+   HeroSlider — Test-Hero: Headline links + 5 Fokusfeld-Spalten rechts
+   =================================================================== */
+.hs-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(36px, 5vw, 64px);
+  align-items: center;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+@media (min-width: 820px) {
+  .hs-split {
+    grid-template-columns: 0.92fr 1.08fr;
+    gap: clamp(40px, 4vw, 72px);
+  }
+}
+.hs-head {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(32px, 4vw, 60px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.hs-line {
+  display: block;
+  opacity: 0;
+  animation: heroTextUp 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hs-key {
+  font-style: normal;
+  font-weight: 600;
+}
+.hs-cols {
+  display: flex;
+  gap: clamp(8px, 0.8vw, 12px);
+  width: 100%;
+}
+.hs-col-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(20px, 1.9vw, 28px);
+  line-height: 1.16;
+  color: #fff;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+.hs-col-text {
+  font-family: var(--sans);
+  font-size: clamp(14px, 1.15vw, 16px);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.9);
+  margin: clamp(12px, 1.4vw, 18px) 0 0;
+  max-width: 42ch;
+  overflow-wrap: break-word;
+}
+.hs-col-cta {
+  display: inline-block;
+  margin-top: clamp(16px, 1.8vw, 24px);
+  text-decoration: none;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  padding: 10px 20px;
+  border-radius: 3px;
+}
+@keyframes heroColRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ===================================================================
+   HeroImpact — vollflächige Bento auf Logo-Modul (53×45), Referenz „Impact"
+   Grotesk-Typo, feine dunkle Stege, Navy-Block mit Schraffur, 2 Fotos.
+   =================================================================== */
+.hi-section {
+  position: relative;
+  overflow: hidden;
+  background: #efeeeb;
+  min-height: 100svh;
+  display: flex;
+  padding: clamp(80px, 9vw, 104px) clamp(16px, 2.4vw, 32px) clamp(20px, 2.4vw, 32px);
+}
+/* Card füllt den Hero; Grid = 6×4 Module, feine dunkle Stege (gap auf dunklem Grund) */
+.hi-card {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-areas:
+    "navy head  head  head  head  photoA"
+    "navy head  head  head  head  photoA"
+    "navy f1    f2    f3    f4    f5"
+    "navy stat  photoB photoB photoB photoB";
+  gap: 1px;
+  background: rgba(20, 28, 40, 0.5); /* feine dunkle Stege */
+  border: 1px solid rgba(20, 28, 40, 0.6);
+  border-radius: clamp(16px, 1.4vw, 22px);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(20, 28, 40, 0.06), 0 24px 56px rgba(20, 28, 40, 0.12);
+}
+.hi-cell {
+  position: relative;
+  overflow: hidden;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(16px, 1.5vw, 26px);
+  min-width: 0;
+  min-height: 0;
+}
+.hi-head { grid-area: head; justify-content: flex-start; }
+.hi-photoA { grid-area: photoA; padding: 0; }
+.hi-photoB { grid-area: photoB; padding: 0; }
+.hi-navy { grid-area: navy; background: var(--navy); justify-content: flex-end; gap: clamp(10px, 1vw, 14px); }
+.hi-f1 { grid-area: f1; }
+.hi-f2 { grid-area: f2; }
+.hi-f3 { grid-area: f3; }
+.hi-f4 { grid-area: f4; }
+.hi-f5 { grid-area: f5; }
+.hi-stat { grid-area: stat; justify-content: flex-end; }
+
+/* — Headline: grotesk, groß, „cool" — */
+.hi-kicker {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hi-accent {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 8px;
+  background: var(--karriere); /* kräftiger Detail-Akzent (kantig) */
+}
+.hi-headline {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(28px, 3.1vw, 54px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  margin: auto 0 0;
+  max-width: 20ch;
+}
+
+/* — Navy-Block: Schraffur-Teilfläche oben + Label + CTA — */
+.hi-hatch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 34%;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0,
+    transparent 7px,
+    rgba(255, 255, 255, 0.14) 7px,
+    rgba(255, 255, 255, 0.14) 8px
+  );
+}
+.hi-navy-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--on-navy) 68%, transparent);
+}
+.hi-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  text-decoration: none;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(19px, 2vw, 30px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  color: var(--on-navy);
+  transition: gap 0.25s ease;
+}
+.hi-cta:hover { gap: 16px; }
+.hi-cta-arrow { font-weight: 400; }
+
+/* — Fokusfeld-Module: kleine Nummer + Icon + Kurztitel — */
+.hi-field { justify-content: space-between; }
+.hi-field-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.hi-num {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.hi-icon-wrap { display: inline-flex; color: var(--navy); }
+.hi-icon {
+  width: clamp(26px, 2.2vw, 34px);
+  height: clamp(26px, 2.2vw, 34px);
+}
+.hi-ftitle {
+  font-family: var(--sans);
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.32;
+  color: var(--slate);
+  margin: clamp(10px, 1.2vw, 16px) 0 0;
+}
+
+/* — Stat-Modul: große Zahl + Label + Teilflächen-Balken — */
+.hi-stat-num {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(26px, 2.6vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+.hi-stat-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.hi-stat-bar {
+  display: block;
+  height: 4px;
+  margin-top: clamp(10px, 1.2vw, 14px);
+  background: linear-gradient(
+    to right,
+    var(--navy) 0,
+    var(--navy) 62%,
+    var(--line) 62%,
+    var(--line) 100%
+  );
+}
+
+/* — Fotos dezent (authentisch, lenken nicht ab) — */
+.hi-photo :is(img, [role="img"]) {
+  filter: grayscale(0.12) brightness(0.95) contrast(1.02);
+}
+
+/* — Mobile: Modul-Raster auflösen → gestapeltes Bento (2 Spalten) — */
+@media (max-width: 899px) {
+  .hi-card {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+    grid-auto-rows: minmax(90px, auto);
+    grid-template-areas: none;
+  }
+  .hi-cell { grid-area: auto; }
+  .hi-head,
+  .hi-navy,
+  .hi-photoA,
+  .hi-photoB,
+  .hi-f5 {
+    grid-column: 1 / -1;
+  }
+  .hi-photoA { min-height: 200px; }
+  .hi-photoB { min-height: 180px; }
+  .hi-navy { min-height: 150px; }
+  .hi-head { min-height: 200px; }
+  /* Lesereihenfolge mobil: Headline zuerst, CTA-Block zuletzt */
+  .hi-head { order: -1; }
+  .hi-navy { order: 1; }
 }

@@ -1,4 +1,6 @@
-import Hero from "@/components/sections/Hero";
+import HeroBento from "@/components/sections/HeroBento";
+import HeroSlider from "@/components/sections/HeroSlider";
+import HeroImpact from "@/components/sections/HeroImpact";
 import EinsatzfelderGrid from "@/components/sections/EinsatzfelderGrid";
 import PortraitBleed from "@/components/sections/PortraitBleed";
 import Ansatz from "@/components/sections/Ansatz";
@@ -16,7 +18,9 @@ export default function Home() {
     <main id="home-root">
       {/* Innerer Wrapper spiegelt die Original-Struktur #home-root > div > section */}
       <div style={{ display: "block", position: "relative" }}>
-        <Hero />
+        <HeroBento />
+        <HeroSlider />
+        <HeroImpact />
         <EinsatzfelderGrid />
         <PortraitBleed />
         <Ansatz />

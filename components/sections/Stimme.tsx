@@ -33,9 +33,9 @@ export default function Stimme() {
           }}
         >
           <ImageFrame
-            src="/assets/acc-1.jpg"
-            alt="Portrait Julius Mischok — konzentriert, nahbar"
-            placeholder="Portrait — konzentriert, nahbar"
+            src="/assets/Redaktionel/54962038207_917685d4d5_o.jpg"
+            alt="Julius Mischok bei einem Fachvortrag"
+            placeholder="Julius Mischok — Vortrag"
             sizes="(max-width:820px) 100vw, 45vw"
           />
         </div>

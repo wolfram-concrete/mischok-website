@@ -7,10 +7,33 @@ die Versionierung an [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
-_Offene Punkte:_ Kundenstimme auf der 9-Levels-Detailseite vor Veröffentlichung
-final mit 9 Levels freigeben; projektspezifische Bilder statt Stockfotos; konkrete
-LinkedIn-Beitrags-URLs in „Aus der Praxis" ergänzen (aktuell Profil-Link);
-Impressum & Datenschutz als eigene Seiten; weitere Referenz-Detailseiten bei Bedarf.
+_Offene Punkte:_ finalen Hero aus den Test-Varianten wählen und daraus das
+Seiten-System ableiten; finale Icons für den Bento-Hero einsetzen; Kundenstimme
+auf der 9-Levels-Detailseite mit 9 Levels freigeben; „Aus der Praxis" mit echten
+Belegen aus `public/social` schärfen (Attribution Julius statt Kajetan);
+Impressum & Datenschutz als eigene Seiten.
+
+## [0.5.0] – 2026-07-16
+
+### Hinzugefügt
+- **Design-Grundlagen dokumentiert:** offizielle Farbpalette + Farblogik aus dem
+  CI-Manual (`design-reference/COLOR-LOGIC.md`) und die UI/UX-Design-Codes aus dem
+  Kickoff-Board (`design-reference/DESIGN-CODES.md`) als verbindliche Leitplanken;
+  Palette als CSS-Tokens (`globals.css`) + Tailwind-Farben (`tailwind.config.ts`).
+- **Hero-Testvarianten** (parallel zum Vergleich, oberhalb der Startseite):
+  `HeroBoxes`, `HeroBento` (CGI-Haptik), `HeroSlider` (interaktives Accordion),
+  `HeroImpact` (vollflächige Bento auf Logo-Modul, „Impact"-Referenz: grotesk,
+  feine Stege, Navy-Block mit Schraffur, Nummer+Icon-Felder, 2 Fotos, Stat-Modul).
+- **Trust-Material-Depot** `public/social/` (README + `trust-feed.json` + Assets)
+  für punktuelle, echte Belege — bewusst keine Auto-News-Section.
+- Druck-Styles (`@media print`) für eine druckbare Seitenübersicht.
+
+### Geändert
+- **Navigation als Burger** auf allen Breakpoints (Links & CTA im Panel); Burger-
+  Striche in der Anmutung des „m" (gleiche Strichstärke, kantige Enden).
+- **Wortmarke** „mischok" im Header statt der Bildmarke.
+- **Stimme-Sektion:** echtes Vortrags-Foto von Julius Mischok statt Stockbild.
+- Einsatzfelder-Karten: Touch-Fix (siehe 0.4.0) unverändert übernommen.
 
 ## [0.4.0] – 2026-07-14
 
@@ -104,6 +127,7 @@ Impressum & Datenschutz als eigene Seiten; weitere Referenz-Detailseiten bei Bed
 - Bilder & Icons nach `public/assets/`, eingebunden über `next/image`.
 
 [Unreleased]: https://github.com/wolfram-concrete/mischok-website/compare/main...HEAD
+[0.5.0]: https://github.com/wolfram-concrete/mischok-website/commits/main
 [0.4.0]: https://github.com/wolfram-concrete/mischok-website/commits/main
 [0.3.0]: https://github.com/wolfram-concrete/mischok-website/commits/main
 [0.2.0]: https://github.com/wolfram-concrete/mischok-website/commits/main

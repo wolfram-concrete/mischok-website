@@ -75,15 +75,15 @@ export default function Header() {
           paddingInline: "clamp(20px,5vw,64px)",
         }}
       >
-        {/* Logo → Home */}
+        {/* Wortmarke → Home (statt Bildmarke) */}
         <a href="/" aria-label="MISCHOK — Startseite" style={{ display: "flex" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/assets/logo.svg"
+            src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-solo.svg"
             alt="MISCHOK"
-            width={42}
-            height={36}
-            style={{ display: "block", height: "34px", width: "auto" }}
+            width={121}
+            height={24}
+            style={{ display: "block", height: "22px", width: "auto" }}
           />
         </a>
 
@@ -222,18 +222,20 @@ const mobileLink = {
   padding: "12px 0",
 } as const;
 
+// Burger-Striche in der Anmutung des „m": gleiche Strichstärke, kantige Enden
+// (keine Rundung). Strichstärke ~11 % der Breite, analog zu den Logo-Balken.
 function burgerLine(open: boolean, i: number) {
   const base = {
     display: "block",
-    width: "24px",
-    height: "2px",
+    width: "27px",
+    height: "3px",
     background: "var(--navy)",
-    borderRadius: "2px",
+    borderRadius: "0",
     transition: "transform .25s ease, opacity .2s ease",
   } as const;
   if (!open) return base;
   if (i === 0)
-    return { ...base, transform: "translateY(7px) rotate(45deg)" };
+    return { ...base, transform: "translateY(8px) rotate(45deg)" };
   if (i === 1) return { ...base, opacity: 0 };
-  return { ...base, transform: "translateY(-7px) rotate(-45deg)" };
+  return { ...base, transform: "translateY(-8px) rotate(-45deg)" };
 }

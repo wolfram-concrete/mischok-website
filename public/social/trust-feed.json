@@ -1,0 +1,126 @@
+{
+  "source_note": "LinkedIn recent activity URLs returned authwall for anonymous/server-side access. Items below are curated from public MISCHOK website material and publicly linked conference/publication sources. Do not present them as scraped LinkedIn posts.",
+  "social_profiles": [
+    {
+      "label": "Kajetan Mischok auf LinkedIn",
+      "url": "https://www.linkedin.com/in/kajetan-mischok/",
+      "usage": "Use as person-level social proof or CTA when showing experienced heads behind MISCHOK."
+    },
+    {
+      "label": "Kajetan Mischok - Aktivitaeten",
+      "url": "https://www.linkedin.com/in/kajetan-mischok/recent-activity/all/",
+      "usage": "Use only as an external profile/activity link. Do not scrape from server-side code."
+    },
+    {
+      "label": "MISCHOK auf LinkedIn",
+      "url": "https://www.linkedin.com/company/mischok/posts/?feedView=all",
+      "usage": "Use as company social proof link. Do not embed a live LinkedIn feed."
+    }
+  ],
+  "recommended_use": [
+    "Use selectively as proof material near existing sections.",
+    "Do not build a standalone news section unless explicitly requested.",
+    "Prefer contextual trust cards, proof strips, or case-adjacent content."
+  ],
+  "items": [
+    {
+      "id": "jax-speaker-julius",
+      "type": "Konferenz",
+      "title": "JAX Speaker-Profil",
+      "source": "JAX",
+      "person": "Julius Mischok",
+      "teaser": "Oeffentliche Speaker-Praesenz rund um Softwarearchitektur, Spring Boot und Engineering-Praxis.",
+      "url": "https://jax.de/speaker/julius-mischok/",
+      "image": "/social/jax.svg",
+      "usage_hint": "Als Trust-Karte fuer fachliche Sichtbarkeit oder als Teil eines 'Bekannt aus'-Moduls."
+    },
+    {
+      "id": "javaland",
+      "type": "Konferenz",
+      "title": "Javaland",
+      "source": "DOAG Javaland",
+      "person": "Julius Mischok",
+      "teaser": "Konferenzbeleg fuer technische Tiefe im Java- und Softwareengineering-Umfeld.",
+      "url": "https://meine.doag.org/events/javaland/2023/agenda/#eventDay.all#textSearch.julius",
+      "image": "/social/javaland.svg",
+      "usage_hint": "Gut fuer kurze Glaubwuerdigkeitsstreifen oder Themenkarten."
+    },
+    {
+      "id": "java-forum-stuttgart-spring-boot",
+      "type": "Vortrag",
+      "title": "Top 10 Spring Boot Hacks",
+      "source": "Java Forum Stuttgart",
+      "person": "Julius Mischok",
+      "teaser": "Ein konkreter Vortrag zu pragmatischen Spring-Boot-Entscheidungen im Projektalltag.",
+      "url": "https://www.java-forum-stuttgart.de/vortraege/top-10-spring-boot-hacks-pragmatismus-statt-magie/",
+      "image": "/social/java-forum-stuttgart.svg",
+      "usage_hint": "Passt in Naehe von Themen wie Spring Boot, Architektur oder technische Entscheidungen."
+    },
+    {
+      "id": "hackerkiste-2025",
+      "type": "Konferenz",
+      "title": "Hackerkiste Augsburg",
+      "source": "Hackerkiste",
+      "person": "Kajetan/Julius Mischok Kontext pruefen",
+      "teaser": "Regionale Tech-Sichtbarkeit in Augsburg und fachlicher Bezug zu Softwareteams und Engineering.",
+      "url": "https://hackerkiste.de/speaker-hackerkiste-2025/",
+      "image": "/social/hackerkiste.svg",
+      "usage_hint": "Geeignet, um Augsburg/Community/Tech-Praesenz zu zeigen. Vor Veroeffentlichung Person und Vortrag im Ziel-Link pruefen."
+    },
+    {
+      "id": "informatik-aktuell-mutation-testing",
+      "type": "Fachartikel",
+      "title": "Mutation Testing mit PIT",
+      "source": "Informatik Aktuell",
+      "person": "Julius Mischok",
+      "teaser": "Fachlicher Beleg fuer Testqualitaet jenseits blosser Testabdeckung.",
+      "url": "https://www.informatik-aktuell.de/entwicklung/methoden/mutation-testing-mit-pit.html",
+      "image": "/social/informatik-aktuell.svg",
+      "usage_hint": "Passt zu Qualitaetssicherung, Testing und belastbaren technischen Entscheidungen."
+    },
+    {
+      "id": "entwickler-legacy-rescue",
+      "type": "Fachartikel",
+      "title": "Legacy Systems: Rescue oder Reimplementierung",
+      "source": "entwickler.de / JAX Magazine",
+      "person": "Julius Mischok",
+      "teaser": "Redaktioneller Beleg fuer den Kern der neuen Positionierung: gewachsene Systeme verstehen, bewerten und tragfaehig weiterentwickeln.",
+      "url": "https://entwickler.de/software-architektur/legacy-systems-rescue-reimplement",
+      "image": "/social/jax-magazine-legacy.svg",
+      "usage_hint": "Sehr passend fuer Home-Problemfelder, Referenznaehe und Legacy-/Bestandssystem-Kommunikation."
+    },
+    {
+      "id": "entwickler-testdaten-spring-boot",
+      "type": "Fachartikel",
+      "title": "Testdatenmanagement in Spring Boot",
+      "source": "entwickler.de / Java Magazin",
+      "person": "Julius Mischok",
+      "teaser": "Konkreter Fachartikel zu belastbaren Tests und verstaendlichen Entwicklungsroutinen.",
+      "url": "https://entwickler.de/testing/testdaten-management-spring-boot",
+      "image": "/social/java-magazin-testing.svg",
+      "usage_hint": "Als Beleg fuer technische Substanz in einer Themen-/Insights-Karte."
+    },
+    {
+      "id": "case-9levels",
+      "type": "Case",
+      "title": "9 Levels",
+      "source": "MISCHOK Case / Kunde",
+      "person": "MISCHOK",
+      "teaser": "Beleg fuer Plattform-Relaunch, technische Neuordnung und geschaeftskritische Software im Bestand.",
+      "url": "/referenzen/9-levels",
+      "image": "/social/client-9levels.svg",
+      "usage_hint": "Fuer Case-nahe CTA-Module und Referenzbruecken auf der Home."
+    },
+    {
+      "id": "case-flutter-mobility",
+      "type": "Case",
+      "title": "Flutter App - Mobility Branche",
+      "source": "MISCHOK Originalseite",
+      "person": "MISCHOK",
+      "teaser": "Case-Beleg fuer Release-Druck, App-Umsetzung und konkrete Produktarbeit.",
+      "url": "https://www.mischok.de/case-studies-umsetzung/barely-digital-flutter-app",
+      "image": "/social/case-flutter-mobility.png",
+      "usage_hint": "Als visueller Case-Beweis, wenn auf der Home mehr echte Projektnaehe gebraucht wird."
+    }
+  ]
+}

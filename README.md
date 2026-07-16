@@ -40,18 +40,39 @@ app/
   referenzen/9-levels/page.tsx  Referenz-Detailseite 9 Levels
   fonts/              Calibre Web-Fonts (Regular/Medium/Bold, woff2 + woff)
 components/
-  layout/Header.tsx   Sticky Top-Navigation (Dropdown, Mobile-Burger)
-  sections/           Eine Datei pro Sektion (Hero, EinsatzfelderGrid, PortraitBleed,
+  layout/Header.tsx   Sticky Top-Navigation als Burger (Wortmarke + Panel)
+  sections/           Eine Datei pro Sektion (EinsatzfelderGrid, PortraitBleed,
                       Ansatz, Stimme, Themen, Zusammenarbeit, Ueber, AusDerPraxis,
                       Kontakt, ArbeitenBeiMischok, Footer, ReferenzenGrid)
+                      + Hero-Testvarianten (Hero, HeroBoxes, HeroBento,
+                      HeroSlider, HeroImpact — siehe „Hero-Testvarianten")
   ui/                 Geteilte Komponenten: LogoMark, CtaButton, ImageFrame,
                       SectionLabel, Reveal
 lib/content.ts        Verbindliche Inhaltstexte (FIELDS, POINTS, ACC, TOPICS, PRAXIS,
                       REFERENZEN_INTRO, REFERENZEN, REFERENZ_9LEVELS)
-public/assets/        Bilder, Icons, Logo (SVG)
+public/assets/        Bilder, Icons; reale Projektfotos + assets/Redaktionel/
+public/Logo/          Offizielle Wortmarke (SVG)
+public/social/        Trust-Material-Depot (README + trust-feed.json + Belege)
 public/video/         Hero-Hintergrundvideo (WebM + MP4-Fallback + Poster)
-design-reference/     Original-Design-Component & Handoff (nicht Teil der Website)
+design-reference/     Design-Grundlagen: COLOR-LOGIC.md (Palette/Farblogik),
+                      DESIGN-CODES.md (UI/UX-Kickoff), Original-DC & Handoff
 ```
+
+## Design-Grundlagen (verbindlich)
+
+- **Farbpalette & Farblogik** — `design-reference/COLOR-LOGIC.md` (CI-Manual):
+  Navy/Grau/Weiß als Basis, vier Akzentfarben nur für Details.
+- **UI/UX-Design-Codes** — `design-reference/DESIGN-CODES.md` (Kickoff-Board):
+  Klarheit · Orientierung · Vertrauen · Kompetenz. Jede neue Section wird dagegen
+  geprüft.
+
+## Hero-Testvarianten
+
+Zum Vergleich liegen mehrere Hero-Prototypen oberhalb der Startseite (`page.tsx`):
+`Hero` (Video, Ausgangsstand), `HeroBoxes`, `HeroBento` (CGI-Haptik),
+`HeroSlider` (interaktives Accordion), `HeroImpact` (vollflächige Bento auf
+Logo-Modul). Sobald ein Favorit feststeht, werden die übrigen entfernt und das
+System daraus abgeleitet.
 
 ## Typografie
 
@@ -63,7 +84,8 @@ Zwei Schriften: **Source Serif 4** (Headlines/Nummern, `next/font/google`) und
 ## Interaktionen
 
 - **Top-Navigation** — sticky, über dem Hero transparent, ab dem Scrollen mit
-  hellem Hintergrund; Referenzen-Dropdown; Mobile-Burger-Menü (`"use client"`).
+  hellem Hintergrund; **Burger auf allen Breakpoints** (Links & CTA im Panel),
+  Burger-Striche in der Anmutung des „m" (`"use client"`).
 - **Hero** — vollflächiges Hintergrund-Video (loop, stumm, autoplay, `playsInline`)
   mit dezentem Scrim; Text-Reveal als CSS-Keyframes.
 - **EinsatzfelderGrid** — Hover schärft die Karte; auf Touch-/No-Hover-Geräten
