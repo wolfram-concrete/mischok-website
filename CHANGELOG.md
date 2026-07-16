@@ -7,11 +7,50 @@ die Versionierung an [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
-_Offene Punkte:_ finalen Hero aus den Test-Varianten wählen und daraus das
-Seiten-System ableiten; finale Icons für den Bento-Hero einsetzen; Kundenstimme
-auf der 9-Levels-Detailseite mit 9 Levels freigeben; „Aus der Praxis" mit echten
-Belegen aus `public/social` schärfen (Attribution Julius statt Kajetan);
-Impressum & Datenschutz als eigene Seiten.
+_Offene Punkte:_ ungenutzte Hero-Prototypen aufräumen (`Hero`, `HeroBoxes`,
+`HeroBento`, `HeroSlider`; `HeroImpact` hält aktuell noch die geteilten
+Icon/FOCUS/NAV-Exports → in ein eigenes Modul auslagern); Keramik-Optik auf die
+übrigen Sektionen ableiten; Kundenstimme auf der 9-Levels-Detailseite mit
+9 Levels freigeben; „Aus der Praxis" mit echten Belegen aus `public/social`
+schärfen (Attribution Julius statt Kajetan); Impressum & Datenschutz als eigene
+Seiten (stehen im Footer noch als reiner Text, da die Routen fehlen).
+
+## [0.6.0] – 2026-07-16
+
+### Hinzugefügt
+- **Finaler Hero in Porzellan-/Keramikoptik** (`HeroCeramic`) als zusammenhängendes
+  Bento-System: Marken-Modul (Wortmarke) links, durchgehendes Bildmodul rechts mit
+  Burger-Overlay, Headline-Modul, fünf „Szenario"-Karten als Flex-Accordion
+  (aktives Feld klappt auf), Teamfoto + Navy-CTA. Füllt den Viewport; helle,
+  leicht bläuliche Grundfläche, einheitliche Kartenhaptik (5 px Radius, heller
+  Innensaum, weiche Tiefe), schmale Stege.
+- **Systems-Thinking-Icons** (Outline-only, 1.5 px, `#002A5C`) mit je eigener,
+  bedeutungsgetriebener Animation statt eines Einheitsmusters: Ring + eintretender
+  gestrichelter Pfeil · Streckennetz, das sich von links nach rechts aufbaut ·
+  Quadrat + driftendes Zielbild · auseinanderschiebende Rauten · nach außen
+  fließende Strahlen. Alle `prefers-reduced-motion`-sicher.
+- **Realtime Rounded** als Display-/Label-Schrift (`--font-realtime` → Token
+  `--realtime`), eingesetzt für die „Szenario 0X"-Labels. Haus-Schriften als
+  Originaldateien unter `public/schriftarten/`.
+- **Textur-System** `PatternBg` (`components/ui/PatternBg.tsx`) + sechs kubische
+  Blau-Texturen (`public/assets/Patterns/`) — dezent per `soft-light` im
+  Hero-CTA-, Über- und Kontakt-Modul.
+- **Newsletter-Bar** im Footer (`components/ui/NewsletterBar.tsx`): ohne Backend —
+  die Anmeldung geht als vorbereitete Mail an `info@mischok.de` (Umstellung auf
+  einen Newsletter-Dienst später nur im Submit-Handler).
+
+### Geändert
+- **Footer neu aufgebaut** (Harbor-Referenz): links Marke (Logo mit Bildmarke),
+  Claim, Newsletter-Bar und CTA; rechts drei Linkspalten (Navigation, Referenzen,
+  Kontakt); Bottom-Leiste mit LinkedIn-Firmenprofil, Copyright und Rechtlichem.
+  Linklisten mit Sibling-Dimm-Hover (reines CSS).
+- **Bildqualität**: `next/image` liefert mit `quality=90` statt 75 (`ImageFrame`-
+  Prop + `images.qualities` in `next.config.mjs`).
+- **Hero-Typografie**: Karten-Titel in Markenblau (Serif), Copy in Schwarz;
+  „Szenario 0X" als Label vor jeder Karte; H1 bündig zum Logo, etwas kleiner.
+- **Hero-Testvarianten aus dem Render entfernt** — der Keramik-Hero ist der
+  finale Hero. `HeroImpact` bleibt vorerst als Modul erhalten, weil es die
+  geteilten `Icon`/`FOCUS`/`NAV`-Exports hält.
 
 ## [0.5.0] – 2026-07-16
 

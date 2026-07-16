@@ -23,6 +23,13 @@ const calibre = localFont({
   variable: "--font-sans",
 });
 
+// Display-/Label-Schrift der Marke: Realtime Rounded (Juri Zaech)
+const realtime = localFont({
+  src: [{ path: "./fonts/RealtimeRounded.woff2", weight: "400", style: "normal" }],
+  display: "swap",
+  variable: "--font-realtime",
+});
+
 export const metadata: Metadata = {
   title: "MISCHOK — Erfahrene Projektführung für geschäftskritische Software",
   description:
@@ -51,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${sourceSerif.variable} ${calibre.variable}`}
+      className={`${sourceSerif.variable} ${calibre.variable} ${realtime.variable}`}
     >
       <body>
         <Header />

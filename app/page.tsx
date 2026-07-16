@@ -1,4 +1,3 @@
-import HeroImpact from "@/components/sections/HeroImpact";
 import HeroCeramic from "@/components/sections/HeroCeramic";
 import PortraitBleed from "@/components/sections/PortraitBleed";
 import Ansatz from "@/components/sections/Ansatz";
@@ -18,8 +17,8 @@ export default function Home() {
       <div style={{ display: "block", position: "relative" }}>
         {/* Masterversion des Heros. HeroBento/HeroSlider/EinsatzfelderGrid
             vorerst abgelegt (Komponenten bleiben im Repo erhalten). */}
-        <HeroImpact />
-        {/* Zweite Hero-Variante (ceramic bento) — Kopie zum Vergleich unter der aktuellen */}
+        {/* Hero in Porzellan-/Keramikoptik (HeroImpact bleibt als Modul für
+            geteilte Icon/FOCUS/NAV-Exports erhalten, wird aber nicht gerendert) */}
         <HeroCeramic />
         <PortraitBleed />
         <Ansatz />

@@ -58,6 +58,8 @@
   --sans: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* Alle nicht-Serif-Texte nutzen Calibre — auch die ehemaligen „Mono"-Labels */
   --mono: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* Display-/Label-Schrift: Realtime Rounded */
+  --realtime: var(--font-realtime), var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -710,8 +712,7 @@ button:focus-visible {
   }
   #home-root > div > section#kontakt,
   #home-root > div > section#stimme,
-  #home-root > div > section#praxis,
-  #home-root > div > section#hero-ceramic {
+  #home-root > div > section#praxis {
     min-height: auto;
   }
   #home-root > div > section#portrait-bleed,
@@ -1104,13 +1105,9 @@ button:focus-visible {
 /* ── Systems-Thinking-Icons v3: gestrichelte Elemente animiert, je Icon eine
    eigene, bedeutungsgetriebene Bewegung (keine einheitliche Animation). ── */
 
-/* 01 — gestrichelter Ring rotiert langsam = laufender Betrieb */
-@keyframes hiRun { to { transform: rotate(360deg); } }
-.hi-a-run {
-  transform-box: view-box;
-  transform-origin: 16px 16px;
-  animation: hiRun 26s linear infinite;
-}
+/* 01 — Ring solid & statisch; gestrichelter Pfeil „zieht sich auf" (Bewegung rein) */
+@keyframes hiEnter { to { stroke-dashoffset: -8.8; } }
+.hi-a-enter { animation: hiEnter 2s linear infinite; }
 
 /* 02 — die (gestrichelte) neue Anforderung pulsiert; Systeme bleiben ruhig */
 @keyframes hiChange { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
@@ -1127,13 +1124,38 @@ button:focus-visible {
 }
 .hi-a-mismatch { animation: hiMismatch 5s ease-in-out infinite; }
 
-/* 04 — gestrichelter Pfeilschaft fließt nach oben = Richtung */
-@keyframes hiDirection { to { stroke-dashoffset: -8.8; } }
-.hi-a-direction { animation: hiDirection 3.4s linear infinite; }
+/* 04 — die drei Rauten schieben vertikal auseinander (Kapazität), Pfeil statisch */
+@keyframes hiSepUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.4px); } }
+@keyframes hiSepDn { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(2.4px); } }
+.hi-a-sepUp { animation: hiSepUp 3.4s ease-in-out infinite; }
+.hi-a-sepDn { animation: hiSepDn 3.4s ease-in-out infinite; }
 
 /* 05 — gestrichelte Strahlen fließen vom Zentrum nach außen = Optionen ordnen */
 @keyframes hiOrder { to { stroke-dashoffset: -8.8; } }
 .hi-a-order path { animation: hiOrder 3.8s linear infinite; }
+
+/* 02 (venn) — baut sich von links nach rechts auf: Linien zeichnen + Endpunkte poppen */
+@keyframes hiBuildLine {
+  0% { stroke-dashoffset: 1; opacity: 1; }
+  40% { stroke-dashoffset: 0; opacity: 1; }
+  80% { stroke-dashoffset: 0; opacity: 1; }
+  92%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+.hi-b-line {
+  stroke-dasharray: 1;
+  animation: hiBuildLine 4.5s ease-in-out infinite;
+}
+@keyframes hiBuildPop {
+  0%, 4% { opacity: 0; transform: scale(0.5); }
+  16% { opacity: 1; transform: scale(1); }
+  80% { opacity: 1; transform: scale(1); }
+  92%, 100% { opacity: 0; transform: scale(1); }
+}
+.hi-b-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hiBuildPop 4.5s ease-in-out infinite;
+}
 
 /* Logo = Home-Button */
 .hi-brand-link { display: block; }
@@ -1200,11 +1222,13 @@ button:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hi-a-run,
-  .hi-a-change,
+  .hi-a-enter,
   .hi-a-mismatch,
-  .hi-a-direction,
-  .hi-a-order path {
+  .hi-a-sepUp,
+  .hi-a-sepDn,
+  .hi-a-order path,
+  .hi-b-line,
+  .hi-b-pop {
     animation: none !important;
   }
 }
@@ -1521,6 +1545,8 @@ button:focus-visible {
    =================================================================== */
 .hc-section {
   position: relative;
+  display: flex;
+  flex-direction: column;
   padding: clamp(18px, 3vw, 40px) clamp(16px, 4vw, 56px) clamp(44px, 6vw, 88px);
   background: radial-gradient(
     circle at 18% 0%,
@@ -1531,7 +1557,8 @@ button:focus-visible {
 }
 .hc-grid {
   display: grid;
-  gap: clamp(14px, 1.2vw, 24px);
+  flex: 1;
+  gap: clamp(6px, 0.6vw, 12px);
   grid-template-columns: 1fr;
 }
 
@@ -1539,7 +1566,8 @@ button:focus-visible {
 .hc-surface {
   position: relative;
   overflow: hidden;
-  border-radius: clamp(22px, 1.8vw, 34px);
+  /* sehr kleine, gleichmäßige Radien an allen Ecken */
+  border-radius: 5px;
   background: linear-gradient(
     145deg,
     rgba(255, 255, 255, 0.97) 0%,
@@ -1555,67 +1583,53 @@ button:focus-visible {
 }
 
 /* 1 — Navigation als Bento-Modul */
-.hc-nav {
+/* Marken-Modul: Wortmarke links, eigener Container (bis an das Bild) */
+.hc-brand {
   display: flex;
   align-items: center;
-  gap: clamp(14px, 1.6vw, 24px);
-  padding: clamp(12px, 1.2vw, 18px) clamp(18px, 2vw, 28px);
+  padding: clamp(14px, 1.4vw, 22px) clamp(20px, 2vw, 32px);
 }
-.hc-nav-brand { display: flex; flex: none; }
-.hc-wordmark { display: block; height: clamp(22px, 2vw, 28px); width: auto; }
-.hc-nav-divider {
-  width: 1px;
-  align-self: stretch;
-  margin: 6px 0;
-  background: rgba(0, 42, 92, 0.12);
-}
-.hc-nav-links {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: clamp(16px, 1.8vw, 30px);
-}
-.hc-nav-links a {
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 500;
-  color: #002a5c;
-  text-decoration: none;
-  opacity: 0.82;
-  transition: opacity 0.2s ease;
-}
-.hc-nav-links a:hover { opacity: 1; }
-.hc-nav-cta {
-  background: #002a5c;
-  color: #fff !important;
-  opacity: 1 !important;
-  padding: 9px 18px;
-  border-radius: 100px;
-}
+.hc-brand-link { display: flex; }
+.hc-wordmark { display: block; height: clamp(24px, 2.1vw, 32px); width: auto; }
+
+/* Burger als Overlay oben rechts über dem rechten Bild */
 .hc-burger {
-  display: none;
+  position: absolute;
+  top: clamp(22px, 2.4vw, 40px);
+  right: clamp(22px, 2.4vw, 40px);
+  z-index: 20;
+  display: flex;
   flex-direction: column;
   gap: 5px;
-  margin-left: auto;
   background: none;
   border: none;
   padding: 8px;
   cursor: pointer;
 }
-.hc-burger span { display: block; width: 26px; height: 2.5px; background: #002a5c; border-radius: 0; }
+.hc-burger span {
+  display: block;
+  width: 26px;
+  height: 2.5px;
+  background: #002a5c;
+  border-radius: 0;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.hc-burger.is-open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.hc-burger.is-open span:nth-child(2) { opacity: 0; }
+.hc-burger.is-open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 .hc-menu {
   position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
+  top: clamp(62px, 6vw, 92px);
+  right: clamp(22px, 2.4vw, 40px);
   z-index: 20;
   display: flex;
   flex-direction: column;
   gap: 2px;
   min-width: 220px;
   padding: 12px;
-  border-radius: 18px;
+  border-radius: 0 16px 16px 16px;
   background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 16px 40px rgba(0, 42, 92, 0.12);
+  box-shadow: 0 16px 40px rgba(0, 42, 92, 0.16);
 }
 .hc-menu a {
   font-family: var(--sans);
@@ -1633,35 +1647,24 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: clamp(26px, 3vw, 52px);
+  /* linkes Padding = Brand-Padding, damit H1 bündig unter dem Logo startet */
+  padding: clamp(26px, 3vw, 52px) clamp(26px, 3vw, 52px) clamp(26px, 3vw, 52px)
+    clamp(20px, 2vw, 32px);
   min-height: clamp(240px, 30vw, 400px);
 }
-.hc-head-planes { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-.hc-head-planes::before,
-.hc-head-planes::after {
-  content: "";
-  position: absolute;
-  border-radius: 10px;
-}
-.hc-head-planes::before {
-  top: 8%; left: 5%; width: 52%; height: 62%;
-  background: linear-gradient(145deg, rgba(0, 42, 92, 0.03), rgba(0, 42, 92, 0) 70%);
-}
-.hc-head-planes::after {
-  top: 28%; left: 30%; width: 62%; height: 68%;
-  background: linear-gradient(145deg, rgba(0, 42, 92, 0.022), rgba(0, 42, 92, 0) 72%);
-}
+/* Deko-Platten entfernt — sie erzeugten eine sichtbare Grau/Weiß-Kante hinter der H1 */
+.hc-head-planes { display: none; }
 .hc-headline {
   position: relative;
   z-index: 1;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(28px, 3.3vw, 60px);
-  line-height: 1.04;
+  font-size: clamp(30px, 3.2vw, 56px);
+  line-height: 1.05;
   letter-spacing: -0.01em;
   color: #002a5c;
   margin: 0;
-  max-width: 15ch;
+  max-width: none;
 }
 
 /* Bildmodul */
@@ -1677,42 +1680,33 @@ button:focus-visible {
 
 /* Fünf Content-Karten */
 .hc-fields {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(14px, 1.2vw, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 0.6vw, 12px);
+  min-width: 0;
 }
 .hc-field {
+  flex: 1 1 0;
+  min-width: 0;
   text-align: left;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  padding: clamp(22px, 2vw, 34px);
+  justify-content: space-between;
+  gap: clamp(12px, 1.4vw, 18px);
+  padding: clamp(20px, 1.8vw, 32px);
   min-height: clamp(210px, 21vw, 290px);
-  transition:
-    transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 450ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: flex-grow 0.45s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
 }
-.hc-field:hover,
+/* Aktives/gehovertes Feld klappt auf (wächst) — wie in der Original-Hero */
 .hc-field.is-open {
-  transform: translateY(-2px);
+  flex-grow: 2.6;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(0, 42, 92, 0.04),
     0 16px 34px rgba(0, 42, 92, 0.075),
     0 3px 10px rgba(0, 42, 92, 0.04);
 }
-.hc-deco {
-  position: absolute;
-  right: -22%;
-  bottom: -26%;
-  width: 150%;
-  height: auto;
-  color: #002a5c;
-  opacity: 0.06;
-  pointer-events: none;
-  z-index: 0;
-}
-.hc-field > *:not(.hc-deco) { position: relative; z-index: 1; }
+.hc-field > * { position: relative; z-index: 1; }
 .hc-field-head {
   display: flex;
   align-items: flex-start;
@@ -1720,19 +1714,19 @@ button:focus-visible {
   gap: 12px;
 }
 .hc-num {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
+  font-family: var(--realtime);
+  font-size: 13.2px;
+  letter-spacing: 0.06em;
   color: rgba(0, 42, 92, 0.5);
   margin-top: 2px;
 }
 .hc-field-icon { color: #002a5c; }
 .hc-field-icon .hi-icon {
-  width: clamp(30px, 2.4vw, 40px);
-  height: clamp(30px, 2.4vw, 40px);
+  width: clamp(60px, 4.8vw, 80px);
+  height: clamp(60px, 4.8vw, 80px);
 }
 .hc-field-body {
-  margin-top: clamp(34px, 4vw, 72px);
+  margin-top: 0;
   display: flex;
   flex-direction: column;
 }
@@ -1747,7 +1741,7 @@ button:focus-visible {
   font-family: var(--sans);
   font-size: clamp(13px, 0.95vw, 14px);
   line-height: 1.6;
-  color: rgba(0, 42, 92, 0.62);
+  color: #0e0e0e;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -1770,7 +1764,7 @@ button:focus-visible {
 .hc-navy {
   position: relative;
   overflow: hidden;
-  border-radius: clamp(22px, 1.8vw, 34px);
+  border-radius: 5px;
   min-height: clamp(200px, 20vw, 260px);
   padding: clamp(28px, 3vw, 48px);
   display: flex;
@@ -1821,32 +1815,31 @@ button:focus-visible {
 @media (min-width: 900px) {
   .hc-grid {
     grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto 1fr 1fr 1.15fr 1fr;
     grid-template-areas:
-      "nav nav nav nav nav nav"
+      "brand brand brand brand photo photo"
+      "head head head head photo photo"
       "head head head head photo photo"
       "fields fields fields fields fields fields"
       "photoB photoB navy navy navy navy";
   }
-  .hc-nav { grid-area: nav; }
+  .hc-brand { grid-area: brand; }
   .hc-head { grid-area: head; }
   .hc-photo { grid-area: photo; }
-  .hc-fields { grid-area: fields; grid-template-columns: repeat(5, 1fr); }
+  .hc-fields { grid-area: fields; flex-direction: row; }
   .hc-photoB { grid-area: photoB; }
   .hc-navy { grid-area: navy; }
 }
 
-/* Tablet: Karten auf 2–3 Spalten, Navigation als Burger */
+/* Tablet/Mobile: Module stapeln, Bild/Marke in sinnvoller Reihenfolge */
 @media (max-width: 899px) {
-  .hc-nav-links { display: none; }
-  .hc-burger { display: flex; }
-  .hc-nav { position: relative; }
-}
-@media (min-width: 600px) and (max-width: 899px) {
-  .hc-fields { grid-template-columns: repeat(3, 1fr); }
+  .hc-brand { order: -2; }
+  .hc-head { order: -1; }
+  .hc-photo { min-height: clamp(220px, 40vw, 320px); }
+  .hc-field.is-open { flex-grow: 0; }
 }
 
 /* Reduced motion: keine Karten-Transitions */
 @media (prefers-reduced-motion: reduce) {
   .hc-field { transition: none; }
-  .hc-field:hover, .hc-field.is-open { transform: none; }
 }

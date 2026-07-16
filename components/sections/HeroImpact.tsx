@@ -26,9 +26,10 @@ const icons: Record<string, ReactNode> = {
   // langsam rotiert = der Betrieb läuft kontinuierlich weiter.
   orbit: (
     <>
-      <circle className="hi-a-run" cx="16" cy="16" r="12.5" strokeDasharray="2 3.1" />
+      <circle cx="16" cy="16" r="12.5" />
       <path d="M13.5 11 H22.5 V21 H13.5" />
-      <path d="M7 16 H19" />
+      {/* Pfeil gestrichelt — die Striche fließen nach innen (simuliert Bewegung) */}
+      <path className="hi-a-enter" d="M6 16 H19" strokeDasharray="2 2.4" />
       <path d="M15.6 12.9 L19 16 L15.6 19.1" />
     </>
   ),
@@ -37,13 +38,15 @@ const icons: Record<string, ReactNode> = {
   // pulsiert), sowie Kreis + Quadrat (bestehende Systeme – bleiben ruhig).
   venn: (
     <>
-      <path d="M4 16 H12" />
-      <path d="M12 16 L18.9 11.3" />
-      <circle className="hi-a-change" cx="21.5" cy="9.5" r="3.2" strokeDasharray="2 2.5" />
-      <path d="M12 16 H19.4" />
-      <circle cx="21.8" cy="16" r="2.4" />
-      <path d="M12 16 L19.8 20.2" />
-      <rect x="19.8" y="20.2" width="4.4" height="4.4" />
+      {/* baut sich von links (Knoten) nach rechts auf: Linien zeichnen,
+          Endpunkte ploppen versetzt nach (gestaffelt nach x-Position) */}
+      <path className="hi-b-line" style={{ animationDelay: "0s" }} pathLength={1} d="M3 16 H8" />
+      <path className="hi-b-line" style={{ animationDelay: "0.25s" }} pathLength={1} d="M8 16 H15.6" />
+      <circle className="hi-b-pop" style={{ animationDelay: "0.5s" }} cx="18.2" cy="16" r="2.6" />
+      <path className="hi-b-line" style={{ animationDelay: "0.6s" }} pathLength={1} d="M8 16 L21.4 8.5" />
+      <path className="hi-b-line" style={{ animationDelay: "0.6s" }} pathLength={1} d="M8 16 L22.5 22.5" />
+      <circle className="hi-b-pop" style={{ animationDelay: "0.95s" }} cx="24" cy="7" r="3" strokeDasharray="2 2.6" />
+      <rect className="hi-b-pop" style={{ animationDelay: "0.95s" }} x="22.5" y="22.5" width="5" height="5" />
     </>
   ),
   // 03 — Technik und Zielbild passen nicht mehr sauber zusammen.
@@ -60,11 +63,12 @@ const icons: Record<string, ReactNode> = {
   // fließt nach oben = die Richtung gibt der Kapazität Sinn.
   layers: (
     <>
-      <path className="hi-a-direction" d="M16 11 V4.3" strokeDasharray="2 2.4" />
+      <path d="M16 11 V4.3" />
       <path d="M13 6.8 L16 3.9 L19 6.8" />
-      <path d="M16 12.6 L23 15 L16 17.4 L9 15 Z" />
+      {/* drei Rauten: oben/unten schieben auseinander, Mitte bleibt */}
+      <path className="hi-a-sepUp" d="M16 12.6 L23 15 L16 17.4 L9 15 Z" />
       <path d="M16 16.6 L23 19 L16 21.4 L9 19 Z" />
-      <path d="M16 20.6 L23 23 L16 25.4 L9 23 Z" />
+      <path className="hi-a-sepDn" d="M16 20.6 L23 23 L16 25.4 L9 23 Z" />
     </>
   ),
   // 05 — Wir klären die Lage, ordnen die Optionen, schaffen die Grundlage.
@@ -173,7 +177,7 @@ export default function HeroImpact() {
                 onFocus={() => setActive(i)}
               >
                 <span className="hi-field-top">
-                  <span className="hi-num">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="hi-num">Szenario {String(i + 1).padStart(2, "0")}</span>
                   <span className="hi-icon-wrap">
                     <Icon name={f.icon} />
                   </span>

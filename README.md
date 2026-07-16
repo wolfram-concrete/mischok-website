@@ -32,30 +32,38 @@ npm run start    # Produktions-Server (nach build)
 
 ```
 app/
-  layout.tsx          Fonts (Source Serif 4 via next/font/google,
-                      Calibre via next/font/local), Header, Metadata
+  layout.tsx          Fonts (Source Serif 4 via next/font/google, Calibre +
+                      Realtime Rounded via next/font/local), Header, Metadata
   globals.css         Design-Tokens, Keyframes, responsive Regeln, reduced-motion
   page.tsx            One-Pager: alle Sektionen in Scroll-Reihenfolge
   referenzen/page.tsx Referenzen-Übersicht
   referenzen/9-levels/page.tsx  Referenz-Detailseite 9 Levels
-  fonts/              Calibre Web-Fonts (Regular/Medium/Bold, woff2 + woff)
+  fonts/              Web-Fonts: Calibre (Regular/Medium/Bold) + RealtimeRounded
 components/
-  layout/Header.tsx   Sticky Top-Navigation als Burger (Wortmarke + Panel)
-  sections/           Eine Datei pro Sektion (EinsatzfelderGrid, PortraitBleed,
-                      Ansatz, Stimme, Themen, Zusammenarbeit, Ueber, AusDerPraxis,
-                      Kontakt, ArbeitenBeiMischok, Footer, ReferenzenGrid)
-                      + Hero-Testvarianten (Hero, HeroBoxes, HeroBento,
-                      HeroSlider, HeroImpact — siehe „Hero-Testvarianten")
+  layout/Header.tsx   Sticky Top-Navigation als Burger (auf „/" ausgeblendet —
+                      Logo & Burger sitzen im Hero-Bento)
+  sections/           Eine Datei pro Sektion (HeroCeramic, PortraitBleed, Ansatz,
+                      Stimme, Themen, Zusammenarbeit, Ueber, AusDerPraxis,
+                      Kontakt, ArbeitenBeiMischok, Footer, ReferenzenGrid,
+                      EinsatzfelderGrid) + abgelegte Hero-Prototypen (Hero,
+                      HeroBoxes, HeroBento, HeroSlider, HeroImpact)
   ui/                 Geteilte Komponenten: LogoMark, CtaButton, ImageFrame,
-                      SectionLabel, Reveal
+                      PatternBg, NewsletterBar, SectionLabel, Reveal
 lib/content.ts        Verbindliche Inhaltstexte (FIELDS, POINTS, ACC, TOPICS, PRAXIS,
                       REFERENZEN_INTRO, REFERENZEN, REFERENZ_9LEVELS)
 public/assets/        Bilder, Icons; reale Projektfotos + assets/Redaktionel/
-public/Logo/          Offizielle Wortmarke (SVG)
+public/assets/Patterns/  Kubische Blau-Texturen für PatternBg (planes, bands,
+                      bands-soft, room, cubes, blocks)
+public/Logo/          Offizielle Wort-/Bildmarke (SVG + PNG)
 public/social/        Trust-Material-Depot (README + trust-feed.json + Belege)
 public/video/         Hero-Hintergrundvideo (WebM + MP4-Fallback + Poster)
 design-reference/     Design-Grundlagen: COLOR-LOGIC.md (Palette/Farblogik),
                       DESIGN-CODES.md (UI/UX-Kickoff), Original-DC & Handoff
+design-reference/schriftarten/  Haus-Schriften im Original (Calibre, Realtime
+                      Rounded). Bewusst NICHT unter public/ — alles dort wird
+                      öffentlich ausgeliefert; die lizenzierten Desktop-Fonts
+                      dürfen nicht im Web verteilt werden. Für die Website
+                      zählen nur die woff2 in app/fonts/ (via next/font/local).
 ```
 
 ## Design-Grundlagen (verbindlich)
@@ -66,28 +74,60 @@ design-reference/     Design-Grundlagen: COLOR-LOGIC.md (Palette/Farblogik),
   Klarheit · Orientierung · Vertrauen · Kompetenz. Jede neue Section wird dagegen
   geprüft.
 
-## Hero-Testvarianten
+## Hero (Porzellan-/Keramikoptik)
 
-Zum Vergleich liegen mehrere Hero-Prototypen oberhalb der Startseite (`page.tsx`):
-`Hero` (Video, Ausgangsstand), `HeroBoxes`, `HeroBento` (CGI-Haptik),
-`HeroSlider` (interaktives Accordion), `HeroImpact` (vollflächige Bento auf
-Logo-Modul). Sobald ein Favorit feststeht, werden die übrigen entfernt und das
-System daraus abgeleitet.
+Der finale Hero ist **`HeroCeramic`** — ein zusammenhängendes Bento-System auf
+heller, leicht bläulicher Grundfläche, das den Viewport füllt:
+
+- **Marken-Modul** links (Wortmarke = Home-Link), **Bildmodul** rechts über die
+  volle Höhe, **Burger** als Overlay oben rechts darauf.
+- **Headline-Modul** (Serif-H1, bündig zum Logo, unten im Modul).
+- **Fünf „Szenario"-Karten** als Flex-Accordion: das aktive/gehoverte Feld klappt
+  per `flex-grow` auf und zeigt seinen Detailtext.
+- **Teamfoto + Navy-CTA** in der Fußzeile des Bentos.
+- Einheitliche Kartenhaptik: 5 px Radius, heller Innensaum, weiche Tiefe, schmale
+  Stege. Zentrale Stellschrauben stehen im `hc-*`-Block in `globals.css`
+  (Radius, Gap, Schattenstärke, Hintergrundkontrast).
+
+Die älteren Prototypen (`Hero`, `HeroBoxes`, `HeroBento`, `HeroSlider`,
+`HeroImpact`) liegen noch im Repo, werden aber nicht mehr gerendert.
+`HeroImpact` hält aktuell noch die geteilten `Icon`/`FOCUS`/`NAV`-Exports.
+
+## Icons
+
+Fünf abstrakte **Systems-Thinking-Icons** (Outline-only, 1.5 px, `#002A5C`,
+runde Enden). Jedes hat eine eigene, **bedeutungsgetriebene** Animation statt
+eines Einheitsmusters — animiert werden vor allem die gestrichelten Elemente:
+
+| # | Motiv | Bewegung |
+|---|-------|----------|
+| 01 | Ring + eintretender Pfeil | gestrichelter Pfeil „zieht sich auf" |
+| 02 | Streckennetz | baut sich von links nach rechts auf |
+| 03 | Quadrat + Zielbild | gestricheltes Zielbild driftet (passt nicht) |
+| 04 | Rauten + Richtungspfeil | Rauten schieben auseinander |
+| 05 | Zentrum + Strahlen | Strahlen fließen nach außen |
 
 ## Typografie
 
-Zwei Schriften: **Source Serif 4** (Headlines/Nummern, `next/font/google`) und
-**Calibre** (alles andere — Fließtext, Labels, Buttons; lokale Web-Fonts in
-`app/fonts/` via `next/font/local`, Weights 400/500/700). Alle CSS-Variablen
-(`--serif`, `--sans`, `--mono`) sind auf diese beiden Schriften gemappt.
+Drei Schriften:
+
+- **Source Serif 4** — H1/Headlines & Zitate (`next/font/google`) → `--serif`.
+- **Calibre** — Fließtext, Labels, Buttons, Navigation → `--sans` / `--mono`.
+- **Realtime Rounded** — Display-/Label-Schrift, z. B. die „Szenario 0X"-Labels
+  → `--realtime`.
+
+Calibre und Realtime Rounded liegen als lokale Web-Fonts in `app/fonts/` und
+werden via `next/font/local` geladen; die Originaldateien aller Haus-Schriften
+liegen unter `public/schriftarten/`.
 
 ## Interaktionen
 
-- **Top-Navigation** — sticky, über dem Hero transparent, ab dem Scrollen mit
-  hellem Hintergrund; **Burger auf allen Breakpoints** (Links & CTA im Panel),
-  Burger-Striche in der Anmutung des „m" (`"use client"`).
-- **Hero** — vollflächiges Hintergrund-Video (loop, stumm, autoplay, `playsInline`)
-  mit dezentem Scrim; Text-Reveal als CSS-Keyframes.
+- **Top-Navigation** — sticky, **Burger auf allen Breakpoints** (Links & CTA im
+  Panel), Burger-Striche in der Anmutung des „m" (`"use client"`). Auf der
+  Startseite ausgeblendet: Wortmarke & Burger sitzen dort im Hero-Bento.
+- **Hero (`HeroCeramic`)** — Bento-Grid; die fünf Szenario-Karten sind ein
+  horizontales Flex-Accordion (Hover/Klick/Fokus klappt auf), die Icons animieren
+  bedeutungsgetrieben (`"use client"`).
 - **EinsatzfelderGrid** — Hover schärft die Karte; auf Touch-/No-Hover-Geräten
   sind alle Karten dauerhaft scharf (`(hover: hover)`-Erkennung, `"use client"`).
 - **Ansatz** — Pin-Scroll über 300vh mit `requestAnimationFrame`, blendet 3 Punkte durch.
@@ -98,12 +138,18 @@ Zwei Schriften: **Source Serif 4** (Headlines/Nummern, `next/font/google`) und
   Die 9-Levels-Karte verlinkt per „Referenz ansehen →" auf `/referenzen/9-levels`.
 - **AusDerPraxis** — Trust-Section vor dem Kontaktbereich: drei kuratierte
   Teaser-Karten, die extern (neuer Tab) auf LinkedIn verweisen — kein Embed.
+- **Footer** — Marke/Claim/Newsletter/CTA links, drei Linkspalten rechts; beim
+  Hovern einer Spalte dimmen die übrigen Links (reines CSS). Die Newsletter-Bar
+  (`"use client"`) übergibt die Anmeldung mangels Backend als vorbereitete Mail
+  an `info@mischok.de`.
+- **PatternBg** — dezente kubische Textur (soft-light) hinter Hero-CTA-, Über-
+  und Kontakt-Modul; über `next/image` optimiert, `pointer-events: none`.
 - **Reveal** — Scroll-Reveal via `IntersectionObserver`.
 
 Alle Animationen respektieren `prefers-reduced-motion: reduce`.
 
-Das Hero-Video wurde auf 1080p komprimiert und liegt als WebM (~451 KB) mit
-MP4-Fallback (~659 KB) und Poster-Frame in `public/video/`.
+`public/video/` enthält noch das komprimierte Hero-Video (WebM ~451 KB, MP4
+~659 KB, Poster) des abgelegten Video-Heros — aktuell ungenutzt.
 
 ## Scope & offene Punkte
 
