@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
 import { Icon, FOCUS, NAV } from "@/components/sections/HeroImpact";
 import { REFERENZEN, REFERENZEN_INTRO } from "@/lib/content";
@@ -38,20 +38,6 @@ export default function HeroCeramic() {
   const [active, setActive] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
-  /* Solange niemand in den Szenarien hovert, klappen sie nacheinander auf —
-     als dezenter Hinweis, dass in den Karten eine zweite Ebene steckt.
-     Beim ersten Hover/Fokus stoppt das dauerhaft. */
-  const [autoplay, setAutoplay] = useState(true);
-
-  useEffect(() => {
-    if (!autoplay) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = window.setInterval(
-      () => setActive((i) => (i + 1) % FOCUS.length),
-      3200
-    );
-    return () => window.clearInterval(id);
-  }, [autoplay]);
 
   return (
     <section className="hc-section" id="hero-ceramic">
@@ -59,7 +45,7 @@ export default function HeroCeramic() {
         {/* Navigations-Modul: Logo, Links (mit Referenzen-Dropdown) und CTA
             zusammengefasst in einem länglichen Bento über die volle Breite. */}
         <div
-          className={`hc-nav hc-surface${dropOpen ? " is-mega" : ""}`}
+          className={`hc-nav${dropOpen ? " is-mega" : ""}`}
           onMouseLeave={() => setDropOpen(false)}
         >
           <a href="/" aria-label="MISCHOK — Startseite" className="hc-nav-brand">
@@ -188,13 +174,7 @@ export default function HeroCeramic() {
         </div>
 
         {/* Fünf Content-Karten (Einzelmodule) */}
-        <div
-          className="hc-fields"
-          role="tablist"
-          aria-label="Fokusfelder"
-          onMouseEnter={() => setAutoplay(false)}
-          onFocusCapture={() => setAutoplay(false)}
-        >
+        <div className="hc-fields" role="tablist" aria-label="Fokusfelder">
           {FOCUS.map((f, i) => {
             const open = i === active;
             return (

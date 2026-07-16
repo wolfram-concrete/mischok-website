@@ -1592,8 +1592,9 @@ button:focus-visible {
 }
 
 /* 1 — Navigation als Bento-Modul */
-/* ── Navigations-Modul: Logo + Links + CTA in einem länglichen Bento ──
-   overflow sichtbar, damit Dropdown/Menü aus dem Modul herausragen dürfen. */
+/* ── Navigation: KEINE eigene Karte — Logo und Links sitzen direkt auf dem
+   Hero-Background. Erst wenn das Mega-Menü öffnet, zieht sich die Kartenfläche
+   auf und läuft als eine Fläche nach unten weiter (siehe .hc-nav.is-mega). ── */
 .hc-nav {
   position: relative;
   z-index: 30;
@@ -1603,6 +1604,11 @@ button:focus-visible {
   gap: clamp(10px, 1.4vw, 20px);
   padding: clamp(8px, 1.2vh, 14px) clamp(12px, 1.2vw, 18px) clamp(8px, 1.2vh, 14px)
     clamp(20px, 2vw, 32px);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: none;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .hc-nav-brand { display: flex; flex: none; }
 .hc-wordmark { display: block; height: clamp(22px, 2.1vh, 30px); width: auto; }
@@ -1653,7 +1659,20 @@ button:focus-visible {
 /* ── Mega-Navi: die Navigationszeile zoomt über ihre volle Breite nach unten
    auf. Höhe animiert über den grid-template-rows 0fr→1fr-Trick (echte
    Auto-Höhe animierbar), Inhalt faded verzögert + gestaffelt nach. ── */
-.hc-nav.is-mega { border-radius: 5px 5px 0 0; }
+/* Bei offenem Mega-Menü wird die Navi selbst zur Kartenfläche, die nahtlos in
+   das Panel darunter übergeht (unten offen, kein Radius, keine Kante). */
+.hc-nav.is-mega {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(249, 251, 255, 0.95) 45%,
+    rgba(238, 244, 252, 0.92) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.9);
+  border-bottom-color: transparent;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0 -2px 24px rgba(0, 42, 92, 0.06);
+}
 .hc-mega {
   position: absolute;
   top: 100%;
@@ -2029,17 +2048,15 @@ button:focus-visible {
   }
   .hc-grid {
     grid-template-columns: repeat(6, 1fr);
-    /* minmax(0,…): Zeilen dürfen unter ihre Inhaltshöhe schrumpfen.
-       Die Kartenreihe bekommt mehr Anteil, damit die größere Copy in die
-       aufgeklappte Karte passt; der Headline-Bereich hat Luft übrig. */
-    grid-template-rows: auto minmax(0, 0.8fr) minmax(0, 0.8fr) minmax(0, 1.95fr) minmax(0, 0.65fr);
-    /* Bewusst asymmetrisch: das Foto links zieht über zwei Zeilen hoch,
-       die Szenario-Karten rücken rechts daneben auf vier Spalten zusammen. */
+    /* minmax(0,…): Zeilen dürfen unter ihre Inhaltshöhe schrumpfen. */
+    grid-template-rows: auto minmax(0, 0.95fr) minmax(0, 0.95fr) minmax(0, 1.6fr) minmax(0, 1fr);
+    /* Szenarien wieder über die volle Breite; Foto links und Navy-Modul rechts
+       teilen sich die letzte Zeile und sind damit exakt gleich hoch. */
     grid-template-areas:
       "nav nav nav nav nav nav"
       "head head head head photo photo"
       "head head head head photo photo"
-      "photoB photoB fields fields fields fields"
+      "fields fields fields fields fields fields"
       "photoB photoB navy navy navy navy";
   }
   /* Mindesthöhen aufheben — die fr-Verteilung bestimmt die Höhen exakt */
