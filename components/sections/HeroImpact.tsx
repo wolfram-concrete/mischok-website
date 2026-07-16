@@ -45,7 +45,7 @@ const icons: Record<string, ReactNode> = {
       <circle className="hi-b-pop" style={{ animationDelay: "0.5s" }} cx="18.2" cy="16" r="2.6" />
       <path className="hi-b-line" style={{ animationDelay: "0.6s" }} pathLength={1} d="M8 16 L21.4 8.5" />
       <path className="hi-b-line" style={{ animationDelay: "0.6s" }} pathLength={1} d="M8 16 L22.5 22.5" />
-      <circle className="hi-b-pop" style={{ animationDelay: "0.95s" }} cx="24" cy="7" r="3" strokeDasharray="2 2.6" />
+      <circle className="hi-b-pop" style={{ animationDelay: "0.95s" }} cx="24" cy="7" r="3" />
       <rect className="hi-b-pop" style={{ animationDelay: "0.95s" }} x="22.5" y="22.5" width="5" height="5" />
     </>
   ),

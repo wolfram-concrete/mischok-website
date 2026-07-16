@@ -1134,27 +1134,30 @@ button:focus-visible {
 @keyframes hiOrder { to { stroke-dashoffset: -8.8; } }
 .hi-a-order path { animation: hiOrder 3.8s linear infinite; }
 
-/* 02 (venn) — baut sich von links nach rechts auf: Linien zeichnen + Endpunkte poppen */
+/* 02 (venn) — baut sich ruhig von links nach rechts auf: Linien zeichnen,
+   Endpunkte blenden weich ein. `animation-fill-mode: backwards` ist wichtig:
+   ohne das stünden die verzögerten Elemente vor ihrem Delay bereits gezeichnet
+   und würden dann auf „unsichtbar" springen (wirkt zerrissen). */
 @keyframes hiBuildLine {
   0% { stroke-dashoffset: 1; opacity: 1; }
-  40% { stroke-dashoffset: 0; opacity: 1; }
-  80% { stroke-dashoffset: 0; opacity: 1; }
-  92%, 100% { stroke-dashoffset: 0; opacity: 0; }
+  45% { stroke-dashoffset: 0; opacity: 1; }
+  86% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
 }
 .hi-b-line {
   stroke-dasharray: 1;
-  animation: hiBuildLine 4.5s ease-in-out infinite;
+  animation: hiBuildLine 6s ease-in-out infinite backwards;
 }
 @keyframes hiBuildPop {
-  0%, 4% { opacity: 0; transform: scale(0.5); }
-  16% { opacity: 1; transform: scale(1); }
-  80% { opacity: 1; transform: scale(1); }
-  92%, 100% { opacity: 0; transform: scale(1); }
+  0%, 6% { opacity: 0; transform: scale(0.72); }
+  24% { opacity: 1; transform: scale(1); }
+  86% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
 }
 .hi-b-pop {
   transform-box: fill-box;
   transform-origin: center;
-  animation: hiBuildPop 4.5s ease-in-out infinite;
+  animation: hiBuildPop 6s ease-in-out infinite backwards;
 }
 
 /* Logo = Home-Button */
@@ -1547,7 +1550,9 @@ button:focus-visible {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: clamp(18px, 3vw, 40px) clamp(16px, 4vw, 56px) clamp(44px, 6vw, 88px);
+  overflow: hidden;
+  /* oben bündig: Marken- und Bildmodul sitzen direkt an der Oberkante */
+  padding: 0 clamp(16px, 4vw, 56px) clamp(18px, 2.6vh, 44px);
   background: radial-gradient(
     circle at 18% 0%,
     rgba(255, 255, 255, 0.98) 0%,
@@ -1558,6 +1563,10 @@ button:focus-visible {
 .hc-grid {
   display: grid;
   flex: 1;
+  /* Pflicht: ohne min-height:0 kann das Flex-Item nicht unter seine
+     min-content-Höhe schrumpfen — beim Aufklappen einer Karte würde das Grid
+     sonst über 100svh wachsen und die oberen Module verspringen. */
+  min-height: 0;
   gap: clamp(6px, 0.6vw, 12px);
   grid-template-columns: 1fr;
 }
@@ -1583,64 +1592,262 @@ button:focus-visible {
 }
 
 /* 1 — Navigation als Bento-Modul */
-/* Marken-Modul: Wortmarke links, eigener Container (bis an das Bild) */
-.hc-brand {
+/* ── Navigations-Modul: Logo + Links + CTA in einem länglichen Bento ──
+   overflow sichtbar, damit Dropdown/Menü aus dem Modul herausragen dürfen. */
+.hc-nav {
+  position: relative;
+  z-index: 30;
+  overflow: visible;
   display: flex;
   align-items: center;
-  padding: clamp(14px, 1.4vw, 22px) clamp(20px, 2vw, 32px);
+  gap: clamp(10px, 1.4vw, 20px);
+  padding: clamp(8px, 1.2vh, 14px) clamp(12px, 1.2vw, 18px) clamp(8px, 1.2vh, 14px)
+    clamp(20px, 2vw, 32px);
 }
-.hc-brand-link { display: flex; }
-.hc-wordmark { display: block; height: clamp(24px, 2.1vw, 32px); width: auto; }
+.hc-nav-brand { display: flex; flex: none; }
+.hc-wordmark { display: block; height: clamp(22px, 2.1vh, 30px); width: auto; }
 
-/* Burger als Overlay oben rechts über dem rechten Bild */
-.hc-burger {
-  position: absolute;
-  top: clamp(22px, 2.4vw, 40px);
-  right: clamp(22px, 2.4vw, 40px);
-  z-index: 20;
+.hc-nav-links {
+  margin-left: auto;
   display: flex;
+  align-items: center;
+  gap: clamp(2px, 0.4vw, 8px);
+}
+.hc-nav-item { position: relative; }
+.hc-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-size: clamp(14px, 1vw, 17px);
+  font-weight: 500;
+  line-height: 1;
+  color: #002a5c;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.hc-nav-link:hover { background: rgba(0, 42, 92, 0.06); }
+.hc-chev { width: 14px; height: 14px; flex: none; transition: transform 0.25s ease; }
+.hc-chev.is-open { transform: rotate(180deg); }
+
+.hc-nav-cta {
+  flex: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background: #002a5c;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: clamp(14px, 1vw, 17px);
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  transition: filter 0.2s ease;
+}
+.hc-nav-cta:hover { filter: brightness(1.3); }
+
+/* ── Mega-Navi: die Navigationszeile zoomt über ihre volle Breite nach unten
+   auf. Höhe animiert über den grid-template-rows 0fr→1fr-Trick (echte
+   Auto-Höhe animierbar), Inhalt faded verzögert + gestaffelt nach. ── */
+.hc-nav.is-mega { border-radius: 5px 5px 0 0; }
+.hc-mega {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 29;
+  display: grid;
+  grid-template-rows: 0fr;
+  pointer-events: none;
+  transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hc-mega.is-open { grid-template-rows: 1fr; pointer-events: auto; }
+.hc-mega-clip { overflow: hidden; min-height: 0; }
+.hc-mega-inner {
+  display: flex;
+  gap: clamp(20px, 3vw, 48px);
+  padding: clamp(20px, 2.4vw, 40px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.99) 0%, rgba(243, 247, 253, 0.98) 100%);
+  box-shadow: 0 30px 64px rgba(0, 42, 92, 0.16);
+}
+.hc-mega-cols {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.4vw, 20px);
+}
+.hc-mega-label {
+  padding-left: 12px;
+  font-family: var(--realtime);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 42, 92, 0.5);
+}
+.hc-mega-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.hc-mega-link {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: background 0.25s ease, opacity 0.4s ease, transform 0.4s ease;
+}
+.hc-mega.is-open .hc-mega-link { opacity: 1; transform: translateY(0); }
+/* Stagger nur beim Öffnen — beim Schließen faden alle gleichzeitig aus */
+.hc-mega.is-open .hc-mega-link:nth-child(1) { transition-delay: 0.22s; }
+.hc-mega.is-open .hc-mega-link:nth-child(2) { transition-delay: 0.27s; }
+.hc-mega.is-open .hc-mega-link:nth-child(3) { transition-delay: 0.32s; }
+.hc-mega.is-open .hc-mega-link:nth-child(4) { transition-delay: 0.37s; }
+.hc-mega.is-open .hc-mega-link:nth-child(5) { transition-delay: 0.42s; }
+.hc-mega-link:hover { background: rgba(0, 42, 92, 0.05); }
+.hc-mega-n {
+  flex: none;
+  margin-top: 3px;
+  font-family: var(--realtime);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(0, 42, 92, 0.4);
+}
+.hc-mega-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.hc-mega-name {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 500;
+  color: #002a5c;
+}
+.hc-mega-sub {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(0, 42, 92, 0.55);
+}
+.hc-mega-cta {
+  flex: none;
+  width: clamp(230px, 24vw, 320px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(18px, 2vw, 28px);
+  border-radius: 5px;
+  background: linear-gradient(135deg, #002a5c 0%, #063d7a 55%, #002a5c 100%);
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.hc-mega.is-open .hc-mega-cta { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+.hc-mega-cta-label {
+  font-family: var(--realtime);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+.hc-mega-cta-h {
+  margin-top: auto;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.2;
+  color: #fff;
+}
+.hc-mega-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  transition: gap 0.25s ease;
+}
+.hc-mega-cta:hover .hc-mega-cta-btn { gap: 14px; }
+
+/* Rest des Heros dimmt ab, solange die Mega-Navi offen ist */
+.hc-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(0, 42, 92, 0.26);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.hc-scrim.is-open { opacity: 1; }
+
+/* Burger (nur < 900px) */
+.hc-burger {
+  display: none;
   flex-direction: column;
   gap: 5px;
   background: none;
   border: none;
   padding: 8px;
   cursor: pointer;
+  flex: none;
 }
 .hc-burger span {
   display: block;
-  width: 26px;
+  width: 24px;
   height: 2.5px;
   background: #002a5c;
-  border-radius: 0;
   transition: transform 0.25s ease, opacity 0.2s ease;
 }
 .hc-burger.is-open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
 .hc-burger.is-open span:nth-child(2) { opacity: 0; }
 .hc-burger.is-open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
 .hc-menu {
   position: absolute;
-  top: clamp(62px, 6vw, 92px);
-  right: clamp(22px, 2.4vw, 40px);
-  z-index: 20;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 30;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-width: 220px;
-  padding: 12px;
-  border-radius: 0 16px 16px 16px;
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 16px 40px rgba(0, 42, 92, 0.16);
+  min-width: 230px;
+  padding: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.99);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 48px rgba(0, 42, 92, 0.16);
+  animation: hcMenuIn 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes hcMenuIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .hc-menu a {
   font-family: var(--sans);
   font-size: 16px;
+  font-weight: 500;
   color: #002a5c;
   text-decoration: none;
-  padding: 10px 12px;
-  border-radius: 10px;
+  padding: 11px 12px;
+  border-radius: 4px;
 }
 .hc-menu a:hover { background: rgba(0, 42, 92, 0.05); }
-.hc-menu-cta { background: #002a5c; color: #fff !important; text-align: center; margin-top: 6px; }
+.hc-menu-cta {
+  background: #002a5c;
+  color: #fff !important;
+  text-align: center;
+  margin-top: 6px;
+}
 
 /* Headline-Modul */
 .hc-head {
@@ -1648,7 +1855,7 @@ button:focus-visible {
   flex-direction: column;
   justify-content: flex-end;
   /* linkes Padding = Brand-Padding, damit H1 bündig unter dem Logo startet */
-  padding: clamp(26px, 3vw, 52px) clamp(26px, 3vw, 52px) clamp(26px, 3vw, 52px)
+  padding: clamp(18px, 3vh, 48px) clamp(26px, 3vw, 52px) clamp(18px, 3vh, 48px)
     clamp(20px, 2vw, 32px);
   min-height: clamp(240px, 30vw, 400px);
 }
@@ -1659,7 +1866,9 @@ button:focus-visible {
   z-index: 1;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(30px, 3.2vw, 56px);
+  /* zurück auf die ursprüngliche Skalierung (Cap 70px); die vh-Grenze bleibt,
+     damit der Hero auch auf flachen Screens in einen Bildschirm passt */
+  font-size: clamp(26px, min(3.7vw, 6vh), 70px);
   line-height: 1.05;
   letter-spacing: -0.01em;
   color: #002a5c;
@@ -1693,8 +1902,8 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: clamp(12px, 1.4vw, 18px);
-  padding: clamp(20px, 1.8vw, 32px);
+  gap: clamp(8px, 1.4vh, 18px);
+  padding: clamp(14px, 2.2vh, 30px);
   min-height: clamp(210px, 21vw, 290px);
   transition: flex-grow 0.45s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
 }
@@ -1715,15 +1924,15 @@ button:focus-visible {
 }
 .hc-num {
   font-family: var(--realtime);
-  font-size: 13.2px;
+  font-size: 14px;
   letter-spacing: 0.06em;
   color: rgba(0, 42, 92, 0.5);
   margin-top: 2px;
 }
 .hc-field-icon { color: #002a5c; }
 .hc-field-icon .hi-icon {
-  width: clamp(60px, 4.8vw, 80px);
-  height: clamp(60px, 4.8vw, 80px);
+  width: clamp(32px, min(4.8vw, 7.4vh), 76px);
+  height: clamp(32px, min(4.8vw, 7.4vh), 76px);
 }
 .hc-field-body {
   margin-top: 0;
@@ -1733,14 +1942,14 @@ button:focus-visible {
 .hc-ftitle {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(16px, 1.15vw, 19px);
+  font-size: clamp(15px, min(1.35vw, 2.4vh), 22px);
   line-height: 1.2;
   color: #002a5c;
 }
 .hc-fdetail {
   font-family: var(--sans);
-  font-size: clamp(13px, 0.95vw, 14px);
-  line-height: 1.6;
+  font-size: clamp(12.5px, min(1.05vw, 1.8vh), 17px);
+  line-height: 1.55;
   color: #0e0e0e;
   max-height: 0;
   opacity: 0;
@@ -1766,11 +1975,11 @@ button:focus-visible {
   overflow: hidden;
   border-radius: 5px;
   min-height: clamp(200px, 20vw, 260px);
-  padding: clamp(28px, 3vw, 48px);
+  padding: clamp(16px, 2.2vh, 34px) clamp(24px, 3vw, 48px);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: clamp(12px, 1.4vw, 18px);
+  gap: clamp(6px, 1vh, 14px);
   background: linear-gradient(135deg, #002a5c 0%, #063d7a 55%, #002a5c 100%);
   box-shadow: 0 12px 30px rgba(0, 42, 92, 0.16), 0 2px 8px rgba(0, 42, 92, 0.08);
 }
@@ -1788,7 +1997,7 @@ button:focus-visible {
   position: relative;
   z-index: 1;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.7);
@@ -1802,7 +2011,7 @@ button:focus-visible {
   align-self: flex-start;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(22px, 2.2vw, 34px);
+  font-size: clamp(18px, min(2.2vw, 3.6vh), 34px);
   line-height: 1.04;
   color: #fff;
   text-decoration: none;
@@ -1813,17 +2022,36 @@ button:focus-visible {
 
 /* Desktop-Bento-Raster */
 @media (min-width: 900px) {
+  /* Hero passt exakt in den Viewport (überschreibt die globale min-height) */
+  #hero-ceramic.hc-section {
+    height: 100svh;
+    min-height: 100svh;
+  }
   .hc-grid {
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: auto 1fr 1fr 1.15fr 1fr;
+    /* minmax(0,…): Zeilen dürfen unter ihre Inhaltshöhe schrumpfen.
+       Die Kartenreihe bekommt mehr Anteil, damit die größere Copy in die
+       aufgeklappte Karte passt; der Headline-Bereich hat Luft übrig. */
+    grid-template-rows: auto minmax(0, 0.8fr) minmax(0, 0.8fr) minmax(0, 1.95fr) minmax(0, 0.65fr);
+    /* Bewusst asymmetrisch: das Foto links zieht über zwei Zeilen hoch,
+       die Szenario-Karten rücken rechts daneben auf vier Spalten zusammen. */
     grid-template-areas:
-      "brand brand brand brand photo photo"
+      "nav nav nav nav nav nav"
       "head head head head photo photo"
       "head head head head photo photo"
-      "fields fields fields fields fields fields"
+      "photoB photoB fields fields fields fields"
       "photoB photoB navy navy navy navy";
   }
-  .hc-brand { grid-area: brand; }
+  /* Mindesthöhen aufheben — die fr-Verteilung bestimmt die Höhen exakt */
+  .hc-head,
+  .hc-photo,
+  .hc-fields,
+  .hc-field,
+  .hc-photoB,
+  .hc-navy {
+    min-height: 0;
+  }
+  .hc-nav { grid-area: nav; }
   .hc-head { grid-area: head; }
   .hc-photo { grid-area: photo; }
   .hc-fields { grid-area: fields; flex-direction: row; }
@@ -1831,15 +2059,23 @@ button:focus-visible {
   .hc-navy { grid-area: navy; }
 }
 
-/* Tablet/Mobile: Module stapeln, Bild/Marke in sinnvoller Reihenfolge */
+/* Tablet/Mobile: Module stapeln; Navi klappt auf den Burger zusammen */
 @media (max-width: 899px) {
-  .hc-brand { order: -2; }
+  .hc-nav { order: -2; }
   .hc-head { order: -1; }
+  .hc-nav-links,
+  .hc-nav-cta,
+  .hc-mega { display: none; }
+  .hc-burger { display: flex; margin-left: auto; }
   .hc-photo { min-height: clamp(220px, 40vw, 320px); }
   .hc-field.is-open { flex-grow: 0; }
 }
 
-/* Reduced motion: keine Karten-Transitions */
+/* Reduced motion: keine Karten-/Navi-Transitions */
 @media (prefers-reduced-motion: reduce) {
-  .hc-field { transition: none; }
+  .hc-field,
+  .hc-mega,
+  .hc-mega-link,
+  .hc-mega-cta,
+  .hc-scrim { transition: none; }
 }
