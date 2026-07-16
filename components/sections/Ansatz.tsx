@@ -4,7 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import CtaButton from "@/components/ui/CtaButton";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { POINTS } from "@/lib/content";
+import ImageFrame from "@/components/ui/ImageFrame";
+import { POINTS, REFERENZEN } from "@/lib/content";
+
+/** Case-Brücke: die einzige Referenz, für die echtes Projektbild-Material
+ *  vorliegt (public/social/case-flutter-mobility.png, belegt über
+ *  trust-feed.json → id "case-flutter-mobility" → Barely Digital). */
+const CASE_REF = REFERENZEN.find((r) => r.name.startsWith("Barely Digital"));
 
 /**
  * Ansatz — Pin-Scroll über 300vh. Sticky-Container (100vh) mit Conic-Gradient,
@@ -114,6 +120,32 @@ export default function Ansatz() {
                 />
               ))}
             </div>
+
+            {/* Case-Brücke: belegt die Arbeitsweise mit einem echten Projekt.
+                Bild + Zuordnung stammen aus dem Trust-Depot (public/social,
+                trust-feed.json → case-flutter-mobility → Barely Digital). */}
+            {CASE_REF && (
+              <a href={`/referenzen#${CASE_REF.slug}`} className="az-case">
+                <span className="az-case-media">
+                  <ImageFrame
+                    src="/social/case-flutter-mobility.png"
+                    alt="vintrica-App — Case Barely Digital"
+                    placeholder=""
+                    sizes="200px"
+                    imgStyle={{ objectFit: "contain" }}
+                  />
+                </span>
+                <span className="az-case-body">
+                  <span className="az-case-kicker">Referenz {CASE_REF.n}</span>
+                  <span className="az-case-name">{CASE_REF.name}</span>
+                  <span className="az-case-sub">{CASE_REF.projektlage}</span>
+                  <span className="az-case-cta">
+                    Referenz ansehen
+                    <span aria-hidden="true">→</span>
+                  </span>
+                </span>
+              </a>
+            )}
           </div>
 
           {/* Rechts: aktiver Punkt */}
