@@ -1,4 +1,5 @@
 import ImageFrame from "@/components/ui/ImageFrame";
+import PatternBg from "@/components/ui/PatternBg";
 import Reveal from "@/components/ui/Reveal";
 
 /**
@@ -31,12 +32,14 @@ export default function Ueber() {
           boxSizing: "border-box",
         }}
       >
+        <PatternBg pattern="blocks" opacity={0.16} blend="soft-light" sizes="100vw" />
         <div
           aria-hidden="true"
           style={{
             position: "absolute",
             top: 0,
             right: 0,
+            zIndex: 1,
             width: "clamp(150px,16%,240px)",
             height: "clamp(44px,5vw,66px)",
             backgroundColor: "#D9D9D9",
@@ -45,6 +48,8 @@ export default function Ueber() {
 
         <div
           style={{
+            position: "relative",
+            zIndex: 1,
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
             gap: "clamp(28px,4vw,72px)",
@@ -87,6 +92,8 @@ export default function Ueber() {
 
         <div
           style={{
+            position: "relative",
+            zIndex: 1,
             display: "flex",
             flexWrap: "wrap",
             gap: "clamp(28px,4vw,72px)",

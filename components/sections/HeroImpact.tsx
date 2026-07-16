@@ -1,79 +1,100 @@
+"use client";
+
+import { useState } from "react";
 import type { ReactNode } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
+import PatternBg from "@/components/ui/PatternBg";
+import { FIELDS } from "@/lib/content";
 
 /**
- * HeroImpact — Hero-Testvariante: vollflächige Bento-„Card" auf Basis des
- * Logo-Moduls, angelehnt an die Referenz „Impact".
+ * HeroImpact — Masterversion des Heros: vollflächige Bento, nur der innere
+ * Aufbau (randlos), feine dunkle Stege.
  *
- * Prinzipien:
- * • Grid füllt den kompletten Hero (100svh), feine dunkle Stege.
- * • Grotesk-dominante, „coole" Typografie + Mono-Labels.
- * • Linke Navy-Spalte als kräftiger Farbblock mit Schraffur-Teilfläche + CTA.
- * • 5 Fokusfelder mit KLEINER Nummer + repräsentativem Icon (Platzhalter,
- *   bis die finalen Icons geliefert werden) + Kurztitel.
- * • Zwei echte Fotos, ein Stat-Modul, rudimentäre Teilflächen-Patterns.
- *
- * Layout (Desktop, 6×4 Module):
- *   navy head  head  head  head  photoA
- *   navy head  head  head  head  photoA
- *   navy f1    f2    f3    f4    f5
- *   navy stat  photoB photoB photoB photoB
+ * • Logo im linken Modul = Home-Button. Keine separate Navigationszeile —
+ *   der Burger sitzt oben rechts in der H1-Box und öffnet das Menü.
+ * • Kacheln 1–5 interaktiv (Klick/Hover skaliert prominent) mit animierten,
+ *   geometrischen Icons (leichte Rotation/Bewegung), reduced-motion-sicher.
+ * • Genau zwei Bildcontainer.
  */
 
-/* Platzhalter-Icons (24×24) — werden durch die gelieferten Icons ersetzt */
+/* — Systems-Thinking-Icons v3 (nach Referenz) — Outline-only, 1.5px, #002A5C.
+   Animiert werden die gestrichelten Elemente; jede Bewegung folgt der Bedeutung
+   des Icons (kein einheitliches Muster). reduced-motion-sicher. */
 const icons: Record<string, ReactNode> = {
-  running: (
+  // 01 — Ihre Software ist Teil des laufenden Betriebs.
+  // Pfeil „tritt ein" in eine offene Box; darum ein gestrichelter Ring, der
+  // langsam rotiert = der Betrieb läuft kontinuierlich weiter.
+  orbit: (
     <>
-      <circle cx="12" cy="12" r="9" strokeDasharray="2 3" />
-      <rect x="9" y="8.5" width="7" height="7" />
-      <path d="M4.5 12H12" />
-      <path d="M9.5 9.6 12 12 9.5 14.4" />
+      <circle className="hi-a-run" cx="16" cy="16" r="12.5" strokeDasharray="2 3.1" />
+      <path d="M13.5 11 H22.5 V21 H13.5" />
+      <path d="M7 16 H19" />
+      <path d="M15.6 12.9 L19 16 L15.6 19.1" />
     </>
   ),
-  diverge: (
+  // 02 — Anforderungen ändern sich, Systeme bleiben.
+  // Verzweigung zu drei Zielen: gestrichelter Kreis (die neue Anforderung –
+  // pulsiert), sowie Kreis + Quadrat (bestehende Systeme – bleiben ruhig).
+  venn: (
     <>
-      <path d="M3 12h5" />
-      <path d="M8 12 13 7.6" />
-      <path d="M8 12 12.4 12.5" />
-      <path d="M8 12 12.6 16" />
-      <circle cx="15.4" cy="6.6" r="2.6" strokeDasharray="1.8 2.4" />
-      <circle cx="13.6" cy="12.6" r="1.35" />
-      <rect x="13" y="15" width="3.1" height="3.1" />
+      <path d="M4 16 H12" />
+      <path d="M12 16 L18.9 11.3" />
+      <circle className="hi-a-change" cx="21.5" cy="9.5" r="3.2" strokeDasharray="2 2.5" />
+      <path d="M12 16 H19.4" />
+      <circle cx="21.8" cy="16" r="2.4" />
+      <path d="M12 16 L19.8 20.2" />
+      <rect x="19.8" y="20.2" width="4.4" height="4.4" />
     </>
   ),
-  mismatch: (
+  // 03 — Technik und Zielbild passen nicht mehr sauber zusammen.
+  // Solides Quadrat (Ist) + gestrichelter Kreis (Zielbild) überlappen; der
+  // gestrichelte Kreis driftet leicht hin und her = passt nicht sauber.
+  offset: (
     <>
-      <rect x="5.5" y="5.5" width="8.5" height="8.5" />
-      <circle cx="15" cy="15" r="5.2" strokeDasharray="1.8 2.4" />
+      <rect x="7.5" y="9.5" width="12" height="12" />
+      <circle className="hi-a-mismatch" cx="21" cy="17.5" r="7" strokeDasharray="2 2.8" />
     </>
   ),
-  scale: (
+  // 04 — Mehr Entwicklungskapazität hilft nur, wenn die Richtung stimmt.
+  // Gestapelte Rauten (Kapazität) + Richtungspfeil; der gestrichelte Schaft
+  // fließt nach oben = die Richtung gibt der Kapazität Sinn.
+  layers: (
     <>
-      <path d="M12 2.6V21" strokeDasharray="2 3" />
-      <path d="M9.6 5 12 2.6 14.4 5" />
-      <path d="M6.5 10.5 12 8 17.5 10.5 12 13Z" />
-      <path d="M6.5 14 12 11.5 17.5 14 12 16.5Z" />
+      <path className="hi-a-direction" d="M16 11 V4.3" strokeDasharray="2 2.4" />
+      <path d="M13 6.8 L16 3.9 L19 6.8" />
+      <path d="M16 12.6 L23 15 L16 17.4 L9 15 Z" />
+      <path d="M16 16.6 L23 19 L16 21.4 L9 19 Z" />
+      <path d="M16 20.6 L23 23 L16 25.4 L9 23 Z" />
     </>
   ),
-  clarify: (
+  // 05 — Wir klären die Lage, ordnen die Optionen, schaffen die Grundlage.
+  // Zentrum + vier gestrichelte Strahlen mit Pfeilspitzen; die Strahlen fließen
+  // vom geklärten Zentrum nach außen = Optionen ordnen sich.
+  radial: (
     <>
-      <circle cx="12" cy="12" r="2.6" />
-      <path d="M12 8.4V4M10.6 5.4 12 4 13.4 5.4" />
-      <path d="M12 15.6V20M10.6 18.6 12 20 13.4 18.6" />
-      <path d="M15.6 12H20M18.6 10.6 20 12 18.6 13.4" />
-      <path d="M8.4 12H4M5.4 10.6 4 12 5.4 13.4" />
+      <circle cx="16" cy="16" r="3.4" />
+      <g className="hi-a-order">
+        <path d="M18.4 13.6 L23.4 8.6" strokeDasharray="2 2.4" />
+        <path d="M13.6 13.6 L8.6 8.6" strokeDasharray="2 2.4" />
+        <path d="M18.4 18.4 L23.4 23.4" strokeDasharray="2 2.4" />
+        <path d="M13.6 18.4 L8.6 23.4" strokeDasharray="2 2.4" />
+      </g>
+      <path d="M21.3 8.6 L23.4 8.6 L23.4 10.7" />
+      <path d="M10.7 8.6 L8.6 8.6 L8.6 10.7" />
+      <path d="M23.4 21.3 L23.4 23.4 L21.3 23.4" />
+      <path d="M8.6 21.3 L8.6 23.4 L10.7 23.4" />
     </>
   ),
 };
 
-function Icon({ name }: { name: string }) {
+export function Icon({ name }: { name: string }) {
   return (
     <svg
       className="hi-icon"
-      viewBox="0 0 24 24"
+      viewBox="0 0 32 32"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.4}
+      strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -83,21 +104,93 @@ function Icon({ name }: { name: string }) {
   );
 }
 
-const FOCUS = [
-  { n: "01", icon: "running", t: "Software ist Teil des laufenden Betriebs" },
-  { n: "02", icon: "diverge", t: "Anforderungen ändern sich, Systeme bleiben" },
-  { n: "03", icon: "mismatch", t: "Technik und Zielbild passen nicht mehr" },
-  { n: "04", icon: "scale", t: "Mehr Kapazität hilft nur mit klarer Richtung" },
-  { n: "05", icon: "clarify", t: "Lage klären, Optionen ordnen, entscheiden" },
+export const FOCUS = [
+  { icon: "orbit", title: "Software ist Teil des laufenden Betriebs", detail: FIELDS[0].detail },
+  { icon: "venn", title: "Anforderungen ändern sich, Systeme bleiben", detail: FIELDS[1].detail },
+  { icon: "offset", title: "Technik und Zielbild passen nicht mehr", detail: FIELDS[2].detail },
+  { icon: "layers", title: "Mehr Kapazität hilft nur mit klarer Richtung", detail: FIELDS[3].detail },
+  { icon: "radial", title: "Lage klären, Optionen ordnen, entscheiden", detail: FIELDS[4].detail },
+];
+
+export const NAV = [
+  { label: "Referenzen", href: "/referenzen" },
+  { label: "Über uns", href: "/#ueber" },
+  { label: "Insights", href: "/#themen" },
+  { label: "Karriere", href: "/#arbeiten" },
 ];
 
 export default function HeroImpact() {
+  const [active, setActive] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <section className="hi-section" id="hero-impact">
       <div className="hi-card">
-        {/* Navy-Block: kräftiger Farbblock mit Schraffur-Teilfläche + CTA */}
+        {/* Brand-Modul: Logo = Home-Button */}
+        <div className="hi-cell hi-brand">
+          <a href="/" aria-label="MISCHOK — Startseite" className="hi-brand-link">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-solo.png"
+              alt="MISCHOK"
+              className="hi-wordmark"
+            />
+          </a>
+        </div>
+
+        {/* Headline (Serif-H1) — unten im Modul ausgerichtet */}
+        <div className="hi-cell hi-head">
+          <h1 className="hi-headline">
+            Wenn Software entscheidend für Ihren Geschäftserfolg ist, braucht sie
+            Menschen, die Verantwortung übernehmen.
+          </h1>
+        </div>
+
+        {/* Foto-Modul rechts */}
+        <div className="hi-cell hi-photo hi-photoL">
+          <ImageFrame
+            src="/assets/Mischok_2023_ma_245.jpg"
+            alt="MISCHOK — Team im Gespräch"
+            placeholder=""
+            sizes="(max-width:900px) 100vw, 34vw"
+            priority
+          />
+        </div>
+
+        {/* Interaktives Accordion-Band: Kacheln 1–5 */}
+        <div className="hi-fields" role="tablist" aria-label="Fokusfelder">
+          {FOCUS.map((f, i) => {
+            const open = i === active;
+            return (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={open}
+                className={`hi-field${open ? " is-open" : ""}`}
+                onClick={() => setActive(i)}
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+              >
+                <span className="hi-field-top">
+                  <span className="hi-num">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="hi-icon-wrap">
+                    <Icon name={f.icon} />
+                  </span>
+                </span>
+                <span className="hi-field-body">
+                  <span className="hi-ftitle">{f.title}</span>
+                  <span className="hi-fdetail">{f.detail}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Navy-Block: kräftiger Farbblock mit kubischer Stardust-Gradient-Fläche + CTA */}
         <div className="hi-cell hi-navy">
-          <span className="hi-hatch" aria-hidden="true" />
+          <PatternBg pattern="bands" opacity={0.55} blend="soft-light" priority sizes="50vw" />
+          <span className="hi-deco" aria-hidden="true" />
           <span className="hi-navy-label">Der nächste Schritt</span>
           <a href="#kontakt" className="hi-cta">
             Projektlage klären
@@ -107,58 +200,46 @@ export default function HeroImpact() {
           </a>
         </div>
 
-        {/* Headline (grotesk, groß) */}
-        <div className="hi-cell hi-head">
-          <span className="hi-kicker">
-            Ausgangslage<span className="hi-accent" aria-hidden="true" />
-          </span>
-          <h1 className="hi-headline">
-            Wenn Software entscheidend für Ihren Geschäftserfolg ist, braucht sie
-            Menschen, die Verantwortung übernehmen.
-          </h1>
-        </div>
-
-        {/* Foto A (portrait, rechts oben) */}
-        <div className="hi-cell hi-photo hi-photoA">
-          <ImageFrame
-            src="/assets/arbeiten.jpg"
-            alt="MISCHOK — Team bei der Arbeit"
-            placeholder=""
-            sizes="(max-width:900px) 100vw, 20vw"
-            priority
-          />
-        </div>
-
-        {/* Fünf Fokusfelder: kleine Nummer + Icon + Kurztitel */}
-        {FOCUS.map((f, i) => (
-          <div key={f.n} className={`hi-cell hi-field hi-f${i + 1}`}>
-            <span className="hi-field-top">
-              <span className="hi-num">{f.n}</span>
-              <span className="hi-icon-wrap">
-                <Icon name={f.icon} />
-              </span>
-            </span>
-            <p className="hi-ftitle">{f.t}</p>
-          </div>
-        ))}
-
-        {/* Stat-Modul (echter Beleg) mit Teilflächen-Balken */}
-        <div className="hi-cell hi-stat">
-          <span className="hi-stat-num">2010</span>
-          <span className="hi-stat-label">seit</span>
-          <span className="hi-stat-bar" aria-hidden="true" />
-        </div>
-
-        {/* Foto B (landscape, unten) */}
+        {/* Foto B */}
         <div className="hi-cell hi-photo hi-photoB">
           <ImageFrame
-            src="/assets/acc-2.jpg"
-            alt="MISCHOK — Zusammenarbeit im Team"
+            src="/assets/Mischok_2025_ma_216.jpg"
+            alt="MISCHOK — Geschäftsführung"
             placeholder=""
-            sizes="(max-width:900px) 100vw, 55vw"
+            sizes="(max-width:900px) 100vw, 40vw"
+            imgStyle={{ objectPosition: "center 32%" }}
           />
         </div>
       </div>
+
+      {/* Navigation: Burger oben rechts im Hero (über dem rechten Bild) */}
+      <button
+        type="button"
+        className={`hi-burger${menuOpen ? " is-open" : ""}`}
+        aria-label={menuOpen ? "Menü schließen" : "Menü öffnen"}
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((o) => !o)}
+      >
+        <span className="hi-burger-line" />
+        <span className="hi-burger-line" />
+        <span className="hi-burger-line" />
+      </button>
+      {menuOpen && (
+        <nav className="hi-menu" aria-label="Hauptnavigation">
+          {NAV.map((n) => (
+            <a key={n.label} href={n.href} onClick={() => setMenuOpen(false)}>
+              {n.label}
+            </a>
+          ))}
+          <a
+            href="/#kontakt"
+            className="hi-menu-cta"
+            onClick={() => setMenuOpen(false)}
+          >
+            Erstgespräch
+          </a>
+        </nav>
+      )}
     </section>
   );
 }

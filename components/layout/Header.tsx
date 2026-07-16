@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { REFERENZEN } from "@/lib/content";
 
 /**
@@ -38,6 +39,10 @@ const NAV: NavItem[] = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Auf der Startseite sitzt die Wortmarke oben im Hero-Bento. Der Header zeigt
+  // sein Logo dort erst, sobald man über den Hero hinausscrollt.
+  const isHome = usePathname() === "/";
+  const showLogo = !isHome || scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -48,6 +53,9 @@ export default function Header() {
 
   // Menü schließen, sobald ein Link geklickt wird
   const closeMobile = () => setMobileOpen(false);
+
+  // Startseite: keine separate Navigationszeile — Logo & Burger sitzen im Hero-Bento.
+  if (isHome) return null;
 
   return (
     <header
@@ -70,22 +78,24 @@ export default function Header() {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: showLogo ? "space-between" : "flex-end",
           height: "68px",
           paddingInline: "clamp(20px,5vw,64px)",
         }}
       >
-        {/* Wortmarke → Home (statt Bildmarke) */}
-        <a href="/" aria-label="MISCHOK — Startseite" style={{ display: "flex" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-solo.svg"
-            alt="MISCHOK"
-            width={121}
-            height={24}
-            style={{ display: "block", height: "22px", width: "auto" }}
-          />
-        </a>
+        {/* Wortmarke → Home. Auf der Home oben im Hero-Bento, im Header ab Scroll. */}
+        {showLogo && (
+          <a href="/" aria-label="MISCHOK — Startseite" style={{ display: "flex" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-solo.svg"
+              alt="MISCHOK"
+              width={121}
+              height={24}
+              style={{ display: "block", height: "22px", width: "auto" }}
+            />
+          </a>
+        )}
 
         {/* Desktop-Navigation */}
         <nav className="nav-desktop" style={{ gap: "clamp(20px,2.4vw,36px)" }}>

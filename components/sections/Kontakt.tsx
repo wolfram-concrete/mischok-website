@@ -1,4 +1,5 @@
 import ImageFrame from "@/components/ui/ImageFrame";
+import PatternBg from "@/components/ui/PatternBg";
 import CtaButton from "@/components/ui/CtaButton";
 
 const infoLine = {
@@ -42,6 +43,7 @@ export default function Kontakt() {
       <div
         style={{
           position: "relative",
+          overflow: "hidden",
           width: "100%",
           display: "flex",
           flexDirection: "column",
@@ -51,8 +53,9 @@ export default function Kontakt() {
           boxSizing: "border-box",
         }}
       >
+        <PatternBg pattern="bands" opacity={0.5} blend="soft-light" sizes="(max-width:900px) 100vw, 88vw" />
         {/* Headline + Intro */}
-        <div>
+        <div style={{ position: "relative", zIndex: 1 }}>
           <h2
             style={{
               fontFamily: "var(--serif)",
@@ -86,6 +89,8 @@ export default function Kontakt() {
         <div
           className="grid-kontakt"
           style={{
+            position: "relative",
+            zIndex: 1,
             gap: "clamp(40px,6vw,96px)",
             alignItems: "start",
             marginTop: "clamp(56px,9vw,150px)",

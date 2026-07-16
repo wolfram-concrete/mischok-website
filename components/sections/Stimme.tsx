@@ -42,11 +42,11 @@ export default function Stimme() {
         <div>
           <blockquote
             style={{
-              fontFamily: "var(--sans)",
-              fontWeight: 600,
-              fontSize: "clamp(20px,2.5vw,29px)",
-              lineHeight: 1.42,
-              letterSpacing: "-0.005em",
+              fontFamily: "var(--serif)",
+              fontWeight: 400,
+              fontSize: "clamp(23px,2.9vw,36px)",
+              lineHeight: 1.3,
+              letterSpacing: "-0.01em",
               color: "var(--ink)",
               margin: 0,
             }}

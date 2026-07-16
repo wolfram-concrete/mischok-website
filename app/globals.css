@@ -710,12 +710,15 @@ button:focus-visible {
   }
   #home-root > div > section#kontakt,
   #home-root > div > section#stimme,
-  #home-root > div > section#praxis {
+  #home-root > div > section#praxis,
+  #home-root > div > section#hero-ceramic {
     min-height: auto;
   }
   #home-root > div > section#portrait-bleed,
   #home-root > div > section#ansatz,
-  #home-root > div > section#arbeiten {
+  #home-root > div > section#arbeiten,
+  #home-root > div > section#hero-impact,
+  #home-root > div > section#hero-ceramic {
     padding-left: 0;
     padding-right: 0;
   }
@@ -875,10 +878,9 @@ button:focus-visible {
   }
 }
 
-
 /* ===================================================================
-   HeroImpact — vollflächige Bento auf Logo-Modul (53×45), Referenz „Impact"
-   Grotesk-Typo, feine dunkle Stege, Navy-Block mit Schraffur, 2 Fotos.
+   HeroImpact — nur der innere Bento (randlos), feine dunkle Stege.
+   Serif-H1, Wortmarke im Modul, interaktives Fokusfeld-Band, 2 Fotos.
    =================================================================== */
 .hi-section {
   position: relative;
@@ -886,25 +888,22 @@ button:focus-visible {
   background: #efeeeb;
   min-height: 100svh;
   display: flex;
-  padding: clamp(80px, 9vw, 104px) clamp(16px, 2.4vw, 32px) clamp(20px, 2.4vw, 32px);
+  padding: 0; /* randlos, komplett formatfüllend */
 }
-/* Card füllt den Hero; Grid = 6×4 Module, feine dunkle Stege (gap auf dunklem Grund) */
+/* Card = reines Grid mit feinen Stegen, KEIN Gehäuse (kein Rahmen/Radius/Schatten) */
 .hi-card {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: 0.45fr 0.85fr 0.85fr 1.05fr 1fr;
   grid-template-areas:
-    "navy head  head  head  head  photoA"
-    "navy head  head  head  head  photoA"
-    "navy f1    f2    f3    f4    f5"
-    "navy stat  photoB photoB photoB photoB";
+    "brand  brand  brand  brand  photoL photoL"
+    "head   head   head   head   photoL photoL"
+    "head   head   head   head   photoL photoL"
+    "fields fields fields fields fields fields"
+    "photoB photoB navy   navy   navy   navy";
   gap: 1px;
   background: rgba(20, 28, 40, 0.5); /* feine dunkle Stege */
-  border: 1px solid rgba(20, 28, 40, 0.6);
-  border-radius: clamp(16px, 1.4vw, 22px);
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(20, 28, 40, 0.06), 0 24px 56px rgba(20, 28, 40, 0.12);
 }
 .hi-cell {
   position: relative;
@@ -916,18 +915,20 @@ button:focus-visible {
   min-width: 0;
   min-height: 0;
 }
-.hi-head { grid-area: head; justify-content: flex-start; }
-.hi-photoA { grid-area: photoA; padding: 0; }
+.hi-brand { grid-area: brand; align-items: flex-start; justify-content: flex-start; }
+.hi-head { grid-area: head; justify-content: center; }
+.hi-photoL { grid-area: photoL; padding: 0; }
 .hi-photoB { grid-area: photoB; padding: 0; }
 .hi-navy { grid-area: navy; background: var(--navy); justify-content: flex-end; gap: clamp(10px, 1vw, 14px); }
-.hi-f1 { grid-area: f1; }
-.hi-f2 { grid-area: f2; }
-.hi-f3 { grid-area: f3; }
-.hi-f4 { grid-area: f4; }
-.hi-f5 { grid-area: f5; }
-.hi-stat { grid-area: stat; justify-content: flex-end; }
 
-/* — Headline: grotesk, groß, „cool" — */
+/* — Wortmarke im Bento-Modul — */
+.hi-wordmark {
+  display: block;
+  width: min(100%, 230px);
+  height: auto;
+}
+
+/* — Headline: akademische Serif-H1 — */
 .hi-kicker {
   display: inline-flex;
   align-items: center;
@@ -943,20 +944,95 @@ button:focus-visible {
   width: 7px;
   height: 7px;
   margin-left: 8px;
-  background: var(--karriere); /* kräftiger Detail-Akzent (kantig) */
+  background: var(--karriere);
 }
 .hi-headline {
-  font-family: var(--sans);
-  font-weight: 700;
-  font-size: clamp(28px, 3.1vw, 54px);
-  line-height: 1.02;
-  letter-spacing: -0.02em;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(30px, 3.3vw, 58px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
   color: var(--navy);
-  margin: auto 0 0;
+  margin: 0;
   max-width: 20ch;
 }
 
-/* — Navy-Block: Schraffur-Teilfläche oben + Label + CTA — */
+/* — Interaktives Fokusfeld-Band (Accordion) — */
+.hi-fields {
+  grid-area: fields;
+  display: flex;
+  gap: 1px;
+  background: rgba(20, 28, 40, 0.5); /* gleiche feine Stege */
+  min-width: 0;
+  min-height: 0;
+}
+.hi-field {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(12px, 1.4vw, 18px);
+  padding: clamp(16px, 1.5vw, 26px);
+  background: var(--white);
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  transition: flex-grow 0.45s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease;
+}
+.hi-field.is-open {
+  flex-grow: 2.8;
+  background: var(--snow);
+}
+.hi-field-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+.hi-num {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.hi-icon-wrap { display: inline-flex; color: var(--navy); flex: none; }
+.hi-icon {
+  width: clamp(24px, 2vw, 32px);
+  height: clamp(24px, 2vw, 32px);
+}
+.hi-field-body { min-width: 0; }
+.hi-ftitle {
+  display: block;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(14px, 1.05vw, 17px);
+  line-height: 1.28;
+  color: var(--ink);
+}
+.hi-fdetail {
+  display: block;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  font-family: var(--sans);
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.5;
+  color: var(--slate);
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease,
+    margin-top 0.45s ease;
+}
+.hi-field.is-open .hi-fdetail {
+  max-height: 14em;
+  opacity: 1;
+  margin-top: clamp(10px, 1.1vw, 14px);
+}
+
+/* — Navy-Block: Schraffur-Teilfläche + CTA — */
 .hi-hatch {
   position: absolute;
   top: 0;
@@ -986,101 +1062,791 @@ button:focus-visible {
   gap: 10px;
   align-self: flex-start;
   text-decoration: none;
-  font-family: var(--sans);
-  font-weight: 700;
-  font-size: clamp(19px, 2vw, 30px);
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(20px, 2.1vw, 32px);
   line-height: 1.04;
   letter-spacing: -0.01em;
   color: var(--on-navy);
   transition: gap 0.25s ease;
 }
 .hi-cta:hover { gap: 16px; }
-.hi-cta-arrow { font-weight: 400; }
+.hi-cta-arrow { font-family: var(--sans); }
 
-/* — Fokusfeld-Module: kleine Nummer + Icon + Kurztitel — */
-.hi-field { justify-content: space-between; }
-.hi-field-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-.hi-num {
-  font-family: var(--mono);
-  font-weight: 500;
-  font-size: 13px;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-}
-.hi-icon-wrap { display: inline-flex; color: var(--navy); }
-.hi-icon {
-  width: clamp(26px, 2.2vw, 34px);
-  height: clamp(26px, 2.2vw, 34px);
-}
-.hi-ftitle {
-  font-family: var(--sans);
-  font-size: clamp(13px, 1vw, 15px);
-  line-height: 1.32;
-  color: var(--slate);
-  margin: clamp(10px, 1.2vw, 16px) 0 0;
-}
-
-/* — Stat-Modul: große Zahl + Label + Teilflächen-Balken — */
-.hi-stat-num {
-  font-family: var(--sans);
-  font-weight: 700;
-  font-size: clamp(26px, 2.6vw, 40px);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--navy);
-}
-.hi-stat-label {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 6px;
-}
-.hi-stat-bar {
-  display: block;
-  height: 4px;
-  margin-top: clamp(10px, 1.2vw, 14px);
-  background: linear-gradient(
-    to right,
-    var(--navy) 0,
-    var(--navy) 62%,
-    var(--line) 62%,
-    var(--line) 100%
-  );
-}
-
-/* — Fotos dezent (authentisch, lenken nicht ab) — */
+/* — Fotos dezent — */
 .hi-photo :is(img, [role="img"]) {
   filter: grayscale(0.12) brightness(0.95) contrast(1.02);
 }
 
-/* — Mobile: Modul-Raster auflösen → gestapeltes Bento (2 Spalten) — */
+/* — Mobile: Raster stapeln, Band als vertikales Accordion — */
 @media (max-width: 899px) {
   .hi-card {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: none;
-    grid-auto-rows: minmax(90px, auto);
+    grid-auto-rows: minmax(0, auto);
     grid-template-areas: none;
   }
-  .hi-cell { grid-area: auto; }
-  .hi-head,
-  .hi-navy,
-  .hi-photoA,
-  .hi-photoB,
-  .hi-f5 {
-    grid-column: 1 / -1;
-  }
-  .hi-photoA { min-height: 200px; }
-  .hi-photoB { min-height: 180px; }
-  .hi-navy { min-height: 150px; }
-  .hi-head { min-height: 200px; }
-  /* Lesereihenfolge mobil: Headline zuerst, CTA-Block zuletzt */
+  .hi-cell,
+  .hi-fields { grid-column: 1 / -1; grid-area: auto; }
+  .hi-brand { order: -2; }
   .hi-head { order: -1; }
-  .hi-navy { order: 1; }
+  .hi-photoL { min-height: 200px; }
+  .hi-photoB { min-height: 180px; }
+  .hi-navy { min-height: 150px; order: 1; }
+  .hi-fields { flex-direction: column; }
+  .hi-field { flex: none; }
+  .hi-field.is-open { flex: none; }
+}
+
+/* ===================================================================
+   HeroImpact — animierte Icons, Home-Link, Burger-in-H1-Box + Menü
+   =================================================================== */
+/* ── Systems-Thinking-Icons v3: gestrichelte Elemente animiert, je Icon eine
+   eigene, bedeutungsgetriebene Bewegung (keine einheitliche Animation). ── */
+
+/* 01 — gestrichelter Ring rotiert langsam = laufender Betrieb */
+@keyframes hiRun { to { transform: rotate(360deg); } }
+.hi-a-run {
+  transform-box: view-box;
+  transform-origin: 16px 16px;
+  animation: hiRun 26s linear infinite;
+}
+
+/* 02 — die (gestrichelte) neue Anforderung pulsiert; Systeme bleiben ruhig */
+@keyframes hiChange { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+.hi-a-change {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hiChange 4.5s ease-in-out infinite;
+}
+
+/* 03 — gestricheltes Zielbild driftet hin und her = passt nicht sauber zusammen */
+@keyframes hiMismatch {
+  0%, 100% { transform: translateX(-1.4px); }
+  50% { transform: translateX(1.4px); }
+}
+.hi-a-mismatch { animation: hiMismatch 5s ease-in-out infinite; }
+
+/* 04 — gestrichelter Pfeilschaft fließt nach oben = Richtung */
+@keyframes hiDirection { to { stroke-dashoffset: -8.8; } }
+.hi-a-direction { animation: hiDirection 3.4s linear infinite; }
+
+/* 05 — gestrichelte Strahlen fließen vom Zentrum nach außen = Optionen ordnen */
+@keyframes hiOrder { to { stroke-dashoffset: -8.8; } }
+.hi-a-order path { animation: hiOrder 3.8s linear infinite; }
+
+/* Logo = Home-Button */
+.hi-brand-link { display: block; }
+
+/* Burger oben rechts in der H1-Box */
+.hi-head { position: relative; }
+.hi-burger {
+  position: absolute;
+  top: clamp(16px, 1.5vw, 26px);
+  right: clamp(16px, 1.5vw, 26px);
+  z-index: 6;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+}
+.hi-burger-line {
+  display: block;
+  width: 27px;
+  height: 3px;
+  background: var(--navy);
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.hi-burger.is-open .hi-burger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hi-burger.is-open .hi-burger-line:nth-child(2) { opacity: 0; }
+.hi-burger.is-open .hi-burger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* Menü-Panel */
+.hi-menu {
+  position: absolute;
+  top: clamp(50px, 5vw, 66px);
+  right: clamp(16px, 1.5vw, 26px);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 210px;
+  padding: 10px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 16px 40px rgba(20, 28, 40, 0.16);
+}
+.hi-menu a {
+  text-decoration: none;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--navy);
+  padding: 10px 12px;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+.hi-menu a:hover { background: var(--card); }
+.hi-menu-cta {
+  margin-top: 6px;
+  background: var(--navy);
+  color: var(--bg) !important;
+  font-weight: 700 !important;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hi-a-run,
+  .hi-a-change,
+  .hi-a-mismatch,
+  .hi-a-direction,
+  .hi-a-order path {
+    animation: none !important;
+  }
+}
+
+/* ===================================================================
+   HeroImpact — Ästhetik-Upgrade: Gradients + gestaffelte Einblend-Bewegung
+   (agiler/haptischer; überschreibt die Flat-Backgrounds oben)
+   =================================================================== */
+.hi-cell {
+  background: linear-gradient(180deg, #eeece6 0%, #ffffff 62%);
+}
+.hi-navy {
+  background: linear-gradient(155deg, #023568 0%, #001a3b 100%);
+}
+.hi-field {
+  background: linear-gradient(180deg, #efede7 0%, #ffffff 64%);
+}
+.hi-field.is-open {
+  background: linear-gradient(180deg, #e8e5de 0%, #fbfaf7 60%);
+}
+
+/* Gestaffelter Blur-/Fade-in beim Laden (wie im Referenz-Beispiel) */
+@keyframes hiReveal {
+  from { opacity: 0; transform: translateY(16px) scale(0.995); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+.hi-card > * {
+  animation: hiReveal 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hi-card > *:nth-child(1) { animation-delay: 0.05s; }
+.hi-card > *:nth-child(2) { animation-delay: 0.13s; }
+.hi-card > *:nth-child(3) { animation-delay: 0.21s; }
+.hi-card > *:nth-child(4) { animation-delay: 0.29s; }
+.hi-card > *:nth-child(5) { animation-delay: 0.37s; }
+.hi-card > *:nth-child(6) { animation-delay: 0.45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hi-card > * {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+/* ===================================================================
+   HeroImpact — Icon-Iteration (größer + feiner) & kubische Deco-Gradients
+   =================================================================== */
+/* Icons: deutlich größer, feine, nicht-skalierende Strichstärke */
+.hi-icon {
+  width: clamp(34px, 3vw, 46px);
+  height: clamp(34px, 3vw, 46px);
+}
+.hi-icon * {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Kubische „Stardust"-Fläche: rotierte Mini-Quader (Logo-Modul) bilden über
+   eine Maske einen Gradient. Als Schmuck-Füllfläche für Boxen/Karten. */
+.deco-cubes {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-repeat: repeat;
+  background-size: 9px 9px;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(135deg, #000 0%, transparent 62%);
+  mask-image: linear-gradient(135deg, #000 0%, transparent 62%);
+}
+.deco-cubes--blue {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='9'%20height='9'%3E%3Crect%20x='3'%20y='3'%20width='3'%20height='3'%20transform='rotate(45%204.5%204.5)'%20fill='%23bcd6f5'/%3E%3C/svg%3E");
+}
+.deco-cubes--green {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='9'%20height='9'%3E%3Crect%20x='3'%20y='3'%20width='3'%20height='3'%20transform='rotate(45%204.5%204.5)'%20fill='%23ccff99'/%3E%3C/svg%3E");
+}
+
+/* Navy-Block: Basis-Gradient + weicher blauer Glow (mehr Tiefe/Haptik) */
+.hi-navy {
+  background:
+    radial-gradient(135% 95% at 10% 6%, rgba(74, 132, 214, 0.34) 0%, rgba(74, 132, 214, 0) 55%),
+    linear-gradient(155deg, #023568 0%, #001a3b 100%);
+}
+.hi-navy .hi-navy-label,
+.hi-navy .hi-cta {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===================================================================
+   HeroImpact — Runde 3: ruhiger, klare Priorität, feinere große Icons,
+   Feld-Headlines blau/Serif, Navy als weiche Vertikal-Bänder + Grain
+   =================================================================== */
+/* Ruhiger: Zellen flach (kein Gradient) — Priorität liegt auf dem Navy-Block */
+.hi-cell { background: var(--white); }
+.hi-field { background: var(--white); }
+.hi-field.is-open { background: var(--snow); }
+
+/* Icons: großzügige optische Größe, konstante 1.5px-Linie (Swiss/editorial) */
+.hi-icon {
+  width: clamp(44px, 3.6vw, 56px);
+  height: clamp(44px, 3.6vw, 56px);
+  stroke-width: 1.5;
+}
+
+/* Feld-Headlines: blau, in der H1-Serif */
+.hi-ftitle {
+  font-family: var(--serif);
+  font-weight: 400;
+  color: var(--navy);
+}
+
+/* Navy-Block: weiche vertikale Blau-Bänder (HelloMortal-Prinzip) + Glow */
+.hi-navy {
+  background:
+    radial-gradient(130% 100% at 16% 0%, rgba(96, 156, 228, 0.26) 0%, rgba(96, 156, 228, 0) 55%),
+    linear-gradient(
+      90deg,
+      #012a54 0%,
+      #012a54 9%,
+      #0b478a 22%,
+      #012a54 36%,
+      #012a54 50%,
+      #0b478a 62%,
+      #012a54 76%,
+      #012a54 88%,
+      #0b478a 99%,
+      #012a54 100%
+    );
+}
+/* Feiner Film-Grain als „Sternstaub"-Haptik über den Bändern */
+.hi-deco {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.85'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='160'%20height='160'%20filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 170px 170px;
+  opacity: 0.14;
+  mix-blend-mode: overlay;
+}
+
+/* HeroImpact — H1 unten im Modul, Burger als Overlay oben rechts im Hero */
+.hi-head { justify-content: flex-end; }
+.hi-burger { z-index: 20; }
+.hi-menu { z-index: 20; }
+
+/* HeroImpact — Runde 5: echte Foto-Textur (PatternBg „bands") auf ruhiger,
+   dunkler Navy-Basis. Die Basis bleibt dunkel → weißer Text bleibt lesbar;
+   die architektonischen Bänder kommen aus der Textur (soft-light). */
+.hi-navy {
+  background:
+    linear-gradient(150deg, #023a72 0%, #001a3b 76%);
+}
+.hi-deco { opacity: 0.12; }
+
+/* Headline füllt ≥80% der Modulbreite, größer */
+.hi-headline {
+  max-width: none;
+  font-size: clamp(34px, 3.7vw, 70px);
+}
+
+/* ===================================================================
+   Footer v2 — Aufbau nach Harbor-Referenz (Marke/CTA links, große
+   Linklisten rechts, Bottom-Leiste mit Linien + Social)
+   =================================================================== */
+.ft-halves {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(48px, 6vw, 96px);
+}
+.ft-left {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.6vw, 32px);
+}
+.ft-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: clamp(32px, 4vw, 56px);
+}
+@media (min-width: 820px) {
+  .ft-halves {
+    grid-template-columns: 1fr 1.5fr;
+    align-items: start;
+  }
+}
+.ft-col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2vw, 26px);
+}
+.ft-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ft-linkcol {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.1vw, 14px);
+}
+.ft-link {
+  font-family: var(--sans);
+  font-size: clamp(16px, 1.4vw, 20px);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--ink);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+/* Harbor-Effekt: beim Hover einer Spalte dimmen die übrigen Links */
+.ft-linkcol:hover .ft-link { opacity: 0.45; }
+.ft-linkcol:hover .ft-link:hover { opacity: 1; }
+.ft-address {
+  font-family: var(--sans);
+  font-size: clamp(15px, 1.3vw, 17px);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.6;
+  color: var(--slate);
+}
+.ft-bottom {
+  margin-top: clamp(56px, 8vw, 128px);
+  padding: clamp(22px, 2.4vw, 32px) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+.ft-bottom-left {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2vw, 28px);
+}
+.ft-social {
+  display: inline-flex;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+.ft-social:hover { color: var(--navy); }
+.ft-legal {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--muted);
+}
+@media (max-width: 560px) {
+  .ft-bottom { flex-direction: column; align-items: flex-start; }
+}
+
+/* Footer — Newsletter-Bar */
+.ft-news {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 340px;
+}
+.ft-news-form {
+  position: relative;
+}
+.ft-news-input {
+  width: 100%;
+  height: 48px;
+  padding: 12px 52px 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+}
+.ft-news-input::placeholder { color: var(--muted); }
+.ft-news-input:focus { outline: none; border-color: var(--navy); }
+.ft-news-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--navy);
+  transition: transform 0.2s ease;
+}
+.ft-news-btn:hover { transform: translateX(3px); }
+.ft-news-note {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.ft-news-done {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--slate);
+}
+
+/* ===================================================================
+   HeroCeramic — zweite Hero-Variante: zusammenhängendes, leicht
+   plastisches Bento-System (hell, ruhig, technisch). Eigener Namespace.
+   =================================================================== */
+.hc-section {
+  position: relative;
+  padding: clamp(18px, 3vw, 40px) clamp(16px, 4vw, 56px) clamp(44px, 6vw, 88px);
+  background: radial-gradient(
+    circle at 18% 0%,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(247, 250, 255, 0.94) 36%,
+    rgba(239, 244, 251, 0.96) 100%
+  );
+}
+.hc-grid {
+  display: grid;
+  gap: clamp(14px, 1.2vw, 24px);
+  grid-template-columns: 1fr;
+}
+
+/* Einheitliche keramische Kartenhaptik */
+.hc-surface {
+  position: relative;
+  overflow: hidden;
+  border-radius: clamp(22px, 1.8vw, 34px);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(249, 251, 255, 0.95) 45%,
+    rgba(238, 244, 252, 0.92) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 42, 92, 0.035),
+    0 12px 30px rgba(0, 42, 92, 0.055),
+    0 2px 8px rgba(0, 42, 92, 0.035);
+}
+
+/* 1 — Navigation als Bento-Modul */
+.hc-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 24px);
+  padding: clamp(12px, 1.2vw, 18px) clamp(18px, 2vw, 28px);
+}
+.hc-nav-brand { display: flex; flex: none; }
+.hc-wordmark { display: block; height: clamp(22px, 2vw, 28px); width: auto; }
+.hc-nav-divider {
+  width: 1px;
+  align-self: stretch;
+  margin: 6px 0;
+  background: rgba(0, 42, 92, 0.12);
+}
+.hc-nav-links {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 1.8vw, 30px);
+}
+.hc-nav-links a {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: #002a5c;
+  text-decoration: none;
+  opacity: 0.82;
+  transition: opacity 0.2s ease;
+}
+.hc-nav-links a:hover { opacity: 1; }
+.hc-nav-cta {
+  background: #002a5c;
+  color: #fff !important;
+  opacity: 1 !important;
+  padding: 9px 18px;
+  border-radius: 100px;
+}
+.hc-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  margin-left: auto;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+.hc-burger span { display: block; width: 26px; height: 2.5px; background: #002a5c; border-radius: 0; }
+.hc-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 220px;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 16px 40px rgba(0, 42, 92, 0.12);
+}
+.hc-menu a {
+  font-family: var(--sans);
+  font-size: 16px;
+  color: #002a5c;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+.hc-menu a:hover { background: rgba(0, 42, 92, 0.05); }
+.hc-menu-cta { background: #002a5c; color: #fff !important; text-align: center; margin-top: 6px; }
+
+/* Headline-Modul */
+.hc-head {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(26px, 3vw, 52px);
+  min-height: clamp(240px, 30vw, 400px);
+}
+.hc-head-planes { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.hc-head-planes::before,
+.hc-head-planes::after {
+  content: "";
+  position: absolute;
+  border-radius: 10px;
+}
+.hc-head-planes::before {
+  top: 8%; left: 5%; width: 52%; height: 62%;
+  background: linear-gradient(145deg, rgba(0, 42, 92, 0.03), rgba(0, 42, 92, 0) 70%);
+}
+.hc-head-planes::after {
+  top: 28%; left: 30%; width: 62%; height: 68%;
+  background: linear-gradient(145deg, rgba(0, 42, 92, 0.022), rgba(0, 42, 92, 0) 72%);
+}
+.hc-headline {
+  position: relative;
+  z-index: 1;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(28px, 3.3vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  color: #002a5c;
+  margin: 0;
+  max-width: 15ch;
+}
+
+/* Bildmodul */
+.hc-photo { min-height: clamp(240px, 30vw, 400px); }
+.hc-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), inset 0 1px 3px rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+}
+
+/* Fünf Content-Karten */
+.hc-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(14px, 1.2vw, 24px);
+}
+.hc-field {
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 2vw, 34px);
+  min-height: clamp(210px, 21vw, 290px);
+  transition:
+    transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 450ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.hc-field:hover,
+.hc-field.is-open {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 42, 92, 0.04),
+    0 16px 34px rgba(0, 42, 92, 0.075),
+    0 3px 10px rgba(0, 42, 92, 0.04);
+}
+.hc-deco {
+  position: absolute;
+  right: -22%;
+  bottom: -26%;
+  width: 150%;
+  height: auto;
+  color: #002a5c;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+.hc-field > *:not(.hc-deco) { position: relative; z-index: 1; }
+.hc-field-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.hc-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(0, 42, 92, 0.5);
+  margin-top: 2px;
+}
+.hc-field-icon { color: #002a5c; }
+.hc-field-icon .hi-icon {
+  width: clamp(30px, 2.4vw, 40px);
+  height: clamp(30px, 2.4vw, 40px);
+}
+.hc-field-body {
+  margin-top: clamp(34px, 4vw, 72px);
+  display: flex;
+  flex-direction: column;
+}
+.hc-ftitle {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(16px, 1.15vw, 19px);
+  line-height: 1.2;
+  color: #002a5c;
+}
+.hc-fdetail {
+  font-family: var(--sans);
+  font-size: clamp(13px, 0.95vw, 14px);
+  line-height: 1.6;
+  color: rgba(0, 42, 92, 0.62);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease, margin-top 0.45s ease;
+}
+.hc-field.is-open .hc-fdetail { max-height: 16em; opacity: 1; margin-top: clamp(10px, 1.1vw, 14px); }
+
+/* Unten links: Teamfoto */
+.hc-photoB { min-height: clamp(200px, 20vw, 260px); }
+.hc-photoB::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+/* Unten rechts: dunkelblaues CTA-Modul */
+.hc-navy {
+  position: relative;
+  overflow: hidden;
+  border-radius: clamp(22px, 1.8vw, 34px);
+  min-height: clamp(200px, 20vw, 260px);
+  padding: clamp(28px, 3vw, 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: clamp(12px, 1.4vw, 18px);
+  background: linear-gradient(135deg, #002a5c 0%, #063d7a 55%, #002a5c 100%);
+  box-shadow: 0 12px 30px rgba(0, 42, 92, 0.16), 0 2px 8px rgba(0, 42, 92, 0.08);
+}
+.hc-navy-planes { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.hc-navy-planes::before,
+.hc-navy-planes::after {
+  content: "";
+  position: absolute;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 70%);
+}
+.hc-navy-planes::before { right: -6%; top: -12%; width: 48%; height: 78%; }
+.hc-navy-planes::after { right: 16%; bottom: -22%; width: 42%; height: 64%; background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0) 72%); }
+.hc-navy-label {
+  position: relative;
+  z-index: 1;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+.hc-cta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(22px, 2.2vw, 34px);
+  line-height: 1.04;
+  color: #fff;
+  text-decoration: none;
+  transition: gap 0.25s ease;
+}
+.hc-cta:hover { gap: 16px; }
+.hc-cta-arrow { font-family: var(--sans); }
+
+/* Desktop-Bento-Raster */
+@media (min-width: 900px) {
+  .hc-grid {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+      "nav nav nav nav nav nav"
+      "head head head head photo photo"
+      "fields fields fields fields fields fields"
+      "photoB photoB navy navy navy navy";
+  }
+  .hc-nav { grid-area: nav; }
+  .hc-head { grid-area: head; }
+  .hc-photo { grid-area: photo; }
+  .hc-fields { grid-area: fields; grid-template-columns: repeat(5, 1fr); }
+  .hc-photoB { grid-area: photoB; }
+  .hc-navy { grid-area: navy; }
+}
+
+/* Tablet: Karten auf 2–3 Spalten, Navigation als Burger */
+@media (max-width: 899px) {
+  .hc-nav-links { display: none; }
+  .hc-burger { display: flex; }
+  .hc-nav { position: relative; }
+}
+@media (min-width: 600px) and (max-width: 899px) {
+  .hc-fields { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Reduced motion: keine Karten-Transitions */
+@media (prefers-reduced-motion: reduce) {
+  .hc-field { transition: none; }
+  .hc-field:hover, .hc-field.is-open { transform: none; }
 }

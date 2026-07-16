@@ -18,6 +18,8 @@ type ImageFrameProps = {
   /** responsive `sizes` für next/image */
   sizes?: string;
   priority?: boolean;
+  /** JPEG/WebP/AVIF-Qualität für next/image (Default 90 — kaum sichtbare Kompression) */
+  quality?: number;
   /** Styles, die direkt auf das <img> gelegt werden (Blur/Scale/Transition) */
   imgStyle?: CSSProperties;
 };
@@ -28,6 +30,7 @@ export default function ImageFrame({
   placeholder = "Bild folgt",
   sizes = "100vw",
   priority = false,
+  quality = 90,
   imgStyle,
 }: ImageFrameProps) {
   if (src) {
@@ -38,6 +41,7 @@ export default function ImageFrame({
         fill
         sizes={sizes}
         priority={priority}
+        quality={quality}
         style={{ objectFit: "cover", ...imgStyle }}
       />
     );
