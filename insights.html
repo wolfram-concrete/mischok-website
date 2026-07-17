@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Wireframe – Insights | MISCHOK</title>
+<link rel="stylesheet" href="assets/wireframe.css">
+<style>
+  /* Listen-Darstellung: einheitliche Zeilenanatomie, kein Ranking,
+     alle Einträge gleichberechtigt (siehe Notiz unter der Liste). */
+  .ins-list { border-top: 1px solid var(--line); }
+  .ins-item {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr) 200px;
+    gap: 0 20px;
+    padding: 20px 4px;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+  .ins-item__format {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding-top: 3px;
+  }
+  .ins-item__title { font-size: 18px; font-weight: 700; line-height: 1.2; margin: 0 0 6px; }
+  .ins-item__desc { font-size: 14px; line-height: 1.55; color: var(--ink-soft); margin: 0; max-width: 62ch; }
+  .ins-item__meta { font-size: 11.5px; color: var(--ink-mute); line-height: 1.5; padding-top: 4px; }
+  .ins-item__meta span { display: block; }
+  @media (max-width: 800px) {
+    .ins-item { grid-template-columns: 1fr; gap: 6px; }
+    .ins-item__meta { padding-top: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wf-bar">
+  <div class="wf-bar__inner">
+    <span class="wf-bar__label">MISCHOK · Wireframe-Dummy</span>
+    <a href="index.html">Sitemap</a>
+    <a href="home.html">Home</a>
+    <a href="einsatzfelder.html">Einsatzfelder</a>
+    <a href="referenzen.html">Referenzen</a>
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="insights.html" aria-current="page">Insights</a>
+    <a href="karriere.html">Karriere</a>
+    <a href="erstgespraech.html">Erstgespräch</a>
+  </div>
+</div>
+
+<main class="page">
+
+  <div class="page-id">
+    <p class="page-id__kicker">Seite 06</p>
+    <h1 class="page-id__title">INSIGHTS</h1>
+    <p class="page-id__url">/insights</p>
+  </div>
+
+  <div class="block block--tight">
+    <span class="block__tag">Header / Navigation</span>
+    <div class="nav-ph">
+      <span class="nav-ph__logo">MISCHOK</span>
+      <span>Einsatzfelder</span>
+      <span>Referenzen</span>
+      <span>Über uns</span>
+      <span>Insights</span>
+      <span>Karriere</span>
+      <span class="btn" style="margin:0;">Projektlage klären</span>
+    </div>
+  </div>
+
+  <div class="block">
+    <span class="block__tag">Listensteuerung</span>
+    <p class="sub" style="font-size:14px;margin-bottom:12px;">20 Einträge · Reihenfolge wie im Konzeptionsdokument</p>
+    <span class="btn btn--ghost">Filter: Alle Formate</span>
+    <span class="btn btn--ghost">Vortrag</span>
+    <span class="btn btn--ghost">Fachbeitrag</span>
+    <span class="btn btn--ghost">Workshop</span>
+    <span class="btn btn--ghost">Veranstaltung</span>
+    <p class="note" style="margin-top:14px;"><strong>Anmerkung zur Liste:</strong> Alle Einträge sind gleich gewichtet — einheitliche Zeilenhöhe, keine Hervorhebung einzelner Themen, kein Ranking. Die Reihenfolge ist redaktionell, also bewusst gesetzt und nicht durch eine Bewertung entstanden. Format-Filter sind hier nur als Platzhalter angedeutet.</p>
+  </div>
+
+  <div class="block">
+    <span class="block__tag">Insights-Liste</span>
+
+    <div class="ins-list">
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Retten oder Reimplementieren?</h3>
+          <p class="ins-item__desc">Julius Mischok, Gründer und Geschäftsführer der MISCHOK GmbH, spricht über die Frage, wann bestehende Software weiterentwickelt werden kann — und wann ein Neustart fachlich sinnvoller ist. Der Vortrag war unter anderem bei JAX, JCON und IT-S Now vertreten.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: optional, wenn vorhanden</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Veranstaltung</div>
+        <div>
+          <h3 class="ins-item__title">STEPS: Technologie und Mittelstand</h3>
+          <p class="ins-item__desc">STEPS ist eine Veranstaltung der MISCHOK GmbH in Augsburg für Menschen aus Mittelstand, Technologie und Unternehmensentwicklung. Im Mittelpunkt stehen konkrete Fragen rund um Software, Digitalisierung und technische Entscheidungen in Unternehmen.</p>
+        </div>
+        <div class="ins-item__meta">
+          <span>Weiterführender Link: ja, wenn STEPS-Seite vorhanden</span>
+          <span>Datum: brauche ich von dir, falls es um eine kommende STEPS-Veranstaltung geht</span>
+        </div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Führung in Tech-Teams</h3>
+          <p class="ins-item__desc">Kajetan Mischok spricht in „Leadership in Tech“ über technische Führung, Verantwortung und Zusammenarbeit in Softwareteams. Der Vortrag wurde unter anderem bei Hackerkiste 2025 und DevDays Magdeburg 2026 angenommen.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: optional, wenn vorhanden</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Spring Boot pragmatisch einsetzen</h3>
+          <p class="ins-item__desc">Julius Mischok zeigt in „Top 10 Spring Boot Hacks“, welche Entscheidungen Spring-Boot-Projekte im Alltag leichter machen: Tests, Security, Architekturkniffe und Entwicklungsroutinen. Der Vortrag war unter anderem bei Javaland, WJAX und IT-Tage vertreten.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: optional, wenn vorhanden</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Workshop</div>
+        <div>
+          <h3 class="ins-item__title">KI in der Softwareentwicklung</h3>
+          <p class="ins-item__desc">Ein Workshop der MISCHOK GmbH zum praktischen Einsatz von KI in Entwicklungsprozessen. Im Fokus stehen Qualität, Verantwortung, Teamarbeit und die Frage, wie KI im Software Engineering sinnvoll eingesetzt werden kann.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: ja, wenn Workshopseite vorhanden</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Digitale Souveränität und KI</h3>
+          <p class="ins-item__desc">Kajetan Mischok spricht in „KI Monopoly“ über digitale Souveränität in Zeiten der Marktkonsolidierung. Der Vortrag thematisiert Abhängigkeiten, die entstehen, wenn wenige Anbieter zentrale KI-Infrastruktur, Plattformen und Entwicklungswerkzeuge prägen.</p>
+        </div>
+        <div class="ins-item__meta">
+          <span>Weiterführender Link: optional, wenn vorhanden</span>
+          <span>Datum: Sparkscon, 16.07.2026 / SQL Days Erding, 05.10.2026</span>
+        </div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Fachbeitrag</div>
+        <div>
+          <h3 class="ins-item__title">Testdaten in Spring Boot</h3>
+          <p class="ins-item__desc">Ein Fachbeitrag von Julius Mischok über Testdatenmanagement in Spring-Boot-Projekten. Es geht darum, wie automatisierte Tests verlässlich bleiben, wenn Anwendungen komplexer werden und Daten sauber aufgebaut, genutzt und zurückgesetzt werden müssen.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: ja, wenn Artikel online verfügbar</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">KI im Engineering-Alltag</h3>
+          <p class="ins-item__desc">In „Wer auf den Vibe wartet, verliert den Faden“ spricht Julius Mischok über agentische KI-Systeme in der Softwareentwicklung. Der Vortrag zeigt, wo KI heute hilft, wo sie ablenkt und welche Rolle Entwickler:innen künftig übernehmen.</p>
+        </div>
+        <div class="ins-item__meta">
+          <span>Weiterführender Link: optional, wenn vorhanden</span>
+          <span>Datum: WJAX, 02.11.2026</span>
+        </div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Junior Devs im KI-Zeitalter</h3>
+          <p class="ins-item__desc">Kajetan Mischok spricht darüber, was Nachwuchsentwickler:innen lernen müssen, wenn KI-Agenten immer mehr Teilaufgaben im Software Engineering übernehmen. Es geht um Ausbildung, Verantwortung und Fähigkeiten, die trotz neuer Tools wichtig bleiben.</p>
+        </div>
+        <div class="ins-item__meta">
+          <span>Weiterführender Link: optional, wenn vorhanden</span>
+          <span>Datum: Java Forum Nord, 22.09.2026 / IT-Tage, 07.12.2026</span>
+        </div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Datenänderungen nachvollziehbar machen</h3>
+          <p class="ins-item__desc">Julius Mischok spricht über Auditierung in Unternehmensanwendungen mit Spring Data JPA und Hibernate Envers. Relevant wird das Thema überall dort, wo Datenänderungen nachvollziehbar, prüfbar und technisch sauber dokumentiert werden müssen.</p>
+        </div>
+        <div class="ins-item__meta">
+          <span>Weiterführender Link: optional, wenn vorhanden</span>
+          <span>Datum: Java Forum Stuttgart, 09.07.2026</span>
+        </div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Fachbeitrag</div>
+        <div>
+          <h3 class="ins-item__title">Legacy-Software bewerten</h3>
+          <p class="ins-item__desc">Ein Fachbeitrag über gewachsene Softwaresysteme und die Frage, wann Stabilisierung, Weiterentwicklung oder Reimplementierung sinnvoll ist. Das Thema schließt direkt an den Vortrag „Retten oder Reimplementieren?“ an.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: ja, wenn Artikel vorhanden</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">GraphRAG mit Spring AI und Neo4j</h3>
+          <p class="ins-item__desc">Julius Mischok zeigt, wie sich LLM-Antworten mit Belegen über eine schlanke GraphRAG-Implementierung mit Spring AI und Neo4j umsetzen lassen. Der Vortrag verbindet KI, Datenmodellierung und nachvollziehbare Antwortlogik.</p>
+        </div>
+        <div class="ins-item__meta">
+          <span>Weiterführender Link: optional, wenn vorhanden</span>
+          <span>Datum: cim lingen, 04.09.2026</span>
+        </div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Workshop</div>
+        <div>
+          <h3 class="ins-item__title">Engineering-Praktiken im Team</h3>
+          <p class="ins-item__desc">Ein Workshopformat rund um technische Entscheidungen, Entwicklungsroutinen und Zusammenarbeit in Softwareteams. Sinnvoll für Teams, die Qualität, Lieferfähigkeit und gemeinsame Verantwortung im Alltag verbessern wollen.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: eher nein, solange das Format intern hinterfragt wird</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Testqualität mit Mutation Testing</h3>
+          <p class="ins-item__desc">Julius Mischok zeigt, warum Testabdeckung allein wenig aussagt — und wie Mutation Testing mit PIT hilft, die tatsächliche Qualität automatisierter Tests besser einzuschätzen. Das Thema war unter anderem bei TestCon, TACON und IT-Tage vertreten.</p>
+        </div>
+        <div class="ins-item__meta">
+          <span>Weiterführender Link: optional, wenn vorhanden</span>
+          <span>Datum: TACON, 16.09.2026 / IT-Tage, 07.12.2026</span>
+        </div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Fachbeitrag</div>
+        <div>
+          <h3 class="ins-item__title">Spring Boot und Testing</h3>
+          <p class="ins-item__desc">Ein Fachbeitrag über Test-Driven Development, Spring Boot und typische Fehler, durch die Tests im Projektalltag langsam, instabil oder wenig aussagekräftig werden. Im Mittelpunkt steht die Frage, wann Tests wirklich Sicherheit geben.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: ja, wenn Artikel vorhanden</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Senior Developers in zehn Jahren</h3>
+          <p class="ins-item__desc">Ein Vortrag über die Frage, wie agentische Systeme die Rolle von Senior Software Engineers verändern. Weniger reine Implementierung, mehr Formulieren, Steuern, Prüfen und Integrieren von Arbeitsergebnissen.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: optional, wenn vorhanden</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Code Reviews als Führungsarbeit</h3>
+          <p class="ins-item__desc">Julius Mischok zeigt, wie technische Führung in Code Reviews, CI/CD, TDD, Refactoring und täglichen Entwicklungsroutinen sichtbar wird. Der Vortrag lief unter anderem unter den Titeln „Code as Leadership“ und „Von Werten zu Wirksamkeit“.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: optional, wenn vorhanden</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Motivation in Softwareteams</h3>
+          <p class="ins-item__desc">In „Why we do what we do“ spricht Julius Mischok über Motivation, Eigenverantwortung und die Bedingungen, unter denen Softwareteams besser zusammenarbeiten. Der Vortrag war unter anderem bei JAX, JCON und DevOpsCon Munich vertreten.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: optional, wenn vorhanden</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Fachbeitrag</div>
+        <div>
+          <h3 class="ins-item__title">Softwarequalität und Architektur</h3>
+          <p class="ins-item__desc">Ein Fachbeitrag über technische Entscheidungen, Qualitätssicherung und Architektur in Softwareprojekten. Der Fokus liegt auf Systemen, die nicht nur gebaut, sondern langfristig betrieben, verstanden und weiterentwickelt werden müssen.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: ja, wenn Artikel vorhanden</span></div>
+      </article>
+
+      <article class="ins-item">
+        <div class="ins-item__format">Vortrag</div>
+        <div>
+          <h3 class="ins-item__title">Graphdatenbanken in der Praxis</h3>
+          <p class="ins-item__desc">Julius Mischok spricht darüber, warum Graphdatenbanken wie Neo4j in vielen Projekten unterschätzt werden. Der Vortrag zeigt, wie Beziehungen, Abhängigkeiten und fachliche Zusammenhänge in Softwareprojekten klarer abgebildet werden können.</p>
+        </div>
+        <div class="ins-item__meta"><span>Weiterführender Link: optional, wenn vorhanden</span></div>
+      </article>
+
+    </div>
+
+    <p class="note" style="margin-top:16px;"><strong>Hinweis:</strong> Die Angaben in der rechten Spalte („Weiterführender Link: optional…“, Datumsangaben) sind redaktionelle Arbeitsnotizen aus der Konzeption, keine Seitentexte. Sie stehen hier, damit sichtbar bleibt, wo noch Links und Termine fehlen. Insgesamt sind es 20 Einträge — die Home-Seite teasert davon drei an.</p>
+  </div>
+
+  <div class="block block--tight">
+    <span class="block__tag">Footer</span>
+    <div class="footer-ph">
+      <span class="nav-ph__logo">MISCHOK</span>
+      <span>Einsatzfelder</span>
+      <span>Referenzen</span>
+      <span>Über uns</span>
+      <span>Insights</span>
+      <span>Karriere</span>
+      <span>Erstgespräch</span>
+      <span>Impressum</span>
+      <span>Datenschutz</span>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

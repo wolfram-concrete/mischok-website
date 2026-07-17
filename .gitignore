@@ -1,0 +1,7 @@
+# Konzeptions-PDF bleibt draußen: gh-pages ist öffentlich abrufbar,
+# das Quelldokument gehört nicht auf die Seite.
+Mischok-Website Konzeption-texte.pdf
+
+# lokale Werkzeuge
+.claude/
+.DS_Store
