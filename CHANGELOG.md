@@ -57,6 +57,15 @@ Redaktionsfoto.
   entlang und zeichnen sich. Maske rechts kräftig / links schwach, weil links
   der CTA-Text steht. `prefers-reduced-motion` → statisch, aber vollständig.
 
+- **Auch das Raster der Zusammenarbeit (`.zu-grid`) besteht jetzt aus
+  Rechtecken statt Kreisen** — dieselbe Logik wie im Hero-CTA. Dafür ist der
+  `radial-gradient` durch eine gekachelte SVG-Data-URI ersetzt: ein Farbverlauf
+  kann kein Rechteck beschneiden (er läuft nur entlang einer Achse), die
+  Schnittmenge zweier Gradienten bräuchte `mask-composite: intersect` und das
+  beisst sich mit der Maske, die hier schon den weichen Rand macht. Gemessen per
+  SVG→Canvas: Füllgrad der Bounding-Box 1.0 (Rechteck, nicht Kreis mit 0.79),
+  Verhältnis 1.18, Fläche 3.83px² gegen 3.80 der früheren Kreise.
+
 ### Entfernt
 - **`.hc-navy-planes`** — die zwei weichen Lichtflächen im Hero-CTA sind durch
   `NavyGrid` ersetzt; die Regeln waren danach tot und sind raus.

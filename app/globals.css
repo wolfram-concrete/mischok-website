@@ -3405,22 +3405,35 @@ button:focus-visible {
 
 .zu-grid {
   /* Stellschrauben an einer Stelle — Rasterweite und Punktgrösse hängen
-     zusammen: weiter auseinander verträgt (und braucht) grössere Punkte. */
+     zusammen: weiter auseinander verträgt (und braucht) grössere Punkte.
+     Beim Kachelbild unten ist das jetzt sogar zwingend: die Kachel ist ein SVG
+     mit eigener 32er-Innengeometrie, das über background-size skaliert wird.
+     Wer --dot-gap ändert, skaliert damit auch das Rechteck mit. */
   --dot-gap: 32px;
-  --dot-size: 1.1px;
-  --dot-color: rgba(0, 42, 92, 0.34);
 
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  /* der Punkt selbst: hart begrenzt, damit er als Rasterpunkt liest und
-     nicht als weicher Fleck */
-  background-image: radial-gradient(
-    circle,
-    var(--dot-color) var(--dot-size),
-    transparent calc(var(--dot-size) + 0.3px)
-  );
+
+  /* RECHTECKE, keine Kreise — rechtwinklig wie der Logorahmen, identisch zum
+     Raster im Hero-CTA (s. NavyGrid.tsx). Proportion und Ausmass sind aus der
+     Bildmarke abgeleitet, nicht geschätzt:
+       Proportion: die beiden Klammern in MISCHOK_LOGO_L_POS_RGB-neu.svg spannen
+         258.6 x 220.1 auf -> 1.175, also liegend und nicht quadratisch.
+       Ausmass: gleiche Fläche wie die früheren Kreise (Radius 1.1px, Fläche
+         pi * 1.1² = 3.80px²), damit das Raster gleich schwer wiegt:
+         b * h = 3.80 bei b = 1.175h  ->  h = 1.8px, b = 2.11px.
+       Lage: mittig in der 32er-Kachel -> x = (32-2.11)/2, y = (32-1.8)/2.
+
+     WARUM ein Kachel-SVG und kein Gradient: ein Farbverlauf kann kein Rechteck
+     beschneiden — er läuft immer nur entlang EINER Achse (linear) oder radial.
+     Zwei gekreuzte Gradienten ergeben ein L, keine Schnittmenge; die Schnitt-
+     menge bräuchte mask-composite: intersect, und das beisst sich mit der
+     Maske, die hier schon den weichen Rand macht.
+     Preis dafür: Farbe und Geometrie stehen IM Data-URI und nicht mehr in
+     Custom Properties — Farbe ist NAVY (#002a5c) bei 34 % Deckung, wie zuvor. */
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='32'%20height='32'%3E%3Crect%20x='14.95'%20y='15.1'%20width='2.11'%20height='1.8'%20fill='%23002a5c'%20fill-opacity='.34'/%3E%3C/svg%3E");
   background-size: var(--dot-gap) var(--dot-gap);
   background-position: center;
 
