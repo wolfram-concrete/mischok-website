@@ -15,6 +15,20 @@ keine Kürzung, keine Ergänzung. Platzhalter aus dem Dokument
 Redaktionelle Anmerkungen aus dem Dokument (Freigabevermerke, offene Fragen)
 sind als graue Randnotiz markiert und gehören nicht zum Seitentext.
 
+## Platzhalter-Kennzeichnung
+
+Alles, was noch kein finaler Inhalt ist, ist im Wireframe gelb umrandet und
+beschriftet — direkt am Element, nicht nur in einer Liste. Drei Arten:
+
+| Vermerk | Bedeutung |
+|---|---|
+| `Platzhalter` | Inhalt fehlt komplett und muss benannt werden |
+| `Freigabe ausstehend` | echtes Kundenzitat, laut Dokument noch nicht freigegeben |
+| `Kein Zitat vorhanden` | für diese Referenz liegt keine Kundenstimme vor |
+
+Die Markierung ist reine Wireframe-Auszeichnung und gehört nicht zur späteren
+Website. Eine Legende steht auf der Startseite (`index.html`).
+
 ## Aufbau
 
 | Datei | Seite |

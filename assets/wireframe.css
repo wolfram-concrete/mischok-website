@@ -152,6 +152,32 @@ body {
 .imgbox--wide { min-height: 200px; }
 .imgbox--portrait { min-height: 180px; }
 
+/* Platzhalter-Kennzeichnung: alles, was noch kein finaler Inhalt ist.
+   Bewusst auffällig — auf einer Wireframe-Seite darf kein Zweifel
+   entstehen, was schon steht und was noch fehlt. */
+.ph-badge {
+  display: inline-block;
+  background: #fff3cd;
+  border: 1px solid #b8912a;
+  color: #6b5410;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  vertical-align: middle;
+  white-space: nowrap;
+  margin-left: 6px;
+}
+.ph-badge--block { margin: 0 0 10px; margin-left: 0; }
+
+/* Element, dessen Inhalt noch Platzhalter ist */
+.ph {
+  background: #fffdf5;
+  outline: 1px dashed #b8912a;
+  outline-offset: 3px;
+}
+
 /* offene Punkte / Klärungsbedarf aus dem Dokument */
 .note {
   border-left: 3px solid var(--line-strong);
