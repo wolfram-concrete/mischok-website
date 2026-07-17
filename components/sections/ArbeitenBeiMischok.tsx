@@ -1,5 +1,4 @@
 import ImageFrame from "@/components/ui/ImageFrame";
-import CtaButton from "@/components/ui/CtaButton";
 import Reveal from "@/components/ui/Reveal";
 
 /**
@@ -54,17 +53,19 @@ export default function ArbeitenBeiMischok() {
                 Verantwortung übernehmen wollen und zu unserer Arbeitsweise
                 passen.
               </p>
-              <CtaButton
+              {/* dieselbe CTA-Optik wie ueberall sonst ausserhalb des Heros.
+                  Vorher .cta-grad (Verlauf transparent → #D6D6D6). */}
+              <a
                 href="#kontakt"
-                padding="14px 24px"
-                fontSize="clamp(14px,1.4vw,16px)"
+                className="cta-ghost"
                 style={{
                   alignSelf: "flex-start",
                   marginTop: "clamp(24px,3vw,38px)",
                 }}
               >
                 Karriere bei MISCHOK
-              </CtaButton>
+                <span aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
         </Reveal>

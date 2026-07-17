@@ -157,7 +157,10 @@ export default function Zusammenarbeit() {
               borderRadius: "5px",
               cursor: open ? "default" : "pointer",
               flex: accStack ? "none" : open ? "3.4 1 0" : "1 1 0",
-              height: accStack ? (open ? "520px" : "150px") : "100%",
+              /* offen hoeher als frueher (520px): das Glas ist auf Mobil nur
+                 noch ein Band an der Unterkante, darueber soll echtes Bild
+                 stehen bleiben — sonst ist die Karte nur Text auf Unschaerfe. */
+              height: accStack ? (open ? "640px" : "200px") : "100%",
               minWidth: 0,
               background: "var(--navy)",
               transition:
@@ -188,13 +191,16 @@ export default function Zusammenarbeit() {
               flexDirection: "column",
               alignItems: "center",
               overflow: "hidden",
-              top: open ? insetOpen : insetClosed,
-              bottom: open ? insetOpen : insetClosed,
-              right: open ? insetOpen : insetClosed,
+              /* Auf Mobil KEIN Vollflaechen-Glas mehr: `top: auto` laesst das
+                 Panel an seinem Inhalt messen, es sitzt damit als Band an der
+                 Unterkante und das Bild bleibt darueber sichtbar. Vorher war es
+                 auf allen vier Seiten eingerueckt und hat die Karte komplett
+                 zugedeckt — vom Motiv blieb nur ein unscharfer Rahmen. */
+              top: accStack ? "auto" : open ? insetOpen : insetClosed,
+              bottom: accStack ? insetClosed : open ? insetOpen : insetClosed,
+              right: accStack ? insetClosed : open ? insetOpen : insetClosed,
               left: accStack
-                ? open
-                  ? insetOpen
-                  : insetClosed
+                ? insetClosed
                 : open
                   /* Untergrenze 360px statt 300px: bei mittleren Fensterbreiten
                      war das Panel nur ~278px breit, der Fliesstext brauchte
@@ -248,18 +254,22 @@ export default function Zusammenarbeit() {
                     {/* Icon sitzt fest oben rechts — dort, wo vorher das Plus
                         war. Die frühere Spacer-Mechanik (zentriert → oben)
                         entfällt damit. */}
-                    <span className="ac-icon-slot">
+                    <span className={`ac-icon-slot${open ? "" : " is-collapsed"}`}>
                       <AccIcon name={c.icon} />
                     </span>
 
                     {/* Headline steht immer — auch auf geschlossenen Karten.
-                        Nur der Fließtext blendet beim Öffnen ein. */}
+                        Nur der Fließtext blendet beim Öffnen ein.
+                        Auf Mobil steht der Block im Fluss statt absolut: nur so
+                        misst sich das Glasband an seinem Inhalt, und nur so kann
+                        das Icon darueber liegen statt darauf. */}
                     <div
                       style={{
-                        position: "absolute",
-                        left: "clamp(26px,2.6vw,40px)",
-                        right: "clamp(26px,2.6vw,40px)",
-                        bottom: "clamp(26px,2.6vw,40px)",
+                        position: accStack ? "relative" : "absolute",
+                        width: accStack ? "100%" : undefined,
+                        left: accStack ? undefined : "clamp(26px,2.6vw,40px)",
+                        right: accStack ? undefined : "clamp(26px,2.6vw,40px)",
+                        bottom: accStack ? undefined : "clamp(26px,2.6vw,40px)",
                         pointerEvents: open ? "auto" : "none",
                       }}
                     >

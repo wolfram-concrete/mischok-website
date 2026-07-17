@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
+import CountUp from "@/components/ui/CountUp";
 import SectionLabel from "@/components/ui/SectionLabel";
 
 /**
@@ -91,12 +92,15 @@ export default function Ueber() {
             </div>
 
             <div className="ue-stats">
+              {/* Gruendungsjahr laeuft ab 1990, nicht ab 0: eine Jahreszahl,
+                  die durch 0…1989 rattert, liest sich als Unsinn statt als
+                  Zahl, die auf 2010 zulaeuft. */}
               <div className="ue-stat">
-                <span className="ue-stat-value">2010</span>
+                <CountUp to={2010} from={1990} className="ue-stat-value" />
                 <span className="eyebrow ue-stat-label">Gegründet</span>
               </div>
               <div className="ue-stat">
-                <span className="ue-stat-value">35+</span>
+                <CountUp to={35} from={0} suffix="+" className="ue-stat-value" />
                 <span className="eyebrow ue-stat-label">Mitarbeiter</span>
               </div>
               <div className="ue-stat">

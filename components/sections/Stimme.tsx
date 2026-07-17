@@ -31,7 +31,15 @@ export default function Stimme() {
       { threshold: 0.25 }
     );
     obs.observe(el);
-    return () => obs.disconnect();
+
+    /* Sicherheitsnetz wie in Reveal: das Zitat ist Inhalt, kein Schmuck — es
+       darf nicht unsichtbar bleiben, nur weil der Observer nicht liefert. */
+    const safety = window.setTimeout(() => setShown(true), 1500);
+
+    return () => {
+      obs.disconnect();
+      clearTimeout(safety);
+    };
   }, []);
 
   return (

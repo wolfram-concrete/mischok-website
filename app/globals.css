@@ -406,9 +406,10 @@ button:focus-visible {
   border-radius: 0 5px 5px 5px;
   box-sizing: border-box;
   /* Karte, kein Band: ohne Deckel zieht sie auf die volle Sectionbreite und
-     das Motiv dahinter waere nur noch am Rand zu sehen. */
+     das Motiv dahinter waere nur noch am Rand zu sehen. Linksbuendig im Grid,
+     nicht zentriert. */
   max-width: 1080px;
-  margin-inline: auto;
+  margin-inline: 0 auto;
   --kt-tab-h: clamp(20px, 2.4vw, 44px);
   /* Breite des Reiters, gemessen von der linken Kante */
   --kt-tab-w: 38%;
@@ -2931,6 +2932,28 @@ button:focus-visible {
   right: clamp(18px, 1.8vw, 26px);
   display: block;
   pointer-events: none;
+}
+/* Mobil (Breakpoint = accStack in Zusammenarbeit.tsx, vw < 760): das Glas ist
+   nur noch ein Band an der Unterkante. Ein absolut gesetztes Icon laege darin
+   wieder auf der Headline — deshalb steht es hier im Fluss ueber dem Text,
+   rechtsbuendig, und ist kleiner. */
+@media (max-width: 759px) {
+  .ac-icon-slot {
+    position: static;
+    align-self: flex-end;
+    margin-bottom: clamp(10px, 3vw, 18px);
+  }
+  /* Auf der geschlossenen Karte kein Icon: das Band misst sich an seinem
+     Inhalt, und das Icon allein macht es hoeher als die Karte — es wurde
+     oben abgeschnitten und vom Bild blieb nichts uebrig. Beim Oeffnen ist
+     Platz, dann kommt es zurueck. */
+  .ac-icon-slot.is-collapsed {
+    display: none;
+  }
+  .ac-icon {
+    width: clamp(52px, 15vw, 72px);
+    height: clamp(52px, 15vw, 72px);
+  }
 }
 .ac-hint {
   display: flex;

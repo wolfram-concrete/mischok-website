@@ -18,6 +18,44 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.10.0] – 2026-07-17
+
+### Behoben
+- **Inhalt hing an einer Animation.** Zitat (Stimme), Footer-Spalten und die
+  Kachel in „Arbeiten" blieben unsichtbar, wenn der `IntersectionObserver` nicht
+  lieferte — der Text stand im DOM, wurde aber nie eingeblendet. `Reveal` und
+  Stimme haben jetzt ein Sicherheitsnetz: nach 1.5s wird eingeblendet, egal was
+  der Observer meldet. Lieber ohne Effekt sichtbar als mit Effekt unsichtbar.
+- **Zusammenarbeit auf Mobil.** Das Glas-Panel war auf allen vier Seiten
+  eingerückt und deckte die Karte komplett zu — vom Motiv blieb nur ein
+  unscharfer Rahmen. Jetzt ist es ein Band an der Unterkante (`top: auto`, misst
+  sich an seinem Inhalt), das Icon steht im Fluss darüber statt absolut darauf.
+  Offene Karte 520 → 640px: 320px Band, **306px Bild**. Geschlossene Karte
+  150 → 200px, ohne Icon — mit Icon war das Band 187px hoch und damit höher als
+  die 150px-Karte, es wurde oben abgeschnitten.
+
+### Geändert
+- **Kennzahlen in „Über" zählen hoch** (neue Komponente `CountUp`). Startwert ist
+  bewusst der ENDWERT, nicht 0: so steht im SSR-HTML die echte Zahl, und ohne JS
+  oder bei `prefers-reduced-motion` stimmt die Aussage trotzdem. Das
+  Gründungsjahr läuft ab 1990 statt ab 0 — eine Jahreszahl, die durch 0…1989
+  rattert, liest sich als Unsinn.
+- **Kontakt-Karte linksbündig** statt zentriert (`margin-inline: 0 auto`).
+- **Verlaufs-CTAs abgelöst.** `.cta-grad` und `.cta-grad-light` sind aus allen
+  aktiven Sektionen raus und laufen jetzt auf `.cta-ghost` (bzw. `.on-navy` auf
+  dunklem Grund): „Karriere bei MISCHOK", „Referenz ansehen" (Referenzübersicht)
+  und die CTA der 9-Levels-Seite. Der solide Navy-Button im Footer bleibt — er
+  ist kein Verlauf, sondern die eine Aktion.
+
+### Offen
+- **Bewegung weiterhin nicht verifizierbar.** Der Preview-Renderer produziert
+  keine Frames: `requestAnimationFrame` feuert nicht, `IntersectionObserver`
+  liefert nicht, und **Transitions bleiben auf ihrem Startwert stehen** — der
+  Reveal-Wrapper trägt inline `opacity: 1`, `getComputedStyle` meldet `0`.
+  Jede Messung einer animierten Eigenschaft (height, flex-grow, opacity) ist
+  dort wertlos; Layout lässt sich nur mit abgeschalteten Transitions messen.
+  Parallaxe, Pin-Scrolls, Reveal und CountUp im echten Browser prüfen.
+
 ## [0.9.0] – 2026-07-17
 
 ### Geändert

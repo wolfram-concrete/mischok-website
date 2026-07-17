@@ -46,7 +46,18 @@ export default function Reveal({ children, delay = 0, style, className }: Reveal
       { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
     );
     obs.observe(el);
-    return () => obs.disconnect();
+
+    /* Sicherheitsnetz: Inhalt darf nie daran haengen, dass eine Animation
+       startet. Liefert der IntersectionObserver aus irgendeinem Grund nicht
+       (kaputter/gedrosselter Renderer), wird nach 1.5s trotzdem eingeblendet —
+       lieber ohne Effekt sichtbar als mit Effekt unsichtbar. Im Normalfall hat
+       der Observer laengst gefeuert und das Timeout ist wirkungslos. */
+    const safety = window.setTimeout(() => setShown(true), 1500);
+
+    return () => {
+      obs.disconnect();
+      clearTimeout(safety);
+    };
   }, []);
 
   return (

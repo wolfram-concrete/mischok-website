@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Footer from "@/components/sections/Footer";
 import ImageFrame from "@/components/ui/ImageFrame";
-import CtaButton from "@/components/ui/CtaButton";
 import { REFERENZ_9LEVELS as R } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -403,15 +402,11 @@ export default function NeunLevelsPage() {
           >
             {R.cta.text}
           </p>
-          <CtaButton
-            href="/#kontakt"
-            weight={500}
-            fontSize="clamp(15px,1.5vw,17px)"
-            padding="14px 28px"
-            style={{ background: "var(--paper)" }}
-          >
+          {/* dieselbe CTA-Optik wie auf der Home. Vorher .cta-grad. */}
+          <a href="/#kontakt" className="cta-ghost on-navy">
             {R.cta.button}
-          </CtaButton>
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
       </section>
 

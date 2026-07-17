@@ -201,9 +201,12 @@ liegen unter `public/schriftarten/`.
   abgeleitet vom Logorahmen-Cutout (siehe unten).
 - **Reveal** — Scroll-Reveal (fade + rise) via `IntersectionObserver`, im Einsatz
   bei der Kachel in „Arbeiten bei MISCHOK" und den drei Footer-Spalten
-  (gestaffelt). **Achtung:** die Komponente rendert serverseitig mit
-  `opacity: 0` und wird erst durch JS sichtbar — sie gehört deshalb nicht um
-  Inhalte, die auch ohne JS stehen müssen.
+  (gestaffelt). Sicherheitsnetz: liefert der Observer nicht, wird nach 1.5s
+  trotzdem eingeblendet — Inhalt darf nie daran hängen, dass eine Animation
+  startet. Dasselbe Netz hat das Zitat in **Stimme**.
+- **CountUp** — Kennzahlen in „Über" zählen beim Eintreten hoch. Startwert ist
+  der ENDWERT, damit im SSR-HTML die echte Zahl steht; animiert wird erst, wenn
+  der Observer meldet.
 
 Alle Animationen respektieren `prefers-reduced-motion: reduce`.
 

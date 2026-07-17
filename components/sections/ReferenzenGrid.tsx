@@ -172,23 +172,17 @@ export default function ReferenzenGrid() {
                     ))}
                   </ul>
 
+                  {/* dieselbe CTA-Optik wie ueberall sonst. Vorher
+                      .cta-grad-light (Verlauf transparent → weiss 22%). */}
                   {r.detailHref && (
                     <a
                       href={r.detailHref}
                       onClick={(e) => e.stopPropagation()}
-                      className="cta-grad-light"
-                      style={{
-                        textDecoration: "none",
-                        display: "inline-block",
-                        fontFamily: "var(--mono)",
-                        fontWeight: 500,
-                        fontSize: "17px",
-                        letterSpacing: "0.04em",
-                        padding: "12px 24px",
-                        marginTop: "clamp(22px,2.4vw,30px)",
-                      }}
+                      className="cta-ghost on-navy"
+                      style={{ marginTop: "clamp(22px,2.4vw,30px)" }}
                     >
-                      Referenz ansehen →
+                      Referenz ansehen
+                      <span aria-hidden="true">→</span>
                     </a>
                   )}
                 </div>
