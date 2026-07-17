@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
+import NavyGrid from "@/components/ui/NavyGrid";
 import { Icon, FOCUS, NAV } from "@/components/sections/HeroImpact";
 import { REFERENZEN, REFERENZEN_INTRO } from "@/lib/content";
 
@@ -230,7 +231,10 @@ export default function HeroCeramic() {
         {/* Das ganze Modul ist der Link: die blaue Fläche und das Klickziel sind
             deckungsgleich — vorher war nur der Textlink darin anklickbar. */}
         <a href="#kontakt" className="hc-navy">
-          <span className="hc-navy-planes" aria-hidden="true" />
+          {/* Ersetzt die frueheren hc-navy-planes (zwei weiche Lichtflaechen):
+              das Raster nimmt die Sprache der Zusammenarbeit-Section auf und
+              bewegt sich, statt nur zu liegen. */}
+          <NavyGrid />
           <span className="hc-navy-label">Der nächste Schritt</span>
           <span className="hc-cta">
             Projektlage klären

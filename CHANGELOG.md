@@ -18,6 +18,37 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.19.0] – 2026-07-17
+
+### Hinzugefügt
+- **Die Logos der Fachöffentlichkeit sind verlinkt** (`Medien`) — 10 von 12, je
+  auf die Seite beim Medium, die den Beleg trägt (Speaker-Profil, Autorenseite
+  oder den Artikel selbst).
+  **Nicht** von der alten mischok.de übernommen: dort sind diese Logos reine
+  `<img>` ohne `<a>`, es gab nichts auszulesen. Die Ziele stammen aus
+  `public/social/trust-feed.json` bzw. sind einzeln gegengeprüft — HTTP 200 und
+  der Name „Mischok" nachweislich auf der Zielseite.
+  Bewusst **ohne** Link bleiben **TestCon** (auf `testcon.lt/speakers/` kommt
+  „Mischok" nicht vor) und **IT-S NOW** (keine erreichbare belegende Seite
+  gefunden). Ein Link dorthin wäre eine Behauptung ohne Beleg.
+  JAX und W-JAX zeigen auf dieselbe Seite — jax.de trägt beide Marken.
+- **`NavyGrid`** — Punktraster als Vektor auf dem blauen CTA-Modul im Hero.
+  Nimmt das Raster der Zusammenarbeit (`.zu-grid`) auf, aber als SVG: 162 Punkte
+  blenden in einer diagonalen Welle ein, zwei Linien laufen den Rasterachsen
+  entlang und zeichnen sich. Maske rechts kräftig / links schwach, weil links
+  der CTA-Text steht. `prefers-reduced-motion` → statisch, aber vollständig.
+
+### Entfernt
+- **`.hc-navy-planes`** — die zwei weichen Lichtflächen im Hero-CTA sind durch
+  `NavyGrid` ersetzt; die Regeln waren danach tot und sind raus.
+
+### Bekannt
+- `public/social/trust-feed.json` nennt für die Hackerkiste
+  `/speaker-hackerkiste-2025/` — die Seite ist inzwischen **404**. Die Medien-
+  leiste verlinkt deshalb die Startseite (die mischok weiterhin führt). Der
+  Depot-Eintrag ist nicht angefasst, da `AusDerPraxis` derzeit nicht gerendert
+  wird — beim Wiedereinhängen ist die URL zu erneuern.
+
 ## [0.18.0] – 2026-07-17
 
 ### Behoben

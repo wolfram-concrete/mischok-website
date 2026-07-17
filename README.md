@@ -227,7 +227,7 @@ Alle Animationen respektieren `prefers-reduced-motion: reduce`.
 
 | Sektion | Bewegung |
 |---|---|
-| HeroCeramic | Bento-Kacheln steigen beim Laden auf · 2 Bilder mit Parallaxe · Icons mit Idle-Animation |
+| HeroCeramic | Bento-Kacheln steigen beim Laden auf · 2 Bilder mit Parallaxe · Icons mit Idle-Animation · blaues CTA-Modul mit `NavyGrid` (Punktraster baut sich als Welle auf, Linien zeichnen sich) |
 | Ansatz | Pin-Scroll über 300vh (Conic-Mittelpunkt wandert, 3 Punkte blenden durch) |
 | Stimme | Vollbild-Motiv mit Parallaxe |
 | Themen | Sticky-Headline · Bilder mit Parallaxe |
