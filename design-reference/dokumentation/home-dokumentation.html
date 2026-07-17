@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>MISCHOK Home — Auflösung zum UI/UX-Kickoff-Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+<style>
+  /* Calibre aus dem Projekt — relativer Pfad, funktioniert beim lokalen Öffnen.
+     Fällt sauber auf eine System-Grotesk zurück, falls die Datei fehlt. */
+  @font-face {
+    font-family: "CalibreDoc";
+    src: url("../../app/fonts/CalibreWeb-Regular.woff2") format("woff2");
+    font-weight: 400; font-display: swap;
+  }
+  @font-face {
+    font-family: "CalibreDoc";
+    src: url("../../app/fonts/CalibreWeb-Medium.woff2") format("woff2");
+    font-weight: 500; font-display: swap;
+  }
+  @font-face {
+    font-family: "RealtimeDoc";
+    src: url("../../app/fonts/RealtimeRounded.woff2") format("woff2");
+    font-weight: 400; font-display: swap;
+  }
+
+  :root {
+    --change:  #002a5c;
+    --snow:    #f9f9f9;
+    --paper:   #ededed;
+    --white:   #fff;
+    --stone:   #a5a5a5;
+    --ocean:   #657383;
+    --slate:   #384352;
+    --portfolio:#ccff99;
+    --karriere: #ffcc66;
+    --about:    #99ccff;
+    --warning:  #ff6698;
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans: "CalibreDoc", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --label: "RealtimeDoc", var(--sans);
+    --line: rgba(165,165,165,.45);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    background: var(--stone);
+    font-family: var(--sans);
+    color: var(--slate);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Eine Seite = ein A4-Querformat-Blatt. Querformat, weil die Vergleiche und
+     die Screenshots breit sind — hochkant müsste alles winzig skalieren. */
+  .page {
+    width: 297mm;
+    /* feste Hoehe: min-height liess Seiten wachsen und der Druck brach sie
+       auf zwei Blaetter um */
+    height: 210mm;
+    margin: 0 auto 8mm;
+    padding: 14mm 16mm 20mm;
+    background: var(--snow);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  @page { size: A4 landscape; margin: 0; }
+  @media print {
+    body { background: none; }
+    .page { margin: 0; box-shadow: none; break-after: page; }
+    .page:last-child { break-after: auto; }
+    .noprint { display: none !important; }
+  }
+
+  .eyebrow {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(0,42,92,.5);
+    margin: 0;
+  }
+  h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 46px; line-height: 1.05; letter-spacing: -.01em;
+    color: var(--change); margin: 10px 0 0;
+  }
+  h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 30px; line-height: 1.1; letter-spacing: -.01em;
+    color: var(--change); margin: 6px 0 0;
+  }
+  h3 {
+    font-family: var(--sans); font-weight: 500;
+    font-size: 14px; margin: 0 0 6px; color: var(--change);
+  }
+  p { margin: 8px 0 0; }
+  .lead { font-size: 17px; line-height: 1.55; max-width: 62ch; }
+  .muted { color: var(--ocean); }
+  .small { font-size: 13px; line-height: 1.5; }
+
+  .pagenum {
+    position: absolute; right: 16mm; bottom: 9mm;
+    font-family: var(--label); font-size: 10px; letter-spacing: .1em;
+    color: rgba(0,42,92,.4);
+  }
+  .footline {
+    position: absolute; left: 16mm; bottom: 9mm;
+    font-family: var(--label); font-size: 10px; letter-spacing: .1em;
+    color: rgba(0,42,92,.4);
+  }
+
+  /* Code-Marker: die vier Prinzipien des Boards */
+  .codes { display: flex; gap: 6px; flex-wrap: wrap; }
+  .code {
+    font-family: var(--label); font-size: 9.5px; letter-spacing: .08em;
+    text-transform: uppercase; padding: 4px 9px; border-radius: 100vw;
+    border: 1px solid var(--line); color: var(--change); white-space: nowrap;
+  }
+  .code.on { border-color: transparent; }
+  .code.c1 { background: color-mix(in srgb, var(--about) 55%, #fff); }
+  .code.c2 { background: color-mix(in srgb, var(--portfolio) 55%, #fff); }
+  .code.c3 { background: color-mix(in srgb, var(--karriere) 55%, #fff); }
+  .code.c4 { background: color-mix(in srgb, var(--warning) 40%, #fff); }
+
+  /* Sektionsseiten: Bild links, Argument rechts */
+  /* align-items:start — sonst streckt das Grid die Bildbox auf die Zeilenhoehe
+     und unter dem Screenshot steht Weissraum */
+  .split { display: grid; grid-template-columns: 1.45fr 1fr; gap: 12mm; flex: 1; min-height: 0; margin-top: 8mm; align-items: start; }
+  .shot {
+    border: 1px solid var(--line); background: var(--white);
+    display: flex; align-items: flex-start; justify-content: center;
+    overflow: hidden; min-height: 0;
+    /* misst sich am Bild — sonst streckt flex die Box und es entsteht
+       Weissraum unter dem Screenshot */
+    flex: 0 0 auto;
+  }
+  .shot img { width: 100%; height: auto; display: block; }
+  .shot.contain { align-items: center; }
+  .arg { display: flex; flex-direction: column; min-height: 0; }
+  .arg .block { margin-top: 14px; }
+  .arg .block:first-of-type { margin-top: 0; }
+
+  .rule { height: 1px; background: var(--line); margin: 12px 0; border: 0; }
+
+  dl.facts { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 13px; }
+  dl.facts dt { font-family: var(--label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: rgba(0,42,92,.5); padding-top: 3px; }
+  dl.facts dd { margin: 0; }
+
+  /* Vorher/Nachher-Schema */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; flex: 1; margin-top: 8mm; min-height: 0; align-items: start; }
+  .col-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+  .col-head .tag {
+    font-family: var(--label); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px;
+  }
+  .tag.alt { background: var(--paper); color: var(--ocean); }
+  .tag.neu { background: var(--change); color: #fff; }
+  .stack { display: flex; flex-direction: column; gap: 5px; }
+  .blk {
+    border: 1px solid var(--line); background: var(--white);
+    padding: 8px 10px; border-radius: 3px;
+    display: flex; align-items: baseline; gap: 9px;
+  }
+  .blk .n { font-family: var(--label); font-size: 9.5px; color: rgba(0,42,92,.4); flex: none; width: 18px; }
+  .blk .t { font-family: var(--sans); font-weight: 500; font-size: 13px; color: var(--change); }
+  .blk .s { font-size: 12px; color: var(--ocean); margin-left: auto; text-align: right; }
+  .blk.ghost { background: var(--paper); border-style: dashed; }
+  .blk.navy { background: var(--change); }
+  .blk.navy .t { color: #fff; }
+  .blk.navy .n, .blk.navy .s { color: rgba(255,255,255,.6); }
+
+  .note {
+    border-left: 2px solid var(--change);
+    padding-left: 12px; margin-top: 12px;
+    font-size: 13px; line-height: 1.55;
+  }
+  .note.warn { border-left-color: var(--warning); }
+
+  .hint {
+    background: var(--paper); border: 1px dashed var(--stone);
+    padding: 10px 12px; font-size: 12.5px; color: var(--ocean);
+  }
+
+  ul.tight { margin: 6px 0 0; padding-left: 16px; }
+  ul.tight li { margin-bottom: 4px; }
+
+  .toolbar {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--change); color: #fff; padding: 10px 16px;
+    font-size: 13px; display: flex; gap: 16px; align-items: center;
+  }
+  .toolbar b { font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="toolbar noprint">
+  <b>Drucken → „Als PDF sichern"</b>
+  <span>Papierformat A4 · Querformat · Ränder: keine · Hintergrundgrafiken: an</span>
+</div>
+
+<!-- ══════════════════ 1 · Titel ══════════════════ -->
+<section class="page">
+  <p class="eyebrow">Auflösung zum Board „Mischok Website UI UX Kickoff"</p>
+  <h1>Die Home — was sie leistet<br>und woraus sie hergeleitet ist</h1>
+  <p class="lead" style="margin-top:18px">
+    Dieses Dokument stellt die gebaute Startseite neben die Parameter, die wir im
+    Kickoff-Board aufgestellt haben. Für jede Sektion steht hier, welche Aufgabe
+    sie übernimmt, auf welchen der vier Design-Codes sie einzahlt und welche
+    Entscheidung dahintersteckt — inklusive der Stellen, die noch offen sind.
+  </p>
+
+  <div class="split" style="grid-template-columns:1fr 1fr; align-items:start">
+    <div>
+      <h3>Die Messlatte: vier Codes aus dem Board</h3>
+      <p class="small muted" style="margin-top:2px">
+        Leitfrage des Boards: „Was müssen wir im UI/UX-Design jetzt
+        berücksichtigen?" Die vier Prinzipien zahlen auf die Markencharaktere
+        <i>relevant, verlässlich, fokussiert, neugierig</i> ein.
+      </p>
+      <div style="margin-top:12px; display:grid; gap:8px">
+        <div class="blk"><span class="n">1</span><span class="t">Klarheit erzeugen</span><span class="s">Weißraum · ruhige Typo · Hierarchie · reduzierte Farbwelt</span></div>
+        <div class="blk"><span class="n">2</span><span class="t">Orientierung schaffen</span><span class="s">editoriales Grid · Bento · Karten · Diagramme</span></div>
+        <div class="blk"><span class="n">3</span><span class="t">Vertrauen vermitteln</span><span class="s">authentische Fotografie · reale Projektsituationen · dezente Tiefe</span></div>
+        <div class="blk"><span class="n">4</span><span class="t">Kompetenz transportieren</span><span class="s">präzise Typo · hochwertige Bildsprache · reduzierte Animation</span></div>
+      </div>
+      <div class="note">
+        Diese Codes sind in <b>design-reference/DESIGN-CODES.md</b> im Repo
+        hinterlegt und werden bei jedem neuen Element gegengeprüft. Die
+        Farbregeln stammen aus dem CI-Manual (S. 17–18) und liegen in
+        <b>COLOR-LOGIC.md</b>.
+      </div>
+    </div>
+
+    <div>
+      <h3>Wie dieses Dokument zu lesen ist</h3>
+      <p class="small">
+        Ab Seite 3 steht je Sektion links der reale Screenshot und rechts die
+        Herleitung. Die farbigen Marker zeigen, auf welche Codes die Sektion
+        einzahlt:
+      </p>
+      <div class="codes" style="margin-top:10px">
+        <span class="code on c1">1 · Klarheit</span>
+        <span class="code on c2">2 · Orientierung</span>
+        <span class="code on c3">3 · Vertrauen</span>
+        <span class="code on c4">4 · Kompetenz</span>
+      </div>
+      <hr class="rule">
+      <dl class="facts">
+        <dt>Stand</dt><dd>17.07.2026 · Screenshots vom Stand ~13:58 Uhr</dd>
+        <dt>Technik</dt><dd>Next.js (App Router) · TypeScript · Tailwind · Vercel</dd>
+        <dt>Schriften</dt><dd>Source Serif 4 (editoriale Serif) + Calibre (Grotesk) + Realtime Rounded (Labels)</dd>
+        <dt>Umfang</dt><dd>9 Sektionen · 1 One-Pager · 2 Unterseiten gebaut</dd>
+      </dl>
+      <div class="hint" style="margin-top:14px">
+        <b>Hinweis zur Ehrlichkeit:</b> Die Seite ist ein Arbeitsstand, kein
+        Abnahmedokument. Was noch nicht trägt, steht auf der letzten Seite —
+        nicht im Kleingedruckten.
+      </div>
+    </div>
+  </div>
+
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">01</span>
+</section>
+
+<!-- ══════════════════ 2 · Vorher / Nachher · Bild ══════════════════ -->
+<section class="page">
+  <p class="eyebrow">Der Hebel · Bild gegen Bild</p>
+  <h2>Derselbe erste Screen, zwei Aufgaben</h2>
+
+  <div class="compare" style="gap:8mm">
+    <div style="display:flex; flex-direction:column; min-height:0">
+      <div class="col-head">
+        <span class="tag alt">Bisher</span>
+        <span class="small muted">mischok.de · abgerufen 17.07.2026</span>
+      </div>
+      <div class="shot">
+        <img src="shots/00-alt-hero.jpg" alt="Bisherige Home: linke Hälfte grau mit Claim und einem Button, rechte Hälfte ein Porträtfoto">
+      </div>
+      <div class="note warn" style="margin-top:8px">
+        <b>Was der Screen leistet:</b> Er nennt die Kategorie
+        („Software­entwicklungs­partner für den Mittelstand") und bietet einen
+        Weg an („Mehr erfahren"). Das Foto ist freundlich, aber austauschbar —
+        es zeigt keine Arbeitssituation. Wer hier landet, weiß danach, <i>was</i>
+        MISCHOK ist. Nicht, <i>wann</i> er MISCHOK braucht.
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; min-height:0">
+      <div class="col-head">
+        <span class="tag neu">Neu</span>
+        <span class="small muted">Bento · Anspruch + 5 Lagen + eine Aktion</span>
+      </div>
+      <div class="shot">
+        <img src="shots/01-hero.jpg" alt="Neue Home: Bento-Raster mit Headline, Teamfoto, fünf Szenariokarten und Navy-CTA">
+      </div>
+      <div class="note" style="margin-top:8px">
+        <b>Was der Screen leistet:</b> Der Anspruch steht als Satz —
+        „…braucht sie Menschen, die Verantwortung übernehmen." Darunter fünf
+        reale Ausgangslagen zum Wiedererkennen, ein Teamfoto als Beleg und
+        genau ein blauer Handlungsanker. Wer hier landet, findet <i>seine
+        Situation</i> und weiß, wohin er klickt.
+      </div>
+    </div>
+  </div>
+
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">02</span>
+</section>
+
+<!-- ══════════════════ 3 · Vorher / Nachher · Struktur ══════════════════ -->
+<section class="page">
+  <p class="eyebrow">Der Hebel · Struktur</p>
+  <h2>Von der Visitenkarte zur Argumentation</h2>
+  <p class="small muted" style="margin-top:6px; max-width:100ch">
+    Die bestehende Home besteht aus einem Hero, zwei Case Studies und einer
+    Logo-Leiste. Sie sagt <i>wer</i> MISCHOK ist. Sie sagt nicht, <i>wann</i> man
+    MISCHOK braucht und <i>wie</i> gearbeitet wird — und sie belegt nichts.
+    Die neue Home führt genau diesen Weg: Lage erkennen → Vorgehen verstehen →
+    Haltung prüfen → Beleg sehen → Gespräch.
+  </p>
+
+  <div class="compare">
+    <div>
+      <div class="col-head">
+        <span class="tag alt">Bisher</span>
+        <span class="small muted">mischok.de · 5 Blöcke</span>
+      </div>
+      <div class="stack">
+        <div class="blk"><span class="n">01</span><span class="t">Navigation</span><span class="s">5 Punkte, kein Vorschau-Menü</span></div>
+        <div class="blk"><span class="n">02</span><span class="t">Hero — „Software Entwicklungspartner für den Mittelstand"</span><span class="s">Claim + 1 CTA</span></div>
+        <div class="blk"><span class="n">03</span><span class="t">Case Study: Flutter App — Mobility</span><span class="s">Teaser + „Zur Case Study"</span></div>
+        <div class="blk"><span class="n">04</span><span class="t">„Sie kennen unsere Experten aus:"</span><span class="s">Fachmedien-Leiste (Java Magazin, iX, JavaPRO, DevOpsCon …)</span></div>
+        <div class="blk"><span class="n">05</span><span class="t">Case Study: Plattform vernetzte Mobilität</span><span class="s">Teaser + „Zur Case Study"</span></div>
+        <div class="blk navy"><span class="n">06</span><span class="t">Kundenlogo-Wand</span><span class="s">12 Logos: Allianz, Audi, Merck, Continental, HiPP, Juzo, Rational, evia, LMU Klinikum, SupplyOn, 9 Levels …</span></div>
+        <div class="blk"><span class="n">07</span><span class="t">Footer</span><span class="s">dunkel · LinkedIn/Instagram/Facebook · Kontakt · Rechtliches</span></div>
+      </div>
+      <div class="note warn">
+        <b>Was fehlt:</b> keine Einordnung der Ausgangslage, keine Arbeitsweise,
+        keine Haltung, keine Menschen, kein Weg zwischen „interessant" und
+        „Gespräch". Die zwei Cases stehen ohne Rahmen, der erklärt, warum
+        <i>diese</i> Cases etwas beweisen.
+      </div>
+      <div class="note">
+        <b>Was die alte Seite besser kann:</b> Die Kundenlogo-Wand (12 Marken,
+        darunter Allianz, Audi, Merck, Continental) und die Fachmedien-Leiste
+        sind harter, sofort lesbarer Beleg. <b>Beides hat die neue Home nicht.</b>
+        Das ist kein Versehen, sondern eine offene Entscheidung — siehe letzte Seite.
+      </div>
+    </div>
+
+    <div>
+      <div class="col-head">
+        <span class="tag neu">Neu</span>
+        <span class="small muted">9 Sektionen mit je einer Aufgabe</span>
+      </div>
+      <div class="stack">
+        <div class="blk navy"><span class="n">01</span><span class="t">Hero — Bento</span><span class="s">Anspruch + 5 Szenarien + eine Aktion</span></div>
+        <div class="blk"><span class="n">02</span><span class="t">Arbeitsweise</span><span class="s">3 Schritte, jeder mit Referenz belegt</span></div>
+        <div class="blk"><span class="n">03</span><span class="t">Stimme</span><span class="s">Haltung, mit Namen</span></div>
+        <div class="blk"><span class="n">04</span><span class="t">Insights</span><span class="s">fachliche Substanz</span></div>
+        <div class="blk"><span class="n">05</span><span class="t">Zusammenarbeit</span><span class="s">3 Prinzipien am realen Bild</span></div>
+        <div class="blk"><span class="n">06</span><span class="t">Über mischok</span><span class="s">Familienunternehmen + Kennzahlen</span></div>
+        <div class="blk navy"><span class="n">07</span><span class="t">Kontakt</span><span class="s">Ansprechpartner mit Gesicht</span></div>
+        <div class="blk"><span class="n">08</span><span class="t">Arbeiten bei MISCHOK</span><span class="s">Karriere</span></div>
+        <div class="blk"><span class="n">09</span><span class="t">Footer</span><span class="s">Navigation + Referenzen + Kontakt</span></div>
+      </div>
+      <div class="note">
+        <b>Der eigentliche Hebel:</b> Aus 2 Teasern wird eine Kette. Jede Sektion
+        beantwortet eine Frage, die die vorherige aufgeworfen hat — und übergibt
+        an die nächste. Blau markiert dabei nur die <i>eine</i> Aktion
+        (01 und 07), damit der Weg zum Gespräch nie in Deko untergeht.
+      </div>
+    </div>
+  </div>
+
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">03</span>
+</section>
+
+<!-- ══════════════════ Sektionsseiten ══════════════════ -->
+
+<!-- Hero -->
+<section class="page">
+  <p class="eyebrow">Sektion 01</p>
+  <h2>Hero — der Anspruch und die fünf Lagen</h2>
+  <div class="split">
+    <div class="shot"><img src="shots/01-hero.jpg" alt="Hero der neuen Home: Bento-Raster mit Headline, Teamfoto, fünf Szenariokarten und Navy-CTA"></div>
+    <div class="arg">
+      <div class="codes">
+        <span class="code on c1">1 · Klarheit</span>
+        <span class="code on c2">2 · Orientierung</span>
+        <span class="code on c4">4 · Kompetenz</span>
+      </div>
+      <div class="block">
+        <h3>Aufgabe</h3>
+        <p class="small">
+          In einem Screen beantworten: Wofür steht MISCHOK — und bin ich hier
+          richtig? Der Anspruch steht als Satz, darunter fünf reale
+          Ausgangslagen. Der Besucher erkennt sich in einer davon wieder, statt
+          eine Leistungsliste zu lesen.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Warum Bento</h3>
+        <p class="small">
+          Code 2 nennt Bento-Layouts als Ordnungsprinzip. Der Hero ist ein
+          zusammenhängendes Raster: Marke, Aussage, Beleg (Teamfoto) und Aktion
+          liegen als Module nebeneinander — nicht als gestapelte Blöcke.
+          Das Raster füllt den Viewport exakt, ohne Scrollaufforderung.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Entscheidungen</h3>
+        <ul class="tight small">
+          <li><b>Die Szenariokarte ist das Bedienelement</b>, nicht ein Button darin — Farbfläche = Klickfläche.</li>
+          <li><b>Auswahl über Helligkeit, nicht über Farbe:</b> die aktive Karte kommt auf Reinweiß nach vorn. Blau bleibt der einen Aktion vorbehalten.</li>
+          <li><b>Fünf Icons, fünf eigene Bewegungen</b> — jede bedeutungsgetrieben statt Einheitsmuster (Code 4: reduzierte Animation).</li>
+          <li><b>Die Navi ist keine Karte.</b> Sie sitzt auf dem Grund; die Fläche erscheint erst, wenn das Mega-Menü aufklappt.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">04</span>
+</section>
+
+<!-- Mega -->
+<section class="page">
+  <p class="eyebrow">Sektion 01 · Detail</p>
+  <h2>Mega-Menü — Vorschau statt Linkliste</h2>
+  <div class="split">
+    <div class="shot"><img src="shots/02-hero-mega.jpg" alt="Geöffnetes Mega-Menü: fünf Referenzen mit Projektlage, rechts eine Navy-Karte"></div>
+    <div class="arg">
+      <div class="codes">
+        <span class="code on c2">2 · Orientierung</span>
+        <span class="code on c3">3 · Vertrauen</span>
+      </div>
+      <div class="block">
+        <h3>Aufgabe</h3>
+        <p class="small">
+          „Referenzen" öffnet keine Liste, sondern zeigt alle fünf Projekte mit
+          ihrer <b>Projektlage</b> — also mit dem Problem, das dahinterstand.
+          Der Besucher wählt nach seiner Situation, nicht nach Firmennamen.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Entscheidungen</h3>
+        <ul class="tight small">
+          <li>Die Navizeile <b>wächst als eine Fläche nach unten</b> und läuft links und rechts bis an den Screenrand.</li>
+          <li>Die Module darunter bleiben im Bento-Raster mit Seitenrand — nur das Panel bricht aus.</li>
+          <li>Flache Fläche statt Verlauf: zwei Verläufe können an einer Kante nie zusammenfallen, weil jeder in seiner eigenen Box neu startet.</li>
+        </ul>
+      </div>
+      <div class="note">
+        Der Screenshot zeigt den Stand vor dem letzten Durchgang — inzwischen
+        sitzt das Bento mit Seitenrand und nur noch das Panel randlos.
+      </div>
+    </div>
+  </div>
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">05</span>
+</section>
+
+<!-- Arbeitsweise -->
+<section class="page">
+  <p class="eyebrow">Sektion 02</p>
+  <h2>Arbeitsweise — drei Schritte, jeder belegt</h2>
+  <div class="split" style="grid-template-columns:1.6fr 1fr">
+    <div style="display:grid; grid-template-rows:1fr 1fr 1fr; gap:4px; min-height:0">
+      <div class="shot"><img src="shots/03-arbeitsweise-01.jpg" alt="Arbeitsweise Schritt 01 mit Referenzkarte 9 Levels"></div>
+      <div class="shot"><img src="shots/04-arbeitsweise-02.jpg" alt="Arbeitsweise Schritt 02"></div>
+      <div class="shot"><img src="shots/05-arbeitsweise-03.jpg" alt="Arbeitsweise Schritt 03 mit Referenzkarte Barely Digital"></div>
+    </div>
+    <div class="arg">
+      <div class="codes">
+        <span class="code on c1">1 · Klarheit</span>
+        <span class="code on c3">3 · Vertrauen</span>
+        <span class="code on c4">4 · Kompetenz</span>
+      </div>
+      <div class="block">
+        <h3>Aufgabe</h3>
+        <p class="small">
+          Die Frage nach dem Hero lautet: <i>Und wie geht ihr vor?</i> Drei
+          Schritte — verstehen, Weg vorschlagen, Verantwortung bis zum Ergebnis.
+          Jeder Schritt bringt <b>seine eigene Referenz</b> mit. Damit ist das
+          Vorgehen keine Behauptung.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Warum Pin-Scroll</h3>
+        <p class="small">
+          Die Sektion bleibt stehen, während die drei Schritte durchlaufen —
+          eine Bewegung, ein Fokus (Code 1). Der Hintergrund führt einen
+          wandernden Sektor im Markenblau mit, der die Sektion trägt, ohne
+          Fläche zu werden.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Ein offener Punkt, bewusst</h3>
+        <p class="small">
+          Schritt 02 zeigt <b>noch einmal 9 Levels</b>. Für WEKA Pilot Online
+          gibt es kein belegtes Projektvisual. Lieber dieselbe belegte Referenz
+          zweimal als ein fremdes Bild, das eine Zuordnung behauptet, die es
+          nicht gibt.
+        </p>
+      </div>
+    </div>
+  </div>
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">06</span>
+</section>
+
+<!-- Stimme -->
+<section class="page">
+  <p class="eyebrow">Sektion 03</p>
+  <h2>Stimme — Haltung mit Namen</h2>
+  <div class="split">
+    <div class="shot contain"><img src="shots/06-stimme.jpg" alt="Vollflächiges Zitat von Julius Mischok auf einem realen Vortragsfoto"></div>
+    <div class="arg">
+      <div class="codes">
+        <span class="code on c3">3 · Vertrauen</span>
+        <span class="code on c1">1 · Klarheit</span>
+      </div>
+      <div class="block">
+        <h3>Aufgabe</h3>
+        <p class="small">
+          Nach dem Vorgehen kommt die Haltung. Ein Satz, der etwas riskiert:
+          nicht zu früh vereinfachen, technische und organisatorische Fragen
+          nicht trennen, auch dann klar bleiben, wenn eine Einschätzung unbequem
+          wird. Gesagt von einer Person mit Namen und Gesicht.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Entscheidungen</h3>
+        <ul class="tight small">
+          <li><b>Reale Situation statt Stock</b> (Code 3): Julius auf einer echten Bühne, kein Konferenzbild aus der Datenbank.</li>
+          <li><b>Zitat in Serif 400, keine Fettung</b> — Haus-Regel für Zitate.</li>
+          <li>Der Satz fährt beim Eintreten zeilenweise ein, von einer Maske beschnitten. Reduziert, einmal, nicht wiederholt.</li>
+        </ul>
+      </div>
+      <div class="note">
+        <b>Konstruktionsprinzip:</b> Der Text ist Inhalt, kein Schmuck. Läuft die
+        Animation aus irgendeinem Grund nicht, wird er nach 1,5 s trotzdem
+        eingeblendet. Sichtbarkeit darf nie daran hängen, dass ein Effekt
+        startet.
+      </div>
+    </div>
+  </div>
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">07</span>
+</section>
+
+<!-- Insights -->
+<section class="page">
+  <p class="eyebrow">Sektion 04</p>
+  <h2>Insights — fachliche Substanz</h2>
+  <div class="split">
+    <div class="shot"><img src="shots/07-insights.jpg" alt="Insights: Sticky-Headline links, rechts drei Formate — Vortrag, Veranstaltung, Workshop"></div>
+    <div class="arg">
+      <div class="codes">
+        <span class="code on c4">4 · Kompetenz</span>
+        <span class="code on c3">3 · Vertrauen</span>
+      </div>
+      <div class="block">
+        <h3>Aufgabe</h3>
+        <p class="small">
+          Zeigen, dass die Themen nicht nur im Kundenprojekt existieren, sondern
+          auch auf der Bühne, im Workshop und in der eigenen Veranstaltung.
+          Das ist der Unterschied zwischen „wir können das" und „wir stehen damit
+          vor Publikum".
+        </p>
+      </div>
+      <div class="block">
+        <h3>Entscheidungen</h3>
+        <ul class="tight small">
+          <li><b>Sticky-Headline</b> links, Formate laufen rechts durch — die Aussage bleibt stehen, die Belege ziehen vorbei.</li>
+          <li>Jedes Format trägt ein <b>reales Foto der Situation</b>, kein Symbolbild.</li>
+          <li>Die Karten bleiben auf Copy-Größe: kein zweiter Titel-Wettbewerb neben der Headline.</li>
+        </ul>
+      </div>
+      <div class="note warn">
+        <b>Offen:</b> Die Konzeption nennt fünf Formate, gebaut sind drei. Die
+        beiden fehlenden brauchen belegtes Material.
+      </div>
+    </div>
+  </div>
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">08</span>
+</section>
+
+<!-- Zusammenarbeit -->
+<section class="page">
+  <p class="eyebrow">Sektion 05</p>
+  <h2>Zusammenarbeit — drei Prinzipien am realen Bild</h2>
+  <div class="split" style="grid-template-columns:1.6fr 1fr">
+    <div style="display:grid; grid-template-rows:1fr 1fr 1fr; gap:4px; min-height:0">
+      <div class="shot"><img src="shots/08-zusammenarbeit-1.jpg" alt="Zusammenarbeit: Karte 1 offen — Klare Einordnung statt später Korrektur"></div>
+      <div class="shot"><img src="shots/09-zusammenarbeit-2.jpg" alt="Zusammenarbeit: Karte 2 offen — Fachliche Tiefe vor schnellen Antworten"></div>
+      <div class="shot"><img src="shots/10-zusammenarbeit-3.jpg" alt="Zusammenarbeit: Karte 3 offen — Verantwortliche Menschen bleiben sichtbar"></div>
+    </div>
+    <div class="arg">
+      <div class="codes">
+        <span class="code on c3">3 · Vertrauen</span>
+        <span class="code on c2">2 · Orientierung</span>
+      </div>
+      <div class="block">
+        <h3>Aufgabe</h3>
+        <p class="small">
+          Drei Prinzipien, die im Projekt spürbar werden: früh einordnen statt
+          später korrigieren, Tiefe vor schnellen Antworten, verantwortliche
+          Menschen bleiben sichtbar. Jedes steht auf einem realen Arbeitsfoto —
+          die Aussage und der Beleg sind dasselbe Element.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Entscheidungen</h3>
+        <ul class="tight small">
+          <li><b>Die geschlossene Karte ist selbst das Bedienelement</b> (Tastatur inklusive) — kein Plus-Button, nur ein Pfeil als Hinweis.</li>
+          <li><b>Unscharf → scharf beim Öffnen:</b> die Aufmerksamkeit folgt der Schärfe, nicht einer Farbe.</li>
+          <li><b>Punktraster im Hintergrund</b> statt Bild — Code 2 nennt „Diagramme und Skizzen"; das Raster ordnet, ohne zu erzählen.</li>
+          <li>Das Glas-Panel trägt einen echten Backdrop-Blur, kein aufgemaltes Grau.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">09</span>
+</section>
+
+<!-- Über -->
+<section class="page">
+  <p class="eyebrow">Sektion 06</p>
+  <h2>Über mischok — Familienunternehmen, nachprüfbar</h2>
+  <div class="split">
+    <div class="shot"><img src="shots/11-ueber.jpg" alt="Über mischok: links Text und Kennzahlen, rechts die Geschäftsführung mit Zitat"></div>
+    <div class="arg">
+      <div class="codes">
+        <span class="code on c1">1 · Klarheit</span>
+        <span class="code on c3">3 · Vertrauen</span>
+      </div>
+      <div class="block">
+        <h3>Aufgabe</h3>
+        <p class="small">
+          Wer steht dahinter? Ein Familienunternehmen in Augsburg, seit 2010,
+          über 35 Menschen. Die Kennzahlen sind nachprüfbar und zählen beim
+          Eintreten hoch. Das Zitat von Virgil benennt, was ein
+          Familienunternehmen ausmacht — auch das Unbequeme.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Entscheidungen</h3>
+        <ul class="tight small">
+          <li><b>Editoriales Raster 5 / 1 / 6</b> (Code 2): Inhalt, Luft, Bild. Die Kennzahlen sitzen auf einer Linie mit dem Bildfuß.</li>
+          <li><b>Ausbuchtung am Bildmodul</b> — dieselbe rechtwinklige Sprache wie die Sektionsstufe, abgeleitet aus dem Cutout des Logorahmens.</li>
+          <li><b>Pin-Scroll durch sieben Aufnahmen:</b> von der Geschäftsführung bis zur einzelnen Arbeitssituation. Vom Repräsentativen ins Konkrete.</li>
+          <li>Die Zahlen stehen serverseitig mit ihrem <b>Endwert</b> im HTML — ohne JavaScript stimmt die Aussage trotzdem.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">10</span>
+</section>
+
+<!-- Kontakt + Arbeiten -->
+<section class="page">
+  <p class="eyebrow">Sektion 07 + 08</p>
+  <h2>Kontakt und Karriere — ein Motiv, zwei Anliegen</h2>
+  <div class="split">
+    <div class="shot"><img src="shots/12-kontakt-arbeiten.jpg" alt="Kontakt-Karte mit Kajetan Mischok, dahinter das Motiv von Arbeiten bei MISCHOK"></div>
+    <div class="arg">
+      <div class="codes">
+        <span class="code on c3">3 · Vertrauen</span>
+        <span class="code on c1">1 · Klarheit</span>
+      </div>
+      <div class="block">
+        <h3>Aufgabe</h3>
+        <p class="small">
+          Der Weg ins Gespräch bekommt ein Gesicht: Kajetan Mischok, mit Namen,
+          Rolle und Foto — kein Formular, kein „Kontaktieren Sie uns". Direkt
+          darunter Karriere, weil es dieselbe Frage aus der anderen Richtung ist:
+          Wer arbeitet hier?
+        </p>
+      </div>
+      <div class="block">
+        <h3>Entscheidungen</h3>
+        <ul class="tight small">
+          <li><b>Ein Bildcontainer für beide Sektionen.</b> Das Motiv steigt hinter die Kontakt-Karte — die Sektionen sind ein Raum, keine zwei Blöcke.</li>
+          <li><b>Glaskarte mit Backdrop-Blur</b> in derselben Machart wie Zusammenarbeit.</li>
+          <li><b>Eine Aktion, nicht zwei:</b> „Projektlage klären". Telefon und E-Mail bleiben Textlinks — sie sind Daten, keine konkurrierende Aktion.</li>
+          <li><b>Ausbuchtung nach oben</b> an der Karte — die Logorahmen-Sprache auch am Modul.</li>
+        </ul>
+      </div>
+      <div class="note">
+        Der Screenshot zeigt den Stand vor dem letzten Durchgang: inzwischen
+        steht die Karte linksbündig und der Karriere-CTA in der Ghost-Optik aller
+        anderen CTAs.
+      </div>
+    </div>
+  </div>
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">11</span>
+</section>
+
+<!-- Footer -->
+<section class="page">
+  <p class="eyebrow">Sektion 09</p>
+  <h2>Footer — Navigation, Referenzen, Kontakt</h2>
+  <div class="split">
+    <div class="shot contain"><img src="shots/13-footer.jpg" alt="Footer mit Marke, Newsletter, drei Linkspalten und Rechtsleiste"></div>
+    <div class="arg">
+      <div class="codes">
+        <span class="code on c2">2 · Orientierung</span>
+      </div>
+      <div class="block">
+        <h3>Aufgabe</h3>
+        <p class="small">
+          Wer bis hier gescrollt hat, soll nicht suchen müssen: Navigation, alle
+          fünf Referenzen beim Namen, echte Kontaktdaten, Rechtliches.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Entscheidungen</h3>
+        <ul class="tight small">
+          <li><b>Referenzen als Namensliste</b>, nicht als „Alle Projekte" — der Footer ist die zweite Chance auf Orientierung.</li>
+          <li><b>Newsletter ohne Versprechen:</b> „Fachliche Impulse statt Werbung." Mangels Backend geht die Anmeldung als vorbereitete Mail raus, statt eine Anmeldung vorzutäuschen.</li>
+          <li><b>Ein Navy-Button</b> — „Erstgespräch vereinbaren" ist die eine Aktion.</li>
+        </ul>
+      </div>
+      <div class="note warn">
+        <b>Offen:</b> Impressum und Datenschutz stehen als Text, die Routen
+        fehlen noch.
+      </div>
+    </div>
+  </div>
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation</span>
+  <span class="pagenum">12</span>
+</section>
+
+<!-- Offene Punkte -->
+<section class="page">
+  <p class="eyebrow">Ehrlicher Stand</p>
+  <h2>Was noch nicht trägt</h2>
+  <p class="small muted" style="margin-top:6px; max-width:100ch">
+    Diese Liste gehört ins Dokument, nicht in eine Fußnote. Sie ist der
+    Unterschied zwischen einem Arbeitsstand und einer Behauptung.
+  </p>
+
+  <div class="split" style="grid-template-columns:1fr 1fr; margin-top:8mm">
+    <div>
+      <h3>Inhalt &amp; Belege</h3>
+      <ul class="tight small">
+        <li><b>Kundenstimmen sind nicht freigegeben.</b> 9 Levels, WEKA und Barely Digital haben den Zitaten noch nicht zugestimmt.</li>
+        <li><b>Nur zwei Cases haben belegtes Visual.</b> Deshalb doppelt Schritt 02 der Arbeitsweise die 9-Levels-Referenz.</li>
+        <li><b>Insights: drei von fünf Formaten</b> gebaut.</li>
+        <li><b>Mittlere Zusammenarbeit-Karte</b> trägt noch ein generisches Redaktionsfoto — gegen Code 3.</li>
+        <li><b>Die Konzeption hat Platzhalter</b> (u. a. vier Teammitglieder auf „Über uns").</li>
+        <li><b>Die Kundenlogo-Wand fehlt.</b> Die alte Home zeigt 12 Marken
+          (Allianz, Audi, Merck, Continental, HiPP, Juzo, Rational, evia,
+          LMU Klinikum, SupplyOn, 9 Levels …) plus eine Fachmedien-Leiste. Das
+          ist der härteste Beleg, den MISCHOK hat — und die neue Home führt ihn
+          nirgends. Bewusst offen: Logos brauchen Nennungsfreigaben. Sobald die
+          stehen, gehört die Wand zwischen Arbeitsweise und Stimme.</li>
+      </ul>
+      <hr class="rule">
+      <h3>Seiten</h3>
+      <ul class="tight small">
+        <li><b>/ueber existiert nicht.</b> Der CTA „Mehr über uns" läuft aktuell auf einen 404.</li>
+        <li><b>Impressum und Datenschutz</b> haben keine Routen.</li>
+        <li>Einsatzfelder, Karriere, Erstgespräch, Insights: konzipiert, nicht gebaut.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Technik &amp; Darstellung</h3>
+      <ul class="tight small">
+        <li><b>Zusammenarbeit auf flachen Fenstern</b> (z. B. 1440×700): Icon und Text überlappen um 118 px. Die Karte ist 60vh hoch, der Textblock allein 317 px — im gepinnten Bereich ist keine Höhe mehr frei. Braucht kürzere Absätze oder ein kleineres Icon.</li>
+        <li><b>Zwei Sektionen haben keine Sektionsstufe</b> (Zusammenarbeit, Über): <code>clip-path</code> und <code>position: sticky</code> schließen sich aus.</li>
+        <li><b>Drei Pin-Scrolls hintereinander</b> ergeben über 1000 vh. Das ist eine bewusste Entscheidung, die im Realtest gegen die Geduld geprüft gehört.</li>
+        <li><b>Ungenutzte Hero-Prototypen</b> liegen noch im Repo.</li>
+      </ul>
+      <hr class="rule">
+      <h3>Gegen die Codes geprüft</h3>
+      <dl class="facts">
+        <dt>1 · Klarheit</dt><dd>Erfüllt — drei Textgrößen, drei Flächenstufen, ein Fokus je Sektion.</dd>
+        <dt>2 · Orientierung</dt><dd>Erfüllt — Bento, editoriales Raster, Karten. „Diagramme &amp; Skizzen" bisher nur als Punktraster und Icons.</dd>
+        <dt>3 · Vertrauen</dt><dd>Überwiegend — reale Fotos stehen. Offen: die generischen Redaktionsfotos und die fehlenden Freigaben.</dd>
+        <dt>4 · Kompetenz</dt><dd>Erfüllt — Tokens statt Einzelwerte, reduzierte Animation, <code>prefers-reduced-motion</code> durchgängig.</dd>
+      </dl>
+    </div>
+  </div>
+  <span class="footline">MISCHOK GmbH · Home-Dokumentation · Stand 17.07.2026</span>
+  <span class="pagenum">13</span>
+</section>
+
+</body>
+</html>
