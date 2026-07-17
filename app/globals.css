@@ -43,16 +43,29 @@
   /* ===================================================================
      Semantische Tokens — auf die Palette gemappt (mirror tailwind.config.ts)
      =================================================================== */
-  --bg: #f6f6f5; /* Seitenhintergrund (warmes Off-White, zwischen SNOW & PAPER) */
-  --section: #e4e3e1; /* Sektionsflächen */
-  --card: #edecea; /* Karten (≈ PAPER) */
+  /* Flächen-Leiter — ausschliesslich aus der offiziellen Palette.
+     Sättigung/Buntheit ist hier nicht erlaubt: die Stufen unterscheiden sich
+     nur im HELLIGKEITSWERT, damit „liegt oben auf" ein Wert-Signal bleibt und
+     Blau der einen Aktion vorbehalten ist.
+       PAPER 237  → Grund einer abgesetzten Section
+       SNOW  249  → durchgehender Seitengrund, ruhende Fläche
+       WHITE 255  → aktive/erhabene Fläche
+     Vorher standen hier freihändige, ins Warme gedriftete Werte
+     (#f6f6f5 / #e4e3e1 / #edecea), die neben echtem SNOW warm ausgeschlagen
+     sind — das war der Grund, warum Hero und Restseite nicht zusammenpassten. */
+  --bg: var(--snow); /* Seitenhintergrund */
+  --section: var(--paper); /* abgesetzte Sektionsflächen */
+  --card: var(--white); /* Karten = erhabene Fläche */
   --navy: var(--change); /* Primär / Akzent = CHANGE */
   --on-navy: #eae8e1; /* Text auf Navy */
   --slate: var(--raven); /* Fließtext = RAVEN */
   --ink: var(--midnight); /* Zitate = MIDNIGHT */
   --muted: #8c9198; /* Sekundärtext (zwischen STONE & OCEAN) */
-  --line: #d5d4d1; /* Trennlinien / Rahmen */
-  --btn: #e4e2de;
+  /* aus STONE (165,165,165 — echter Neutralton) abgeleitet statt erfundenes
+     warmes #d5d4d1; ergibt auf SNOW ~211 und damit fast exakt die bisherige
+     Helligkeit, nur ohne Warmstich */
+  --line: rgba(165, 165, 165, 0.45); /* Trennlinien / Rahmen */
+  --btn: var(--paper);
   --accent: var(--change);
   --serif: var(--font-serif), "Source Serif Pro", Georgia, serif;
   --sans: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -348,14 +361,6 @@ button:focus-visible {
 .topic-card:hover {
   transform: translateY(-4px);
 }
-/* Plus-Button geschlossener Accordion-Karten dreht sich beim Hover */
-.acc-plus {
-  transition: transform 0.3s ease;
-}
-.acc-plus:hover {
-  transform: rotate(90deg) scale(1.08);
-}
-
 /* Footer-Links färben sich beim Hover navy */
 .foot-link {
   transition: color 0.2s ease;
@@ -700,7 +705,11 @@ button:focus-visible {
 @media (min-width: 900px) {
   #home-root > div > section,
   #home-root > div > footer {
-    margin: 0;
+    /* nur die Seitenränder normalisieren. Vorher stand hier `margin: 0`, was
+       wegen der ID-Spezifität auch das negative margin-top von .sec-step
+       überschrieben hat — die Sektionsstufe konnte nicht überlappen. */
+    margin-left: 0;
+    margin-right: 0;
     padding-left: 64px;
     padding-right: 64px;
   }
@@ -710,8 +719,9 @@ button:focus-visible {
   #home-root > div > section#arbeiten {
     min-height: 60vh;
   }
+  /* #stimme ist hier bewusst NICHT mehr gelistet: die Section ist inzwischen
+     ein vollflächiges Zitat und braucht ihre volle Viewport-Höhe. */
   #home-root > div > section#kontakt,
-  #home-root > div > section#stimme,
   #home-root > div > section#praxis {
     min-height: auto;
   }
@@ -1425,11 +1435,9 @@ button:focus-visible {
   gap: clamp(18px, 2vw, 26px);
 }
 .ft-label {
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 500;
+  font-family: var(--realtime);
+  font-size: 14px;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--muted);
 }
 .ft-linkcol {
@@ -1553,12 +1561,8 @@ button:focus-visible {
   overflow: hidden;
   /* oben bündig: Marken- und Bildmodul sitzen direkt an der Oberkante */
   padding: 0 clamp(16px, 4vw, 56px) clamp(18px, 2.6vh, 44px);
-  background: radial-gradient(
-    circle at 18% 0%,
-    rgba(255, 255, 255, 0.98) 0%,
-    rgba(247, 250, 255, 0.94) 36%,
-    rgba(239, 244, 251, 0.96) 100%
-  );
+  /* TEST: neutrales SNOW statt des blaustichigen Radialverlaufs */
+  background: var(--snow);
 }
 .hc-grid {
   display: grid;
@@ -1572,6 +1576,16 @@ button:focus-visible {
 }
 
 /* Einheitliche keramische Kartenhaptik */
+/* Keramikfläche — neutral.
+   Der Verlauf lief zuvor blaustichig (…249,251,255 → …238,244,252) als Antwort
+   auf den blaustichigen Radial-Background. Seit der Grund neutrales SNOW ist,
+   hatte der Schimmer keinen Bezug mehr und war die einzige Buntfläche im hellen
+   Bereich — gegen die Regel, dass Blau die eine Aktion markiert.
+   Die Ersatzstops sind auf GLEICHE LEUCHTDICHTE umgerechnet, nicht einfach
+   ersetzt: 249,251,255 → 251 (Δ 0.001) und 238,244,252 → 243 (Δ 0.003). Der
+   Helligkeitsverlauf und damit die Haptik sind unverändert, nur der Farbton
+   fällt weg. Inset-Lichtkante und die navy getönten Schatten bleiben — sie
+   tragen die Materialwirkung. */
 .hc-surface {
   position: relative;
   overflow: hidden;
@@ -1580,8 +1594,8 @@ button:focus-visible {
   background: linear-gradient(
     145deg,
     rgba(255, 255, 255, 0.97) 0%,
-    rgba(249, 251, 255, 0.95) 45%,
-    rgba(238, 244, 252, 0.92) 100%
+    rgba(251, 251, 251, 0.95) 45%,
+    rgba(243, 243, 243, 0.92) 100%
   );
   border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow:
@@ -1611,7 +1625,11 @@ button:focus-visible {
   transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .hc-nav-brand { display: flex; flex: none; }
-.hc-wordmark { display: block; height: clamp(22px, 2.1vh, 30px); width: auto; }
+/* Lockup mit Bildmarke: die Wortmarke füllt nur ~45% der Gesamthöhe, deshalb
+   höher gesetzt als die frühere Solo-Wortmarke — sonst liest sie zu klein.
+   Werte +30%: die linke Kante steht fest, die Navi zentriert vertikal — das
+   Logo wächst also nach rechts und bleibt mittelachsig. */
+.hc-wordmark { display: block; height: clamp(39px, 3.9vh, 52px); width: auto; }
 
 .hc-nav-links {
   margin-left: auto;
@@ -1641,20 +1659,27 @@ button:focus-visible {
 .hc-chev { width: 14px; height: 14px; flex: none; transition: transform 0.25s ease; }
 .hc-chev.is-open { transform: rotate(180deg); }
 
+/* Ghost statt gefüllt: „Erstgespräch" und „Projektlage klären" zielen beide auf
+   #kontakt. Vollsättigung bleibt der einen Aktion im Navy-Modul vorbehalten,
+   damit im Header genau ein blauer Handlungsanker steht. */
 .hc-nav-cta {
   flex: none;
-  padding: 10px 20px;
+  padding: 9px 19px;
   border-radius: 4px;
-  background: #002a5c;
-  color: #fff;
+  background: transparent;
+  border: 1.5px solid rgba(0, 42, 92, 0.5);
+  color: #002a5c;
   font-family: var(--sans);
   font-size: clamp(14px, 1vw, 17px);
   font-weight: 500;
   line-height: 1;
   text-decoration: none;
-  transition: filter 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
-.hc-nav-cta:hover { filter: brightness(1.3); }
+.hc-nav-cta:hover {
+  border-color: #002a5c;
+  background: rgba(0, 42, 92, 0.06);
+}
 
 /* ── Mega-Navi: die Navigationszeile zoomt über ihre volle Breite nach unten
    auf. Höhe animiert über den grid-template-rows 0fr→1fr-Trick (echte
@@ -1662,11 +1687,12 @@ button:focus-visible {
 /* Bei offenem Mega-Menü wird die Navi selbst zur Kartenfläche, die nahtlos in
    das Panel darunter übergeht (unten offen, kein Radius, keine Kante). */
 .hc-nav.is-mega {
+  /* dieselbe neutrale Keramikfläche wie .hc-surface */
   background: linear-gradient(
     145deg,
     rgba(255, 255, 255, 0.97) 0%,
-    rgba(249, 251, 255, 0.95) 45%,
-    rgba(238, 244, 252, 0.92) 100%
+    rgba(251, 251, 251, 0.95) 45%,
+    rgba(243, 243, 243, 0.92) 100%
   );
   border-color: rgba(255, 255, 255, 0.9);
   border-bottom-color: transparent;
@@ -1706,9 +1732,8 @@ button:focus-visible {
 .hc-mega-label {
   padding-left: 12px;
   font-family: var(--realtime);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.06em;
   color: rgba(0, 42, 92, 0.5);
 }
 .hc-mega-list {
@@ -1772,9 +1797,8 @@ button:focus-visible {
 .hc-mega.is-open .hc-mega-cta { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
 .hc-mega-cta-label {
   font-family: var(--realtime);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.6);
 }
 .hc-mega-cta-h {
@@ -1924,11 +1948,20 @@ button:focus-visible {
   gap: clamp(8px, 1.4vh, 18px);
   padding: clamp(14px, 2.2vh, 30px);
   min-height: clamp(210px, 21vw, 290px);
-  transition: flex-grow 0.45s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
+  transition: flex-grow 0.45s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease,
+    background 0.35s ease;
+}
+/* Helligkeitsleiter statt Farbwechsel: inaktive Felder liegen flach auf SNOW
+   und treten zurück, das aktive kommt auf Reinweiss nach vorn. Die Auswahl ist
+   damit ein Wert-, kein Farbsignal. */
+.hc-field {
+  background: var(--snow);
+  box-shadow: inset 0 0 0 1px rgba(0, 42, 92, 0.05);
 }
 /* Aktives/gehovertes Feld klappt auf (wächst) — wie in der Original-Hero */
 .hc-field.is-open {
   flex-grow: 2.6;
+  background: #fff;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 1),
     0 16px 34px rgba(0, 42, 92, 0.075),
@@ -1978,6 +2011,9 @@ button:focus-visible {
 .hc-field.is-open .hc-fdetail { max-height: 16em; opacity: 1; margin-top: clamp(10px, 1.1vw, 14px); }
 
 /* Unten links: Teamfoto */
+/* Bild randlos im Modul. Der weisse Rahmen von zuvor trennte das damals blaue
+   Foto vom Navy-Modul; mit dem neutralen Motiv gibt es kein blaues Band mehr,
+   das getrennt werden muesste. */
 .hc-photoB { min-height: clamp(200px, 20vw, 260px); }
 .hc-photoB::after {
   content: "";
@@ -2001,6 +2037,13 @@ button:focus-visible {
   gap: clamp(6px, 1vh, 14px);
   background: linear-gradient(135deg, #002a5c 0%, #063d7a 55%, #002a5c 100%);
   box-shadow: 0 12px 30px rgba(0, 42, 92, 0.16), 0 2px 8px rgba(0, 42, 92, 0.08);
+  /* Modul = Link: gesamte Fläche klickbar */
+  text-decoration: none;
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+}
+.hc-navy:hover {
+  filter: brightness(1.12);
+  box-shadow: 0 18px 40px rgba(0, 42, 92, 0.22), 0 3px 10px rgba(0, 42, 92, 0.1);
 }
 .hc-navy-planes { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .hc-navy-planes::before,
@@ -2015,10 +2058,9 @@ button:focus-visible {
 .hc-navy-label {
   position: relative;
   z-index: 1;
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--realtime);
+  font-size: 14px;
+  letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.7);
 }
 .hc-cta {
@@ -2036,7 +2078,7 @@ button:focus-visible {
   text-decoration: none;
   transition: gap 0.25s ease;
 }
-.hc-cta:hover { gap: 16px; }
+.hc-navy:hover .hc-cta { gap: 16px; }
 .hc-cta-arrow { font-family: var(--sans); }
 
 /* Desktop-Bento-Raster */
@@ -2098,21 +2140,43 @@ button:focus-visible {
 }
 
 /* ===================================================================
-   Ansatz — Case-Brücke: belegt die Arbeitsweise mit einem echten Projekt
+   Eyebrows/Labels — durchgehend Versal.
+   Alle Label der Seite laufen in Realtime Rounded; diese Regel hält die
+   Versalschreibung an einer Stelle zusammen. Caps brauchen mehr Luft als
+   Gemischtschreibung, deshalb 0.1em statt der 0.06em der Einzelregeln.
+   =================================================================== */
+.ft-label,
+.hc-mega-label,
+.hc-mega-n,
+.hc-mega-cta-label,
+.hc-num,
+.hc-navy-label,
+.az-case-kicker,
+.in-kind,
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ===================================================================
+   Ansatz — Case-Brücke: Bildcontainer und Referenz-CTA in einem Element.
+   Steht in der rechten Spalte unter der Copy und ersetzt dort den früheren
+   generischen Button — deshalb etwas grösser als eine reine Beleg-Kachel.
    =================================================================== */
 .az-case {
   display: flex;
   align-items: center;
   gap: clamp(14px, 1.6vw, 22px);
-  max-width: 440px;
-  margin-top: clamp(28px, 3.4vw, 48px);
-  padding: clamp(10px, 1vw, 14px);
+  max-width: 46ch;
+  margin-top: clamp(26px, 3vw, 40px);
+  padding: clamp(12px, 1.1vw, 16px);
   border-radius: 5px;
   text-decoration: none;
+  /* neutral, analog .hc-surface: 249,251,255 → 251 bei gleicher Leuchtdichte */
   background: linear-gradient(
     145deg,
     rgba(255, 255, 255, 0.96) 0%,
-    rgba(249, 251, 255, 0.92) 100%
+    rgba(251, 251, 251, 0.92) 100%
   );
   border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: 0 10px 28px rgba(0, 42, 92, 0.07), 0 2px 6px rgba(0, 42, 92, 0.04);
@@ -2140,9 +2204,8 @@ button:focus-visible {
 }
 .az-case-kicker {
   font-family: var(--realtime);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.06em;
   color: rgba(0, 42, 92, 0.45);
 }
 .az-case-name {
@@ -2173,4 +2236,505 @@ button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .az-case { transition: none; }
   .az-case:hover { transform: none; }
+}
+
+/* ===================================================================
+   Zusammenarbeit — Icons in der Systems-Thinking-Sprache des Heros,
+   je Icon eine eigene, bedeutungsgetriebene Bewegung
+   =================================================================== */
+.ac-icon {
+  width: clamp(84px, 6.4vw, 108px);
+  height: clamp(84px, 6.4vw, 108px);
+  flex: none;
+  color: #fff;
+}
+.ac-icon * { vector-effect: non-scaling-stroke; }
+
+/* Einordnung: die Punkte richten sich nacheinander an der Achse aus */
+@keyframes acSort { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.6px); } }
+@keyframes acSortLine { to { stroke-dashoffset: -7.2; } }
+.ac-a-sort1 { animation: acSort 5s ease-in-out infinite; }
+.ac-a-sort2 { animation: acSort 5s ease-in-out infinite 0.35s; }
+.ac-a-sort3 { animation: acSort 5s ease-in-out infinite 0.7s; }
+.ac-a-sortL1 { animation: acSortLine 3s linear infinite; }
+.ac-a-sortL2 { animation: acSortLine 3s linear infinite 0.35s; }
+.ac-a-sortL3 { animation: acSortLine 3s linear infinite 0.7s; }
+
+/* Tiefe: die gestrichelte Sonde fährt nach unten, der Messpunkt folgt */
+@keyframes acProbe { to { stroke-dashoffset: -8.8; } }
+@keyframes acProbeDot {
+  0%, 100% { transform: translateY(-11px); }
+  50% { transform: translateY(0); }
+}
+.ac-a-probe { animation: acProbe 2.6s linear infinite; }
+.ac-a-probeDot { animation: acProbeDot 5s ease-in-out infinite; }
+
+/* Menschen: die Gruppe atmet ruhig, der Verantwortliche bleibt konstant sichtbar */
+@keyframes acBreathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+.ac-a-p1 { animation: acBreathe 5.5s ease-in-out infinite; }
+.ac-a-p3 { animation: acBreathe 5.5s ease-in-out infinite 0.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-a-sort1, .ac-a-sort2, .ac-a-sort3,
+  .ac-a-sortL1, .ac-a-sortL2, .ac-a-sortL3,
+  .ac-a-probe, .ac-a-probeDot,
+  .ac-a-p1, .ac-a-p3 { animation: none !important; }
+}
+
+/* ===================================================================
+   Sektionsstufe — Übertragung des Logorahmen-Cutouts auf die Module
+
+   Die Klammern der Bildmarke bestehen ausschliesslich aus horizontalen und
+   vertikalen Zügen (h/v im SVG-Pfad) — keine einzige Schräge. Die Sektionskante
+   folgt demselben Prinzip: EINE rechtwinklige Stufe, die an einer Stelle
+   hochspringt und auf beiden Ebenen bis in den Screenrand durchläuft. Sie endet
+   nie im Bild.
+
+           ┌────────────────►  (obere Ebene, läuft rechts raus)
+           │
+   ◄───────┘                   (untere Ebene = die alte Sektionskante)
+
+   Beschnitten wird die SECTION selbst — dadurch trägt die Stufe automatisch
+   deren Grund, auch wenn das ein Foto ist. Das negative margin-top zieht die
+   Section um die Stufenhöhe hoch, sodass die obere Ebene in die Nachbarsection
+   darüber ragt; die untere Ebene bleibt exakt auf der bisherigen Kante, es gibt
+   also keinen Layoutversatz.
+
+   Variabel über zwei Stellschrauben:
+     --step-x   Position des Sprungs (kann beliebig über die Breite wandern)
+     .is-right  spiegelt die Stufe — dann ragt die RECHTE Seite hoch
+
+   Achtung: clip-path erzeugt einen neuen Containing Block — nicht auf Sections
+   mit position:sticky-Kindern anwenden (z. B. Ansatz).
+   =================================================================== */
+.sec-step {
+  --step-h: clamp(18px, 2.4vw, 44px);
+  --step-x: 34%;
+  margin-top: calc(-1 * var(--step-h));
+  /* links hoch, rechts auf der alten Kante */
+  clip-path: polygon(
+    0 0,
+    var(--step-x) 0,
+    var(--step-x) var(--step-h),
+    100% var(--step-h),
+    100% 100%,
+    0 100%
+  );
+}
+/* gespiegelt: rechts hoch, links auf der alten Kante */
+.sec-step.is-right {
+  clip-path: polygon(
+    0 var(--step-h),
+    var(--step-x) var(--step-h),
+    var(--step-x) 0,
+    100% 0,
+    100% 100%,
+    0 100%
+  );
+}
+
+/* Sprungpunkt je Section — bewusst gestreut und die Seite abwechselnd, damit
+   die Stufe als Eigenart der Marke liest und nicht als wiederholtes Muster.
+   Hier gebündelt statt in sieben Dateien verstreut. */
+#stimme { --step-x: 58%; }
+#themen { --step-x: 41%; }
+#zusammenarbeit { --step-x: 27%; }
+#ueber { --step-x: 66%; }
+#praxis { --step-x: 38%; }
+#kontakt { --step-x: 52%; }
+#arbeiten { --step-x: 71%; }
+
+/* ===================================================================
+   Stimme — vollflächiges Zitat auf Bild
+   =================================================================== */
+.st-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  /* oben zusätzlich um die Reiterhöhe einrücken, damit nichts angeschnitten wird */
+  padding: calc(var(--step-h) + clamp(56px, 7vw, 104px)) clamp(20px, 5vw, 72px)
+    clamp(48px, 6vw, 88px);
+}
+.st-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: -2;
+}
+/* Parallaxe: uebernimmt jetzt .pxf aus dem ImageFrame (seitenweit) */
+.st-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  /* Kontrastträger für die weiße Schrift — unten dicht, oben offen */
+  background: linear-gradient(
+    180deg,
+    rgba(0, 42, 92, 0.15) 0%,
+    rgba(0, 42, 92, 0.3) 45%,
+    rgba(0, 42, 92, 0.78) 100%
+  );
+}
+.st-inner {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  gap: clamp(16px, 1.6vw, 28px);
+  align-items: start;
+}
+/* Maske: beschneidet die einfahrenden Zeilen */
+.st-mask { overflow: hidden; }
+.st-tag,
+.st-quote,
+.st-by {
+  transform: translateY(115%) rotate(1.2deg);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.6s ease;
+}
+.st-inner.is-in .st-tag,
+.st-inner.is-in .st-quote,
+.st-inner.is-in .st-by {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
+}
+.st-inner.is-in .st-quote { transition-delay: 0.08s; }
+.st-inner.is-in .st-by { transition-delay: 0.18s; }
+
+.st-tag {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.72);
+}
+/* Zitat in Serif 400, keine Fettung — Haus-Regel für Zitate */
+.st-quote {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(24px, 2.6vw, 40px);
+  line-height: 1.24;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  /* keine eigene max-width: die Zitatbreite bestimmt die Rasterspalte (2.5fr),
+     sonst fällt der Satz in eine schmale Säule statt breit unten zu stehen */
+  text-wrap: pretty;
+}
+.st-by {
+  margin-top: clamp(18px, 2vw, 30px);
+  font-family: var(--sans);
+  font-size: clamp(14px, 1.1vw, 16px);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (max-width: 767px) {
+  .st-inner { grid-template-columns: 1fr; gap: 22px; }
+  .st-quote { max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .st-tag,
+  .st-quote,
+  .st-by {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* ===================================================================
+   Innenliegende Parallaxe — Wrapper aller Bildcontainer (ImageFrame)
+   120 % hoch mit je 10 % Überstand oben/unten. Die Bewegung (±8 % der
+   Eigenhöhe ≈ ±9,6 % der Containerhöhe) bleibt damit immer im Überstand,
+   es läuft nie eine Kante frei. Transform kommt aus useParallax.
+   =================================================================== */
+.pxf {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10%;
+  height: 120%;
+  display: block;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* ohne Bewegung braucht es keinen Überstand — Bild sitzt bündig */
+  .pxf { top: 0; height: 100%; transform: none !important; }
+}
+
+/* ===================================================================
+   Themen/Insights — sticky Headline links, Kartenliste rechts
+   Die linke Spalte bleibt stehen, während die Formate daran vorbeilaufen.
+   Raster wie in der Referenz: 5fr / 2fr Luft / 5fr — die mittlere Spalte ist
+   bewusst leer und hält den Abstand, statt ihn über Gaps zu erzwingen.
+   =================================================================== */
+.in-section {
+  background: var(--bg);
+  padding: clamp(96px, 12vw, 180px) clamp(20px, 5vw, 72px) clamp(64px, 8vw, 120px);
+  /* KEIN overflow: hidden — das machte die Section zum Scroll-Container und
+     hätte das sticky der Headline ausgehebelt. Nötig war es nur für den alten
+     Slider, der rechts aus dem Bild lief; den gibt es nicht mehr. */
+}
+.in-grid {
+  display: grid;
+  grid-template-columns: 5fr 2fr 5fr;
+  align-items: start;
+  width: 100%;
+}
+.in-head {
+  grid-column: 1;
+  position: sticky;
+  /* Abstand zur Oberkante, während die Karten vorbeiziehen */
+  top: clamp(80px, 12vh, 140px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(16px, 1.6vw, 24px);
+}
+.in-h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(30px, 4vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  margin: 0;
+}
+.in-lead {
+  font-family: var(--sans);
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.6;
+  color: var(--slate);
+  margin: 0;
+  max-width: 46ch;
+}
+/* Ghost-CTA — Vollsättigung bleibt der einen Aktion im Hero vorbehalten */
+.in-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: clamp(6px, 0.8vw, 12px);
+  padding: 11px 21px;
+  border: 1.5px solid rgba(0, 42, 92, 0.5);
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(14px, 1vw, 16px);
+  color: var(--navy);
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease, gap 0.25s ease;
+}
+.in-cta:hover {
+  border-color: var(--navy);
+  background: rgba(0, 42, 92, 0.06);
+  gap: 14px;
+}
+
+.in-list {
+  grid-column: 3;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.4vw, 22px);
+  width: 100%;
+}
+/* Karte: Bild fuellt die Flaeche, Text steht darauf.
+   space-between schiebt die Kopfzeile nach oben und den Text nach unten. */
+.in-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(28px, 3vw, 48px);
+  min-height: clamp(340px, 30vw, 440px);
+  padding: clamp(24px, 2.4vw, 40px);
+  border-radius: 5px;
+  background: var(--navy);
+}
+.in-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* oben dicht genug fuer Eyebrow und Icon, unten fuer Titel und Copy */
+  background: linear-gradient(
+    180deg,
+    rgba(0, 42, 92, 0.5) 0%,
+    rgba(0, 42, 92, 0.22) 42%,
+    rgba(0, 42, 92, 0.78) 100%
+  );
+}
+.in-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+/* gross rechts oben. flex:none ist Pflicht — sonst zieht das SVG als
+   Flex-Item auf die volle Kartenbreite auf. */
+.in-icon {
+  flex: none;
+  width: clamp(44px, 4.2vw, 66px);
+  height: clamp(44px, 4.2vw, 66px);
+  color: #fff;
+}
+.in-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.in-kind {
+  font-family: var(--realtime);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.86);
+}
+.in-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(24px, 2.3vw, 34px);
+  line-height: 1.16;
+  color: #fff;
+  margin: 0;
+}
+.in-desc {
+  font-family: var(--sans);
+  font-size: clamp(14px, 1.05vw, 15.5px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.86);
+  margin: 0;
+  max-width: 52ch;
+}
+
+@media (max-width: 991px) {
+  /* sticky ergibt ohne Nebenspalte keinen Sinn — Headline läuft mit */
+  .in-grid { grid-template-columns: 1fr; gap: clamp(36px, 6vw, 64px); }
+  .in-head { position: static; grid-column: 1; }
+  .in-list { grid-column: 1; }
+}
+
+/* ===================================================================
+   Zusammenarbeit — Icon-Slot und Interaktivitäts-Hinweis
+   Das Icon sitzt fest oben rechts (dort, wo vorher der Plus-Button war).
+   Statt des Plus deutet ein Pfeil unter dem Titel die Bedienbarkeit an:
+   sein Schaft wächst beim Hovern nach rechts. Er ist rein dekorativ —
+   bedient wird die Karte selbst (role="button" + Enter/Space).
+   =================================================================== */
+.ac-icon-slot {
+  position: absolute;
+  top: clamp(18px, 1.8vw, 26px);
+  right: clamp(18px, 1.8vw, 26px);
+  display: block;
+  pointer-events: none;
+}
+.ac-hint {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+  margin-top: 14px;
+  height: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 1;
+  transition: opacity 0.35s ease, height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* offene Karte: der Hinweis hat seinen Zweck erfüllt und klappt weg */
+.ac-hint.is-off {
+  opacity: 0;
+  height: 0;
+  margin-top: 0;
+}
+.ac-hint-line {
+  display: block;
+  height: 1.5px;
+  width: 20px;
+  border-radius: 1px;
+  background: currentColor;
+  transition: width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ac-hint-tip {
+  display: block;
+  width: 7px;
+  height: 11px;
+  flex: none;
+}
+/* nur die geschlossene Karte reagiert — die offene ist kein Ziel mehr */
+[role="button"]:hover .ac-hint-line,
+[role="button"]:focus-visible .ac-hint-line {
+  width: 44px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ac-hint, .ac-hint-line { transition: none; }
+}
+
+/* ===================================================================
+   Zusammenarbeit — Punktraster als Sektionsgrund
+
+   Bewusst reines CSS statt Grafik: scharf auf jedem Display und jeder
+   Zoomstufe, kein zusätzlicher Request, und die Punktfarbe kommt aus der
+   Palette statt aus einem Bild.
+
+   Das „Leben" entsteht NICHT dadurch, dass das Raster wandert — das würde
+   beim Scrollen flimmern und die Punkte in Zwischenpixel setzen. Stattdessen
+   steht das Raster still, und eine weiche Maske zieht langsam darüber: die
+   Punkte treten dort hervor, wo die Maske dicht ist, und verlieren sich zum
+   Rand. Animiert wird nur mask-position — das läuft auf dem Compositor.
+   =================================================================== */
+.zu-grid {
+  /* Stellschrauben an einer Stelle — Rasterweite und Punktgrösse hängen
+     zusammen: weiter auseinander verträgt (und braucht) grössere Punkte. */
+  --dot-gap: 32px;
+  --dot-size: 1.6px;
+  --dot-color: rgba(0, 42, 92, 0.4);
+
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* der Punkt selbst: hart begrenzt, damit er als Rasterpunkt liest und
+     nicht als weicher Fleck */
+  background-image: radial-gradient(
+    circle,
+    var(--dot-color) var(--dot-size),
+    transparent calc(var(--dot-size) + 0.3px)
+  );
+  background-size: var(--dot-gap) var(--dot-gap);
+  background-position: center;
+
+  /* Maske: dicht in der Mitte, offen zum Rand */
+  -webkit-mask-image: radial-gradient(
+    circle,
+    #000 0%,
+    rgba(0, 0, 0, 0.55) 45%,
+    rgba(0, 0, 0, 0.12) 75%
+  );
+  mask-image: radial-gradient(
+    circle,
+    #000 0%,
+    rgba(0, 0, 0, 0.55) 45%,
+    rgba(0, 0, 0, 0.12) 75%
+  );
+  -webkit-mask-size: 150% 150%;
+  mask-size: 150% 150%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: zuBreathe 24s ease-in-out infinite alternate;
+}
+@keyframes zuBreathe {
+  from {
+    -webkit-mask-position: 18% 26%;
+    mask-position: 18% 26%;
+  }
+  to {
+    -webkit-mask-position: 82% 74%;
+    mask-position: 82% 74%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zu-grid { animation: none; }
 }

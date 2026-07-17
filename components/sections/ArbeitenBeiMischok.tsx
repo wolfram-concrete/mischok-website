@@ -9,6 +9,7 @@ export default function ArbeitenBeiMischok() {
   return (
     <section
       id="arbeiten"
+      className="sec-step is-right"
       data-screen-label="Arbeiten bei MISCHOK"
       style={{
         position: "relative",
@@ -26,20 +27,11 @@ export default function ArbeitenBeiMischok() {
         className="grid-arbeiten"
         style={{ position: "relative", minHeight: "60vh" }}
       >
-        {/* Linke Spalte: dekorativer Block auf scharfem Bild */}
-        <div style={{ position: "relative" }}>
-          <div
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              top: "-9px",
-              left: "1px",
-              width: "303px",
-              height: "85px",
-              backgroundColor: "#EEEEEE",
-            }}
-          />
-        </div>
+        {/* Linke Spalte: hält das scharfe Bild frei (kein eigener Inhalt).
+            Der frühere dekorative #EEEEEE-Block ist entfallen — er war fest auf
+            303×85px verdrahtet, skalierte nicht mit und las sich seit der
+            Sektionsstufe nur noch als graue Kante. */}
+        <div style={{ position: "relative" }} />
 
         {/* Rechte Spalte: Blur-Panel + Text */}
         <div

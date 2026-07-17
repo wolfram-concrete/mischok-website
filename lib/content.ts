@@ -91,7 +91,8 @@ export const POINTS: Point[] = [
 ];
 
 export type AccCard = {
-  icon: string;
+  /** Schlüssel der animierten Icon-Grafik (siehe Zusammenarbeit.tsx) */
+  icon: "einordnung" | "tiefe" | "menschen";
   slot: string;
   src: string;
   placeholder: string;
@@ -102,15 +103,15 @@ export type AccCard = {
 /** Zusammenarbeit — ACC (horizontales Accordion) */
 export const ACC: AccCard[] = [
   {
-    icon: "/assets/icon-list.svg",
+    icon: "einordnung",
     slot: "acc_1",
-    src: "/assets/acc-1.jpg",
-    placeholder: "Meeting / Einordnung",
+    src: "/assets/Mischok_2023_ma_245.jpg",
+    placeholder: "Gespräch im Team",
     title: "Klare Einordnung statt später Korrektur",
     text: "Ein Projekt wird nicht besser, wenn Risiken zu lange offenbleiben. Wenn ein Ziel technisch, zeitlich oder organisatorisch nicht trägt, muss das früh auf den Tisch. Nicht als Problem, sondern als Grundlage für eine Entscheidung, die später noch Bestand hat.",
   },
   {
-    icon: "/assets/icon-brain.svg",
+    icon: "tiefe",
     slot: "acc_2",
     src: "/assets/acc-3.jpg",
     placeholder: "Konzentrierte Analyse",
@@ -118,10 +119,10 @@ export const ACC: AccCard[] = [
     text: "Gewachsene Systeme versteht man nicht aus der Distanz. Wir wollen nachvollziehen, warum etwas so geworden ist, welche Abhängigkeiten bestehen und wo Veränderung realistisch möglich ist. Erst dann lässt sich beurteilen, welcher Weg trägt.",
   },
   {
-    icon: "/assets/icon-people.svg",
+    icon: "menschen",
     slot: "acc_3",
-    src: "/assets/acc-2.jpg",
-    placeholder: "Sichtbare Verantwortung",
+    src: "/assets/Mischok_2025_ma_156.jpg",
+    placeholder: "Team in der Besprechung",
     title: "Verantwortliche Menschen bleiben sichtbar",
     text: "Vertrauen entsteht nicht zu Prozessen, sondern zu Menschen. Deshalb bleibt bei uns sichtbar, wer eine Lage einschätzt, Entscheidungen mit vorbereitet und ein Projekt fachlich begleitet. Gerade dann, wenn aus einer ersten Einschätzung echte Verantwortung wird.",
   },
@@ -138,6 +139,11 @@ export type Topic = {
 };
 
 /** Themen — topics */
+/**
+ * Themen/Insights. Bilder bewusst aus echtem Material statt Stock, passend zum
+ * jeweiligen Format: redaktionelle Vortragsfotos (assets/Redaktionel) für
+ * Vortrag und Veranstaltung, ein reales MISCHOK-Workshopfoto für den Workshop.
+ */
 export const TOPICS: Topic[] = [
   {
     slot: "topic_1",
@@ -145,23 +151,23 @@ export const TOPICS: Topic[] = [
     placeholder: "Vortragssituation",
     title: "Retten oder Reimplementieren?",
     desc: "Julius Mischok spricht darüber, wann bestehende Software weiterentwickelt werden kann — und wann ein Neustart fachlich sinnvoller ist.",
-    image: "/assets/arbeiten.jpg",
+    image: "/assets/Redaktionel/54962038207_917685d4d5_o.jpg",
   },
   {
     slot: "topic_2",
-    kind: "Fachartikel",
-    placeholder: "Team bei der Arbeit",
-    title: "Wenn Kapazität zu Komplexität wird",
-    desc: "Warum zusätzliche Entwickler ein Projekt nicht automatisch schneller machen — und was in gewachsenen Systemen stattdessen hilft.",
-    image: "/assets/acc-3.jpg",
+    kind: "Veranstaltung",
+    placeholder: "Veranstaltung / Publikum",
+    title: "STEPS",
+    desc: "Eine Veranstaltung von MISCHOK in Augsburg für Menschen aus Mittelstand, Technologie und Unternehmensentwicklung.",
+    image: "/assets/Redaktionel/20250710_110909.jpg",
   },
   {
     slot: "topic_3",
-    kind: "Vortrag",
-    placeholder: "Fachpublikum / Bühne",
-    title: "KI im Bestand: Werkzeug, kein Wundermittel",
-    desc: "Wo KI in geschäftskritischen Systemen wirklich Zeit spart — und wo sie neue Risiken schafft, die man früh einordnen muss.",
-    image: "/assets/acc-1.jpg",
+    kind: "Workshop",
+    placeholder: "Workshop-Situation",
+    title: "KI in der Softwareentwicklung",
+    desc: "Ein Workshop zum praktischen Einsatz von KI in Entwicklungsprozessen — mit Blick auf Qualität, Verantwortung und konkrete Arbeitsweisen im Team.",
+    image: "/assets/Mischok_2023_ma_334.jpg",
   },
 ];
 

@@ -32,11 +32,13 @@ export default function Kontakt() {
   return (
     <section
       id="kontakt"
+      className="sec-step"
       data-screen-label="Kontakt"
       style={{
         position: "relative",
         overflow: "hidden",
-        background: "linear-gradient(135deg, #D7D7D3 0%, #FFFFFFEB, #FFFFFFEB)",
+        background:
+          "linear-gradient(135deg, var(--paper) 0%, var(--white) 55%, var(--white) 100%)",
         padding: "90px",
       }}
     >
@@ -138,7 +140,7 @@ export default function Kontakt() {
                 style={{
                   marginTop: "clamp(30px,3.4vw,48px)",
                   alignSelf: "flex-start",
-                  background: "#D6D6D6",
+                  background: "var(--paper)",
                 }}
               >
                 Projektlage klären
@@ -179,7 +181,7 @@ export default function Kontakt() {
               style={{
                 marginTop: "clamp(30px,3.4vw,48px)",
                 alignSelf: "flex-start",
-                background: "#D6D6D6",
+                background: "var(--paper)",
               }}
             >
               Rückruf anfragen

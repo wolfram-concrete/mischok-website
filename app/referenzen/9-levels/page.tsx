@@ -408,7 +408,7 @@ export default function NeunLevelsPage() {
             weight={500}
             fontSize="clamp(15px,1.5vw,17px)"
             padding="14px 28px"
-            style={{ background: "#D6D6D6" }}
+            style={{ background: "var(--paper)" }}
           >
             {R.cta.button}
           </CtaButton>

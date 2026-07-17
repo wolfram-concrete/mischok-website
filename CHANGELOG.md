@@ -9,11 +9,101 @@ die Versionierung an [Semantic Versioning](https://semver.org/lang/de/).
 
 _Offene Punkte:_ ungenutzte Hero-Prototypen aufräumen (`Hero`, `HeroBoxes`,
 `HeroBento`, `HeroSlider`; `HeroImpact` hält aktuell noch die geteilten
-Icon/FOCUS/NAV-Exports → in ein eigenes Modul auslagern); Keramik-Optik auf die
-übrigen Sektionen ableiten; Kundenstimme auf der 9-Levels-Detailseite mit
-9 Levels freigeben; „Aus der Praxis" mit echten Belegen aus `public/social`
-schärfen (Attribution Julius statt Kajetan); Impressum & Datenschutz als eigene
-Seiten (stehen im Footer noch als reiner Text, da die Routen fehlen).
+Icon/FOCUS/NAV-Exports → in ein eigenes Modul auslagern); Kundenstimme auf der
+9-Levels-Detailseite mit 9 Levels freigeben; „Aus der Praxis" mit echten Belegen
+aus `public/social` schärfen (Attribution Julius statt Kajetan); Impressum &
+Datenschutz als eigene Seiten (stehen im Footer noch als reiner Text, da die
+Routen fehlen); Bildcontainer für Schritt 02 der Arbeitsweise (es fehlt belegtes
+Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
+Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
+Redaktionsfoto.
+
+## [0.7.0] – 2026-07-17
+
+### Geändert
+- **Flächen konsequent auf die offizielle Palette gezogen.** Die semantischen
+  Tokens waren freihändig gesetzt und ins Warme gedriftet (`--bg: #f6f6f5`,
+  `--section: #e4e3e1`, `--card: #edecea`, `--line: #d5d4d1`, `--btn: #e4e2de`) —
+  neben echtem SNOW schlugen sie warm aus. Jetzt: `--bg` = SNOW, `--section` =
+  PAPER, `--card` = WHITE, `--line` aus STONE abgeleitet, `--btn` = PAPER. Drei
+  Sections hatten die Tokens umgangen und Grautöne fest verdrahtet
+  (Zusammenarbeit `#D6D6D6`, Kontakt `#D7D7D3`, 9-Levels-Seite) — ebenfalls
+  gemappt. **Alle zehn Sektionsgründe lösen jetzt auf einen Palettenwert auf.**
+  Damit gilt die Flächen-Leiter: PAPER 237 (Grund) → SNOW 249 (ruhend) →
+  WHITE 255 (aktiv/erhaben). Die Stufen unterscheiden sich nur im Helligkeits-,
+  nicht im Farbwert.
+- **Hero-Grundfläche und Keramikflächen neutral.** Der Radialverlauf ist flachem
+  SNOW gewichen; der Blauschimmer der Kartenflächen (`.hc-surface`, Mega-Navi,
+  Case-Karte) ist raus. Die Ersatzstops sind auf **gleiche Leuchtdichte**
+  umgerechnet (249,251,255 → 251 · 238,244,252 → 243; Abweichung ≤ 0.45 %), damit
+  der Helligkeitsverlauf und damit die Haptik unverändert bleiben. Inset-Lichtkante
+  und navy getönte Schatten bleiben — sie tragen die Materialwirkung.
+- **Farbpriorität im Header.** „Erstgespräch" und „Projektlage klären" zeigten
+  beide auf `#kontakt` und trugen beide volles Navy. „Erstgespräch" ist jetzt ein
+  Ghost-Button; Vollsättigung trägt nur noch die eine Aktion. Das Navy-Modul ist
+  als Ganzes der Link — Klickfläche von 11.827 auf 268.610 px² (Farbfläche =
+  Klickziel). Die Szenariokarten staffeln über Helligkeit (inaktiv SNOW/flach,
+  aktiv WHITE/erhaben) statt über Farbe.
+- **Arbeitsweise als Fortsetzung des Heros.** Conic-Grundfarbe von `#E7EEF9 →
+  #F9FBFF` auf `#F9F9F9 → #FFFFFF`; die Naht kann rechnerisch nicht auffallen
+  (max. 6 von 255 Helligkeitsstufen).
+- **Eyebrows durchgehend Versal**, an einer gemeinsamen `.eyebrow`-Regel
+  gebündelt; Laufweite 0.06em → 0.1em (Caps brauchen mehr Luft).
+- **Insights umgebaut**: sticky Headline links, Kartenliste rechts (Raster
+  5fr/2fr/5fr) statt horizontalem Slider. Karten mit vollflächigem Bild, Eyebrow
+  links oben, Icon gross rechts oben.
+- **Slider-Scrollbar und Step-Indikator feingliedriger**: 6 → 3 px bzw. 3 → 2 px,
+  leiser in Ruhe, deutlicher beim Hovern.
+- **Hero-Logo** mit Bildmarke (PNG statt SVG — die SVG zeigte Fragmente), +30 %.
+- Kartentitel im Hero enden auf einem Punkt.
+
+### Hinzugefügt
+- **Sektionsstufe** (`.sec-step`) als Übertragung des Logorahmen-Cutouts: EINE
+  rechtwinklige Stufe, die an einer Stelle hochspringt und auf beiden Ebenen bis
+  in den Screenrand läuft — keine Schräge, kein Ende im Bild. Die Logoklammern
+  bestehen ausschliesslich aus h/v-Zügen; die Kante folgt dem. Beschnitten wird
+  die Section selbst, dadurch trägt die Stufe deren Grund (auch ein Foto).
+  Variabel über `--step-x` und `.is-right`; Sprungpunkt je Section gestreut.
+  **Nicht auf Sections mit `position: sticky`-Kindern anwenden** (clip-path
+  erzeugt einen Containing Block) — Ansatz bleibt deshalb aussen vor.
+- **Innenliegende Parallaxe für alle Bildcontainer** (`useParallax` + `.pxf`,
+  eingebaut in `ImageFrame`): Wrapper 120 % hoch, wandert ±8 % der Eigenhöhe
+  ≈ ±9,6 % der Containerhöhe — bleibt damit immer im Überstand, es läuft nie eine
+  Kante frei. Ein Listener und ein IntersectionObserver für die ganze Seite statt
+  ein rAF-Loop je Bild; scroll-getrieben, im Leerlauf läuft nichts.
+  `parallax={false}` für `object-fit: contain`-Motive.
+- **Stimme als vollflächiges Zitat**: Bild über die ganze Section, Zitat in Weiss
+  (Serif 400), Eyebrow + Zitat fahren gestaffelt aus einer Maske ein.
+- **Case-Brücke rotiert je Schritt** (Arbeitsweise): Schritt 01 → 9 Levels,
+  Schritt 03 → Barely Digital. Beide Visuals sind über `trust-feed.json` belegt.
+  Schritt 02 bleibt bewusst ohne Karte — für WEKA Pilot Online gibt es kein
+  belegtes Material, und die `image`-Felder der Referenzen sind dafür **kein**
+  Ersatz (generische Redaktionsfotos; `acc-1.jpg` hängt an Referenz 01 *und* 04).
+  Die Karten liegen im Grid-Stapel, damit das Layout bei Schritt 02 nicht springt.
+- **Punktraster** als Grund der Zusammenarbeit (`.zu-grid`): reines CSS statt
+  Grafik, Punktfarbe aus der Palette. Das Raster steht still, eine weiche Maske
+  zieht in 24 s darüber (`mask-position`, läuft auf dem Compositor) — ein
+  wanderndes Raster würde beim Scrollen flimmern. Stellschrauben: `--dot-gap`,
+  `--dot-size`, `--dot-color`.
+
+### Entfernt
+- **Plus-Button** der Zusammenarbeit-Karten. Er war das einzige tastaturbedienbare
+  Element — die geschlossene Karte ist jetzt selbst das Bedienelement
+  (`role="button"`, Enter/Space, `aria-label`), das Icon sitzt oben rechts, und
+  ein Pfeil unter dem Titel deutet die Bedienbarkeit an (Schaft wächst beim
+  Hovern nach rechts, rein dekorativ).
+- Dekorativer `#EEEEEE`-Block in „Arbeiten bei MISCHOK" (fest auf 303×85 px
+  verdrahtet, skalierte nicht, doppelte seit der Sektionsstufe deren Idee).
+- Trennlinie über „Aus der Praxis" (die Stufe markiert den Übergang).
+- Toter Slider-CSS (`tm-*`) und `.acc-plus`-Regeln.
+
+### Behoben
+- `#home-root > div > section { margin: 0 }` überschrieb wegen ID-Spezifität das
+  negative `margin-top` der Sektionsstufe → auf `margin-left/right` reduziert.
+- `#stimme` stand in einer `min-height: auto`-Liste und blieb trotz `100svh` bei
+  520 px hoch → entfernt.
+- `overflow: hidden` auf der Insights-Section machte sie zum Scroll-Container und
+  hebelte das sticky der Headline aus → entfernt (brauchte nur der alte Slider).
 
 ## [0.6.0] – 2026-07-16
 

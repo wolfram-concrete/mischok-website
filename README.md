@@ -77,17 +77,20 @@ design-reference/schriftarten/  Haus-Schriften im Original (Calibre, Realtime
 ## Hero (Porzellan-/Keramikoptik)
 
 Der finale Hero ist **`HeroCeramic`** — ein zusammenhängendes Bento-System auf
-heller, leicht bläulicher Grundfläche, das den Viewport füllt:
+neutralem SNOW-Grund, das den Viewport exakt füllt:
 
-- **Marken-Modul** links (Wortmarke = Home-Link), **Bildmodul** rechts über die
-  volle Höhe, **Burger** als Overlay oben rechts darauf.
+- **Navigationszeile** oben: Logo-Lockup (mit Bildmarke) als Home-Link, Links in
+  Sitemap-Reihenfolge, „Referenzen" trägt das Mega-Menü, rechts der
+  „Erstgespräch"-Ghost-Button. Sie sitzt direkt auf dem Grund; die Kartenfläche
+  erscheint erst, wenn das Mega-Menü aufklappt.
 - **Headline-Modul** (Serif-H1, bündig zum Logo, unten im Modul).
 - **Fünf „Szenario"-Karten** als Flex-Accordion: das aktive/gehoverte Feld klappt
   per `flex-grow` auf und zeigt seinen Detailtext.
 - **Teamfoto + Navy-CTA** in der Fußzeile des Bentos.
 - Einheitliche Kartenhaptik: 5 px Radius, heller Innensaum, weiche Tiefe, schmale
-  Stege. Zentrale Stellschrauben stehen im `hc-*`-Block in `globals.css`
-  (Radius, Gap, Schattenstärke, Hintergrundkontrast).
+  Stege. Der Verlauf ist **neutral** — die Stops sind leuchtdichtegleich zum
+  früheren blaustichigen Verlauf umgerechnet, die Haptik bleibt also, nur der
+  Farbton fällt weg. Stellschrauben im `hc-*`-Block in `globals.css`.
 
 Die älteren Prototypen (`Hero`, `HeroBoxes`, `HeroBento`, `HeroSlider`,
 `HeroImpact`) liegen noch im Repo, werden aber nicht mehr gerendert.
@@ -106,6 +109,44 @@ eines Einheitsmusters — animiert werden vor allem die gestrichelten Elemente:
 | 03 | Quadrat + Zielbild | gestricheltes Zielbild driftet (passt nicht) |
 | 04 | Rauten + Richtungspfeil | Rauten schieben auseinander |
 | 05 | Zentrum + Strahlen | Strahlen fließen nach außen |
+
+## Flächen & Farblogik (verbindlich)
+
+Helle Neutrale gibt es **nur drei** — alle aus der Palette, alle exakt neutral.
+Die Stufen unterscheiden sich im **Helligkeitswert, nicht im Farbton**:
+
+| Ebene | Token | Wert |
+|---|---|---|
+| Grund einer abgesetzten Section | `--section` = PAPER | 237 |
+| Durchgehender Seitengrund, ruhende Fläche | `--bg` = SNOW | 249 |
+| Aktive/erhabene Fläche, Karten | `--card` = WHITE | 255 |
+
+Zwei Regeln, die daran hängen:
+
+- **Blau markiert die eine Aktion.** Vollgesättigtes `#002A5C` ist pro Screen für
+  genau einen Handlungsanker reserviert. Sekundäre CTAs sind Ghost-Buttons
+  (Kontur statt Fläche). Auswahl/Zustand wird über den Helligkeitswert markiert,
+  nicht über den Farbton.
+- **Farbfläche = Klickfläche.** Trägt ein Modul eine Aktionsfarbe, ist das ganze
+  Modul das Klickziel — kein kleiner Textlink in einer grossen farbigen Fläche.
+
+Keine neuen Grautöne erfinden. Wer eine Zwischenstufe braucht, leitet sie aus der
+Palette ab (Beispiel `--line`: `rgba(165,165,165,0.45)` aus STONE).
+
+## Sektionsstufe (Logorahmen-Cutout)
+
+Die Klammern der Bildmarke bestehen ausschliesslich aus horizontalen und
+vertikalen Zügen — **keine Schräge**. Die Sektionskante (`.sec-step`) folgt dem:
+EINE rechtwinklige Stufe, die an einer Stelle hochspringt und auf beiden Ebenen
+bis in den Screenrand läuft. Sie endet nie im Bild.
+
+- Beschnitten wird die **Section selbst** (nicht ein Element davor) — dadurch
+  trägt die Stufe automatisch deren Grund, auch wenn das ein Foto ist.
+- `--step-x` verschiebt den Sprung, `.is-right` spiegelt die Seite. Die
+  Sprungpunkte sind je Section gestreut (gebündelt in `globals.css`).
+- **Nicht auf Sections mit `position: sticky`-Kindern anwenden**: `clip-path`
+  erzeugt einen Containing Block. Ansatz bleibt deshalb aussen vor — dort soll
+  der Übergang ohnehin nahtlos sein.
 
 ## Typografie
 
@@ -131,7 +172,11 @@ liegen unter `public/schriftarten/`.
 - **EinsatzfelderGrid** — Hover schärft die Karte; auf Touch-/No-Hover-Geräten
   sind alle Karten dauerhaft scharf (`(hover: hover)`-Erkennung, `"use client"`).
 - **Ansatz** — Pin-Scroll über 300vh mit `requestAnimationFrame`, blendet 3 Punkte durch.
-- **Zusammenarbeit** — horizontales Accordion mit smoothem Morph-Übergang (`"use client"`).
+- **Zusammenarbeit** — horizontales Accordion mit smoothem Morph-Übergang
+  (`"use client"`). Die **geschlossene Karte ist selbst das Bedienelement**
+  (`role="button"`, Enter/Space) — es gibt keinen Plus-Button mehr; ein Pfeil
+  unter dem Titel deutet die Bedienbarkeit an. Grund: Punktraster aus CSS
+  (`.zu-grid`), Stellschrauben `--dot-gap` / `--dot-size` / `--dot-color`.
 - **ReferenzenGrid** — Karten: geschlossen (Nummer/Headline/Projektlage, Bild
   unscharf) · Hover (Bild scharf) · offen (horizontale Aufteilung mit Fließtext,
   Basisinfos). Nur eine Karte offen; beim Öffnen zentriert sie sich im Viewport.
@@ -142,8 +187,15 @@ liegen unter `public/schriftarten/`.
   Hovern einer Spalte dimmen die übrigen Links (reines CSS). Die Newsletter-Bar
   (`"use client"`) übergibt die Anmeldung mangels Backend als vorbereitete Mail
   an `info@mischok.de`.
-- **PatternBg** — dezente kubische Textur (soft-light) hinter Hero-CTA-, Über-
-  und Kontakt-Modul; über `next/image` optimiert, `pointer-events: none`.
+- **PatternBg** — dezente kubische Textur (soft-light) hinter Über- und
+  Kontakt-Modul; über `next/image` optimiert, `pointer-events: none`. Die
+  Komponente ist bewusst als *leiser Schmuck* ausgelegt (Default `opacity` 0.14);
+  für eine tragende Fläche ist sie das falsche Werkzeug.
+- **Parallaxe** — jeder Bildcontainer bekommt sie automatisch über `ImageFrame`
+  (`useParallax` + `.pxf`): ein Listener + ein IntersectionObserver für die ganze
+  Seite, scroll-getrieben. `parallax={false}` bei `object-fit: contain`.
+- **Sektionsstufe** (`.sec-step`) — rechtwinklige Stufe an den Sektionsübergängen,
+  abgeleitet vom Logorahmen-Cutout (siehe unten).
 - **Reveal** — Scroll-Reveal via `IntersectionObserver`.
 
 Alle Animationen respektieren `prefers-reduced-motion: reduce`.

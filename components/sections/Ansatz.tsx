@@ -2,15 +2,48 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import CtaButton from "@/components/ui/CtaButton";
 import SectionLabel from "@/components/ui/SectionLabel";
 import ImageFrame from "@/components/ui/ImageFrame";
 import { POINTS, REFERENZEN } from "@/lib/content";
 
-/** Case-Brücke: die einzige Referenz, für die echtes Projektbild-Material
- *  vorliegt (public/social/case-flutter-mobility.png, belegt über
- *  trust-feed.json → id "case-flutter-mobility" → Barely Digital). */
-const CASE_REF = REFERENZEN.find((r) => r.name.startsWith("Barely Digital"));
+/**
+ * Case-Brücke je Step. Es rotieren nur die Referenzen, für die echtes,
+ * belegtes Projektmaterial vorliegt — Beleg jeweils über
+ * public/social/trust-feed.json:
+ *   Step 01 → id "case-9levels"          → 9 Levels
+ *   Step 03 → id "case-flutter-mobility" → Barely Digital
+ * Step 02 bleibt bewusst ohne Karte: für WEKA Pilot Online gibt es kein
+ * belegtes Visual. Die `image`-Felder der Referenzen sind dafür KEIN Ersatz —
+ * das sind generische Redaktionsfotos (acc-1.jpg hängt an Referenz 01 *und* 04),
+ * die als Case-Beleg gelesen würden, ohne welcher zu sein.
+ */
+const byName = (s: string) => REFERENZEN.find((r) => r.name.startsWith(s));
+
+type StepCase = {
+  ref: NonNullable<ReturnType<typeof byName>>;
+  img: string;
+  alt: string;
+};
+
+const STEP_CASES: (StepCase | null)[] = [
+  (() => {
+    const r = byName("9 Levels");
+    return r
+      ? { ref: r, img: "/social/client-9levels.svg", alt: "9 Levels — Kundenlogo" }
+      : null;
+  })(),
+  null,
+  (() => {
+    const r = byName("Barely Digital");
+    return r
+      ? {
+          ref: r,
+          img: "/social/case-flutter-mobility.png",
+          alt: "vintrica-App — Case Barely Digital",
+        }
+      : null;
+  })(),
+];
 
 /**
  * Ansatz — Pin-Scroll über 300vh. Sticky-Container (100vh) mit Conic-Gradient,
@@ -67,8 +100,11 @@ export default function Ansatz() {
           overflow: "hidden",
           display: "flex",
           alignItems: "center",
+          /* Grundfarbe = die Hero-Grundfläche (SNOW), damit die Section als deren
+             Fortsetzung liest statt als eigener Block. Der wandernde
+             Conic-Mittelpunkt bleibt und hellt nur nach Weiss auf. */
           background:
-            "conic-gradient(from 0deg at 34.05% var(--ansatz-cy,25.64%), #D6D6D6 0deg, #EDEDED 360deg)",
+            "conic-gradient(from 0deg at 34.05% var(--ansatz-cy,25.64%), #F9F9F9 0deg, #FFFFFF 360deg)",
           padding: "clamp(48px,6vw,96px) clamp(20px,5vw,72px)",
           boxSizing: "border-box",
           justifyContent: "center",
@@ -106,62 +142,38 @@ export default function Ansatz() {
                 gap: "10px",
               }}
             >
+              {/* Step-Indikator: feingliedrig und leise. Er zeigt nur an, wo man
+                  steht — volles Navy ist der einen Aktion vorbehalten, deshalb
+                  markiert die aktive Stufe über Länge statt über Sättigung. */}
               {POINTS.map((_, i) => (
                 <div
                   key={i}
                   style={{
-                    height: "3px",
-                    borderRadius: "2px",
-                    width: i === step ? "48px" : "22px",
+                    height: "2px",
+                    borderRadius: "1px",
+                    width: i === step ? "44px" : "18px",
                     background:
-                      i === step ? "var(--navy)" : "rgba(0,42,92,0.22)",
+                      i === step ? "rgba(0,42,92,0.55)" : "rgba(0,42,92,0.14)",
                     transition: "width .35s ease, background .35s ease",
                   }}
                 />
               ))}
             </div>
 
-            {/* Case-Brücke: belegt die Arbeitsweise mit einem echten Projekt.
-                Bild + Zuordnung stammen aus dem Trust-Depot (public/social,
-                trust-feed.json → case-flutter-mobility → Barely Digital). */}
-            {CASE_REF && (
-              <a href={`/referenzen#${CASE_REF.slug}`} className="az-case">
-                <span className="az-case-media">
-                  <ImageFrame
-                    src="/social/case-flutter-mobility.png"
-                    alt="vintrica-App — Case Barely Digital"
-                    placeholder=""
-                    sizes="200px"
-                    imgStyle={{ objectFit: "contain" }}
-                  />
-                </span>
-                <span className="az-case-body">
-                  <span className="az-case-kicker">Referenz {CASE_REF.n}</span>
-                  <span className="az-case-name">{CASE_REF.name}</span>
-                  <span className="az-case-sub">{CASE_REF.projektlage}</span>
-                  <span className="az-case-cta">
-                    Referenz ansehen
-                    <span aria-hidden="true">→</span>
-                  </span>
-                </span>
-              </a>
-            )}
           </div>
 
-          {/* Rechts: aktiver Punkt */}
-          <div
-            style={{
-              position: "relative",
-              minHeight: "clamp(280px,36vh,360px)",
-            }}
-          >
+          {/* Rechts: aktiver Punkt — darunter die Case-Brücke als Abschluss.
+              Sie ersetzt den früheren generischen „Zur Referenz"-Button: Bild
+              und CTA sind ein Element statt zweier konkurrierender. */}
+          <div>
+          {/* Alle Punkte liegen in derselben Grid-Zelle: sie überblenden
+              übereinander, der Container misst sich aber am längsten Punkt.
+              So kann keine Copy in die Case-Karte darunter laufen. */}
+          <div style={{ display: "grid" }}>
             {POINTS.map((p, i) => {
               const active = i === step;
               const pointStyle: CSSProperties = {
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
+                gridArea: "1 / 1",
                 opacity: active ? 1 : 0,
                 transform: active ? "translateY(0)" : "translateY(16px)",
                 transition: "opacity .55s ease, transform .55s ease",
@@ -201,16 +213,65 @@ export default function Ansatz() {
                       fontSize: "clamp(14px,1.4vw,15.5px)",
                       lineHeight: 1.75,
                       color: "var(--slate)",
-                      margin: "22px 0 34px",
+                      margin: "22px 0 0",
                       maxWidth: "46ch",
                     }}
                   >
                     {p.detail}
                   </p>
-                  <CtaButton href="/referenzen">Zur Referenz</CtaButton>
                 </div>
               );
             })}
+          </div>
+
+          {/* Case-Brücke je Step: Bildcontainer und Referenz-CTA in einem
+              Element. Wieder ein Grid-Stapel — die Karten liegen in derselben
+              Zelle und blenden über. Ohne das würde das Layout springen, weil
+              Step 02 keine Karte hat. */}
+          <div style={{ display: "grid" }}>
+            {STEP_CASES.map((c, i) => {
+              if (!c) return null;
+              const active = i === step;
+              return (
+                <a
+                  key={c.ref.slug}
+                  href={c.ref.detailHref ?? `/referenzen#${c.ref.slug}`}
+                  className="az-case"
+                  style={{
+                    gridArea: "1 / 1",
+                    opacity: active ? 1 : 0,
+                    pointerEvents: active ? "auto" : "none",
+                    transition: "opacity .45s ease",
+                  }}
+                  aria-hidden={!active}
+                  tabIndex={active ? undefined : -1}
+                >
+                  <span className="az-case-media">
+                    <ImageFrame
+                      src={c.img}
+                      alt={c.alt}
+                      placeholder=""
+                      sizes="200px"
+                      imgStyle={{ objectFit: "contain" }}
+                      /* contain statt cover: das Motiv steht frei im Rahmen.
+                         Eine Parallaxe würde es im Rahmen herumschieben statt
+                         einen Ausschnitt zu verschieben. */
+                      parallax={false}
+                    />
+                  </span>
+                  <span className="az-case-body">
+                    <span className="az-case-kicker">Referenz {c.ref.n}</span>
+                    <span className="az-case-name">{c.ref.name}</span>
+                    <span className="az-case-sub">{c.ref.projektlage}</span>
+                    <span className="az-case-cta">
+                      Referenz ansehen
+                      <span aria-hidden="true">→</span>
+                    </span>
+                  </span>
+                </a>
+              );
+            })}
+          </div>
           </div>
         </div>
       </div>

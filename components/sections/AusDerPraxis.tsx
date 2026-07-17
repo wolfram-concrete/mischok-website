@@ -10,9 +10,11 @@ export default function AusDerPraxis() {
   return (
     <section
       id="praxis"
+      className="sec-step is-right"
       style={{
         background: "var(--section)",
-        borderTop: "1px solid var(--line)",
+        /* Trennlinie entfällt: den Übergang markiert jetzt die Sektionsstufe.
+           Sie wäre vom clip-path ohnehin grösstenteils abgeschnitten. */
         padding:
           "clamp(72px,10vw,140px) clamp(20px,5vw,72px) clamp(72px,10vw,140px)",
       }}
@@ -20,12 +22,11 @@ export default function AusDerPraxis() {
       <div style={{ width: "100%" }}>
         {/* Kicker */}
         <div
+          className="eyebrow"
           style={{
-            fontFamily: "var(--mono)",
-            fontSize: "12px",
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            color: "var(--muted)",
+            fontFamily: "var(--realtime)",
+            fontSize: "14px",
+            color: "rgba(0,42,92,0.5)",
             marginBottom: "clamp(16px,2vw,22px)",
           }}
         >
@@ -91,11 +92,10 @@ export default function AusDerPraxis() {
             >
               {/* Typ-Badge */}
               <span
+                className="eyebrow"
                 style={{
-                  fontFamily: "var(--mono)",
-                  fontSize: "12px",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
+                  fontFamily: "var(--realtime)",
+                  fontSize: "13px",
                   color: "var(--navy)",
                 }}
               >

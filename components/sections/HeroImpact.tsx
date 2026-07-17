@@ -108,15 +108,17 @@ export function Icon({ name }: { name: string }) {
   );
 }
 
+/* Kartentitel sind ganze Aussagen und enden deshalb auf einem Punkt. */
 export const FOCUS = [
-  { icon: "orbit", title: "Software ist Teil des laufenden Betriebs", detail: FIELDS[0].detail },
-  { icon: "venn", title: "Anforderungen ändern sich, Systeme bleiben", detail: FIELDS[1].detail },
-  { icon: "offset", title: "Technik und Zielbild passen nicht mehr", detail: FIELDS[2].detail },
-  { icon: "layers", title: "Mehr Kapazität hilft nur mit klarer Richtung", detail: FIELDS[3].detail },
-  { icon: "radial", title: "Lage klären, Optionen ordnen, entscheiden", detail: FIELDS[4].detail },
+  { icon: "orbit", title: "Software ist Teil des laufenden Betriebs.", detail: FIELDS[0].detail },
+  { icon: "venn", title: "Anforderungen ändern sich, Systeme bleiben.", detail: FIELDS[1].detail },
+  { icon: "offset", title: "Technik und Zielbild passen nicht mehr.", detail: FIELDS[2].detail },
+  { icon: "layers", title: "Mehr Kapazität hilft nur mit klarer Richtung.", detail: FIELDS[3].detail },
+  { icon: "radial", title: "Lage klären, Optionen ordnen, entscheiden.", detail: FIELDS[4].detail },
 ];
 
 export const NAV = [
+  { label: "Einsatzfelder", href: "/#einsatzfelder" },
   { label: "Referenzen", href: "/referenzen" },
   { label: "Über uns", href: "/#ueber" },
   { label: "Insights", href: "/#themen" },

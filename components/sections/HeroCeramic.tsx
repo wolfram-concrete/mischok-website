@@ -5,9 +5,6 @@ import ImageFrame from "@/components/ui/ImageFrame";
 import { Icon, FOCUS, NAV } from "@/components/sections/HeroImpact";
 import { REFERENZEN, REFERENZEN_INTRO } from "@/lib/content";
 
-/** Sekundär-Links (Referenzen bekommt ein eigenes Dropdown) */
-const NAV_REST = NAV.filter((n) => n.label !== "Referenzen");
-
 const Chevron = ({ open }: { open: boolean }) => (
   <svg
     className={`hc-chev${open ? " is-open" : ""}`}
@@ -51,36 +48,39 @@ export default function HeroCeramic() {
           <a href="/" aria-label="MISCHOK — Startseite" className="hc-nav-brand">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-solo.png"
+              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu.png"
               alt="MISCHOK"
               className="hc-wordmark"
             />
           </a>
 
+          {/* Reihenfolge folgt der Sitemap; „Referenzen" trägt das Mega-Menü */}
           <nav className="hc-nav-links" aria-label="Hauptnavigation">
-            <div className="hc-nav-item">
-              <button
-                type="button"
-                className="hc-nav-link"
-                aria-expanded={dropOpen}
-                onMouseEnter={() => setDropOpen(true)}
-                onClick={() => setDropOpen((o) => !o)}
-              >
-                Referenzen
-                <Chevron open={dropOpen} />
-              </button>
-            </div>
-
-            {NAV_REST.map((n) => (
-              <a
-                key={n.label}
-                href={n.href}
-                className="hc-nav-link"
-                onMouseEnter={() => setDropOpen(false)}
-              >
-                {n.label}
-              </a>
-            ))}
+            {NAV.map((n) =>
+              n.label === "Referenzen" ? (
+                <div key={n.label} className="hc-nav-item">
+                  <button
+                    type="button"
+                    className="hc-nav-link"
+                    aria-expanded={dropOpen}
+                    onMouseEnter={() => setDropOpen(true)}
+                    onClick={() => setDropOpen((o) => !o)}
+                  >
+                    {n.label}
+                    <Chevron open={dropOpen} />
+                  </button>
+                </div>
+              ) : (
+                <a
+                  key={n.label}
+                  href={n.href}
+                  className="hc-nav-link"
+                  onMouseEnter={() => setDropOpen(false)}
+                >
+                  {n.label}
+                </a>
+              )
+            )}
           </nav>
 
           <a href="/#kontakt" className="hc-nav-cta">
@@ -174,7 +174,14 @@ export default function HeroCeramic() {
         </div>
 
         {/* Fünf Content-Karten (Einzelmodule) */}
-        <div className="hc-fields" role="tablist" aria-label="Fokusfelder">
+        {/* Die fünf Szenarien sind inhaltlich die Einsatzfelder — daher trägt
+            diese Reihe den Anker, auf den der Navipunkt „Einsatzfelder" zeigt. */}
+        <div
+          className="hc-fields"
+          id="einsatzfelder"
+          role="tablist"
+          aria-label="Einsatzfelder"
+        >
           {FOCUS.map((f, i) => {
             const open = i === active;
             return (
@@ -206,23 +213,28 @@ export default function HeroCeramic() {
         {/* Unten links: Teamfoto */}
         <div className="hc-photoB hc-surface">
           <ImageFrame
-            src="/assets/Mischok_2025_ma_216.jpg"
-            alt="MISCHOK — Geschäftsführung"
+            src="/assets/Mischok_2023_ma_444.jpg"
+            alt="MISCHOK — Zusammenarbeit im Projekt"
             placeholder=""
             sizes="(max-width:900px) 100vw, 40vw"
-            imgStyle={{ objectPosition: "center 32%" }}
+            /* Das Modul ist ~3.2:1, die Quelle 1.5:1 — es fallen gut 50% der
+               Bildhöhe weg. 22% hält beide Köpfe im Bild; höhere Werte
+               schneiden oben an. */
+            imgStyle={{ objectPosition: "center 22%" }}
           />
         </div>
 
         {/* Unten rechts: dunkelblaues CTA-Modul */}
-        <div className="hc-navy">
+        {/* Das ganze Modul ist der Link: die blaue Fläche und das Klickziel sind
+            deckungsgleich — vorher war nur der Textlink darin anklickbar. */}
+        <a href="#kontakt" className="hc-navy">
           <span className="hc-navy-planes" aria-hidden="true" />
           <span className="hc-navy-label">Der nächste Schritt</span>
-          <a href="#kontakt" className="hc-cta">
+          <span className="hc-cta">
             Projektlage klären
             <span aria-hidden="true" className="hc-cta-arrow">→</span>
-          </a>
-        </div>
+          </span>
+        </a>
       </div>
 
       {/* Abdunkeln, solange die Mega-Navi offen ist */}

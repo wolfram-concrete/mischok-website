@@ -12,6 +12,7 @@ export default function Ueber() {
   return (
     <section
       id="ueber"
+      className="sec-step"
       data-screen-label="Über MISCHOK"
       style={{
         background: "var(--section)",
