@@ -106,10 +106,19 @@ export default function Ansatz() {
           display: "flex",
           alignItems: "center",
           /* Grundfarbe = die Hero-Grundfläche (SNOW), damit die Section als deren
-             Fortsetzung liest statt als eigener Block. Der wandernde
-             Conic-Mittelpunkt bleibt und hellt nur nach Weiss auf. */
+             Fortsetzung liest. Der wandernde Sektor lief vorher von SNOW nach
+             WEISS — 6 Helligkeitswerte Unterschied, praktisch unsichtbar.
+             Jetzt läuft er ins Markenblau (Stärke über --az-wash justierbar).
+             Zwei Dinge stecken darin:
+             • Gespiegelt bei 180deg statt einmal rundum. Ein Kegelverlauf, der
+               bei 0deg anders anfängt als er bei 360deg endet, trifft an dieser
+               Achse HART aufeinander — das war die sichtbare senkrechte Naht
+               über dem Zentrum (Kante bei x≈865 auf 2560px, Zentrum liegt bei
+               34.05% = 872px). Gleicher Start- und Endwert schliesst sie.
+             • Der Verlauf bleibt eine leise Tönung, keine Fläche: das CI-Manual
+               reserviert Vollflächen-Blau für Bühne/Aktion. */
           background:
-            "conic-gradient(from 0deg at 34.05% var(--ansatz-cy,25.64%), #F9F9F9 0deg, #FFFFFF 360deg)",
+            "conic-gradient(from 0deg at 34.05% var(--ansatz-cy,25.64%), var(--snow) 0deg, var(--az-wash) 180deg, var(--snow) 360deg)",
           padding: "clamp(48px,6vw,96px) clamp(20px,5vw,72px)",
           boxSizing: "border-box",
           justifyContent: "center",
@@ -119,7 +128,9 @@ export default function Ansatz() {
           className="grid-ansatz"
           style={{
             gap: "clamp(36px,7vw,110px)",
-            alignItems: "center",
+            /* start statt center: Eyebrow/Headline sollen als Block auf einer
+               Linie mit der Ziffer rechts beginnen, nicht mittig schwimmen */
+            alignItems: "start",
             justifyContent: "space-between",
           }}
         >
@@ -133,7 +144,7 @@ export default function Ansatz() {
                 fontSize: "clamp(38px,6.6vw,90px)",
                 lineHeight: 1.04,
                 letterSpacing: "-0.01em",
-                color: "var(--slate)",
+                color: "var(--navy)",
                 margin: "16px 0 0",
               }}
             >
@@ -207,7 +218,8 @@ export default function Ansatz() {
                       lineHeight: 1.22,
                       color: "var(--slate)",
                       margin: "18px 0 0",
-                      maxWidth: "22ch",
+                      /* +20% (22ch -> 26ch) */
+                      maxWidth: "26ch",
                     }}
                   >
                     {p.title}
@@ -219,7 +231,8 @@ export default function Ansatz() {
                       lineHeight: 1.75,
                       color: "var(--slate)",
                       margin: "22px 0 0",
-                      maxWidth: "46ch",
+                      /* +20% (46ch -> 55ch) */
+                      maxWidth: "55ch",
                     }}
                   >
                     {p.detail}

@@ -18,6 +18,43 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.13.0] – 2026-07-17
+
+### Geändert
+- **Arbeitsweise: Proportionen.** Rechte Spalte 20% breiter (`1fr 1fr` →
+  `1fr 1.2fr`, gemessen Verhältnis 1.20); Titel 22ch → 26ch, Copy und
+  Referenzkarte 46ch → 55ch — ohne das hätten die `max-width`-Werte den Inhalt
+  weiter gedeckelt und die breitere Spalte wäre wirkungslos geblieben.
+  Eyebrow/Headline stehen als Block oben bündig mit der Ziffer rechts
+  (`align-items: start` statt `center`; gemessen 268 gegen 263). Headline in
+  `--navy` statt `--slate`.
+- **Arbeitsweise: Hintergrund.** Der wandernde Sektor lief von SNOW nach WEISS —
+  6 Helligkeitswerte Unterschied, praktisch unsichtbar. Er läuft jetzt ins
+  Markenblau; Stärke über `--az-wash` (`color-mix(… 14%, SNOW)`) an einer Stelle
+  justierbar. Bewusst eine Tönung, keine Fläche — Vollflächen-Blau bleibt laut
+  CI-Manual Bühne und Aktion vorbehalten.
+- **Mobile Navigation wie die Desktop-Variante.** Das Burger-Panel war eine
+  schwebende Karte (230px, rechts angeschlagen, eigener Rand und Radius). Jetzt
+  wächst die Navizeile als EINE Fläche nach unten bis an beide Screenränder
+  (gemessen 0–375), Punkte linksbündig bei 16px — exakt unter dem Logo.
+  Hoverfläche in der Grundfarbe statt eines grauen Flecks.
+- **Logo und Burger bündig mit den Modulkanten.** Der Innenabstand der Navi hatte
+  das Logo 20px und den Burger 12px nach innen geschoben (Logo bei 36, Module bei
+  16; Burger bei 347, Module bei 359). Der Burger behält seine 8px Touchfläche,
+  die Striche rücken per negativem Rand auf die Kante.
+- **Burger-Strichstärke = Logo-Strichstärke.** Die Klammer ist im SVG eine
+  gefüllte Form: viewBox 220.1 hoch, Steg 27 Einheiten → bei 39px Logohöhe sind
+  das 4.78px. Der Burger stand auf 2.5px, jetzt 4.8px (gemessen 4.80). Der
+  Versatz des Kreuzes leitet sich aus den Variablen ab, damit er beim nächsten
+  Justieren mitwandert.
+
+### Behoben
+- **Harte Naht im Hintergrund der Arbeitsweise.** Ein Kegelverlauf, der bei 0deg
+  mit SNOW startet und bei 360deg mit WEISS endet, trifft an dieser Achse hart
+  aufeinander — sichtbar als senkrechte Kante über dem Verlaufszentrum (im
+  Snapshot bei x≈865, Zentrum liegt bei 34.05% von 2560px = 872px). Jetzt bei
+  180deg gespiegelt, Start- und Endwert gleich.
+
 ## [0.12.0] – 2026-07-17
 
 ### Behoben

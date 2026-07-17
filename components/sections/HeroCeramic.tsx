@@ -42,7 +42,9 @@ export default function HeroCeramic() {
         {/* Navigations-Modul: Logo, Links (mit Referenzen-Dropdown) und CTA
             zusammengefasst in einem länglichen Bento über die volle Breite. */}
         <div
-          className={`hc-nav${dropOpen ? " is-mega" : ""}`}
+          /* is-mega auch beim Burger-Panel: die Navizeile ist dann dieselbe
+             Flaeche, die nach unten weiterwaechst — auf Mobil wie auf Desktop */
+          className={`hc-nav${dropOpen || menuOpen ? " is-mega" : ""}`}
           onMouseLeave={() => setDropOpen(false)}
         >
           <a href="/" aria-label="MISCHOK — Startseite" className="hc-nav-brand">
