@@ -84,7 +84,7 @@ neutralem SNOW-Grund, das den Viewport exakt füllt:
   „Erstgespräch"-Ghost-Button. Sie sitzt direkt auf dem Grund; die Kartenfläche
   erscheint erst, wenn das Mega-Menü aufklappt.
 - **Headline-Modul** (Serif-H1, bündig zum Logo, unten im Modul).
-- **Fünf „Szenario"-Karten** als Flex-Accordion: das aktive/gehoverte Feld klappt
+- **Fünf „Projektlage"-Karten** als Flex-Accordion: das aktive/gehoverte Feld klappt
   per `flex-grow` auf und zeigt seinen Detailtext.
 - **Teamfoto + Navy-CTA** in der Fußzeile des Bentos.
 - Einheitliche Kartenhaptik: 5 px Radius, heller Innensaum, weiche Tiefe, schmale
@@ -98,17 +98,30 @@ Die älteren Prototypen (`Hero`, `HeroBoxes`, `HeroBento`, `HeroSlider`,
 
 ## Icons
 
-Fünf abstrakte **Systems-Thinking-Icons** (Outline-only, 1.5 px, `#002A5C`,
+Fünf abstrakte **Systems-Thinking-Icons** (Outline-only, 1.25 px, `#002A5C`,
 runde Enden). Jedes hat eine eigene, **bedeutungsgetriebene** Animation statt
-eines Einheitsmusters — animiert werden vor allem die gestrichelten Elemente:
+eines Einheitsmusters:
 
 | # | Motiv | Bewegung |
 |---|-------|----------|
 | 01 | Ring + eintretender Pfeil | gestrichelter Pfeil „zieht sich auf" |
-| 02 | Streckennetz | baut sich von links nach rechts auf |
+| 02 | Gabelung + drei Körper | Linien zeichnen sich, **danach** entstehen die Körper an ihren Enden |
 | 03 | Quadrat + Zielbild | gestricheltes Zielbild driftet (passt nicht) |
 | 04 | Rauten + Richtungspfeil | Rauten schieben auseinander |
 | 05 | Zentrum + Strahlen | Strahlen fließen nach außen |
+
+**Linien, die sich zeichnen** (`hi-b-line`, genutzt im Hero-Icon 02 und in den
+Themen-Icons) brauchen ihre **echte Pfadlänge als `--len`** am Pfad:
+
+```jsx
+<path className="hi-b-line" style={{ "--len": 10.08 } as CSSProperties} d="M10 16 L18.7 10.9" />
+```
+
+Die Länge ermittelt man einmalig mit `element.getTotalLength()` im Browser. Wer
+einen `d`-Pfad ändert, **muss `--len` mitziehen** — sonst zeichnet die Linie
+gestrichelt oder unvollständig. `pathLength={1}` (die naheliegende Normierung)
+funktioniert hier **nicht**: das Attribut steht dann zwar im DOM, die Strichelung
+bleibt aber bei 1 Nutzereinheit und alle Linien laufen sichtbar gestrichelt.
 
 ## Flächen & Farblogik (verbindlich)
 
@@ -154,7 +167,7 @@ Drei Schriften:
 
 - **Source Serif 4** — H1/Headlines & Zitate (`next/font/google`) → `--serif`.
 - **Calibre** — Fließtext, Labels, Buttons, Navigation → `--sans` / `--mono`.
-- **Realtime Rounded** — Display-/Label-Schrift, z. B. die „Szenario 0X"-Labels
+- **Realtime Rounded** — Display-/Label-Schrift, z. B. die „Projektlage 0X"-Labels
   → `--realtime`.
 
 Calibre und Realtime Rounded liegen als lokale Web-Fonts in `app/fonts/` und
@@ -166,7 +179,7 @@ liegen unter `public/schriftarten/`.
 - **Top-Navigation** — sticky, **Burger auf allen Breakpoints** (Links & CTA im
   Panel), Burger-Striche in der Anmutung des „m" (`"use client"`). Auf der
   Startseite ausgeblendet: Wortmarke & Burger sitzen dort im Hero-Bento.
-- **Hero (`HeroCeramic`)** — Bento-Grid; die fünf Szenario-Karten sind ein
+- **Hero (`HeroCeramic`)** — Bento-Grid; die fünf Projektlage-Karten sind ein
   horizontales Flex-Accordion (Hover/Klick/Fokus klappt auf), die Icons animieren
   bedeutungsgetrieben (`"use client"`).
 - **EinsatzfelderGrid** — Hover schärft die Karte; auf Touch-/No-Hover-Geräten

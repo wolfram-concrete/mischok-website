@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
 import PatternBg from "@/components/ui/PatternBg";
 import { FIELDS } from "@/lib/content";
@@ -38,22 +38,26 @@ const icons: Record<string, ReactNode> = {
   // pulsiert), sowie Kreis + Quadrat (bestehende Systeme – bleiben ruhig).
   venn: (
     <>
-      {/* Ein Stamm, drei Aeste, drei UNTERSCHIEDLICHE Endkoerper: Kreis, Dreieck,
-          Quadrat. Vorher waren es zwei Kreise und ein Quadrat — der mittlere
-          Kreis war vom oberen nicht zu unterscheiden.
-          Ausserdem lagen die Linien zu dicht: der Stamm endete bei x=8, und von
-          dort lief eine Waagerechte (H15.6) fast deckungsgleich neben den beiden
-          Diagonalen los. Jetzt faechern die drei Aeste mit ~33 Grad Abstand vom
-          selben Knoten (9|16) auf und enden bei x=20.4 — VOR den Koerpern, mit
-          sichtbarer Luecke. Vorher stiess die untere Linie exakt auf die Ecke
-          des Quadrats und verschmolz damit. */}
-      <path className="hi-b-line" style={{ animationDelay: "0s" }} pathLength={1} d="M3 16 H9" />
-      <path className="hi-b-line" style={{ animationDelay: "0.3s" }} pathLength={1} d="M9 16 L20.4 8.7" />
-      <path className="hi-b-line" style={{ animationDelay: "0.3s" }} pathLength={1} d="M9 16 H20.4" />
-      <path className="hi-b-line" style={{ animationDelay: "0.3s" }} pathLength={1} d="M9 16 L20.4 23.3" />
-      <circle className="hi-b-pop" style={{ animationDelay: "0.75s" }} cx="24" cy="7.6" r="2.7" />
-      <path className="hi-b-pop" style={{ animationDelay: "0.75s" }} d="M24 13.3 L26.6 18.4 H21.4 Z" />
-      <rect className="hi-b-pop" style={{ animationDelay: "0.75s" }} x="21.4" y="21.7" width="5.3" height="5.3" />
+      {/* Ein Stamm gabelt sich in drei Aeste; an deren Enden entstehen drei
+          UNTERSCHIEDLICHE Koerper: Kreis, Dreieck, Quadrat.
+          Ablauf: erst zeichnen die Linien (hi-b-line), dann ploppen die Koerper
+          (hi-b-pop-seq blendet erst ab 48% des Zyklus ein, also nach der
+          Linie) — nicht mehr parallel wie vorher.
+          Die Koerper stehen bei x=24.5 und die Aeste enden schon bei x=18.7:
+          die Luecke ist Absicht. Vorher endeten die Aeste bei 20.4 und stiessen
+          fast auf die Koerper, was zusammen mit der (kaputten) Strichelung wie
+          eine gefiederte Pfeilspitze aussah.
+          --len ist die echte Pfadlaenge und steuert die Strichelung — s. den
+          Kommentar bei .hi-b-line in globals.css. Bei Aenderung an d MUSS --len
+          neu ermittelt werden (getTotalLength), sonst zeichnet die Linie
+          entweder gestrichelt oder unvollstaendig. */}
+      <path className="hi-b-line" style={{ "--len": 7, animationDelay: "0s" } as CSSProperties} d="M3 16 H10" />
+      <path className="hi-b-line" style={{ "--len": 10.08, animationDelay: "0.3s" } as CSSProperties} d="M10 16 L18.7 10.9" />
+      <path className="hi-b-line" style={{ "--len": 8.7, animationDelay: "0.3s" } as CSSProperties} d="M10 16 H18.7" />
+      <path className="hi-b-line" style={{ "--len": 10.08, animationDelay: "0.3s" } as CSSProperties} d="M10 16 L18.7 21.1" />
+      <circle className="hi-b-pop-seq" style={{ animationDelay: "0s" }} cx="24.5" cy="7.5" r="3" />
+      <path className="hi-b-pop-seq" style={{ animationDelay: "0.12s" }} d="M24.5 12.8 L27.4 18 H21.6 Z" />
+      <rect className="hi-b-pop-seq" style={{ animationDelay: "0.24s" }} x="21.5" y="21.5" width="6" height="6" />
     </>
   ),
   // 03 — Technik und Zielbild passen nicht mehr sauber zusammen.
@@ -186,7 +190,7 @@ export default function HeroImpact() {
                 onFocus={() => setActive(i)}
               >
                 <span className="hi-field-top">
-                  <span className="hi-num">Szenario {String(i + 1).padStart(2, "0")}</span>
+                  <span className="hi-num">Projektlage {String(i + 1).padStart(2, "0")}</span>
                   <span className="hi-icon-wrap">
                     <Icon name={f.icon} />
                   </span>

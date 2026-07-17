@@ -18,6 +18,34 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.18.0] – 2026-07-17
+
+### Behoben
+- **Die sich zeichnenden Icon-Linien liefen gestrichelt statt durchgezogen.**
+  `.hi-b-line` setzte `stroke-dasharray: 1` und verliess sich darauf, dass
+  `pathLength={1}` am Pfad die Länge auf 1 normiert — ein Strich von 1 hätte
+  dann den ganzen Pfad gedeckt. Die Normierung griff nicht: der Strich blieb
+  1 Nutzereinheit lang, ein 6 Einheiten langer Pfad wurde also als 3 Striche
+  mit 3 Lücken gezeichnet. Betroffen waren Hero-Icon 02 **und alle
+  Themen-Icons**.
+  Jetzt trägt jeder Pfad seine **echte Länge als `--len`** (per
+  `getTotalLength()` ermittelt), `pathLength` ist raus. Gegengeprüft über
+  SVG→Canvas→Pixelzählung: vorher 4 Striche auf dem Stamm, jetzt 1
+  durchgezogene Linie.
+
+### Geändert
+- **Hero-Icon 02 (Gabelung) neu aufgebaut.** Die Äste enden jetzt bei x=18.7,
+  die Körper stehen bei x=24.5 — die Lücke ist Absicht. Vorher stiessen die Äste
+  fast auf die Körper, was zusammen mit der kaputten Strichelung wie eine
+  gefiederte Pfeilspitze aussah.
+- **Reihenfolge der Bewegung:** erst zeichnen die Linien vollständig, **dann**
+  entstehen die Körper an ihren Enden. Dafür `hi-b-pop-seq` (blendet ab 48% des
+  Zyklus ein) statt `hi-b-pop` (ab 6%). Eigene Keyframes statt `animationDelay`,
+  weil ein Delay von ~2.5s das Ausblenden bei 86% in den nächsten Durchlauf
+  geschoben hätte.
+- **„Szenario 0X" heisst jetzt „Projektlage 0X"** auf den Hero-Karten
+  (`HeroCeramic`, `HeroImpact`).
+
 ## [0.17.0] – 2026-07-17
 
 ### Geändert

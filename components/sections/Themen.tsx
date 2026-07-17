@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { TOPICS, PRAXIS_LINKEDIN } from "@/lib/content";
@@ -13,7 +13,7 @@ import HeadlineRise from "@/components/ui/HeadlineRise";
  *
  * Jedes Format (Vortrag, Veranstaltung, Workshop, Fachartikel) hat ein eigenes
  * Icon in der Systems-Thinking-Sprache der Seite; die Format-Eyebrow folgt der
- * „SZENARIO 0X"-Schreibweise.
+ * „PROJEKTLAGE 0X"-Schreibweise des Heros.
  */
 
 /**
@@ -21,7 +21,8 @@ import HeadlineRise from "@/components/ui/HeadlineRise";
  *   – dasselbe 32×32-Raster, Outline-only, 1.5px, runde Enden/Ecken
  *   – abstrakt-geometrisch statt Piktogramm
  *   – jedes Icon BAUT SICH AUF und wiederholt das: `hi-b-line` zeichnet Linien
- *     (braucht pathLength={1}), `hi-b-pop` lässt Endpunkte einploppen, versetzt
+ *     (braucht --len = echte Pfadlänge, s. globals.css), `hi-b-pop` lässt
+ *     Endpunkte einploppen, versetzt
  *     über animationDelay. Beide Klassen kommen aus dem Hero — bewusst
  *     wiederverwendet statt parallel nachgebaut, damit die Bewegung identisch
  *     ist und reduced-motion an einer Stelle greift.
@@ -40,15 +41,15 @@ const KIND_ICONS: Record<string, ReactNode> = {
         fill="currentColor"
         stroke="none"
       />
-      <path className="hi-b-line" style={{ animationDelay: "0.3s" }} pathLength={1} d="M14.6 10.6 A 7.4 7.4 0 0 1 14.6 21.4" />
-      <path className="hi-b-line" style={{ animationDelay: "0.5s" }} pathLength={1} d="M19 7.4 A 11.6 11.6 0 0 1 19 24.6" />
-      <path className="hi-b-line" style={{ animationDelay: "0.7s" }} pathLength={1} d="M23.4 4.2 A 15.8 15.8 0 0 1 23.4 27.8" />
+      <path className="hi-b-line" style={{ "--len": 12.11, animationDelay: "0.3s" } as CSSProperties} d="M14.6 10.6 A 7.4 7.4 0 0 1 14.6 21.4" />
+      <path className="hi-b-line" style={{ "--len": 19.37, animationDelay: "0.5s" } as CSSProperties} d="M19 7.4 A 11.6 11.6 0 0 1 19 24.6" />
+      <path className="hi-b-line" style={{ "--len": 26.65, animationDelay: "0.7s" } as CSSProperties} d="M23.4 4.2 A 15.8 15.8 0 0 1 23.4 27.8" />
     </>
   ),
   // Veranstaltung — viele kommen an einem Ort zusammen: Bühne, dann füllt sich der Raum
   Veranstaltung: (
     <>
-      <path className="hi-b-line" style={{ animationDelay: "0s" }} pathLength={1} d="M5 9.5 H27" />
+      <path className="hi-b-line" style={{ "--len": 22, animationDelay: "0s" } as CSSProperties} d="M5 9.5 H27" />
       <circle className="hi-b-pop" style={{ animationDelay: "0.35s" }} cx="9" cy="17" r="2.2" />
       <circle className="hi-b-pop" style={{ animationDelay: "0.5s" }} cx="16" cy="17" r="2.2" />
       <circle className="hi-b-pop" style={{ animationDelay: "0.65s" }} cx="23" cy="17" r="2.2" />
@@ -69,11 +70,11 @@ const KIND_ICONS: Record<string, ReactNode> = {
   // Fachartikel — Gedanke wird geschrieben: Seite entsteht, dann füllen sich die Zeilen
   Fachartikel: (
     <>
-      <path className="hi-b-line" style={{ animationDelay: "0s" }} pathLength={1} d="M8 4.5 H19 L24 9.5 V27.5 H8 Z" />
-      <path className="hi-b-line" style={{ animationDelay: "0.4s" }} pathLength={1} d="M19 4.5 V9.5 H24" />
-      <path className="hi-b-line" style={{ animationDelay: "0.6s" }} pathLength={1} d="M12 15.5 H20" />
-      <path className="hi-b-line" style={{ animationDelay: "0.75s" }} pathLength={1} d="M12 19.5 H20" />
-      <path className="hi-b-line" style={{ animationDelay: "0.9s" }} pathLength={1} d="M12 23.5 H16.5" />
+      <path className="hi-b-line" style={{ "--len": 75.07, animationDelay: "0s" } as CSSProperties} d="M8 4.5 H19 L24 9.5 V27.5 H8 Z" />
+      <path className="hi-b-line" style={{ "--len": 10, animationDelay: "0.4s" } as CSSProperties} d="M19 4.5 V9.5 H24" />
+      <path className="hi-b-line" style={{ "--len": 8, animationDelay: "0.6s" } as CSSProperties} d="M12 15.5 H20" />
+      <path className="hi-b-line" style={{ "--len": 8, animationDelay: "0.75s" } as CSSProperties} d="M12 19.5 H20" />
+      <path className="hi-b-line" style={{ "--len": 4.5, animationDelay: "0.9s" } as CSSProperties} d="M12 23.5 H16.5" />
     </>
   ),
 };

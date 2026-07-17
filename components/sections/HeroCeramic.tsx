@@ -198,7 +198,7 @@ export default function HeroCeramic() {
                 onFocus={() => setActive(i)}
               >
                 <span className="hc-field-head">
-                  <span className="hc-num">Szenario {String(i + 1).padStart(2, "0")}</span>
+                  <span className="hc-num">Projektlage {String(i + 1).padStart(2, "0")}</span>
                   <span className="hc-field-icon">
                     <Icon name={f.icon} />
                   </span>

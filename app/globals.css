@@ -1335,14 +1335,24 @@ button:focus-visible {
    Endpunkte blenden weich ein. `animation-fill-mode: backwards` ist wichtig:
    ohne das stünden die verzögerten Elemente vor ihrem Delay bereits gezeichnet
    und würden dann auf „unsichtbar" springen (wirkt zerrissen). */
+/* Die Laenge der Linie kommt als --len vom Pfad selbst (echte Laenge in
+   Nutzereinheiten, per getTotalLength ermittelt und am Pfad notiert).
+   FRUEHER stand hier `stroke-dasharray: 1` zusammen mit pathLength={1} am
+   Pfad — die Idee: pathLength normiert die Laenge auf 1, ein Strich von 1
+   deckt den ganzen Pfad, die Linie laeuft durchgezogen ein. Das hat nicht
+   funktioniert: die Strichelung blieb bei 1 Nutzereinheit, und alle Linien
+   liefen sichtbar GESTRICHELT statt durchgezogen (bei einem 6 Einheiten langen
+   Pfad also drei Striche und drei Luecken). Betraf auch die Themen-Icons.
+   Deshalb jetzt die echte Laenge statt der Normierung — ohne pathLength.
+   Wer einen d-Pfad aendert, muss --len mitziehen. */
 @keyframes hiBuildLine {
-  0% { stroke-dashoffset: 1; opacity: 1; }
-  45% { stroke-dashoffset: 0; opacity: 1; }
+  0% { stroke-dashoffset: var(--len, 40); opacity: 1; }
+  40% { stroke-dashoffset: 0; opacity: 1; }
   86% { stroke-dashoffset: 0; opacity: 1; }
   100% { stroke-dashoffset: 0; opacity: 0; }
 }
 .hi-b-line {
-  stroke-dasharray: 1;
+  stroke-dasharray: var(--len, 40);
   animation: hiBuildLine 6s ease-in-out infinite backwards;
 }
 @keyframes hiBuildPop {
@@ -1355,6 +1365,24 @@ button:focus-visible {
   transform-box: fill-box;
   transform-origin: center;
   animation: hiBuildPop 6s ease-in-out infinite backwards;
+}
+/* Wie hi-b-pop, aber die Koerper erscheinen ERST, wenn die Linien fertig
+   gezeichnet sind (ab 48% statt ab 6%) — „die Linie baut sich auf, an ihrem
+   Ende entstehen dann die Elemente".
+   Warum eigene Keyframes und nicht einfach animationDelay: das Ausblenden liegt
+   bei 86% des 6s-Zyklus. Ein Delay von ~2.5s wuerde es auf 7.5s schieben, also
+   in den naechsten Durchlauf hinein — die Koerper stuenden dann noch, waehrend
+   die Linien schon wieder neu zeichnen. */
+.hi-b-pop-seq {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hiBuildPopSeq 6s ease-in-out infinite backwards;
+}
+@keyframes hiBuildPopSeq {
+  0%, 48% { opacity: 0; transform: scale(0.72); }
+  58% { opacity: 1; transform: scale(1); }
+  86% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
 }
 
 /* Logo = Home-Button */
@@ -1428,7 +1456,10 @@ button:focus-visible {
   .hi-a-sepDn,
   .hi-a-order path,
   .hi-b-line,
-  .hi-b-pop {
+  .hi-b-pop,
+  .hi-b-pop-seq {
+    /* animation:none laesst die Linien voll gezeichnet stehen (dashoffset ist
+       dann 0) und die Koerper sichtbar — das Icon ist statisch vollstaendig. */
     animation: none !important;
   }
 }
