@@ -888,7 +888,10 @@ button:focus-visible {
   }
   /* #stimme ist hier bewusst NICHT mehr gelistet: die Section ist inzwischen
      ein vollflächiges Zitat und braucht ihre volle Viewport-Höhe. */
+  /* #medien ist eine Leiste, kein Kapitel — die globale 100vh-Regel haette sie
+     auf volle Viewport-Hoehe aufgeblasen (gemessen 950px). */
   #home-root > div > section#kontakt,
+  #home-root > div > section#medien,
   #home-root > div > section#praxis {
     min-height: auto;
   }
@@ -2650,6 +2653,50 @@ button:focus-visible {
 #themen { --step-x: 41%; }
 /* #zusammenarbeit hat keine .sec-step-Kante mehr (Pin-Scroll, s. .zu-section) */
 /* #ueber hat keine .sec-step-Kante mehr (Pin-Scroll, s. .ue-section) */
+/* ===================================================================
+   Medien — „Sie kennen unsere Experten aus": Logoleiste vor dem Kontakt-Modul.
+   =================================================================== */
+.md-section {
+  background: var(--bg);
+  padding: clamp(48px, 6vw, 84px) clamp(20px, 5vw, 64px) clamp(40px, 5vw, 72px);
+}
+.md-label {
+  color: rgba(0, 42, 92, 0.45);
+}
+.md-row {
+  list-style: none;
+  margin: clamp(22px, 2.6vw, 34px) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(26px, 3.2vw, 54px) clamp(30px, 3.6vw, 60px);
+}
+/* In Farbe, wie auf der bestehenden mischok.de.
+   Entsaettigt getestet und verworfen: das CODE-DAYS-Logo ist eine hellgruene
+   Kontur ohne dunklen Anteil — in Graustufen bleibt ein hellgrauer Umriss, der
+   praktisch verschwindet. Fremdmarken duerfen ausserdem nicht umgefaerbt
+   werden. Zurueckgenommen wird deshalb ueber die GROESSE, nicht ueber die
+   Farbe: die Leiste bleibt klein und ruhig.
+   Bekannte Spannung zum CI-Manual („reduzierte Farbwelt", Blau markiert die
+   eine Aktion) — zwoelf Fremdlogos sind die bunteste Stelle der Seite. Bewusst
+   in Kauf genommen: der Beleg zaehlt hier mehr als die Farbdisziplin. */
+.md-item img {
+  display: block;
+  height: clamp(22px, 2.1vw, 32px);
+  width: auto;
+  opacity: 0.85;
+  transition: opacity 0.25s ease;
+}
+.md-item img:hover {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-item img {
+    transition: none;
+  }
+}
+
 /* Stärke des wandernden Blau-Sektors in der Arbeitsweise — eine Stellschraube.
    14% liest deutlich, ohne dass daraus eine blaue Vollfläche wird. */
 #ansatz {

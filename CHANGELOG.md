@@ -18,6 +18,42 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.14.0] – 2026-07-17
+
+### Hinzugefügt
+- **Neue Sektion „Sie kennen unsere Experten aus"** (`Medien`) — zwölf Fachmedien
+  und Konferenzen, direkt über dem Kontakt-Modul: der letzte Beleg vor der
+  Aufforderung. Die Marken stehen so bereits auf der bestehenden mischok.de; es
+  ist kein neuer Anspruch, sondern ein vorhandener, der auf der neuen Home
+  fehlte.
+  Enthalten: Informatik Aktuell, JAVAPRO, JAX, W-JAX, JavaLand, JavaFORUM
+  Stuttgart, DevOpsCon, CODE DAYS, TestCon, IT-S NOW, IT Security Summit,
+  Hackerkiste Augsburg.
+
+### Konstruktionshinweise
+- **Die Logos lagen als SVG mit eingebettetem Rasterbild vor** — zusammen
+  **941 KB**, einzelne bis 413 KB (JavaFORUM) und 244 KB (CODE DAYS). So
+  eingebunden wäre die Leiste schwerer gewesen als der halbe Rest der Seite.
+  Sie sind auf Anzeigegröße gerendert und auf ihren Inhalt beschnitten:
+  jetzt **~380 KB** für alle zwölf (`public/social/medien/`).
+- **Entsättigung getestet und verworfen.** Eine Graustufen-Logoleiste wäre näher
+  an „reduzierte Farbwelt" — aber das CODE-DAYS-Logo ist eine hellgrüne Kontur
+  ohne dunklen Anteil und verschwindet in Graustufen praktisch. Fremdmarken
+  dürfen zudem nicht umgefärbt werden. Zurückgenommen wird deshalb über die
+  **Größe**, nicht über die Farbe.
+- `#medien` steht in der `min-height: auto`-Liste. Ohne das hätte die globale
+  100vh-Regel die Leiste auf volle Viewport-Höhe aufgeblasen (gemessen 950px);
+  jetzt 331px.
+
+### Offen
+- **Die Magazin-Cover fehlen** (Java Magazin, iX, entwickler, jaxmagazine). Die
+  bestehende Seite führt sie als Ausgaben-Titelbilder — in einer Logoleiste sind
+  sie bei 32px unlesbar, und Logos dieser Titel liegen dort nicht vor. Damit
+  fehlen ausgerechnet die bekanntesten Namen.
+- **Die Kundenlogo-Wand fehlt weiterhin** (Allianz, Audi, Merck, Continental,
+  HiPP, Juzo, Rational, evia, netzwerk P, LMU Klinikum, SupplyOn, 9 Levels).
+  Braucht Nennungsfreigaben.
+
 ## [0.13.0] – 2026-07-17
 
 ### Geändert
