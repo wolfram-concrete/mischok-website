@@ -53,7 +53,13 @@ export default function Kontakt() {
         <div className="kt-left">
           <ImageFrame
             src="/assets/Mischok_2025_ma_176.jpg"
-            alt="Kajetan Mischok, Geschäftsführer der MISCHOK GmbH"
+            /* „Mischok GmbH" wie im sichtbaren Text der Karte und im Footer —
+               das ist die Firmierung, nicht die Marke. ACHTUNG: die Konzeption
+               schreibt an dieser Stelle „MISCHOK GmbH", die bestehende
+               mischok.de „Mischok GmbH". Welche Fassung im Handelsregister
+               steht, ist hier nicht pruefbar — bis dahin bleibt der Stand der
+               Live-Seite. */
+            alt="Kajetan Mischok, Geschäftsführer der Mischok GmbH"
             placeholder=""
             /* NICHT die Containerbreite (340px), sondern die Breite, auf die
                `cover` das Bild tatsaechlich zieht. Der Container ist hochformat

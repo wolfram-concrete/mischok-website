@@ -18,6 +18,32 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.15.0] – 2026-07-17
+
+### Behoben
+- **Schreibweise „MISCHOK" vereinheitlicht.** Zwei Headlines standen klein
+  („Wo mischok konkret ansetzt", „Über mischok") — beide stehen in der
+  Konzeption wörtlich **versal**. Die Kleinschreibung war eine Abweichung von
+  der Vorlage, keine Designentscheidung. Die Kleinschreibung der Wortmarke ist
+  Logotypografie und keine Schreibregel für Fließtext.
+- **Alt-Text in Kontakt korrigiert:** dort stand „MISCHOK GmbH", zwei Zeilen
+  weiter im sichtbaren Text „Mischok GmbH". Jetzt beides „Mischok GmbH".
+
+### Regel (belegt aus der Konzeption, 61.500 Zeichen)
+| Fall | Schreibweise | Vorkommen |
+|---|---|---|
+| Die Marke / das Unternehmen | **MISCHOK** | 68× |
+| Nachname | **Mischok** | Julius / Kajetan / Virgil |
+| Kundenzitate | „Mit Mischok …" | wörtlich, unverändert |
+| Kleingeschrieben | — | **0×** |
+
+### Offen
+- **Firmierung unklar.** Die Konzeption schreibt „MISCHOK GmbH" (4×), die
+  bestehende mischok.de „Mischok GmbH". Impressum, Footer und Kontaktkarte
+  führen aktuell „Mischok GmbH" (Stand der Live-Seite). Welche Fassung im
+  Handelsregister steht, ist von hier nicht prüfbar — das ist eine rechtliche,
+  keine gestalterische Frage.
+
 ## [0.14.2] – 2026-07-17
 
 ### Geändert

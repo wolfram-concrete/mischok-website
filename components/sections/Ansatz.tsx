@@ -150,7 +150,10 @@ export default function Ansatz() {
                 margin: "16px 0 0",
               }}
             >
-              Wo mischok <br />
+              {/* Versal, wie in der Konzeption: die Firma ist MISCHOK, der
+                  Nachname ist Mischok. Die Kleinschreibung der Wortmarke ist
+                  Logotypografie und keine Schreibregel fuer Fliesstext. */}
+              Wo MISCHOK <br />
               konkret ansetzt
             </h2>
             <div

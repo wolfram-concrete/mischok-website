@@ -72,7 +72,8 @@ export default function Ueber() {
           <div className="ue-content">
             <div className="ue-head">
               <SectionLabel>Über uns</SectionLabel>
-              <h2 className="ue-h2">Über mischok</h2>
+              {/* Versal, wie in der Konzeption — s. Kommentar in Ansatz.tsx */}
+              <h2 className="ue-h2">Über MISCHOK</h2>
               <p className="ue-lead">
                 Wir sind MISCHOK, ein Familienunternehmen mit Sitz in Augsburg.
                 Seit 2010 begleiten wir Unternehmen, deren Geschäftserfolg von
