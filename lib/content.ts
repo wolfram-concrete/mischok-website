@@ -142,7 +142,7 @@ export type Topic = {
 /**
  * Themen/Insights. Bilder bewusst aus echtem Material statt Stock, passend zum
  * jeweiligen Format: redaktionelle Vortragsfotos (assets/Redaktionel) für
- * Vortrag und Veranstaltung, ein reales MISCHOK-Workshopfoto für den Workshop.
+ * Vortrag und Veranstaltung, ein reales mischok-Workshopfoto für den Workshop.
  */
 export const TOPICS: Topic[] = [
   {
@@ -158,7 +158,7 @@ export const TOPICS: Topic[] = [
     kind: "Veranstaltung",
     placeholder: "Veranstaltung / Publikum",
     title: "STEPS",
-    desc: "Eine Veranstaltung von MISCHOK in Augsburg für Menschen aus Mittelstand, Technologie und Unternehmensentwicklung.",
+    desc: "Eine Veranstaltung von mischok in Augsburg für Menschen aus Mittelstand, Technologie und Unternehmensentwicklung.",
     image: "/assets/Redaktionel/20250710_110909.jpg",
   },
   {
@@ -173,7 +173,7 @@ export const TOPICS: Topic[] = [
 
 /**
  * Aus der Praxis — kuratierte Trust-/Sichtbarkeits-Karten (kein LinkedIn-Embed).
- * Inhalte an die realen MISCHOK-Projektthemen angelehnt (Mischok-Website.pdf,
+ * Inhalte an die realen mischok-Projektthemen angelehnt (Mischok-Website.pdf,
  * Referenz 9 Levels). Verlinken auf das LinkedIn-Profil von Kajetan Mischok,
  * solange keine konkreten Beitrags-URLs vorliegen.
  */
@@ -201,7 +201,7 @@ export const PRAXIS: PraxisCard[] = [
     title: "Was 8.500 Tests mit Verantwortung zu tun haben",
     teaser:
       "Test Driven Development ist für uns kein Selbstzweck: Es hält geschäftskritische Systeme veränderbar — auch dann, wenn es im laufenden Betrieb ernst wird.",
-    author: "MISCHOK",
+    author: "mischok",
     href: PRAXIS_LINKEDIN,
   },
   {
@@ -249,16 +249,16 @@ export const REFERENZ_9LEVELS = {
   image: "/assets/acc-1.jpg",
   hero: [
     "9 Levels wollte seine Kunden langfristiger begleiten, Auswertungen flexibler machen und die Plattform als Grundlage für weitere Angebote nutzen. Die bestehende Software setzte dafür zu enge technische Grenzen.",
-    "MISCHOK hat die technische Ausgangslage analysiert, die Anforderungen neu geordnet und die Plattform so aufgebaut, dass neue Produkte, flexiblere Auswertungen und langfristige Kundenbegleitung möglich werden.",
+    "mischok hat die technische Ausgangslage analysiert, die Anforderungen neu geordnet und die Plattform so aufgebaut, dass neue Produkte, flexiblere Auswertungen und langfristige Kundenbegleitung möglich werden.",
   ],
   facts: [
     { label: "Kunde", value: "9 Levels of Value Systems GmbH" },
     { label: "Branche", value: "HR-Tech, Organisationsentwicklung, Beratung / Coaching" },
     { label: "Projektart", value: "Relaunch einer Softwareplattform" },
-    { label: "Rolle von MISCHOK", value: "Konzeption, UX/UI Design, Softwareentwicklung, Projektmanagement" },
+    { label: "Rolle von mischok", value: "Konzeption, UX/UI Design, Softwareentwicklung, Projektmanagement" },
     { label: "Umfang", value: "1.606 Stunden Entwicklung, ohne Konzeption und Design" },
     { label: "Qualitätssicherung", value: "97 % Testabdeckung im Backend (TDD), insgesamt 8.500 Tests" },
-    { label: "MISCHOK-Team", value: "8 Personen: Projektleitung, UX/UI, Softwarearchitektur, Tech Lead, Frontend Lead sowie Senior und Junior Software Engineering" },
+    { label: "mischok-Team", value: "8 Personen: Projektleitung, UX/UI, Softwarearchitektur, Tech Lead, Frontend Lead sowie Senior und Junior Software Engineering" },
     { label: "Technologie", value: "Spring Boot, React, PostgreSQL, STACKIT, Stripe, Spring Security" },
   ] as { label: string; value: string }[],
   sections: [
@@ -279,9 +279,9 @@ export const REFERENZ_9LEVELS = {
       ],
     },
     {
-      title: "Rolle von MISCHOK",
+      title: "Rolle von mischok",
       body: [
-        "MISCHOK hat die technische Ausgangslage eingeordnet und die fachlichen Anforderungen so strukturiert, dass daraus eine tragfähige Richtung für den Relaunch entstehen konnte.",
+        "mischok hat die technische Ausgangslage eingeordnet und die fachlichen Anforderungen so strukturiert, dass daraus eine tragfähige Richtung für den Relaunch entstehen konnte.",
         "Im ersten Schritt entstand eine vollständige Konzeption der neuen Plattform. Nach der Schätzung wurde deutlich, dass die Lösung noch zu groß gedacht war. Statt daraus direkt ein umfangreiches Entwicklungsprojekt zu machen, ging das Projektteam noch einmal zurück in die Konzeption.",
         "Funktionen wurden priorisiert, Komplexität reduziert und der Aufbau geschärft. So entstand eine Plattformlogik, die besser zum tatsächlichen Bedarf, zum Budget und zur weiteren Entwicklung von 9 Levels passte.",
       ],
@@ -289,7 +289,7 @@ export const REFERENZ_9LEVELS = {
     {
       title: "Projektteam",
       body: [
-        "Für MISCHOK war ein festes Team aus 8 Personen beteiligt. Die Rollen lagen in Projektleitung, UX/UI, Softwarearchitektur, Tech Lead, Frontend Lead sowie Senior und Junior Software Engineering.",
+        "Für mischok war ein festes Team aus 8 Personen beteiligt. Die Rollen lagen in Projektleitung, UX/UI, Softwarearchitektur, Tech Lead, Frontend Lead sowie Senior und Junior Software Engineering.",
         "Die Schlüsselrollen blieben über den Projektverlauf stabil. Dadurch blieb das technische Verständnis im Team und Entscheidungen mussten nicht immer wieder neu aufgebaut werden.",
       ],
     },
@@ -338,7 +338,7 @@ export const REFERENZ_9LEVELS = {
     title: "Was wir aus diesem Projekt mitnehmen",
     body: [
       "Der wichtigste Moment lag vor der Umsetzung. Die erste Lösung war fachlich nachvollziehbar, aber noch zu groß. Statt daraus einfach ein großes Entwicklungsprojekt zu machen, wurde die Konzeption noch einmal geschärft. Genau dadurch wurde die spätere Umsetzung klarer.",
-      "Für uns zeigt dieses Projekt sehr gut, wann MISCHOK besonders hilfreich ist: wenn eine bestehende Software für das Geschäft wichtig bleibt, aber die technische Grundlage nicht mehr zu den nächsten Anforderungen passt. Dann reicht es nicht, neue Funktionen zu bauen. Zuerst muss klar werden, welche Entscheidung das System wieder beweglich macht.",
+      "Für uns zeigt dieses Projekt sehr gut, wann mischok besonders hilfreich ist: wenn eine bestehende Software für das Geschäft wichtig bleibt, aber die technische Grundlage nicht mehr zu den nächsten Anforderungen passt. Dann reicht es nicht, neue Funktionen zu bauen. Zuerst muss klar werden, welche Entscheidung das System wieder beweglich macht.",
     ],
   },
   cta: {
@@ -358,7 +358,7 @@ export const REFERENZEN: Referenz[] = [
       "Eine Plattform neu aufgebaut, damit das Geschäftsmodell weiter wachsen kann",
     text: [
       "9 Levels wollte seine Plattform stärker für langfristige Kundenbegleitung, flexiblere Auswertungen und neue digitale Angebote nutzen. Die bestehende technische Grundlage setzte dafür zu enge Grenzen.",
-      "MISCHOK hat die technische Ausgangslage analysiert, die Anforderungen neu geordnet und die Plattform so aufgebaut, dass diese Entwicklung möglich wird.",
+      "mischok hat die technische Ausgangslage analysiert, die Anforderungen neu geordnet und die Plattform so aufgebaut, dass diese Entwicklung möglich wird.",
     ],
     facts: [
       { label: "Branche", value: "HR-Tech / Organisationsentwicklung" },
@@ -378,7 +378,7 @@ export const REFERENZEN: Referenz[] = [
       "Ein bestehendes System neu entwickelt, bevor Lizenzverträge den Betrieb begrenzen",
     text: [
       "WEKA brauchte eine neue Anwendung für die Produktion und Online-Darstellung seiner Fachinformationsprodukte. Der Zeitrahmen war nicht frei wählbar, weil bestehende Lizenzverträge ausliefen.",
-      "MISCHOK hat Anforderungen, Nutzerführung und technische Integration zusammengeführt und die Anwendung so umgesetzt, dass sie sich in die bestehende Plattform einfügt und langfristig wartbar bleibt.",
+      "mischok hat Anforderungen, Nutzerführung und technische Integration zusammengeführt und die Anwendung so umgesetzt, dass sie sich in die bestehende Plattform einfügt und langfristig wartbar bleibt.",
     ],
     facts: [
       { label: "Branche", value: "Fachinformation / Medien" },
@@ -396,7 +396,7 @@ export const REFERENZEN: Referenz[] = [
       "Ein beliebtes System neu aufgebaut, ohne die Nutzer:innen im laufenden Betrieb zu verlieren",
     text: [
       "SMP Prochange nutzte ein Projektmanagement-Tool, das in großen Beratungsprojekten etabliert war. Die Anwendung funktionierte im Alltag, war technisch aber nicht mehr gut wartbar.",
-      "MISCHOK hat Anforderungen, Architektur und Oberfläche neu geordnet und das System so umgesetzt, dass Performance, Wartbarkeit und vertraute Nutzerführung zusammenpassen.",
+      "mischok hat Anforderungen, Architektur und Oberfläche neu geordnet und das System so umgesetzt, dass Performance, Wartbarkeit und vertraute Nutzerführung zusammenpassen.",
     ],
     facts: [
       { label: "Branche", value: "Unternehmensberatung / Restrukturierung" },
@@ -414,7 +414,7 @@ export const REFERENZEN: Referenz[] = [
       "Ein Softwareteam neu ausgerichtet, damit Entwicklung wieder planbar wird",
     text: [
       "Ein Unternehmen hatte ein großes internes Softwareteam aufgebaut. Die fachliche Kompetenz war vorhanden, trotzdem kamen Entwicklung und Produktfortschritt nicht in der erwarteten Form zusammen.",
-      "MISCHOK hat Arbeitsweise, Teamstruktur und technische Abläufe eingeordnet und daraus eine Struktur entwickelt, mit der das Team wieder klarer arbeiten, liefern und entscheiden konnte.",
+      "mischok hat Arbeitsweise, Teamstruktur und technische Abläufe eingeordnet und daraus eine Struktur entwickelt, mit der das Team wieder klarer arbeiten, liefern und entscheiden konnte.",
     ],
     facts: [
       { label: "Branche", value: "Software / digitale Produktentwicklung" },
@@ -432,7 +432,7 @@ export const REFERENZEN: Referenz[] = [
       "Ein laufendes App-Projekt übernommen, damit der Release-Termin hält",
     text: [
       "Barely Digital wollte den bestehenden Service vintrica zusätzlich als App veröffentlichen. Der Release-Termin war durch den Stichtag der Schweizer Vignetten eng gesetzt.",
-      "MISCHOK ist in das laufende Projekt eingestiegen, hat das Frontend in Flutter übernommen und die Umsetzung so strukturiert, dass Fortschritt, Testing und Abstimmung bis zum Release transparent blieben.",
+      "mischok ist in das laufende Projekt eingestiegen, hat das Frontend in Flutter übernommen und die Umsetzung so strukturiert, dass Fortschritt, Testing und Abstimmung bis zum Release transparent blieben.",
     ],
     facts: [
       { label: "Branche", value: "Mobilität / digitale Mautzahlungen" },

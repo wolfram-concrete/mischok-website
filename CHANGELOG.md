@@ -1,6 +1,6 @@
 # Changelog
 
-Alle nennenswerten Änderungen an der MISCHOK-Website werden hier dokumentiert.
+Alle nennenswerten Änderungen an der mischok-Website werden hier dokumentiert.
 
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung an [Semantic Versioning](https://semver.org/lang/de/).
@@ -17,6 +17,42 @@ Routen fehlen); Bildcontainer für Schritt 02 der Arbeitsweise (es fehlt belegte
 Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
+
+## [0.17.0] – 2026-07-17
+
+### Geändert
+- **Schreibweise der Marke: durchgängig klein — „mischok".** Damit ist die
+  Vereinheitlichung auf Versal (0.16.0) bewusst zurückgenommen. Die Konzeption
+  schreibt zwar 68× MISCHOK und 0× klein, aber die Marke folgt der
+  Logoschreibweise; die Entscheidung liegt beim Auftraggeber und wiegt schwerer
+  als der Textbefund. 62 Stellen in Copy, `alt`/`aria`-Texten, Metadaten und
+  `lib/content.ts`.
+  Nicht betroffen: der **Nachname** (Kajetan/Julius/Virgil Mischok) und die
+  **Firmierung** (Mischok GmbH) — beide bleiben im Titelfall. Dateinamen wie
+  `MISCHOK_LOGO_L_POS_RGB-neu.svg` ebenfalls unverändert.
+- **Firmierung vereinheitlicht:** die Metadaten (`app/layout.tsx`,
+  `app/referenzen/page.tsx`) schrieben „MISCHOK GmbH", Footer und Kontakt
+  „Mischok GmbH". Jetzt überall „Mischok GmbH". Welche Fassung im
+  Handelsregister steht, ist von hier aus nicht prüfbar — der sichtbare Text
+  der Seite gibt den Ausschlag.
+- **Zeilenabstand im Fließtext auf einen Token.** Neu `--lh-copy: 1.5` in
+  `:root`; 12 CSS-Regeln und 17 Inline-Stellen hängen jetzt daran. Vorher lagen
+  die Werte verstreut zwischen 1.45 und 1.75, was von Section zu Section
+  unterschiedlich luftig las. Ausgenommen bleiben Headlines (eigene, engere
+  Werte) und `.acc-copy` in der Zusammenarbeit: die 1.45 dort sind kein
+  Stilwert, sondern halten den Text aus dem Icon heraus.
+- **Feinere Icon-Strichstärke:** 1.5 → 1.25 in `HeroImpact`, `Zusammenarbeit`
+  und `Themen`. Der Hinweispfeil der Zusammenarbeit bleibt bei 1.5 — er ist
+  UI-Element, kein Icon.
+
+### Behoben
+- **Icon Szenario 02 (`venn`) neu gezeichnet.** Es hatte zwei Kreise und ein
+  Quadrat als Endkörper — der mittlere Kreis war vom oberen nicht zu
+  unterscheiden. Außerdem lief eine Waagerechte fast deckungsgleich neben den
+  Diagonalen, und die untere Linie stieß exakt auf die Ecke des Quadrats und
+  verschmolz damit. Jetzt: ein Stamm, drei Äste mit ~33° Abstand aus einem
+  Knoten, mit sichtbarer Lücke vor drei unterscheidbaren Körpern (Kreis,
+  Dreieck, Quadrat).
 
 ## [0.16.0] – 2026-07-17
 

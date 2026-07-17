@@ -144,7 +144,7 @@ export default function HeroBento() {
         >
           <ImageFrame
             src="/assets/arbeiten.jpg"
-            alt="Team von MISCHOK bei der Arbeit"
+            alt="Team von mischok bei der Arbeit"
             placeholder="Team"
             sizes="(max-width:1000px) 100vw, 20vw"
             priority
@@ -159,7 +159,7 @@ export default function HeroBento() {
         >
           <ImageFrame
             src="/assets/acc-2.jpg"
-            alt="MISCHOK — Zusammenarbeit im Team"
+            alt="mischok — Zusammenarbeit im Team"
             placeholder="Team"
             sizes="(max-width:1000px) 100vw, 40vw"
           />

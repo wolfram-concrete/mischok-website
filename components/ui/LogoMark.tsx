@@ -18,7 +18,7 @@ export default function LogoMark({
   return (
     <div
       className={className}
-      aria-label="MISCHOK"
+      aria-label="mischok"
       role="img"
       style={{
         width,

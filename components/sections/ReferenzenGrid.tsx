@@ -107,7 +107,7 @@ export default function ReferenzenGrid() {
                   style={{
                     fontFamily: "var(--mono)",
                     fontSize: "17px",
-                    lineHeight: 1.5,
+                    lineHeight: "var(--lh-copy)",
                     color: "rgba(255,255,255,.82)",
                     margin: "14px 0 0",
                   }}
@@ -125,7 +125,7 @@ export default function ReferenzenGrid() {
                       style={{
                         fontFamily: "var(--mono)",
                         fontSize: "clamp(17px,1.6vw,20px)",
-                        lineHeight: 1.7,
+                        lineHeight: "var(--lh-copy)",
                         color: "rgba(255,255,255,.92)",
                         margin: idx === 0 ? "0" : "14px 0 0",
                       }}
@@ -154,7 +154,7 @@ export default function ReferenzenGrid() {
                           gap: "10px",
                           fontFamily: "var(--mono)",
                           fontSize: "17px",
-                          lineHeight: 1.5,
+                          lineHeight: "var(--lh-copy)",
                           color: "rgba(255,255,255,.88)",
                         }}
                       >

@@ -18,7 +18,7 @@ export default function NewsletterBar() {
     if (!email) return;
     const subject = encodeURIComponent("Newsletter-Anmeldung");
     const body = encodeURIComponent(
-      `Bitte nehmen Sie diese Adresse in den MISCHOK-Newsletter auf:\n${email}`
+      `Bitte nehmen Sie diese Adresse in den mischok-Newsletter auf:\n${email}`
     );
     window.location.href = `mailto:info@mischok.de?subject=${subject}&body=${body}`;
     setSent(true);

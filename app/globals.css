@@ -81,6 +81,15 @@
   --text-copy: clamp(15px, 1.25vw, 17px); /* Standard-Fliesstext */
   --text-meta: clamp(12px, 0.9vw, 13px); /* Kleingedrucktes */
 
+  /* Zeilenabstand fuer Fliesstext — EINE Stelle fuer die ganze Seite.
+     Vorher lagen die Werte verstreut zwischen 1.45 und 1.75; das las sich von
+     Section zu Section unterschiedlich luftig. 1.5 ist bewusst gewaehlt: noch
+     offen, aber ohne dass die Zeilen auseinanderfallen.
+     Ausgenommen bleiben Headlines (die haben eigene, engere Werte) und
+     .acc-copy in der Zusammenarbeit — dort ist 1.45 kein Stilwert, sondern
+     haelt den Text aus dem Icon heraus. */
+  --lh-copy: 1.5;
+
   --serif: var(--font-serif), "Source Serif Pro", Georgia, serif;
   --sans: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* Alle nicht-Serif-Texte nutzen Calibre — auch die ehemaligen „Mono"-Labels */
@@ -515,7 +524,7 @@ button:focus-visible {
 .kt-copy {
   font-family: var(--sans);
   font-size: var(--text-copy);
-  line-height: 1.6;
+  line-height: var(--lh-copy);
   color: color-mix(in srgb, var(--on-navy) 82%, transparent);
   margin: clamp(12px, 1.4vw, 18px) 0 0;
   max-width: 46ch;
@@ -1039,7 +1048,7 @@ button:focus-visible {
 .hs-col-text {
   font-family: var(--sans);
   font-size: clamp(14px, 1.15vw, 16px);
-  line-height: 1.55;
+  line-height: var(--lh-copy);
   color: rgba(255, 255, 255, 0.9);
   margin: clamp(12px, 1.4vw, 18px) 0 0;
   max-width: 42ch;
@@ -1210,7 +1219,7 @@ button:focus-visible {
   opacity: 0;
   font-family: var(--sans);
   font-size: clamp(13px, 1vw, 15px);
-  line-height: 1.5;
+  line-height: var(--lh-copy);
   color: var(--slate);
   transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease,
     margin-top 0.45s ease;
@@ -1640,7 +1649,7 @@ button:focus-visible {
   font-size: clamp(15px, 1.3vw, 17px);
   font-weight: 400;
   font-style: normal;
-  line-height: 1.6;
+  line-height: var(--lh-copy);
   color: var(--slate);
 }
 .ft-bottom {
@@ -1717,14 +1726,14 @@ button:focus-visible {
   margin: 0;
   font-family: var(--sans);
   font-size: var(--text-meta);
-  line-height: 1.5;
+  line-height: var(--lh-copy);
   color: var(--muted);
 }
 .ft-news-done {
   margin: 0;
   font-family: var(--sans);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: var(--lh-copy);
   color: var(--slate);
 }
 
@@ -2222,7 +2231,7 @@ button:focus-visible {
 .hc-fdetail {
   font-family: var(--sans);
   font-size: clamp(12.5px, min(1.05vw, 1.8vh), 17px);
-  line-height: 1.55;
+  line-height: var(--lh-copy);
   color: #0e0e0e;
   max-height: 0;
   opacity: 0;
@@ -2244,7 +2253,6 @@ button:focus-visible {
   }
   .hc-fdetail {
     font-size: 15.5px;
-    line-height: 1.6;
   }
   .hc-field-icon .hi-icon {
     width: 44px;
@@ -2835,7 +2843,7 @@ button:focus-visible {
 .arb-copy {
   font-family: var(--sans);
   font-size: var(--text-copy);
-  line-height: 1.6;
+  line-height: var(--lh-copy);
   color: var(--slate);
   margin: clamp(16px, 1.8vw, 24px) 0 0;
 }
@@ -3018,7 +3026,7 @@ button:focus-visible {
 .in-lead {
   font-family: var(--sans);
   font-size: var(--text-lead);
-  line-height: 1.6;
+  line-height: var(--lh-copy);
   color: var(--slate);
   margin: 0;
   /* ebenfalls +20% (46ch -> 55ch) */
@@ -3132,7 +3140,7 @@ button:focus-visible {
 .in-desc {
   font-family: var(--sans);
   font-size: var(--text-copy);
-  line-height: 1.6;
+  line-height: var(--lh-copy);
   color: rgba(255, 255, 255, 0.86);
   margin: 0;
   max-width: 52ch;
@@ -3381,7 +3389,7 @@ button:focus-visible {
 .ue-lead {
   font-family: var(--sans);
   font-size: var(--text-lead);
-  line-height: 1.6;
+  line-height: var(--lh-copy);
   color: var(--slate);
   margin: 0;
   max-width: 52ch;

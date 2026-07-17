@@ -4,9 +4,9 @@ import ImageFrame from "@/components/ui/ImageFrame";
 import { REFERENZ_9LEVELS as R } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: `${R.name} — Referenz | MISCHOK`,
+  title: `${R.name} — Referenz | mischok`,
   description:
-    "Plattform-Relaunch für 9 Levels: MISCHOK hat die technische Ausgangslage analysiert, die Anforderungen neu geordnet und die Plattform so aufgebaut, dass das Geschäftsmodell weiter wachsen kann.",
+    "Plattform-Relaunch für 9 Levels: mischok hat die technische Ausgangslage analysiert, die Anforderungen neu geordnet und die Plattform so aufgebaut, dass das Geschäftsmodell weiter wachsen kann.",
 };
 
 /**
@@ -89,7 +89,7 @@ export default function NeunLevelsPage() {
                 style={{
                   fontFamily: "var(--sans)",
                   fontSize: "clamp(17px,1.7vw,21px)",
-                  lineHeight: 1.6,
+                  lineHeight: "var(--lh-copy)",
                   color: "var(--slate)",
                   margin: i === 0 ? 0 : "16px 0 0",
                 }}
@@ -166,7 +166,7 @@ export default function NeunLevelsPage() {
                     style={{
                       fontFamily: "var(--sans)",
                       fontSize: "clamp(16px,1.6vw,19px)",
-                      lineHeight: 1.45,
+                      lineHeight: "var(--lh-copy)",
                       color: "var(--on-navy)",
                       margin: "6px 0 0",
                     }}
@@ -212,7 +212,7 @@ export default function NeunLevelsPage() {
                   style={{
                     fontFamily: "var(--sans)",
                     fontSize: "clamp(16px,1.6vw,19px)",
-                    lineHeight: 1.7,
+                    lineHeight: "var(--lh-copy)",
                     color: "var(--slate)",
                     margin: i === 0 ? 0 : "18px 0 0",
                   }}
@@ -239,7 +239,7 @@ export default function NeunLevelsPage() {
                         paddingLeft: "22px",
                         fontFamily: "var(--mono)",
                         fontSize: "clamp(15px,1.5vw,17px)",
-                        lineHeight: 1.5,
+                        lineHeight: "var(--lh-copy)",
                         color: "var(--ink)",
                       }}
                     >
@@ -267,7 +267,7 @@ export default function NeunLevelsPage() {
                   style={{
                     fontFamily: "var(--sans)",
                     fontSize: "clamp(16px,1.6vw,19px)",
-                    lineHeight: 1.7,
+                    lineHeight: "var(--lh-copy)",
                     color: "var(--slate)",
                     margin: "18px 0 0",
                   }}
@@ -347,7 +347,7 @@ export default function NeunLevelsPage() {
               style={{
                 fontFamily: "var(--sans)",
                 fontSize: "clamp(16px,1.6vw,19px)",
-                lineHeight: 1.7,
+                lineHeight: "var(--lh-copy)",
                 color: "var(--slate)",
                 margin: i === 0 ? 0 : "18px 0 0",
               }}
@@ -394,7 +394,7 @@ export default function NeunLevelsPage() {
             style={{
               fontFamily: "var(--sans)",
               fontSize: "clamp(16px,1.6vw,19px)",
-              lineHeight: 1.6,
+              lineHeight: "var(--lh-copy)",
               color: "color-mix(in srgb, var(--on-navy) 86%, transparent)",
               margin: "clamp(18px,2vw,26px) 0 clamp(32px,3.6vw,44px)",
               maxWidth: "56ch",

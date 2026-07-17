@@ -87,7 +87,7 @@ function KindIcon({ kind }: { kind: string }) {
       viewBox="0 0 32 32"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.5}
+      strokeWidth={1.25}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -110,7 +110,7 @@ export default function Themen() {
           <p className="in-lead">
             Viele Fragen aus unseren Projekten tauchen auch in Vorträgen,
             Fachbeiträgen, Workshops und eigenen Veranstaltungen auf. Hier zeigen
-            wir, womit wir uns bei MISCHOK fachlich beschäftigen — von
+            wir, womit wir uns bei mischok fachlich beschäftigen — von
             gewachsenen Softwaresystemen über Spring Boot und Testing bis zu KI
             in der Softwareentwicklung.
           </p>

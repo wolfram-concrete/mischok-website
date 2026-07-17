@@ -2,7 +2,7 @@ import { PRAXIS, PRAXIS_LINKEDIN } from "@/lib/content";
 
 /**
  * AusDerPraxis — Trust-/Sichtbarkeits-Section.
- * Zeigt, dass MISCHOK und Kajetan Mischok fachlich öffentlich sichtbar sind.
+ * Zeigt, dass mischok und Kajetan Mischok fachlich öffentlich sichtbar sind.
  * Bewusst keine LinkedIn-Embeds (Datenschutz/Cookies), sondern kuratierte
  * Teaser-Karten, die extern in einem neuen Tab auf LinkedIn verweisen.
  *
@@ -64,13 +64,13 @@ export default function AusDerPraxis() {
             style={{
               fontFamily: "var(--sans)",
               fontSize: "var(--text-lead)",
-              lineHeight: 1.6,
+              lineHeight: "var(--lh-copy)",
               color: "var(--slate)",
               margin: 0,
               alignSelf: "end",
             }}
           >
-            Einordnungen, Vorträge und Beiträge von MISCHOK und Kajetan Mischok —
+            Einordnungen, Vorträge und Beiträge von mischok und Kajetan Mischok —
             zu gewachsenen Systemen, Testing und KI im Bestand. Kompetenz zeigt
             sich in Haltung und Themen, nicht in Behauptungen.
           </p>
@@ -132,7 +132,7 @@ export default function AusDerPraxis() {
                 style={{
                   fontFamily: "var(--sans)",
                   fontSize: "var(--text-copy)",
-                  lineHeight: 1.6,
+                  lineHeight: "var(--lh-copy)",
                   color: "var(--slate)",
                   margin: "14px 0 0",
                 }}

@@ -154,7 +154,7 @@ export default function EinsatzfelderGrid() {
                   style={{
                     fontFamily: "var(--mono)",
                     fontSize: "28px",
-                    lineHeight: 1.5,
+                    lineHeight: "var(--lh-copy)",
                     marginTop: "20px",
                     maxWidth: "26ch",
                     color: isHover ? "#fff" : "var(--slate)",

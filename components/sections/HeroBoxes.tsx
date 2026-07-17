@@ -74,7 +74,7 @@ export default function HeroBoxes() {
         </div>
 
         {/* Rechts: Karten-Wand */}
-        <div className="hero-wall" aria-label="Einsatzfelder von MISCHOK">
+        <div className="hero-wall" aria-label="Einsatzfelder von mischok">
           {FIELDS.map((f, i) => (
             <article
               key={f.n}

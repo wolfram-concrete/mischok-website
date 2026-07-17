@@ -1,6 +1,6 @@
 /**
  * Medien — „Sie kennen unsere Experten aus": Fachmedien und Konferenzen, in
- * denen MISCHOK-Leute publizieren und sprechen. Die Leiste steht bewusst kurz
+ * denen mischok-Leute publizieren und sprechen. Die Leiste steht bewusst kurz
  * vor dem Kontakt-Modul: sie ist der letzte Beleg vor der Aufforderung.
  *
  * Herkunft: die Marken stehen so bereits auf der bestehenden mischok.de

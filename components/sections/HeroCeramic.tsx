@@ -47,11 +47,11 @@ export default function HeroCeramic() {
           className={`hc-nav${dropOpen || menuOpen ? " is-mega" : ""}`}
           onMouseLeave={() => setDropOpen(false)}
         >
-          <a href="/" aria-label="MISCHOK — Startseite" className="hc-nav-brand">
+          <a href="/" aria-label="mischok — Startseite" className="hc-nav-brand">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu.png"
-              alt="MISCHOK"
+              alt="mischok"
               className="hc-wordmark"
             />
           </a>
@@ -168,7 +168,7 @@ export default function HeroCeramic() {
         <div className="hc-photo hc-surface">
           <ImageFrame
             src="/assets/Mischok_2023_ma_245.jpg"
-            alt="MISCHOK — Team im Gespräch"
+            alt="mischok — Team im Gespräch"
             placeholder=""
             sizes="(max-width:900px) 100vw, 34vw"
             priority
@@ -216,7 +216,7 @@ export default function HeroCeramic() {
         <div className="hc-photoB hc-surface">
           <ImageFrame
             src="/assets/Mischok_2023_ma_444.jpg"
-            alt="MISCHOK — Zusammenarbeit im Projekt"
+            alt="mischok — Zusammenarbeit im Projekt"
             placeholder=""
             sizes="(max-width:900px) 100vw, 40vw"
             /* Das Modul ist ~3.2:1, die Quelle 1.5:1 — es fallen gut 50% der

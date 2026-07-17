@@ -17,7 +17,7 @@ export default function ArbeitenBeiMischok() {
     <section
       id="arbeiten"
       className="sec-step is-right"
-      data-screen-label="Arbeiten bei MISCHOK"
+      data-screen-label="Arbeiten bei mischok"
       style={{
         position: "relative",
         background: "var(--navy)",
@@ -26,7 +26,7 @@ export default function ArbeitenBeiMischok() {
     >
       <ImageFrame
         src="/assets/arbeiten.jpg"
-        alt="Team von MISCHOK in Augsburg bei der Arbeit"
+        alt="Team von mischok in Augsburg bei der Arbeit"
         placeholder="Team / Arbeitssituation"
         sizes="100vw"
       />
@@ -46,10 +46,10 @@ export default function ArbeitenBeiMischok() {
               {/* delay: die Kachel selbst faehrt per Reveal ein — die Headline
                   kommt gestaffelt danach, sonst laufen zwei Bewegungen gegeneinander */}
               <h2 className="arb-h">
-                <HeadlineRise delay={0.15}>Arbeiten bei MISCHOK</HeadlineRise>
+                <HeadlineRise delay={0.15}>Arbeiten bei mischok</HeadlineRise>
               </h2>
               <p className="arb-copy">
-                Bei MISCHOK arbeiten Menschen, die Softwareprojekte verstehen,
+                Bei mischok arbeiten Menschen, die Softwareprojekte verstehen,
                 begleiten und umsetzen. Vor Ort in Augsburg, nah am Team und nah
                 an den Projekten unserer Kunden.
               </p>
@@ -68,7 +68,7 @@ export default function ArbeitenBeiMischok() {
                   marginTop: "clamp(24px,3vw,38px)",
                 }}
               >
-                Karriere bei MISCHOK
+                Karriere bei mischok
                 <span aria-hidden="true">→</span>
               </a>
             </div>

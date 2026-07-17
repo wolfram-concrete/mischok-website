@@ -38,15 +38,22 @@ const icons: Record<string, ReactNode> = {
   // pulsiert), sowie Kreis + Quadrat (bestehende Systeme – bleiben ruhig).
   venn: (
     <>
-      {/* baut sich von links (Knoten) nach rechts auf: Linien zeichnen,
-          Endpunkte ploppen versetzt nach (gestaffelt nach x-Position) */}
-      <path className="hi-b-line" style={{ animationDelay: "0s" }} pathLength={1} d="M3 16 H8" />
-      <path className="hi-b-line" style={{ animationDelay: "0.25s" }} pathLength={1} d="M8 16 H15.6" />
-      <circle className="hi-b-pop" style={{ animationDelay: "0.5s" }} cx="18.2" cy="16" r="2.6" />
-      <path className="hi-b-line" style={{ animationDelay: "0.6s" }} pathLength={1} d="M8 16 L21.4 8.5" />
-      <path className="hi-b-line" style={{ animationDelay: "0.6s" }} pathLength={1} d="M8 16 L22.5 22.5" />
-      <circle className="hi-b-pop" style={{ animationDelay: "0.95s" }} cx="24" cy="7" r="3" />
-      <rect className="hi-b-pop" style={{ animationDelay: "0.95s" }} x="22.5" y="22.5" width="5" height="5" />
+      {/* Ein Stamm, drei Aeste, drei UNTERSCHIEDLICHE Endkoerper: Kreis, Dreieck,
+          Quadrat. Vorher waren es zwei Kreise und ein Quadrat — der mittlere
+          Kreis war vom oberen nicht zu unterscheiden.
+          Ausserdem lagen die Linien zu dicht: der Stamm endete bei x=8, und von
+          dort lief eine Waagerechte (H15.6) fast deckungsgleich neben den beiden
+          Diagonalen los. Jetzt faechern die drei Aeste mit ~33 Grad Abstand vom
+          selben Knoten (9|16) auf und enden bei x=20.4 — VOR den Koerpern, mit
+          sichtbarer Luecke. Vorher stiess die untere Linie exakt auf die Ecke
+          des Quadrats und verschmolz damit. */}
+      <path className="hi-b-line" style={{ animationDelay: "0s" }} pathLength={1} d="M3 16 H9" />
+      <path className="hi-b-line" style={{ animationDelay: "0.3s" }} pathLength={1} d="M9 16 L20.4 8.7" />
+      <path className="hi-b-line" style={{ animationDelay: "0.3s" }} pathLength={1} d="M9 16 H20.4" />
+      <path className="hi-b-line" style={{ animationDelay: "0.3s" }} pathLength={1} d="M9 16 L20.4 23.3" />
+      <circle className="hi-b-pop" style={{ animationDelay: "0.75s" }} cx="24" cy="7.6" r="2.7" />
+      <path className="hi-b-pop" style={{ animationDelay: "0.75s" }} d="M24 13.3 L26.6 18.4 H21.4 Z" />
+      <rect className="hi-b-pop" style={{ animationDelay: "0.75s" }} x="21.4" y="21.7" width="5.3" height="5.3" />
     </>
   ),
   // 03 — Technik und Zielbild passen nicht mehr sauber zusammen.
@@ -98,7 +105,7 @@ export function Icon({ name }: { name: string }) {
       viewBox="0 0 32 32"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.5}
+      strokeWidth={1.25}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -134,11 +141,11 @@ export default function HeroImpact() {
       <div className="hi-card">
         {/* Brand-Modul: Logo = Home-Button */}
         <div className="hi-cell hi-brand">
-          <a href="/" aria-label="MISCHOK — Startseite" className="hi-brand-link">
+          <a href="/" aria-label="mischok — Startseite" className="hi-brand-link">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-solo.png"
-              alt="MISCHOK"
+              alt="mischok"
               className="hi-wordmark"
             />
           </a>
@@ -156,7 +163,7 @@ export default function HeroImpact() {
         <div className="hi-cell hi-photo hi-photoL">
           <ImageFrame
             src="/assets/Mischok_2023_ma_245.jpg"
-            alt="MISCHOK — Team im Gespräch"
+            alt="mischok — Team im Gespräch"
             placeholder=""
             sizes="(max-width:900px) 100vw, 34vw"
             priority
@@ -210,7 +217,7 @@ export default function HeroImpact() {
         <div className="hi-cell hi-photo hi-photoB">
           <ImageFrame
             src="/assets/Mischok_2025_ma_216.jpg"
-            alt="MISCHOK — Geschäftsführung"
+            alt="mischok — Geschäftsführung"
             placeholder=""
             sizes="(max-width:900px) 100vw, 40vw"
             imgStyle={{ objectPosition: "center 32%" }}

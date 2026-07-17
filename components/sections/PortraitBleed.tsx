@@ -17,7 +17,7 @@ export default function PortraitBleed() {
     >
       <ImageFrame
         src="/assets/acc-1.jpg"
-        alt="Großformat — echte Arbeitssituation bei MISCHOK"
+        alt="Großformat — echte Arbeitssituation bei mischok"
         placeholder="Grossformat — echte Arbeitssituation"
         sizes="100vw"
       />

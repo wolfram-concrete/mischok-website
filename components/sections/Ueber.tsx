@@ -23,13 +23,13 @@ type Shot = { src: string; alt: string };
 
 /** Schritt 0 trägt das Zitat, danach die Bilderstrecke. */
 const SHOTS: Shot[] = [
-  { src: "/assets/Mischok_2025_ma_216.jpg", alt: "MISCHOK — Geschäftsführung" },
-  { src: "/assets/Mischok_2025_ma_200.jpg", alt: "MISCHOK — Arbeit zu zweit am Schreibtisch" },
-  { src: "/assets/Mischok_2023_ma_061.jpg", alt: "MISCHOK — Workshop im Team" },
-  { src: "/assets/Mischok_2025_ma_046.jpg", alt: "MISCHOK — Besprechung" },
-  { src: "/assets/Mischok_2023_ma_422.jpg", alt: "MISCHOK — Arbeit am Whiteboard" },
-  { src: "/assets/Mischok_2025_ma_147.jpg", alt: "MISCHOK — Abstimmung am Laptop" },
-  { src: "/assets/Mischok_2025_ma_199.jpg", alt: "MISCHOK — konzentrierte Entwicklungsarbeit" },
+  { src: "/assets/Mischok_2025_ma_216.jpg", alt: "mischok — Geschäftsführung" },
+  { src: "/assets/Mischok_2025_ma_200.jpg", alt: "mischok — Arbeit zu zweit am Schreibtisch" },
+  { src: "/assets/Mischok_2023_ma_061.jpg", alt: "mischok — Workshop im Team" },
+  { src: "/assets/Mischok_2025_ma_046.jpg", alt: "mischok — Besprechung" },
+  { src: "/assets/Mischok_2023_ma_422.jpg", alt: "mischok — Arbeit am Whiteboard" },
+  { src: "/assets/Mischok_2025_ma_147.jpg", alt: "mischok — Abstimmung am Laptop" },
+  { src: "/assets/Mischok_2025_ma_199.jpg", alt: "mischok — konzentrierte Entwicklungsarbeit" },
 ];
 
 export default function Ueber() {
@@ -66,19 +66,19 @@ export default function Ueber() {
   const intro = step === 0;
 
   return (
-    <section id="ueber" ref={sectionRef} className="ue-section" data-screen-label="Über MISCHOK">
+    <section id="ueber" ref={sectionRef} className="ue-section" data-screen-label="Über mischok">
       <div className="ue-sticky">
         <div className="ue-grid">
           {/* Links: Headline/Lead oben, Kennzahlen unten */}
           <div className="ue-content">
             <div className="ue-head">
               <SectionLabel>Über uns</SectionLabel>
-              {/* Versal, wie in der Konzeption — s. Kommentar in Ansatz.tsx */}
+              {/* Logoschreibweise, immer klein — s. Kommentar in Ansatz.tsx */}
               <h2 className="ue-h2">
-                <HeadlineRise>Über MISCHOK</HeadlineRise>
+                <HeadlineRise>Über mischok</HeadlineRise>
               </h2>
               <p className="ue-lead">
-                Wir sind MISCHOK, ein Familienunternehmen mit Sitz in Augsburg.
+                Wir sind mischok, ein Familienunternehmen mit Sitz in Augsburg.
                 Seit 2010 begleiten wir Unternehmen, deren Geschäftserfolg von
                 Software abhängt. Bei uns arbeiten mehr als 35 Menschen in
                 Entwicklung, Architektur, Projektleitung und Beratung. Unsere

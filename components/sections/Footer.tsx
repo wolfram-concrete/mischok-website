@@ -3,7 +3,7 @@ import NewsletterBar from "@/components/ui/NewsletterBar";
 import Reveal from "@/components/ui/Reveal";
 
 /**
- * Footer — Aufbau nach Harbor-Referenz, mit MISCHOK-Inhalten:
+ * Footer — Aufbau nach Harbor-Referenz, mit mischok-Inhalten:
  * • links: Wortmarke, Claim, CTA „Erstgespräch vereinbaren"
  * • rechts: drei Linkspalten (Navigation, Referenzen, Kontakt)
  * • Bottom-Leiste (oben/unten Linie): LinkedIn + Copyright, rechts Rechtliches
@@ -34,11 +34,11 @@ export default function Footer() {
       <div className="ft-halves" style={{ width: "100%" }}>
         {/* Links: Marke + Claim + CTA */}
         <div className="ft-left">
-          <a href="/" aria-label="MISCHOK — Startseite" style={{ display: "inline-block" }}>
+          <a href="/" aria-label="mischok — Startseite" style={{ display: "inline-block" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu.svg"
-              alt="MISCHOK"
+              alt="mischok"
               style={{ display: "block", height: "38px", width: "auto" }}
             />
           </a>
@@ -46,7 +46,7 @@ export default function Footer() {
             style={{
               fontFamily: "var(--sans)",
               fontSize: "var(--text-copy)",
-              lineHeight: 1.6,
+              lineHeight: "var(--lh-copy)",
               color: "var(--slate)",
               margin: 0,
               maxWidth: "34ch",
@@ -129,7 +129,7 @@ export default function Footer() {
             href={LINKEDIN_COMPANY}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="MISCHOK auf LinkedIn"
+            aria-label="mischok auf LinkedIn"
             className="ft-social"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

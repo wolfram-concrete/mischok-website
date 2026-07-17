@@ -4,9 +4,9 @@ import ReferenzenGrid from "@/components/sections/ReferenzenGrid";
 import { REFERENZEN_INTRO } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Referenzen — MISCHOK",
+  title: "Referenzen — mischok",
   description:
-    "Ausgewählte Projekte der MISCHOK GmbH: gewachsene Plattformen, feste Termine, technische Abhängigkeiten und Teams unter Druck.",
+    "Ausgewählte Projekte der Mischok GmbH: gewachsene Plattformen, feste Termine, technische Abhängigkeiten und Teams unter Druck.",
 };
 
 /**
@@ -103,7 +103,7 @@ export default function ReferenzenPage() {
                 fontFamily: "var(--sans)",
                 fontSize: "clamp(22px,2.1vw,27px)",
                 fontWeight: 500,
-                lineHeight: 1.55,
+                lineHeight: "var(--lh-copy)",
                 color: "var(--slate)",
                 margin: 0,
                 maxWidth: "52ch",

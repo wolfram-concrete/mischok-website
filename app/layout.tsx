@@ -31,12 +31,12 @@ const realtime = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "MISCHOK — Erfahrene Projektführung für geschäftskritische Software",
+  title: "mischok — Erfahrene Projektführung für geschäftskritische Software",
   description:
-    "MISCHOK GmbH aus Augsburg: Softwareentwicklung und Projektführung für geschäftskritische Bestandssoftware. Menschen, die Verantwortung übernehmen.",
+    "Mischok GmbH aus Augsburg: Softwareentwicklung und Projektführung für geschäftskritische Bestandssoftware. Menschen, die Verantwortung übernehmen.",
   metadataBase: new URL("https://mischok.de"),
   openGraph: {
-    title: "MISCHOK GmbH",
+    title: "Mischok GmbH",
     description:
       "Erfahrene Projektführung für geschäftskritische Software im Bestand.",
     locale: "de_DE",

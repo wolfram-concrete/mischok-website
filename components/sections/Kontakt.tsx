@@ -37,7 +37,7 @@ export default function Kontakt() {
         position: "relative",
         overflow: "hidden",
         /* KEINE Vollflaeche: der Papiergrund liegt als eigene Flaeche darin und
-           endet an der Oberkante des Bildes aus „Arbeiten bei MISCHOK", das von
+           endet an der Oberkante des Bildes aus „Arbeiten bei mischok", das von
            unten her hinter diese Section steigt. Als Section-Hintergrund wuerde
            er das Bild verdecken. */
         background: "transparent",
@@ -56,7 +56,7 @@ export default function Kontakt() {
             src="/assets/Mischok_2025_ma_176.jpg"
             /* „Mischok GmbH" wie im sichtbaren Text der Karte und im Footer —
                das ist die Firmierung, nicht die Marke. ACHTUNG: die Konzeption
-               schreibt an dieser Stelle „MISCHOK GmbH", die bestehende
+               schreibt an dieser Stelle „Mischok GmbH", die bestehende
                mischok.de „Mischok GmbH". Welche Fassung im Handelsregister
                steht, ist hier nicht pruefbar — bis dahin bleibt der Stand der
                Live-Seite. */
@@ -104,7 +104,7 @@ export default function Kontakt() {
                 info@mischok.de
               </a>
               <address
-                style={{ ...infoLine, fontStyle: "normal", lineHeight: 1.55, marginTop: "6px" }}
+                style={{ ...infoLine, fontStyle: "normal", lineHeight: "var(--lh-copy)", marginTop: "6px" }}
               >
                 Mischok GmbH
                 <br />

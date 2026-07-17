@@ -151,11 +151,12 @@ export default function Ansatz() {
                 margin: "16px 0 0",
               }}
             >
-              {/* Versal, wie in der Konzeption: die Firma ist MISCHOK, der
-                  Nachname ist Mischok. Die Kleinschreibung der Wortmarke ist
-                  Logotypografie und keine Schreibregel fuer Fliesstext. */}
+              {/* Die Marke folgt der Logoschreibweise und bleibt immer klein:
+                  „mischok". Gross bleiben nur der Nachname (Kajetan Mischok)
+                  und die Firmierung (Mischok GmbH). Die Konzeption schreibt
+                  durchgaengig MISCHOK — das ist bewusst verworfen. */}
               <HeadlineRise>
-                Wo MISCHOK <br />
+                Wo mischok <br />
                 konkret ansetzt.
               </HeadlineRise>
             </h2>
@@ -236,7 +237,7 @@ export default function Ansatz() {
                     style={{
                       fontFamily: "var(--mono)",
                       fontSize: "var(--text-copy)",
-                      lineHeight: 1.75,
+                      lineHeight: "var(--lh-copy)",
                       color: "var(--slate)",
                       margin: "22px 0 0",
                       /* +20% (46ch -> 55ch) */
