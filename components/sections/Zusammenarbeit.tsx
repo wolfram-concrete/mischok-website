@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
 import { ACC } from "@/lib/content";
@@ -68,6 +68,8 @@ function AccIcon({ name }: { name: string }) {
 }
 
 export default function Zusammenarbeit() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const lastStep = useRef(-1);
   const [vw, setVw] = useState(1280);
   const [accOpen, setAccOpen] = useState(0);
 
@@ -78,24 +80,52 @@ export default function Zusammenarbeit() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  /**
+   * Pin-Scroll wie in Ansatz: die Section bleibt stehen und klappt beim Scrollen
+   * eine Karte nach der anderen auf; nach der letzten läuft sie weiter.
+   * Der lastStep-Guard sorgt dafür, dass ein Klick zwischen zwei Scrollstufen
+   * stehen bleibt und nicht sofort wieder überschrieben wird — Maus und Scroll
+   * arbeiten so nebeneinander statt gegeneinander.
+   */
+  useEffect(() => {
+    let raf = 0;
+    const tick = () => {
+      const sec = sectionRef.current;
+      if (sec) {
+        const rect = sec.getBoundingClientRect();
+        const total = sec.offsetHeight - window.innerHeight;
+        const scrolled = Math.min(Math.max(-rect.top, 0), total);
+        const progress = total > 0 ? scrolled / total : 0;
+        const max = ACC.length - 1;
+        const next = Math.max(
+          0,
+          Math.min(max, Math.floor(progress * (ACC.length - 0.0001)))
+        );
+        if (next !== lastStep.current) {
+          lastStep.current = next;
+          setAccOpen(next);
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   const accStack = vw < 760;
 
   return (
     <section
       id="zusammenarbeit"
-      className="sec-step is-right"
+      ref={sectionRef}
+      className="zu-section"
       data-screen-label="Zusammenarbeit"
-      style={{
-        position: "relative",
-        /* nur noch Ladefarbe aus der Palette — darüber liegt das Bild deckend */
-        background: "var(--snow)",
-        padding: "clamp(48px,6vw,96px) clamp(20px,5vw,72px)",
-      }}
     >
-      {/* Punktraster als Grund — reines CSS statt Grafik (siehe .zu-grid) */}
-      <span className="zu-grid" aria-hidden="true" />
+      <div className="zu-sticky">
+        {/* Punktraster als Grund — reines CSS statt Grafik (siehe .zu-grid) */}
+        <span className="zu-grid" aria-hidden="true" />
 
-      <div style={{ position: "relative", zIndex: 1, width: "100%" }}>
+        <div style={{ position: "relative", zIndex: 1, width: "100%" }}>
         <h2
           style={{
             fontFamily: "var(--serif)",
@@ -166,7 +196,13 @@ export default function Zusammenarbeit() {
                   ? insetOpen
                   : insetClosed
                 : open
-                  ? "calc(100% - clamp(300px,44%,440px))"
+                  /* Untergrenze 360px statt 300px: bei mittleren Fensterbreiten
+                     war das Panel nur ~278px breit, der Fliesstext brauchte
+                     dadurch 10 Zeilen und der Textblock fuellte das Panel bis
+                     hoch ins Icon. Mit 360px sind es 6–8 Zeilen. Mehr als 360px
+                     bringt nichts — dann deckelt die max-width von 38ch die
+                     Textspalte, und das Panel waechst ohne Wirkung. */
+                  ? "calc(100% - clamp(360px,44%,440px))"
                   : insetClosed,
               padding: open
                 ? "clamp(26px,2.6vw,40px)"
@@ -231,15 +267,18 @@ export default function Zusammenarbeit() {
                         style={{
                           fontFamily: "var(--serif)",
                           fontWeight: 400,
-                          // geschlossen etwas kleiner, damit sie in die schmale Karte passt
-                          fontSize: open
-                            ? "clamp(24px,2.4vw,32px)"
-                            : "clamp(17px,1.5vw,21px)",
+                          /* Eine Groesse in beiden Zustaenden. Vorher wuchs die
+                             Headline beim Oeffnen auf clamp(24px,2.4vw,32px) und
+                             lief damit je nach Fensterformat in das Icon oben
+                             rechts — Textblock und Icon sind zwei unabhaengige
+                             absolut positionierte Ebenen, keine reserviert der
+                             anderen Platz. Ohne den Sprung haengt die Hoehe des
+                             Blocks nur noch an einer Groesse. */
+                          fontSize: "clamp(17px,1.5vw,21px)",
                           lineHeight: 1.16,
                           color: "#fff",
                           margin: 0,
                           overflowWrap: "break-word",
-                          transition: "font-size .55s cubic-bezier(.4,0,.2,1)",
                         }}
                       >
                         {c.title}
@@ -247,8 +286,15 @@ export default function Zusammenarbeit() {
                       <p
                         style={{
                           fontFamily: "var(--sans)",
-                          fontSize: "clamp(14px,1.4vw,16px)",
-                          lineHeight: 1.6,
+                          fontSize: "var(--text-lead)",
+                          /* 1.45 statt der 1.6 der uebrigen Copy: bewusste
+                             Ausnahme. Der Text steht hier in einer schmalen
+                             Spalte auf Bild und muss zwischen Icon und
+                             Kartenunterkante passen — die engere Zeile kauft
+                             die letzten Pixel, ohne dass die Schrift kleiner
+                             wird. Mit 1.5 blieben im engsten Fall nur 7px
+                             Abstand zum Icon, mit 1.45 sind es 14px. */
+                          lineHeight: 1.45,
                           color: "rgba(255,255,255,.92)",
                           margin: open ? "20px 0 0" : "0",
                           maxWidth: "38ch",
@@ -289,6 +335,7 @@ export default function Zusammenarbeit() {
               </div>
             );
           })}
+        </div>
         </div>
       </div>
     </section>

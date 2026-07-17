@@ -94,7 +94,7 @@ export default function ArbeitenBeiMischok() {
             <p
               style={{
                 fontFamily: "var(--sans)",
-                fontSize: "clamp(15px,1.35vw,18px)",
+                fontSize: "var(--text-lead)",
                 lineHeight: 1.6,
                 color: "#fff",
                 margin: "clamp(24px,3vw,38px) 0 0",
@@ -108,7 +108,7 @@ export default function ArbeitenBeiMischok() {
             <p
               style={{
                 fontFamily: "var(--sans)",
-                fontSize: "clamp(15px,1.35vw,18px)",
+                fontSize: "var(--text-lead)",
                 lineHeight: 1.6,
                 color: "#fff",
                 margin: "clamp(18px,2vw,26px) 0 0",

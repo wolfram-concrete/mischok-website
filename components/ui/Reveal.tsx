@@ -13,9 +13,12 @@ type RevealProps = {
   /** Verzögerung der Transition in Sekunden */
   delay?: number;
   style?: CSSProperties;
+  /** Klasse für das Wrapper-Element — Reveal ersetzt damit einen eigenen
+      Layout-Container, statt einen zusätzlichen Div-Level zu erzwingen */
+  className?: string;
 };
 
-export default function Reveal({ children, delay = 0, style }: RevealProps) {
+export default function Reveal({ children, delay = 0, style, className }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
 
@@ -49,6 +52,7 @@ export default function Reveal({ children, delay = 0, style }: RevealProps) {
   return (
     <div
       ref={ref}
+      className={className}
       style={{
         opacity: shown ? 1 : 0,
         transform: shown ? "none" : "translateY(24px)",

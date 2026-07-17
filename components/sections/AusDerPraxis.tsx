@@ -1,10 +1,23 @@
 import { PRAXIS, PRAXIS_LINKEDIN } from "@/lib/content";
 
 /**
- * AusDerPraxis — Trust-/Sichtbarkeits-Section vor dem Kontaktbereich.
+ * AusDerPraxis — Trust-/Sichtbarkeits-Section.
  * Zeigt, dass MISCHOK und Kajetan Mischok fachlich öffentlich sichtbar sind.
  * Bewusst keine LinkedIn-Embeds (Datenschutz/Cookies), sondern kuratierte
  * Teaser-Karten, die extern in einem neuen Tab auf LinkedIn verweisen.
+ *
+ * PARKIERT — steht seit 2026-07-17 nicht mehr auf der Home (aus app/page.tsx
+ * ausgehängt), ist aber vollständig erhalten und sofort wieder einsetzbar:
+ * einfach importieren und rendern. Sie bringt alles mit:
+ *   – Inhalte: PRAXIS in lib/content.ts
+ *   – Styles:  .grid-praxis-head / .praxis-card / .praxis-arrow in globals.css
+ *   – Kante:   #praxis { --step-x: 38% } (Sektionsstufe) in globals.css
+ * Kandidaten für einen neuen Platz sind die konzipierten Seiten /insights oder
+ * /ueber (siehe Sitemap in der Konzeption).
+ *
+ * Achtung beim Wiedereinsetzen: Die Attribution der Karten steht auf Kajetan
+ * Mischok; laut Konzeption (Insights) gehören mehrere der Themen zu Julius
+ * Mischok. Vor dem Live-Gang prüfen.
  */
 export default function AusDerPraxis() {
   return (
@@ -50,7 +63,7 @@ export default function AusDerPraxis() {
           <p
             style={{
               fontFamily: "var(--sans)",
-              fontSize: "clamp(15px,1.5vw,17px)",
+              fontSize: "var(--text-lead)",
               lineHeight: 1.6,
               color: "var(--slate)",
               margin: 0,
@@ -118,7 +131,7 @@ export default function AusDerPraxis() {
               <p
                 style={{
                   fontFamily: "var(--sans)",
-                  fontSize: "15px",
+                  fontSize: "var(--text-copy)",
                   lineHeight: 1.6,
                   color: "var(--slate)",
                   margin: "14px 0 0",

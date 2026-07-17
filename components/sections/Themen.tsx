@@ -115,7 +115,7 @@ export default function Themen() {
             href={PRAXIS_LINKEDIN}
             target="_blank"
             rel="noopener noreferrer"
-            className="in-cta"
+            className="cta-ghost"
           >
             Alle Insights ansehen
             <span aria-hidden="true">→</span>

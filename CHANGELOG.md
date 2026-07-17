@@ -18,6 +18,69 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.8.0] – 2026-07-17
+
+### Geändert
+- **Kontakt als CTA-Karte statt Vollbreiten-Block.** Bildkachel links, Inhalt
+  rechts, Kontaktdaten und eine Aktion in der Fusszeile. Die Headline lief mit
+  `clamp(44px,7.5vw,80px)` auf der Stufe einer Seiten-H1 und stand damit gleichauf
+  mit dem Hero — jetzt 38px. Die Karte zog vorher auf die volle Sectionbreite
+  (1509px), während die Inhaltsspalte darin nur 435px belegte; sie hat jetzt
+  1080px Maximalbreite. Glasfläche mit `backdrop-filter: blur(20px)` in der
+  Machart der Zusammenarbeit-Panels, plus Ausbuchtung nach oben links in der
+  rechtwinkligen Sprache der Sektionsstufe.
+- **Kontakt-CTA auf die Standard-Optik.** „Projektlage klären" läuft auf
+  `.cta-ghost` wie „Alle Insights ansehen" und „Mehr über uns"; neue Variante
+  `.on-navy` kippt nur die Farbwerte für den dunklen Grund. Der eingekreiste
+  Pfeil davor stammte aus einer Referenz-Card und war eine Formsprache, die es
+  sonst nirgends auf der Seite gibt. Zwei konkurrierende Buttons → eine Aktion;
+  Telefon und E-Mail bleiben Textlinks, sie sind Daten.
+- **Ansatz: ganze Case-Karte in Navy** statt nur der Logokachel. Klickfläche =
+  Farbfläche. Schritt 02 zeigt bewusst noch einmal 9 Levels — für WEKA Pilot
+  Online gibt es kein belegtes Projektvisual.
+- **Über: Bilderstrecke auf 7 Motive** (`Mischok_2025_ma_200.jpg` an zweiter
+  Stelle). Die Fortschrittsleiste sitzt jetzt links im grauen Streifen unter der
+  Bildkante statt im Bild — als eigenes Grid-Item, weil das `clip-path` von
+  `.ue-media` genau diesen Streifen wegschneidet. Farbwerte wie der
+  Step-Indikator in Ansatz; in Weiss wäre sie auf Grau unsichtbar gewesen.
+- **Zusammenarbeit: Kollision von Headline und Icon entschärft.** Headline in
+  einer Grösse statt Sprung auf `clamp(24px,2.4vw,32px)` beim Öffnen;
+  Panel-Minimum 300 → 360px; Copy-Zeilenabstand 1.6 → 1.45 (bewusste Ausnahme von
+  der Hausregel, s. Kommentar). Gemessener Abstand Headline↔Icon am längsten
+  Text: 1637×900 −71 → +14px, 1280×800 −70 → +35px. Mehr als 360px Panelbreite
+  bringt nichts, weil `max-width: 38ch` die Textspalte deckelt.
+
+### Behoben
+- **Kontakt: Auflösung des Ansprechpartner-Fotos.** Der Container ist hochformat
+  (~340×441), die Aufnahme querformat (3:2) — `cover` skaliert über die HÖHE und
+  rendert das Bild ~661 CSS-Pixel breit, während `sizes="340px"` dem Browser 340
+  nannte. Er lud eine 750er-Variante und skalierte sie auf Retina fast 2× hoch.
+  `sizes` beschreibt jetzt die tatsächliche Renderbreite.
+- **Doppelter React-Key** in der Case-Brücke: Schritt 01 und 02 zeigen dieselbe
+  Referenz, `key={c.ref.slug}` war damit zweimal „referenz-1".
+- **Grid-Autoplatzierung in Über:** `.ue-media` hatte nur `grid-column: 3` ohne
+  Zeile; sobald die Fortschrittsleiste Zeile 1 belegte, rutschte das Bild in eine
+  zweite Zeile (Grid 1332px statt 692px hoch). Zeile jetzt explizit.
+- **Kontakt-Innenabstand auf Mobil:** feste 90px, während die globale 64px-Regel
+  erst ab 900px greift — auf 375px blieben von der Karte 247px übrig.
+
+### Entfernt
+- **Zweites Bildband in Kontakt.** Dasselbe Motiv wie „Arbeiten bei MISCHOK" lag
+  als eigener Container darüber. Zwei getrennte Bildcontainer können an der
+  Sektionsgrenze nicht nahtlos aneinanderstossen — beide werden von clip-paths
+  beschnitten, der untere läuft mit Parallaxe, der obere stand still. Übrig blieb
+  eine sichtbare weisse Naht. Wenn das Motiv wieder hinter die Karte soll, muss
+  es EIN Container sein, der nach oben hinter die Karte reicht.
+
+### Offen
+- **`/ueber` existiert weiterhin nicht** (Konzeption S. 28–29), der CTA „Mehr
+  über uns" in der Über-Section läuft auf einen 404.
+- **Zusammenarbeit auf flachen Fenstern:** bei 1440×700 bleibt eine Überlappung
+  von 118px. Die Karte ist `60vh` = 420px, der Textblock allein 317px. Im
+  gepinnten 100vh-Bereich stehen nach Innenabständen und Headline nur 432px zur
+  Verfügung — eine höhere Karte passt dort nicht. Braucht kürzere Absätze oder
+  ein kleineres Icon auf niedrigen Viewports.
+
 ## [0.7.0] – 2026-07-17
 
 ### Geändert

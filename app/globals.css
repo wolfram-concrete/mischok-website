@@ -67,6 +67,20 @@
   --line: rgba(165, 165, 165, 0.45); /* Trennlinien / Rahmen */
   --btn: var(--paper);
   --accent: var(--change);
+  /* ===================================================================
+     Fliesstext-Stufen — an die ROLLE gebunden, nicht an die Section.
+     Vorher hatte sich jede Section ihre eigene Groesse ausgedacht: neun
+     Clamp-Definitionen, sieben verschiedene Desktop-Groessen (19/18/17/16/
+     15.5/15/12.5). Das Verhaeltnis war dabei verkehrt herum — reine Intros
+     standen groesser als die Texte, die die Aussage tragen.
+     Copy-Maximum 17px = der Fliesstext in den Hero-Szenariokarten; der ist
+     die Referenz. Der Hero selbst behaelt seine eigene Clamp mit
+     vh-Komponente, weil er exakt in den Viewport passen muss.
+     =================================================================== */
+  --text-lead: clamp(16px, 1.4vw, 19px); /* Section-Intros, Statements, tragende Kartencopy */
+  --text-copy: clamp(15px, 1.25vw, 17px); /* Standard-Fliesstext */
+  --text-meta: clamp(12px, 0.9vw, 13px); /* Kleingedrucktes */
+
   --serif: var(--font-serif), "Source Serif Pro", Georgia, serif;
   --sans: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* Alle nicht-Serif-Texte nutzen Calibre — auch die ehemaligen „Mono"-Labels */
@@ -111,7 +125,6 @@ button:focus-visible {
    Ersetzt die JS-gesteuerten *Cols-Variablen für nicht-interaktive Sektionen.
    =================================================================== */
 .grid-quote,
-.grid-kontakt,
 .grid-arbeiten,
 .grid-ansatz,
 .grid-foot {
@@ -125,7 +138,6 @@ button:focus-visible {
   .grid-quote {
     grid-template-columns: 0.85fr 1.15fr;
   }
-  .grid-kontakt,
   .grid-arbeiten,
   .grid-ansatz {
     grid-template-columns: 1fr 1fr;
@@ -374,6 +386,158 @@ button:focus-visible {
   color: #fff;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* ===================================================================
+   Kontakt — CTA-Karte: Bildkachel links, Inhalt rechts, Kontaktdaten und
+   eine Aktion in der Fusszeile. Vorher war das ein Vollbreiten-Block mit
+   80px-Headline und zwei konkurrierenden Buttons; jetzt eine Karte, deren
+   Headline auf der Stufe einer H4 steht statt auf der einer Seiten-H1.
+   =================================================================== */
+.kt-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: clamp(24px, 3vw, 48px);
+  padding: clamp(14px, 1.4vw, 20px);
+  /* oben links kein Radius: dort setzt der Reiter an und fuehrt die Kante
+     weiter — eine Rundung wuerde an der Nahtstelle eine Kerbe hinterlassen.
+     Den Radius traegt jetzt der Reiter. */
+  border-radius: 0 5px 5px 5px;
+  box-sizing: border-box;
+  /* Karte, kein Band: ohne Deckel zieht sie auf die volle Sectionbreite und
+     das Motiv dahinter waere nur noch am Rand zu sehen. */
+  max-width: 1080px;
+  margin-inline: auto;
+  --kt-tab-h: clamp(20px, 2.4vw, 44px);
+  /* Breite des Reiters, gemessen von der linken Kante */
+  --kt-tab-w: 38%;
+  /* Glasflaeche in derselben Machart wie die Panels in „Zusammenarbeit":
+     durchscheinend + backdrop-blur. Der Blur wirkt nur dort, wo hinter der
+     Karte auch etwas liegt — oben auf dem grauen Grund passiert nichts, unten
+     im Bildband schmilzt das Motiv weich durch.
+     Bewusst OHNE den hellen 1px-Rand der Zusammenarbeit-Panels: der liefe auch
+     quer unter dem Reiter durch und haette an dessen Fuss eine sichtbare Linie
+     hinterlassen. Blur und Transparenz tragen das Glas auch so. */
+  --kt-glass: color-mix(in srgb, var(--navy) 82%, transparent);
+  background: var(--kt-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--on-navy);
+}
+/* Ausbuchtung nach oben an der linken Ecke — dieselbe rechtwinklige
+   Sprachlogik wie die Sektionsstufe (Logorahmen-Cutout), nur am Modul und an
+   der Oberkante. Bewusst als eigene Flaeche statt als clip-path auf der Karte:
+   ein Clip wuerde deren border-radius mit ueberschreiben, und die 5px teilt sie
+   sich mit allen anderen Karten der Seite. Die Flaeche stoesst an der Kante an,
+   ohne zu ueberlappen — deshalb bleibt die Halbtransparenz nahtlos und das
+   Motiv laeuft ohne Kante durch. */
+.kt-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: var(--kt-tab-w);
+  bottom: 100%;
+  height: var(--kt-tab-h);
+  background: var(--kt-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 5px 5px 0 0;
+  pointer-events: none;
+}
+.kt-left {
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  box-sizing: border-box;
+  width: clamp(200px, 24vw, 340px);
+  min-height: clamp(280px, 30vw, 420px);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(16px, 1.6vw, 24px);
+}
+/* Verlauf nach unten, damit Name und Rolle im Bild lesbar bleiben, ohne dass
+   eine zweite Flaeche darunter gelegt werden muss. */
+.kt-shade {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 58%;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 42, 92, 0), rgba(0, 42, 92, 0.72));
+}
+.kt-author {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.kt-author-name {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: var(--text-copy);
+  color: #fff;
+}
+.kt-author-role {
+  font-family: var(--sans);
+  font-size: var(--text-meta);
+  color: rgba(255, 255, 255, 0.66);
+}
+.kt-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(28px, 3.5vw, 56px);
+  min-width: 0;
+  padding: clamp(12px, 1.4vw, 20px) clamp(6px, 1vw, 14px) clamp(12px, 1.4vw, 20px) 0;
+}
+.kt-label {
+  font-family: var(--realtime);
+  font-size: 13px;
+  color: color-mix(in srgb, var(--on-navy) 50%, transparent);
+  margin: 0;
+}
+.kt-h {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(26px, 2.9vw, 38px);
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+  color: var(--on-navy);
+  margin: clamp(14px, 1.6vw, 20px) 0 0;
+  max-width: 20ch;
+}
+.kt-copy {
+  font-family: var(--sans);
+  font-size: var(--text-copy);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--on-navy) 82%, transparent);
+  margin: clamp(12px, 1.4vw, 18px) 0 0;
+  max-width: 46ch;
+}
+.kt-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(24px, 3vw, 44px);
+}
+.kt-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-left: clamp(14px, 1.4vw, 20px);
+  border-left: 1px solid color-mix(in srgb, var(--on-navy) 26%, transparent);
+}
+@media (max-width: 820px) {
+  .kt-card {
+    flex-direction: column;
+  }
+  .kt-left {
+    width: 100%;
+  }
 }
 
 /* ===================================================================
@@ -1538,7 +1702,7 @@ button:focus-visible {
 .ft-news-note {
   margin: 0;
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: var(--text-meta);
   line-height: 1.5;
   color: var(--muted);
 }
@@ -2172,21 +2336,21 @@ button:focus-visible {
   padding: clamp(12px, 1.1vw, 16px);
   border-radius: 5px;
   text-decoration: none;
-  /* neutral, analog .hc-surface: 249,251,255 → 251 bei gleicher Leuchtdichte */
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.96) 0%,
-    rgba(251, 251, 251, 0.92) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 28px rgba(0, 42, 92, 0.07), 0 2px 6px rgba(0, 42, 92, 0.04);
+  /* Die ganze Karte ist die blaue Flaeche — nicht die Logokachel darin.
+     Klickflaeche = Farbflaeche: die Karte IST der Verweis auf die Referenz. */
+  background: var(--navy);
+  box-shadow: 0 10px 28px rgba(0, 42, 92, 0.16), 0 2px 6px rgba(0, 42, 92, 0.1);
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
     box-shadow 0.35s ease;
 }
 .az-case:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(0, 42, 92, 0.1), 0 3px 8px rgba(0, 42, 92, 0.05);
+  box-shadow: 0 16px 36px rgba(0, 42, 92, 0.22), 0 3px 8px rgba(0, 42, 92, 0.12);
 }
+/* Ohne eigene Flaeche: die Kachel soll nicht das blaue Element sein, das ist
+   jetzt die Karte. Der Navy-Grund bleibt trotzdem wichtig — das 9-Levels-Logo
+   besteht aus #f9f9f9, #fff und #657383; auf Weiss verschwinden seine hellen
+   Flaechen schlicht. Hier erbt es den Grund der Karte. */
 .az-case-media {
   position: relative;
   overflow: hidden;
@@ -2194,7 +2358,7 @@ button:focus-visible {
   width: clamp(96px, 9vw, 128px);
   aspect-ratio: 4 / 3;
   border-radius: 4px;
-  background: var(--white);
+  background: transparent;
 }
 .az-case-body {
   display: flex;
@@ -2202,24 +2366,25 @@ button:focus-visible {
   gap: 4px;
   min-width: 0;
 }
+/* Textwerte auf Navy gedreht — die Karte ist jetzt die blaue Flaeche */
 .az-case-kicker {
   font-family: var(--realtime);
   font-size: 13px;
   letter-spacing: 0.06em;
-  color: rgba(0, 42, 92, 0.45);
+  color: color-mix(in srgb, var(--on-navy) 50%, transparent);
 }
 .az-case-name {
   font-family: var(--serif);
   font-weight: 400;
   font-size: clamp(17px, 1.5vw, 20px);
   line-height: 1.2;
-  color: #002a5c;
+  color: var(--on-navy);
 }
 .az-case-sub {
   font-family: var(--sans);
   font-size: 13px;
   line-height: 1.45;
-  color: rgba(0, 42, 92, 0.6);
+  color: color-mix(in srgb, var(--on-navy) 65%, transparent);
 }
 .az-case-cta {
   display: inline-flex;
@@ -2229,7 +2394,7 @@ button:focus-visible {
   font-family: var(--sans);
   font-size: 13.5px;
   font-weight: 500;
-  color: #002a5c;
+  color: var(--on-navy);
   transition: gap 0.25s ease;
 }
 .az-case:hover .az-case-cta { gap: 12px; }
@@ -2338,8 +2503,8 @@ button:focus-visible {
    Hier gebündelt statt in sieben Dateien verstreut. */
 #stimme { --step-x: 58%; }
 #themen { --step-x: 41%; }
-#zusammenarbeit { --step-x: 27%; }
-#ueber { --step-x: 66%; }
+/* #zusammenarbeit hat keine .sec-step-Kante mehr (Pin-Scroll, s. .zu-section) */
+/* #ueber hat keine .sec-step-Kante mehr (Pin-Scroll, s. .ue-section) */
 #praxis { --step-x: 38%; }
 #kontakt { --step-x: 52%; }
 #arbeiten { --step-x: 71%; }
@@ -2484,6 +2649,10 @@ button:focus-visible {
 }
 .in-head {
   grid-column: 1;
+  /* +20% nach rechts: die linke Kante steht (Rasterspalte 1), der Block waechst
+     in die leere Mittelspalte hinein. 774 -> 929px, die Luecke ist 310px breit —
+     die Karten werden also nicht beruehrt. */
+  width: 120%;
   position: sticky;
   /* Abstand zur Oberkante, während die Karten vorbeiziehen */
   top: clamp(80px, 12vh, 140px);
@@ -2500,17 +2669,26 @@ button:focus-visible {
   letter-spacing: -0.01em;
   color: var(--navy);
   margin: 0;
+  /* Der Block ist auf 120% gewachsen — die Headline lief dadurch einzeilig auf
+     908px aus. Hier wieder auf Zweizeiler begrenzt: „Themen, über die wir"
+     endet bei 569px, die volle Zeile bei 908px; 20ch (~600px) liegt dazwischen
+     und bricht damit nach „wir". In ch statt px, damit der Umbruch erhalten
+     bleibt, wenn die Schrift über die clamp kleiner wird. */
+  max-width: 20ch;
 }
 .in-lead {
   font-family: var(--sans);
-  font-size: clamp(15px, 1.5vw, 17px);
+  font-size: var(--text-lead);
   line-height: 1.6;
   color: var(--slate);
   margin: 0;
-  max-width: 46ch;
+  /* ebenfalls +20% (46ch -> 55ch) */
+  max-width: 55ch;
 }
-/* Ghost-CTA — Vollsättigung bleibt der einen Aktion im Hero vorbehalten */
-.in-cta {
+/* Ghost-CTA — die übliche CTA-Optik ausserhalb des Heros. Vollsättigung bleibt
+   der einen Aktion im Hero vorbehalten, deshalb Kontur statt Fläche.
+   Gemeinsame Klasse, damit die CTAs nicht je Section auseinanderdriften. */
+.cta-ghost {
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -2525,10 +2703,21 @@ button:focus-visible {
   text-decoration: none;
   transition: border-color 0.2s ease, background 0.2s ease, gap 0.25s ease;
 }
-.in-cta:hover {
+.cta-ghost:hover {
   border-color: var(--navy);
   background: rgba(0, 42, 92, 0.06);
   gap: 14px;
+}
+/* Gleicher CTA auf dunklem Grund (Kontakt-Karte). Nur die Farbwerte kippen —
+   Geometrie, Pfeil und Hover-Verhalten bleiben identisch, damit es derselbe
+   Button bleibt und kein zweiter Buttontyp entsteht. */
+.cta-ghost.on-navy {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: var(--on-navy);
+}
+.cta-ghost.on-navy:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .in-list {
@@ -2603,7 +2792,7 @@ button:focus-visible {
 }
 .in-desc {
   font-family: var(--sans);
-  font-size: clamp(14px, 1.05vw, 15.5px);
+  font-size: var(--text-copy);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.86);
   margin: 0;
@@ -2613,7 +2802,9 @@ button:focus-visible {
 @media (max-width: 991px) {
   /* sticky ergibt ohne Nebenspalte keinen Sinn — Headline läuft mit */
   .in-grid { grid-template-columns: 1fr; gap: clamp(36px, 6vw, 64px); }
-  .in-head { position: static; grid-column: 1; }
+  /* ohne Mittelspalte gibt es nichts, in das der Block wachsen koennte —
+     die 120% wuerden hier aus dem Bild laufen */
+  .in-head { position: static; grid-column: 1; width: 100%; }
   .in-list { grid-column: 1; }
 }
 
@@ -2685,12 +2876,35 @@ button:focus-visible {
    Punkte treten dort hervor, wo die Maske dicht ist, und verlieren sich zum
    Rand. Animiert wird nur mask-position — das läuft auf dem Compositor.
    =================================================================== */
+/* Pin-Scroll: die Section ist ueberhoch, der innere Container bleibt stehen und
+   klappt je Scrollstufe eine Karte auf. 3 Karten auf 200vh Scrollweg.
+   KEINE .sec-step-Kante: clip-path und position:sticky vertragen sich nicht. */
+.zu-section {
+  position: relative;
+  height: 300vh;
+  background: var(--snow);
+}
+.zu-sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  /* NUR vertikal einruecken. Die Seitenraender kommen von der globalen Regel
+     #home-root > div > section (64px ab 900px) — ein eigenes horizontales
+     Padding hier hat sie verdoppelt (136px statt 64px), wodurch die Karten
+     schmaler wurden und die Titel staerker umbrachen. */
+  padding: clamp(48px, 6vw, 96px) 0;
+}
+
 .zu-grid {
   /* Stellschrauben an einer Stelle — Rasterweite und Punktgrösse hängen
      zusammen: weiter auseinander verträgt (und braucht) grössere Punkte. */
   --dot-gap: 32px;
-  --dot-size: 1.6px;
-  --dot-color: rgba(0, 42, 92, 0.4);
+  --dot-size: 1.1px;
+  --dot-color: rgba(0, 42, 92, 0.34);
 
   position: absolute;
   inset: 0;
@@ -2737,4 +2951,235 @@ button:focus-visible {
 }
 @media (prefers-reduced-motion: reduce) {
   .zu-grid { animation: none; }
+}
+
+/* ===================================================================
+   Über MISCHOK — Aufbau nach dem Referenzmuster
+   Raster 5fr / 1fr Luft / 6fr. Die linke Spalte ist so hoch wie das Bild und
+   schiebt per space-between die Kennzahlen an die Unterkante — sie stehen
+   dadurch auf einer Linie mit dem Bildfuß. Das Zitat liegt als eigene Karte
+   auf dem Portrait (in der Referenz sitzt dort ein Widget).
+   =================================================================== */
+.ue-section {
+  /* hier definiert, nicht auf .ue-media: die Inhaltsspalte braucht --bulge-h
+     ebenfalls, um ihre Kennzahlen auf der Hauptkante zu halten */
+  --bulge-h: clamp(28px, 3.2vw, 60px);
+  --bulge-x: 58%;
+
+  /* Pin-Scroll: die Section ist ueberhoch, der innere Container bleibt stehen.
+     6 Schritte (Zitat + 5 Bilder) auf 320vh Scrollweg = ca. 53vh je Schritt.
+     KEINE .sec-step-Kante hier: clip-path und position:sticky vertragen sich
+     nicht — derselbe Grund, warum Ansatz keine Stufe traegt. */
+  position: relative;
+  height: 420vh;
+  background: var(--section);
+}
+.ue-sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  /* nur vertikal — Seitenraender kommen von der globalen Section-Regel */
+  padding: clamp(56px, 7vw, 110px) 0;
+}
+.ue-grid {
+  display: grid;
+  grid-template-columns: 5fr 1fr 6fr;
+  width: 100%;
+}
+.ue-content {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(48px, 6vw, 96px);
+  /* gleiche Höhe wie das Bild, damit space-between überhaupt etwas verteilt */
+  min-height: clamp(420px, 46vw, 640px);
+  /* Das Grid streckt die Spalte auf die volle Medienhöhe — inklusive der
+     Ausbuchtung. Ohne dieses Padding wandern die Kennzahlen mit ihr nach
+     unten und stehen nicht mehr auf der Hauptkante des Bildes. */
+  padding-bottom: var(--bulge-h);
+}
+.ue-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(14px, 1.4vw, 20px);
+}
+.ue-h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(38px, 5vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  margin: 0;
+}
+.ue-lead {
+  font-family: var(--sans);
+  font-size: var(--text-lead);
+  line-height: 1.6;
+  color: var(--slate);
+  margin: 0;
+  max-width: 52ch;
+}
+
+/* Kennzahlen: Wert oben, Label darunter — wie in der Referenz */
+.ue-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: clamp(24px, 3vw, 48px);
+}
+.ue-stat {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 0.8vw, 12px);
+}
+.ue-stat-value {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(34px, 3.4vw, 52px);
+  line-height: 1;
+  color: var(--navy);
+}
+.ue-stat-label {
+  font-family: var(--realtime);
+  font-size: 13px;
+  color: rgba(0, 42, 92, 0.5);
+}
+
+/* Portrait mit Zitatkarte */
+.ue-media {
+  /* Ausbuchtung nach unten an der rechten Ecke — dieselbe rechtwinklige
+     Sprachlogik wie die Sektionsstufe (Logorahmen-Cutout), nur am Modul und
+     an der Unterkante. Die Box ist um --bulge-h hoeher; der Clip laesst links
+     auf der alten Kante enden, rechts laeuft sie weiter nach unten. Dadurch
+     bleibt die sichtbare Hauptkante auf einer Linie mit den Kennzahlen. */
+  grid-column: 3;
+  /* Zeile explizit: .ue-dots belegt dieselbe Zelle. Ohne diese Angabe schiebt
+     die Auto-Platzierung das Medium in eine zweite Zeile, weil Spalte 3/Zeile 1
+     dann schon vergeben ist. */
+  grid-row: 1;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* kein border-radius: clip-path wuerde ihn ohnehin ueberschreiben, und die
+     Kantensprache ist rechtwinklig */
+  min-height: calc(clamp(420px, 46vw, 640px) + var(--bulge-h));
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(20px, 2.2vw, 36px);
+  /* Zitat sitzt ueber der Ausbuchtung, nicht darin */
+  padding-bottom: calc(var(--bulge-h) + clamp(24px, 2.6vw, 44px));
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    var(--bulge-x) 100%,
+    var(--bulge-x) calc(100% - var(--bulge-h)),
+    0 calc(100% - var(--bulge-h))
+  );
+}
+/* Bilderstrecke: alle Aufnahmen liegen uebereinander, nur die aktive ist
+   sichtbar. Ueberblendung statt Austausch, damit kein Sprung entsteht. */
+.ue-shot {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.ue-shot.is-on { opacity: 1; }
+
+/* Blaue Abdunklung — traegt den Kontrast fuer die weisse Schrift.
+   Werte wie bei .st-scrim, damit beide Zitatmotive gleich lesen.
+   Gehoert zu Schritt 0 und blendet danach weg. */
+.ue-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 42, 92, 0.15) 0%,
+    rgba(0, 42, 92, 0.3) 45%,
+    rgba(0, 42, 92, 0.78) 100%
+  );
+}
+.ue-scrim.is-on { opacity: 1; }
+
+/* Kein Glaskasten mehr: das Zitat steht direkt auf dem Bild, den Kontrast
+   traegt die Abdunklung (.ue-scrim) — wie beim Zitatmotiv in Stimme. */
+.ue-quote {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ue-quote.is-on {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Fortschritt der Bilderstrecke — leise, wie der Step-Indikator in Ansatz */
+/* Liegt als eigenes Grid-Item in derselben Zelle wie .ue-media und damit
+   ausserhalb von dessen clip-path. align-self:end + justify-self:start setzt sie
+   linksbuendig auf die Unterkante — also genau in den grauen Streifen, den die
+   Ausbuchtung unter der Bildkante freilegt. Die Hoehe des Streifens ist
+   --bulge-h; darin zentriert die Leiste sich selbst. */
+.ue-dots {
+  grid-column: 3;
+  grid-row: 1;
+  align-self: end;
+  justify-self: start;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  height: var(--bulge-h);
+  gap: 7px;
+  pointer-events: none;
+}
+/* Farbwerte wie der Step-Indikator in Ansatz: die Leiste stand vorher in Weiss
+   auf dem dunklen Bild — auf dem grauen Streifen waere sie damit unsichtbar. */
+.ue-dot {
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background: rgba(0, 42, 92, 0.14);
+  transition: width 0.35s ease, background 0.35s ease;
+}
+.ue-dot.is-on {
+  width: 30px;
+  background: rgba(0, 42, 92, 0.55);
+}
+/* Zitat in Serif 400, keine Fettung — Haus-Regel */
+.ue-quote-text {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(19px, 1.7vw, 26px);
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  color: #fff;
+}
+.ue-quote-by {
+  margin-top: clamp(14px, 1.4vw, 20px);
+  font-family: var(--sans);
+  font-size: clamp(13px, 1vw, 15px);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (max-width: 991px) {
+  .ue-grid { grid-template-columns: 1fr; gap: clamp(36px, 6vw, 64px); }
+  .ue-content { grid-column: 1; min-height: 0; }
+  .ue-media { grid-column: 1; min-height: clamp(380px, 80vw, 520px); }
 }

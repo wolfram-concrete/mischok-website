@@ -25,14 +25,19 @@ type StepCase = {
   alt: string;
 };
 
+const neunLevels = (): StepCase | null => {
+  const r = byName("9 Levels");
+  return r
+    ? { ref: r, img: "/social/client-9levels.svg", alt: "9 Levels — Kundenlogo" }
+    : null;
+};
+
 const STEP_CASES: (StepCase | null)[] = [
-  (() => {
-    const r = byName("9 Levels");
-    return r
-      ? { ref: r, img: "/social/client-9levels.svg", alt: "9 Levels — Kundenlogo" }
-      : null;
-  })(),
-  null,
+  neunLevels(),
+  /* Schritt 02 doppelt bewusst 9 Levels: für WEKA Pilot Online gibt es kein
+     belegtes Projektvisual, und lieber dieselbe belegte Referenz zweimal als
+     ein fremdes Bild, das eine falsche Zuordnung behaupten würde. */
+  neunLevels(),
   (() => {
     const r = byName("Barely Digital");
     return r
@@ -210,7 +215,7 @@ export default function Ansatz() {
                   <p
                     style={{
                       fontFamily: "var(--mono)",
-                      fontSize: "clamp(14px,1.4vw,15.5px)",
+                      fontSize: "var(--text-copy)",
                       lineHeight: 1.75,
                       color: "var(--slate)",
                       margin: "22px 0 0",
@@ -234,7 +239,10 @@ export default function Ansatz() {
               const active = i === step;
               return (
                 <a
-                  key={c.ref.slug}
+                  /* nach Schritt schluesseln, nicht nach Referenz: Schritt 01
+                     und 02 zeigen dieselbe Referenz, ein slug-Key waere doppelt
+                     und React wuerde eine der Karten verwerfen */
+                  key={`step-${i}`}
                   href={c.ref.detailHref ?? `/referenzen#${c.ref.slug}`}
                   className="az-case"
                   style={{

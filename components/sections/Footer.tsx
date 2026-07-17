@@ -44,7 +44,7 @@ export default function Footer() {
           <p
             style={{
               fontFamily: "var(--sans)",
-              fontSize: "clamp(14px,1.15vw,16px)",
+              fontSize: "var(--text-copy)",
               lineHeight: 1.6,
               color: "var(--slate)",
               margin: 0,

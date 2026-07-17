@@ -4,7 +4,6 @@ import Stimme from "@/components/sections/Stimme";
 import Themen from "@/components/sections/Themen";
 import Zusammenarbeit from "@/components/sections/Zusammenarbeit";
 import Ueber from "@/components/sections/Ueber";
-import AusDerPraxis from "@/components/sections/AusDerPraxis";
 import Kontakt from "@/components/sections/Kontakt";
 import ArbeitenBeiMischok from "@/components/sections/ArbeitenBeiMischok";
 import Footer from "@/components/sections/Footer";
@@ -17,14 +16,18 @@ export default function Home() {
         {/* Hero in Porzellan-/Keramikoptik (HeroImpact bleibt als Modul für
             geteilte Icon/FOCUS/NAV-Exports erhalten, wird aber nicht gerendert).
             PortraitBleed entfernt: das Großbild war nur Puffer und hat den Weg
-            zur ersten inhaltlichen Section unnötig verlängert. */}
+            zur ersten inhaltlichen Section unnötig verlängert.
+
+            AusDerPraxis ist hier bewusst nicht mehr gerendert — die Section ist
+            samt Inhalten (PRAXIS in lib/content.ts) und Styles erhalten und
+            kann an anderer Stelle wieder eingehängt werden. Siehe den Hinweis
+            im Kopf von components/sections/AusDerPraxis.tsx. */}
         <HeroCeramic />
         <Ansatz />
         <Stimme />
         <Themen />
         <Zusammenarbeit />
         <Ueber />
-        <AusDerPraxis />
         <Kontakt />
         <ArbeitenBeiMischok />
         <Footer />

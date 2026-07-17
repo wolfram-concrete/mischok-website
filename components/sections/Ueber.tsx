@@ -1,197 +1,162 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
-import PatternBg from "@/components/ui/PatternBg";
-import Reveal from "@/components/ui/Reveal";
+import SectionLabel from "@/components/ui/SectionLabel";
 
 /**
- * Ueber — Navy-Panel (voll-breit, ragt −64px über Content-Padding) mit Headline
- * „Über mischok", Fließtext und Kennzahlen (Seit 2010 · Augsburg · 35+
- * Mitarbeiter). Darunter überlappend Portrait + Zitat Virgil Mischok mit
- * Scroll-Reveal (fade + rise).
+ * Ueber — Aufbau nach dem Referenzmuster (5fr / 1fr Luft / 6fr):
+ *   links  eine Inhaltsspalte, die per space-between die Kennzahlen an die
+ *          Unterkante schiebt — sie stehen auf einer Linie mit dem Bildfuß.
+ *   rechts das Bildmodul mit Ausbuchtung unten rechts.
+ *
+ * Pin-Scroll wie in Ansatz: die Section ist überhoch, der innere Container
+ * bleibt stehen. Schritt 0 zeigt die Geschäftsführung mit Abdunklung und
+ * Zitat; ab Schritt 1 blenden Zitat und Abdunklung weg und das Modul läuft
+ * durch fünf weitere Fotos — von der Gruppe bis zur einzelnen Arbeitssituation.
+ * Danach scrollt die Section normal weiter.
  */
+
+type Shot = { src: string; alt: string };
+
+/** Schritt 0 trägt das Zitat, danach die Bilderstrecke. */
+const SHOTS: Shot[] = [
+  { src: "/assets/Mischok_2025_ma_216.jpg", alt: "MISCHOK — Geschäftsführung" },
+  { src: "/assets/Mischok_2025_ma_200.jpg", alt: "MISCHOK — Arbeit zu zweit am Schreibtisch" },
+  { src: "/assets/Mischok_2023_ma_061.jpg", alt: "MISCHOK — Workshop im Team" },
+  { src: "/assets/Mischok_2025_ma_046.jpg", alt: "MISCHOK — Besprechung" },
+  { src: "/assets/Mischok_2023_ma_422.jpg", alt: "MISCHOK — Arbeit am Whiteboard" },
+  { src: "/assets/Mischok_2025_ma_147.jpg", alt: "MISCHOK — Abstimmung am Laptop" },
+  { src: "/assets/Mischok_2025_ma_199.jpg", alt: "MISCHOK — konzentrierte Entwicklungsarbeit" },
+];
+
 export default function Ueber() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const lastStep = useRef(-1);
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    let raf = 0;
+    const tick = () => {
+      const sec = sectionRef.current;
+      if (sec) {
+        const rect = sec.getBoundingClientRect();
+        const total = sec.offsetHeight - window.innerHeight;
+        const scrolled = Math.min(Math.max(-rect.top, 0), total);
+        const progress = total > 0 ? scrolled / total : 0;
+        const max = SHOTS.length - 1;
+        const next = Math.max(
+          0,
+          Math.min(max, Math.floor(progress * (SHOTS.length - 0.0001)))
+        );
+        if (next !== lastStep.current) {
+          lastStep.current = next;
+          setStep(next);
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  /* Zitat und Abdunklung gehören zu Schritt 0 */
+  const intro = step === 0;
+
   return (
-    <section
-      id="ueber"
-      className="sec-step"
-      data-screen-label="Über MISCHOK"
-      style={{
-        background: "var(--section)",
-        position: "relative",
-        overflow: "hidden",
-        padding: "0 0 clamp(40px,6vw,90px)",
-      }}
-    >
-      {/* Navy panel */}
-      <div
-        id="ueber-panel"
-        style={{
-          position: "relative",
-          background: "var(--navy)",
-          width: "100%",
-          marginInline: 0,
-          padding: "clamp(52px,6vw,96px) 64px clamp(60px,7vw,104px)",
-          boxSizing: "border-box",
-        }}
-      >
-        <PatternBg pattern="blocks" opacity={0.16} blend="soft-light" sizes="100vw" />
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            zIndex: 1,
-            width: "clamp(150px,16%,240px)",
-            height: "clamp(44px,5vw,66px)",
-            backgroundColor: "#D9D9D9",
-          }}
-        />
+    <section id="ueber" ref={sectionRef} className="ue-section" data-screen-label="Über MISCHOK">
+      <div className="ue-sticky">
+        <div className="ue-grid">
+          {/* Links: Headline/Lead oben, Kennzahlen unten */}
+          <div className="ue-content">
+            <div className="ue-head">
+              <SectionLabel>Über uns</SectionLabel>
+              <h2 className="ue-h2">Über mischok</h2>
+              <p className="ue-lead">
+                Wir sind MISCHOK, ein Familienunternehmen mit Sitz in Augsburg.
+                Seit 2010 begleiten wir Unternehmen, deren Geschäftserfolg von
+                Software abhängt. Bei uns arbeiten mehr als 35 Menschen in
+                Entwicklung, Architektur, Projektleitung und Beratung. Unsere
+                Projekte entstehen dort, wo Software nicht isoliert betrachtet
+                werden kann, sondern Teil des laufenden Geschäfts ist.
+              </p>
+              {/* Konzeption Seite 3: „Link: Mehr über uns".
+                  ACHTUNG: /ueber ist konzipiert (Konzeption S. 28–29), aber noch
+                  nicht gebaut — dieser Link läuft bis dahin auf einen 404 und
+                  darf nicht live gehen. */}
+              <a href="/ueber" className="cta-ghost">
+                Mehr über uns
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
 
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
-            gap: "clamp(28px,4vw,72px)",
-            alignItems: "start",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "var(--serif)",
-              fontWeight: 400,
-              fontSize: "clamp(52px,8.5vw,120px)",
-              lineHeight: 0.98,
-              letterSpacing: "-0.01em",
-              color: "var(--on-navy)",
-              margin: 0,
-            }}
-          >
-            Über
-            <br />
-            mischok
-          </h2>
-          <p
-            style={{
-              fontFamily: "var(--sans)",
-              fontSize: "clamp(14px,1.15vw,15.5px)",
-              lineHeight: 1.55,
-              color: "color-mix(in srgb, var(--on-navy) 88%, transparent)",
-              margin: "clamp(6px,1vw,14px) 0 0",
-              maxWidth: "569px",
-            }}
-          >
-            Wir sind MISCHOK, ein Familienunternehmen mit Sitz in Augsburg. Seit
-            2010 begleiten wir Unternehmen, deren Geschäftserfolg von Software
-            abhängt. Bei uns arbeiten mehr als 35 Menschen in Entwicklung,
-            Architektur, Projektleitung und Beratung. Unsere Projekte entstehen
-            dort, wo Software nicht isoliert betrachtet werden kann, sondern Teil
-            des laufenden Geschäfts ist.
-          </p>
-        </div>
-
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "clamp(28px,4vw,72px)",
-            justifyContent: "space-between",
-            marginTop: "clamp(56px,8vw,132px)",
-          }}
-        >
-          <div style={{ flex: "0 1 auto" }}>
-            <div style={statLabel}>Seit</div>
-            <div style={statValue}>2010</div>
-          </div>
-          <div style={{ flex: "0 1 auto" }}>
-            <div style={statLabel}>Sitz in</div>
-            <div style={statValue}>Augsburg</div>
-          </div>
-          <div style={{ flex: "0 1 auto" }}>
-            <div style={statLabel}>Mehr als</div>
-            <div style={statValue}>35</div>
-            <div style={{ ...statLabel, marginBottom: 0, marginTop: "clamp(8px,1vw,16px)" }}>
-              Mitarbeiter
+            <div className="ue-stats">
+              <div className="ue-stat">
+                <span className="ue-stat-value">2010</span>
+                <span className="eyebrow ue-stat-label">Gegründet</span>
+              </div>
+              <div className="ue-stat">
+                <span className="ue-stat-value">35+</span>
+                <span className="eyebrow ue-stat-label">Mitarbeiter</span>
+              </div>
+              <div className="ue-stat">
+                <span className="ue-stat-value">Augsburg</span>
+                <span className="eyebrow ue-stat-label">Standort</span>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Portrait + Zitat */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 2,
-          marginTop: "clamp(-40px,-3vw,-24px)",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
-          gap: "clamp(28px,5vw,72px)",
-          alignItems: "center",
-          paddingRight: "clamp(20px,5vw,72px)",
-        }}
-      >
-        <Reveal
-          style={{
-            position: "relative",
-            overflow: "hidden",
-            width: "100%",
-            height: "clamp(360px,44vw,740px)",
-          }}
-        >
-          <ImageFrame
-            src="/assets/acc-2.jpg"
-            alt="Portrait Virgil Mischok"
-            placeholder="Portrait — Virgil Mischok"
-            sizes="(max-width:820px) 100vw, 50vw"
-          />
-        </Reveal>
-        <Reveal delay={0.1}>
-          <blockquote
-            style={{
-              fontFamily: "var(--sans)",
-              fontWeight: 700,
-              fontSize: "clamp(20px,2.3vw,28px)",
-              lineHeight: 1.4,
-              letterSpacing: "-0.005em",
-              color: "var(--ink)",
-              margin: 0,
-            }}
-          >
-            „In einem Familienunternehmen kann man sich nicht hinter Abteilungen
-            verstecken. Entscheidungen haben Namen. Das macht vieles direkter —
-            manchmal auch unbequemer."
-          </blockquote>
-          <div
-            style={{
-              marginTop: "clamp(20px,2.4vw,32px)",
-              fontFamily: "var(--mono)",
-              fontSize: "14px",
-              color: "var(--slate)",
-            }}
-          >
-            — Virgil Mischok
+          {/* Rechts: Bilderstrecke; alle Bilder liegen übereinander und blenden um */}
+          <div className="ue-media">
+            {SHOTS.map((s, i) => (
+              <span
+                key={s.src}
+                className={`ue-shot${i === step ? " is-on" : ""}`}
+                aria-hidden={i !== step}
+              >
+                <ImageFrame
+                  src={s.src}
+                  alt={s.alt}
+                  placeholder=""
+                  sizes="(max-width:991px) 100vw, 50vw"
+                  /* nur das sichtbare Bild priorisieren wäre Micro-Tuning;
+                     entscheidend ist, dass die Parallaxe hier ruht — sie würde
+                     sich mit dem Pin-Scroll überlagern */
+                  parallax={false}
+                />
+              </span>
+            ))}
+
+            {/* Blaue Abdunklung + Zitat gehören zu Schritt 0 */}
+            <span
+              className={`ue-scrim${intro ? " is-on" : ""}`}
+              aria-hidden="true"
+            />
+            <figure className={`ue-quote${intro ? " is-on" : ""}`} aria-hidden={!intro}>
+              <blockquote className="ue-quote-text">
+                „In einem Familienunternehmen kann man sich nicht hinter
+                Abteilungen verstecken. Entscheidungen haben Namen. Das macht
+                vieles direkter — manchmal auch unbequemer."
+              </blockquote>
+              <figcaption className="ue-quote-by">— Virgil Mischok</figcaption>
+            </figure>
+
           </div>
-        </Reveal>
+
+          {/* Fortschritt der Bilderstrecke — dieselbe leise Sprache wie der
+              Step-Indikator in Ansatz, jetzt auch in derselben Farbe.
+              Bewusst NEBEN .ue-media statt darin: die Leiste soll in dem grauen
+              Streifen sitzen, den die Ausbuchtung unter der Bildkante freilegt —
+              und genau den schneidet das clip-path von .ue-media weg. Als
+              eigenes Grid-Item in derselben Zelle liegt sie ausserhalb des
+              Clips, aber deckungsgleich ueber dem Streifen. */}
+          <div className="ue-dots" aria-hidden="true">
+            {SHOTS.map((s, i) => (
+              <span key={s.src} className={`ue-dot${i === step ? " is-on" : ""}`} />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
 }
-
-const statLabel = {
-  fontFamily: "var(--sans)",
-  fontSize: "clamp(16px,1.4vw,20px)",
-  color: "color-mix(in srgb, var(--on-navy) 82%, transparent)",
-  marginBottom: "clamp(8px,1vw,16px)",
-} as const;
-
-const statValue = {
-  fontFamily: "var(--serif)",
-  fontWeight: 400,
-  fontSize: "clamp(46px,6vw,88px)",
-  lineHeight: 1,
-  color: "var(--on-navy)",
-  whiteSpace: "nowrap",
-} as const;

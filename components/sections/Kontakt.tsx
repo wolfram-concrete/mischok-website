@@ -1,11 +1,9 @@
 import ImageFrame from "@/components/ui/ImageFrame";
-import PatternBg from "@/components/ui/PatternBg";
-import CtaButton from "@/components/ui/CtaButton";
 
 const infoLine = {
   fontFamily: "var(--sans)",
-  fontSize: "clamp(16px,1.5vw,19px)",
-  color: "color-mix(in srgb, var(--on-navy) 88%, transparent)",
+  fontSize: "var(--text-copy)",
+  color: "color-mix(in srgb, var(--on-navy) 82%, transparent)",
 } as const;
 
 const contactLink = {
@@ -14,19 +12,19 @@ const contactLink = {
   transition: "color .2s ease",
 } as const;
 
-const heading = {
-  fontFamily: "var(--sans)",
-  fontWeight: 700,
-  fontSize: "clamp(20px,2.2vw,30px)",
-  lineHeight: 1.14,
-  color: "var(--on-navy)",
-  margin: 0,
-} as const;
-
 /**
- * Kontakt — Headline, Intro und zwei Kontaktblöcke mit echten Kontaktdaten:
- * Ansprechpartner Kajetan Mischok (Geschäftsführer), Telefon, E-Mail und Anschrift
- * der Mischok GmbH. Telefon/E-Mail als klickbare tel:/mailto:-Links.
+ * Kontakt — CTA-Karte mit echten Kontaktdaten: Ansprechpartner Kajetan Mischok
+ * (Geschäftsführer), Telefon, E-Mail und Anschrift der Mischok GmbH.
+ * Telefon/E-Mail als klickbare tel:/mailto:-Links.
+ *
+ * Aufbau (Bildkachel links, Inhalt rechts, Fusszeile mit Daten + einer Aktion)
+ * folgt der Referenz-Card. Zwei bewusste Abweichungen davon:
+ *   • Kein Punkt vor dem Eyebrow — die Eyebrows der Seite haben keinen, und die
+ *     Akzentfarben sind laut CI-Manual an Themenfelder gebunden (Portfolio /
+ *     Karriere / About / Warning). Für „Kontakt" gibt es keinen; ein Punkt hier
+ *     müsste sich eine Farbe ausleihen, die etwas anderes bedeutet.
+ *   • Statt zweier konkurrierender Buttons eine Aktion. Telefon und E-Mail
+ *     bleiben als Textlinks erreichbar — sie sind Daten, keine zweite Aktion.
  */
 export default function Kontakt() {
   return (
@@ -37,155 +35,86 @@ export default function Kontakt() {
       style={{
         position: "relative",
         overflow: "hidden",
-        background:
-          "linear-gradient(135deg, var(--paper) 0%, var(--white) 55%, var(--white) 100%)",
-        padding: "90px",
+        background: "var(--paper)",
+        /* seitlich mitwachsend: die globale 64px-Regel greift erst ab 900px,
+           ein fester Wert wuerde die Karte auf Mobil zusammenquetschen */
+        padding: "clamp(56px,7vw,96px) clamp(20px,5vw,64px)",
       }}
     >
-      <div
-        style={{
-          position: "relative",
-          overflow: "hidden",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          background: "var(--navy)",
-          borderRadius: "5px",
-          padding: "40px",
-          boxSizing: "border-box",
-        }}
-      >
-        <PatternBg pattern="bands" opacity={0.5} blend="soft-light" sizes="(max-width:900px) 100vw, 88vw" />
-        {/* Headline + Intro */}
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <h2
-            style={{
-              fontFamily: "var(--serif)",
-              fontWeight: 400,
-              fontSize: "clamp(44px,7.5vw,80px)",
-              lineHeight: 1.04,
-              letterSpacing: "-0.01em",
-              color: "var(--on-navy)",
-              margin: 0,
-              width: "100%",
-            }}
-          >
-            Der nächste Schritt ist ein Gespräch.
-          </h2>
-          <p
-            style={{
-              fontFamily: "var(--sans)",
-              fontSize: "clamp(16px,1.5vw,19px)",
-              lineHeight: 1.6,
-              color: "color-mix(in srgb, var(--on-navy) 88%, transparent)",
-              marginTop: 0,
-            }}
-          >
-            Softwareprojekte lassen sich nicht über ein Formular erklären.
-            Erzählen Sie uns, wo Ihr Projekt steht — wir ordnen gemeinsam ein, was
-            als Nächstes sinnvoll ist.
-          </p>
+      {/* Hier lag ein zweites Bildband mit demselben Motiv wie „Arbeiten bei
+          MISCHOK". Es ist entfernt: zwei getrennte Bildcontainer koennen an der
+          Sektionsgrenze nicht nahtlos aneinanderstossen — sie werden von zwei
+          clip-paths beschnitten und der untere laeuft mit Parallaxe, der obere
+          stand still. Uebrig blieb eine sichtbare Naht. Wenn das Motiv wieder
+          hinter die Karte soll, muss es EIN Container sein, der nach oben hinter
+          die Karte reicht — nicht ein zweiter, der davorgesetzt wird. */}
+
+      <div className="kt-card">
+        {/* Links: Ansprechpartner — Bild traegt Name und Rolle, statt sie
+            daneben noch einmal zu beschriften. */}
+        <div className="kt-left">
+          <ImageFrame
+            src="/assets/Mischok_2025_ma_176.jpg"
+            alt="Kajetan Mischok, Geschäftsführer der MISCHOK GmbH"
+            placeholder=""
+            /* NICHT die Containerbreite (340px), sondern die Breite, auf die
+               `cover` das Bild tatsaechlich zieht. Der Container ist hochformat
+               (~340x441), die Aufnahme querformat (3:2) — cover skaliert also
+               ueber die HOEHE und rendert das Bild ~661 CSS-Pixel breit. Mit
+               `sizes="340px"` hat der Browser eine 750er-Variante geladen und
+               sie auf Retina fast 2x hochskaliert; daher die weiche Optik. */
+            sizes="(max-width: 820px) 120vw, 700px"
+            /* Hochformat-Ausschnitt aus einer Querformat-Aufnahme: ohne
+               objectPosition landet der Beschnitt in der Bildmitte und
+               schneidet das Gesicht an. 42%/40% haelt es im Bild. */
+            imgStyle={{ objectPosition: "42% 40%" }}
+            parallax={false}
+          />
+          <span className="kt-shade" aria-hidden="true" />
+          <div className="kt-author">
+            <span className="kt-author-name">Kajetan Mischok</span>
+            <span className="kt-author-role">Geschäftsführer</span>
+          </div>
         </div>
 
-        {/* Kontaktblöcke */}
-        <div
-          className="grid-kontakt"
-          style={{
-            position: "relative",
-            zIndex: 1,
-            gap: "clamp(40px,6vw,96px)",
-            alignItems: "start",
-            marginTop: "clamp(56px,9vw,150px)",
-          }}
-        >
-          {/* Links: Ansprechpartner */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "auto 1fr",
-              gap: "clamp(24px,3vw,44px)",
-              alignItems: "start",
-            }}
-          >
-            <div
-              style={{
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: "5px",
-                width: "clamp(120px,12vw,168px)",
-                aspectRatio: "1 / 1.08",
-                flex: "none",
-              }}
-            >
-              <ImageFrame
-                src="/assets/acc-2.jpg"
-                alt="Ihr Ansprechpartner bei MISCHOK"
-                placeholder="Ansprechpartner"
-                sizes="168px"
-              />
-            </div>
-            <div>
-              <h3 style={heading}>Ihr Ansprechpartner</h3>
-              <div style={{ ...infoLine, marginTop: "clamp(28px,3vw,44px)", color: "var(--on-navy)", fontWeight: 500 }}>
-                Kajetan Mischok
-              </div>
-              <div style={{ ...infoLine, marginTop: "clamp(10px,1.2vw,16px)" }}>
-                Geschäftsführer
-              </div>
-              <CtaButton
-                href="mailto:info@mischok.de"
-                weight={500}
-                fontSize="clamp(14px,1.4vw,16px)"
-                padding="12px 24px"
-                style={{
-                  marginTop: "clamp(30px,3.4vw,48px)",
-                  alignSelf: "flex-start",
-                  background: "var(--paper)",
-                }}
-              >
-                Projektlage klären
-              </CtaButton>
-            </div>
+        {/* Rechts: Anliegen oben, Daten und Aktion unten */}
+        <div className="kt-right">
+          <div>
+            <p className="eyebrow kt-label">Kontakt</p>
+            <h2 className="kt-h">Der nächste Schritt ist ein Gespräch.</h2>
+            <p className="kt-copy">
+              Softwareprojekte lassen sich nicht über ein Formular erklären.
+              Erzählen Sie uns, wo Ihr Projekt steht — wir ordnen gemeinsam ein,
+              was als Nächstes sinnvoll ist.
+            </p>
           </div>
 
-          {/* Rechts: Direktkontakt */}
-          <div>
-            <h3 style={heading}>Oder direkt Kontakt aufnehmen:</h3>
-            <div style={{ ...infoLine, marginTop: "clamp(28px,3vw,44px)" }}>
+          <div className="kt-foot">
+            <div className="kt-tile">
               <a href="tel:+4982149815881" className="contact-link" style={contactLink}>
                 +49 821 49 81 58 81
               </a>
-            </div>
-            <div style={{ ...infoLine, marginTop: "clamp(14px,1.6vw,22px)" }}>
               <a href="mailto:info@mischok.de" className="contact-link" style={contactLink}>
                 info@mischok.de
               </a>
+              <address
+                style={{ ...infoLine, fontStyle: "normal", lineHeight: 1.55, marginTop: "6px" }}
+              >
+                Mischok GmbH
+                <br />
+                Karlstr. 12, 86150 Augsburg
+              </address>
             </div>
-            <address
-              style={{
-                ...infoLine,
-                marginTop: "clamp(14px,1.6vw,22px)",
-                fontStyle: "normal",
-                lineHeight: 1.6,
-              }}
-            >
-              Mischok GmbH
-              <br />
-              Karlstr. 12, 86150 Augsburg
-            </address>
-            <CtaButton
-              href="tel:+4982149815881"
-              weight={500}
-              fontSize="clamp(14px,1.4vw,16px)"
-              padding="12px 24px"
-              style={{
-                marginTop: "clamp(30px,3.4vw,48px)",
-                alignSelf: "flex-start",
-                background: "var(--paper)",
-              }}
-            >
-              Rückruf anfragen
-            </CtaButton>
+
+            {/* dieselbe CTA-Optik wie „Alle Insights ansehen" (Themen) und
+                „Mehr über uns" (Über) — `on-navy` tauscht nur die Farbwerte
+                fuer den dunklen Grund, Geometrie und Pfeil bleiben identisch.
+                Der eingekreiste Pfeil davor stammte aus der Referenz-Card und
+                war eine Formsprache, die es sonst nirgends auf der Seite gibt. */}
+            <a href="mailto:info@mischok.de" className="cta-ghost on-navy">
+              Projektlage klären
+              <span aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
       </div>
