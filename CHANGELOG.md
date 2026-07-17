@@ -18,6 +18,19 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.14.2] – 2026-07-17
+
+### Geändert
+- **Medien-Leiste auf denselben Grund wie „Über"** (PAPER statt SNOW). Sie stand
+  als hellere Bank unter den Logos; gemessen: Über `rgb(237,237,237)`, Leiste
+  `rgb(249,249,249)`.
+- **Logos freigestellt.** Sie kamen mit eingebackenem, deckendem Hintergrund —
+  meist SNOW, DevOpsCon auf Weiss, IT-S NOW auf `(251,254,255)`. Auf PAPER hätte
+  jedes als heller Kasten gestanden. Der Grund ist jetzt per Alpha entfernt
+  (enge Toleranz, damit helle Flächen *innerhalb* der Logos bleiben).
+  Ein minimaler Kantensaum aus der ursprünglichen Glättung bleibt, ist bei 32px
+  Anzeigehöhe aber nicht zu sehen.
+
 ## [0.14.1] – 2026-07-17
 
 ### Geändert

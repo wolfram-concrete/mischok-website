@@ -2656,8 +2656,12 @@ button:focus-visible {
 /* ===================================================================
    Medien — „Sie kennen unsere Experten aus": Logoleiste vor dem Kontakt-Modul.
    =================================================================== */
+/* Derselbe Grund wie „Über" darüber — die Leiste ist kein eigenes Kapitel und
+   soll keine hellere Bank unter die Logos legen. Voraussetzung dafür: die
+   Logo-PNGs sind freigestellt. Sie kamen mit eingebackenem Grund (meist SNOW,
+   DevOpsCon auf Weiss) — auf PAPER haette jedes als heller Kasten gestanden. */
 .md-section {
-  background: var(--bg);
+  background: var(--section);
   padding: clamp(48px, 6vw, 84px) clamp(20px, 5vw, 64px) clamp(40px, 5vw, 72px);
 }
 .md-label {
