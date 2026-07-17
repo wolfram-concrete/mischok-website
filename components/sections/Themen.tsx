@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { TOPICS, PRAXIS_LINKEDIN } from "@/lib/content";
+import HeadlineRise from "@/components/ui/HeadlineRise";
 
 /**
  * Themen (Insights) — Handling nach dem Referenzmuster: links eine Headline-
@@ -103,7 +104,9 @@ export default function Themen() {
         {/* Links: bleibt stehen, während die Karten vorbeilaufen */}
         <div className="in-head">
           <SectionLabel>Insights</SectionLabel>
-          <h2 className="in-h2">Themen, über die wir nachdenken</h2>
+          <h2 className="in-h2">
+            <HeadlineRise>Themen, über die wir nachdenken.</HeadlineRise>
+          </h2>
           <p className="in-lead">
             Viele Fragen aus unseren Projekten tauchen auch in Vorträgen,
             Fachbeiträgen, Workshops und eigenen Veranstaltungen auf. Hier zeigen

@@ -1,5 +1,6 @@
 import ImageFrame from "@/components/ui/ImageFrame";
 import Reveal from "@/components/ui/Reveal";
+import HeadlineRise from "@/components/ui/HeadlineRise";
 
 /**
  * ArbeitenBeiMischok — EIN Bildcontainer, vollflächig im Hintergrund. Er reicht
@@ -42,7 +43,11 @@ export default function ArbeitenBeiMischok() {
             {/* dasselbe Raster wie in „Zusammenarbeit" */}
             <span className="zu-grid arb-raster" aria-hidden="true" />
             <div className="arb-tile-body">
-              <h2 className="arb-h">Arbeiten bei MISCHOK</h2>
+              {/* delay: die Kachel selbst faehrt per Reveal ein — die Headline
+                  kommt gestaffelt danach, sonst laufen zwei Bewegungen gegeneinander */}
+              <h2 className="arb-h">
+                <HeadlineRise delay={0.15}>Arbeiten bei MISCHOK</HeadlineRise>
+              </h2>
               <p className="arb-copy">
                 Bei MISCHOK arbeiten Menschen, die Softwareprojekte verstehen,
                 begleiten und umsetzen. Vor Ort in Augsburg, nah am Team und nah

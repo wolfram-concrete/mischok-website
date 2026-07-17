@@ -72,19 +72,19 @@ export type Point = {
 export const POINTS: Point[] = [
   {
     n: "01",
-    title: "Zuerst verstehen, was wirklich entschieden werden muss",
+    title: "Zuerst verstehen, was wirklich entschieden werden muss.",
     detail:
       "Bevor wir Lösungen vorschlagen, steigen wir tief in System, Code und Kontext ein. Wir trennen technische von organisatorischen Fragen und benennen das eigentliche Problem — auch wenn es unbequem ist.",
   },
   {
     n: "02",
-    title: "Einen Weg vorschlagen, der im Betrieb trägt",
+    title: "Einen Weg vorschlagen, der im Betrieb trägt.",
     detail:
       "Wir planen Veränderung in Schritten, die der laufende Betrieb aushält. Sie bekommen eine ehrliche Einschätzung, was jetzt sinnvoll ist, was warten kann und welches Risiko jede Option mit sich bringt.",
   },
   {
     n: "03",
-    title: "Verantwortung bis zum nutzbaren Ergebnis übernehmen",
+    title: "Verantwortung bis zum nutzbaren Ergebnis übernehmen.",
     detail:
       "Wir begleiten die Umsetzung mit erfahrenen Köpfen, die persönlich einstehen — bis zu dem Punkt, an dem die Software wieder verlässlich das tut, was Ihr Geschäft von ihr braucht.",
   },
@@ -107,7 +107,7 @@ export const ACC: AccCard[] = [
     slot: "acc_1",
     src: "/assets/Mischok_2023_ma_245.jpg",
     placeholder: "Gespräch im Team",
-    title: "Klare Einordnung statt später Korrektur",
+    title: "Klare Einordnung statt später Korrektur.",
     text: "Ein Projekt wird nicht besser, wenn Risiken zu lange offenbleiben. Wenn ein Ziel technisch, zeitlich oder organisatorisch nicht trägt, muss das früh auf den Tisch. Nicht als Problem, sondern als Grundlage für eine Entscheidung, die später noch Bestand hat.",
   },
   {
@@ -115,7 +115,7 @@ export const ACC: AccCard[] = [
     slot: "acc_2",
     src: "/assets/acc-3.jpg",
     placeholder: "Konzentrierte Analyse",
-    title: "Fachliche Tiefe vor schnellen Antworten",
+    title: "Fachliche Tiefe vor schnellen Antworten.",
     text: "Gewachsene Systeme versteht man nicht aus der Distanz. Wir wollen nachvollziehen, warum etwas so geworden ist, welche Abhängigkeiten bestehen und wo Veränderung realistisch möglich ist. Erst dann lässt sich beurteilen, welcher Weg trägt.",
   },
   {
@@ -123,7 +123,7 @@ export const ACC: AccCard[] = [
     slot: "acc_3",
     src: "/assets/Mischok_2025_ma_156.jpg",
     placeholder: "Team in der Besprechung",
-    title: "Verantwortliche Menschen bleiben sichtbar",
+    title: "Verantwortliche Menschen bleiben sichtbar.",
     text: "Vertrauen entsteht nicht zu Prozessen, sondern zu Menschen. Deshalb bleibt bei uns sichtbar, wer eine Lage einschätzt, Entscheidungen mit vorbereitet und ein Projekt fachlich begleitet. Gerade dann, wenn aus einer ersten Einschätzung echte Verantwortung wird.",
   },
 ];

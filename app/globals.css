@@ -2654,6 +2654,39 @@ button:focus-visible {
 /* #zusammenarbeit hat keine .sec-step-Kante mehr (Pin-Scroll, s. .zu-section) */
 /* #ueber hat keine .sec-step-Kante mehr (Pin-Scroll, s. .ue-section) */
 /* ===================================================================
+   HeadlineRise — Auftritt der Headlines (s. components/ui/HeadlineRise.tsx).
+   Verallgemeinert das, was bisher nur das Zitat in „Stimme" konnte.
+   =================================================================== */
+.hl-mask {
+  display: block;
+  overflow: hidden;
+  /* Luft fuer Unterlaengen: die Masken-Box ist die Zeilenbox, und bei
+     line-height 1.04–1.08 haengt das „g" in „wichtig" darunter — ohne das
+     Padding schneidet overflow:hidden es ab. Das negative margin nimmt die
+     Luft aus dem Layout wieder raus, damit sich Abstaende nicht verschieben. */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+.hl-rise {
+  display: block;
+  transform: translateY(110%) rotate(1.2deg);
+  opacity: 0;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.6s ease;
+}
+.hl-mask.is-in .hl-rise {
+  transform: none;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hl-rise {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* ===================================================================
    Medien — „Sie kennen unsere Experten aus": Logoleiste vor dem Kontakt-Modul.
    =================================================================== */
 /* Derselbe Grund wie „Über" darüber — die Leiste ist kein eigenes Kapitel und

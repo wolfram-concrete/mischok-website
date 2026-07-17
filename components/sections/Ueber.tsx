@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
+import HeadlineRise from "@/components/ui/HeadlineRise";
 import CountUp from "@/components/ui/CountUp";
 import SectionLabel from "@/components/ui/SectionLabel";
 
@@ -73,7 +74,9 @@ export default function Ueber() {
             <div className="ue-head">
               <SectionLabel>Über uns</SectionLabel>
               {/* Versal, wie in der Konzeption — s. Kommentar in Ansatz.tsx */}
-              <h2 className="ue-h2">Über MISCHOK</h2>
+              <h2 className="ue-h2">
+                <HeadlineRise>Über MISCHOK</HeadlineRise>
+              </h2>
               <p className="ue-lead">
                 Wir sind MISCHOK, ein Familienunternehmen mit Sitz in Augsburg.
                 Seit 2010 begleiten wir Unternehmen, deren Geschäftserfolg von

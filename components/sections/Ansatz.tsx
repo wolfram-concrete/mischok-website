@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
 import ImageFrame from "@/components/ui/ImageFrame";
+import HeadlineRise from "@/components/ui/HeadlineRise";
 import { POINTS, REFERENZEN } from "@/lib/content";
 
 /**
@@ -153,8 +154,10 @@ export default function Ansatz() {
               {/* Versal, wie in der Konzeption: die Firma ist MISCHOK, der
                   Nachname ist Mischok. Die Kleinschreibung der Wortmarke ist
                   Logotypografie und keine Schreibregel fuer Fliesstext. */}
-              Wo MISCHOK <br />
-              konkret ansetzt
+              <HeadlineRise>
+                Wo MISCHOK <br />
+                konkret ansetzt.
+              </HeadlineRise>
             </h2>
             <div
               style={{

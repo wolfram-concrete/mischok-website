@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
+import HeadlineRise from "@/components/ui/HeadlineRise";
 import { ACC } from "@/lib/content";
 
 /**
@@ -135,9 +136,16 @@ export default function Zusammenarbeit() {
             letterSpacing: "-0.01em",
             color: "var(--navy)",
             margin: "0 0 clamp(32px,4vw,52px)",
+            /* Nicht ueber die volle Gridbreite: der Satz soll als Zweizeiler
+               stehen. ch statt px, damit die Grenze mit der Schriftgroesse
+               mitwaechst. Der harte Umbruch sitzt hinter „Zusammenarbeit". */
+            maxWidth: "24ch",
           }}
         >
-          Was uns in der Zusammenarbeit wichtig ist
+          <HeadlineRise>
+            Was uns in der Zusammenarbeit <br />
+            wichtig ist.
+          </HeadlineRise>
         </h2>
 
         <div

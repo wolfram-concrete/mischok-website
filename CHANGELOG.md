@@ -18,6 +18,42 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.16.0] – 2026-07-17
+
+### Hinzugefügt
+- **`HeadlineRise`** — die Headlines fahren beim Eintreten von unten ein,
+  beschnitten von einer Maske. Verallgemeinert den Auftritt, den bisher nur das
+  Zitat in „Stimme" hatte. Im Einsatz auf sechs Headlines: Arbeitsweise,
+  Insights, Zusammenarbeit, Über, Kontakt, Arbeiten (dort gestaffelt hinter dem
+  Kachel-Reveal, sonst laufen zwei Bewegungen gegeneinander).
+  Sicherheitsnetz wie in `Reveal`: nach 1.5s wird unabhängig vom Observer
+  eingeblendet — eine Headline ist Inhalt.
+  `.hl-mask` trägt `padding-bottom: .14em` mit ausgleichendem negativem
+  `margin`: die Maskenbox ist die Zeilenbox, und bei `line-height` 1.04–1.08
+  hätte `overflow: hidden` das „g" in „wichtig" abgeschnitten.
+  **Nicht** auf den Karten-Titeln von Arbeitsweise und Zusammenarbeit — die
+  wechseln beim Scrollen, ein einmaliger Auftritt wäre dort falsch.
+
+### Geändert
+- **Zusammenarbeit-Headline als Zweizeiler** mit Umbruch hinter
+  „Zusammenarbeit" und `max-width: 24ch`, damit sie nicht über die volle
+  Gridbreite läuft (gemessen 762px statt voll).
+- **Interpunktion der Headlines vereinheitlicht.** Die Regel stand implizit
+  schon im Code, war aber nicht durchgezogen:
+
+| Typ | Beispiel | Ende |
+|---|---|---|
+| Aussagesatz | „Wo MISCHOK konkret ansetzt." | Punkt |
+| Frage | „Retten oder Reimplementieren?" | Fragezeichen |
+| Name / Label | „Über MISCHOK", „STEPS" | kein Zeichen |
+
+  Punkt ergänzt bei: Arbeitsweise-, Insights- und Zusammenarbeit-Headline sowie
+  den 3 Schritt-Titeln und den 3 Prinzipien-Titeln. Ohne Punkt bleiben „Über
+  MISCHOK" und „Arbeiten bei MISCHOK" — das sind Namen, keine Sätze.
+  Die Konzeption ist an dieser Stelle selbst uneinheitlich (nur „Der nächste
+  Schritt ist ein Gespräch." trägt dort einen Punkt); die Regel oben ist die
+  Hausentscheidung.
+
 ## [0.15.0] – 2026-07-17
 
 ### Behoben

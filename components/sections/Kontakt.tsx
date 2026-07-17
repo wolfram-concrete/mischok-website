@@ -1,4 +1,5 @@
 import ImageFrame from "@/components/ui/ImageFrame";
+import HeadlineRise from "@/components/ui/HeadlineRise";
 
 const infoLine = {
   fontFamily: "var(--sans)",
@@ -84,7 +85,9 @@ export default function Kontakt() {
         <div className="kt-right">
           <div>
             <p className="eyebrow kt-label">Kontakt</p>
-            <h2 className="kt-h">Der nächste Schritt ist ein Gespräch.</h2>
+            <h2 className="kt-h">
+                <HeadlineRise>Der nächste Schritt ist ein Gespräch.</HeadlineRise>
+              </h2>
             <p className="kt-copy">
               Softwareprojekte lassen sich nicht über ein Formular erklären.
               Erzählen Sie uns, wo Ihr Projekt steht — wir ordnen gemeinsam ein,
