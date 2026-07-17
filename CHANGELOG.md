@@ -18,6 +18,21 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.12.0] – 2026-07-17
+
+### Behoben
+- **Hero-Module liefen bis an den Screenrand.** `#hero-ceramic` stand in der
+  Ausnahmeliste `padding-left/right: 0` (seit `4cdd723`, „Keramik-Hero final") —
+  damit war der ganze Hero Full-Bleed, nicht nur das Mega-Panel. Der Hero ist
+  aber ein **Bento** und behält seinen Seitenrand; ausbrechen soll allein das
+  Mega-Panel. Der Seitenrand liegt jetzt als `--hc-pad` an EINER Stelle
+  (`.hc-section`), und Panel wie Navifläche brechen mit genau diesem Wert wieder
+  heraus — beides bleibt damit gekoppelt.
+  Gemessen bei 1485px: Bento-Grid 56–1429, Mega-Panel und Navifläche 0–1485.
+- Die Navifläche bei offenem Mega-Menü liegt dafür als `::before` **hinter** der
+  Navi statt als deren Hintergrund. Ein negatives `margin` am Element selbst
+  hätte Logo und Links mitverschoben.
+
 ## [0.11.0] – 2026-07-17
 
 ### Behoben

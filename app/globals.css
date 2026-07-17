@@ -893,10 +893,18 @@ button:focus-visible {
   #home-root > div > section#portrait-bleed,
   #home-root > div > section#ansatz,
   #home-root > div > section#arbeiten,
-  #home-root > div > section#hero-impact,
-  #home-root > div > section#hero-ceramic {
+  #home-root > div > section#hero-impact {
     padding-left: 0;
     padding-right: 0;
+  }
+  /* Der Hero ist KEIN Full-Bleed: seine Module sind ein Bento und behalten den
+     Seitenrand. Nur das Mega-Panel bricht daraus aus (s. --hc-pad). Vorher
+     stand #hero-ceramic in der Liste darueber und lief bis an den Screenrand —
+     die 64px der allgemeinen Regel muessen hier trotzdem weichen, deshalb die
+     explizite Angabe statt eines Ausschlusses. */
+  #home-root > div > section#hero-ceramic {
+    padding-left: var(--hc-pad);
+    padding-right: var(--hc-pad);
   }
 }
 
@@ -1720,12 +1728,17 @@ button:focus-visible {
    plastisches Bento-System (hell, ruhig, technisch). Eigener Namespace.
    =================================================================== */
 .hc-section {
+  /* Seitenrand des Bentos an EINER Stelle. Das Mega-Panel bricht mit genau
+     diesem Wert wieder heraus (s. .hc-mega / .hc-nav.is-mega::before) — nur so
+     bleiben Bento-Inset und Full-Bleed-Panel gekoppelt, wenn sich der Wert
+     aendert. */
+  --hc-pad: clamp(16px, 4vw, 56px);
   position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   /* oben bündig: Marken- und Bildmodul sitzen direkt an der Oberkante */
-  padding: 0 clamp(16px, 4vw, 56px) clamp(18px, 2.6vh, 44px);
+  padding: 0 var(--hc-pad) clamp(18px, 2.6vh, 44px);
   /* TEST: neutrales SNOW statt des blaustichigen Radialverlaufs */
   background: var(--snow);
 }
@@ -1865,7 +1878,18 @@ button:focus-visible {
 :root {
   --mega-surface: rgba(252, 252, 252, 0.98);
 }
+/* Die Flaeche liegt als eigene Ebene HINTER der Navi (z-index -1 im
+   Stapelkontext von .hc-nav) und ragt um --hc-pad nach links und rechts heraus:
+   damit steht sie am Screenrand, ohne dass Logo und Links mitwandern. Ein
+   negatives margin am Element selbst haette den Inhalt verschoben. */
 .hc-nav.is-mega {
+  background: transparent;
+}
+.hc-nav.is-mega::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(-1 * var(--hc-pad));
+  z-index: -1;
   background: var(--mega-surface);
   border-radius: 5px 5px 0 0;
   box-shadow: 0 -2px 24px rgba(0, 42, 92, 0.06);
@@ -1873,8 +1897,9 @@ button:focus-visible {
 .hc-mega {
   position: absolute;
   top: 100%;
-  left: 0;
-  right: 0;
+  /* bricht aus dem Bento-Seitenrand aus — full size bis an den Screenrand */
+  left: calc(-1 * var(--hc-pad));
+  right: calc(-1 * var(--hc-pad));
   z-index: 29;
   display: grid;
   grid-template-rows: 0fr;
