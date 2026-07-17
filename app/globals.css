@@ -2851,11 +2851,15 @@ button:focus-visible {
     grid-column: 3;
   }
   .md-row {
-    /* zwei Spalten statt umbrechender Reihe: die Logos stehen damit auf zwei
-       festen Achsen, statt je nach Eigenbreite zu flattern */
+    /* vier Spalten: 12 Logos ergeben so 3 Zeilen statt 6 — kompakter, und die
+       Logos stehen auf festen Achsen statt je nach Eigenbreite zu flattern.
+       Der Block sitzt in Spalte 3 des Übernahme-Rasters (halbe Sectionbreite);
+       vier Spalten passen dort, weil die Logos schmal sind (max. ~32px hoch,
+       Breite proportional). Der Zeilenabstand ist enger als der Spaltenabstand,
+       damit die drei Zeilen als Block zusammenstehen. */
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(18px, 1.9vw, 30px) clamp(24px, 2.6vw, 44px);
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(16px, 1.7vw, 26px) clamp(16px, 1.8vw, 30px);
     align-items: center;
   }
   .md-item {
