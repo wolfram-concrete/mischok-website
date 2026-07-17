@@ -2129,6 +2129,26 @@ button:focus-visible {
   background: var(--snow);
   box-shadow: inset 0 0 0 1px rgba(0, 42, 92, 0.05);
 }
+/* Mobil: die Szenariokarten sind Liste, nicht Viewport-Fuellung.
+   `min-height: 210px` ist eine Desktop-Regel — dort teilen sich fuenf Karten die
+   Hoehe des Heros. Auf 380px Breite hat sie jede Karte auf 210px aufgeblasen,
+   macht 1050px allein fuer die Liste, und `flex-grow` der offenen Karte lief ins
+   Leere (in einem inhaltshohen Container gibt es keine freie Hoehe zu verteilen).
+   Jetzt misst sich jede Karte an ihrem Inhalt: geschlossen nur Nummer + Titel,
+   offen kommt der Fliesstext dazu — das Auffaechern passiert also ueber den
+   Inhalt statt ueber verteilte Restflaeche.
+   Die Schriftgroessen stehen weiter unten, NACH ihren Basisregeln — eine Media
+   Query erhoeht die Spezifitaet nicht, sie muss also spaeter in der Datei
+   stehen als die Regel, die sie ueberschreiben soll. */
+@media (max-width: 760px) {
+  .hc-field {
+    flex: 0 0 auto;
+    min-height: 0;
+    gap: 10px;
+    padding: 16px 18px;
+  }
+}
+
 /* Aktives/gehovertes Feld klappt auf (wächst) — wie in der Original-Hero */
 .hc-field.is-open {
   flex-grow: 2.6;
@@ -2180,6 +2200,27 @@ button:focus-visible {
   transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease, margin-top 0.45s ease;
 }
 .hc-field.is-open .hc-fdetail { max-height: 16em; opacity: 1; margin-top: clamp(10px, 1.1vw, 14px); }
+
+/* Mobil: feste, lesbare Groessen. Die clamp()-Terme hingen alle an ihrem
+   MINIMUM, weil die vw/vh-Anteile auf 380px Breite winzig werden — Titel 15px,
+   Copy 12.5px, Icon 32px. Muss nach den Basisregeln stehen (s. o.). */
+@media (max-width: 760px) {
+  .hc-num {
+    font-size: 12px;
+  }
+  .hc-ftitle {
+    font-size: 19px;
+    line-height: 1.25;
+  }
+  .hc-fdetail {
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+  .hc-field-icon .hi-icon {
+    width: 44px;
+    height: 44px;
+  }
+}
 
 /* Unten links: Teamfoto */
 /* Bild randlos im Modul. Der weisse Rahmen von zuvor trennte das damals blaue
@@ -3312,7 +3353,15 @@ button:focus-visible {
 }
 
 @media (max-width: 991px) {
+  /* Reihenfolge wie in der Referenz: Inhaltsspalte ZUERST (dort `order:-9999`),
+     Bild darunter. Die Zeilen muessen explizit stehen: .ue-media traegt fuer den
+     Desktop `grid-row: 1` (damit die Fortschrittsleiste in derselben Zelle
+     liegt) — ohne Gegenangabe beansprucht es auch einspaltig Zeile 1 und
+     schiebt den Inhalt nach unten. Genau das hat das Bild mobil nach oben
+     gebracht. */
   .ue-grid { grid-template-columns: 1fr; gap: clamp(36px, 6vw, 64px); }
-  .ue-content { grid-column: 1; min-height: 0; }
-  .ue-media { grid-column: 1; min-height: clamp(380px, 80vw, 520px); }
+  .ue-content { grid-column: 1; grid-row: 1; min-height: 0; }
+  .ue-media { grid-column: 1; grid-row: 2; min-height: clamp(380px, 80vw, 520px); }
+  /* Leiste bleibt deckungsgleich ueber dem grauen Streifen des Bildes */
+  .ue-dots { grid-column: 1; grid-row: 2; }
 }

@@ -18,6 +18,29 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.11.0] – 2026-07-17
+
+### Behoben
+- **Hero-Szenariokarten auf Mobil.** `.hc-field` trug `min-height: clamp(210px,
+  21vw, 290px)` — eine Desktop-Regel, wo sich fünf Karten die Hero-Höhe teilen.
+  Auf 380px Breite griff das Minimum und blies jede Karte auf 210px auf: 1050px
+  allein für die Liste. `flex-grow` der offenen Karte lief dabei ins Leere, weil
+  es in einem inhaltshohen Container keine freie Höhe zu verteilen gibt — alle
+  fünf Karten waren exakt gleich hoch, auch die offene. Jetzt misst sich jede an
+  ihrem Inhalt: geschlossen 136px (Nummer + Titel), offen 269px. Hero 2044 →
+  1805px.
+- **Schriftgrößen im Hero auf Mobil.** Titel, Copy und Icon hingen alle am
+  Clamp-MINIMUM (15px / 12.5px / 32px), weil die vw/vh-Anteile auf 380px winzig
+  werden. Jetzt 19px / 15.5px / 44px. Die Media Query musste dafür **nach** die
+  Basisregeln — eine Media Query erhöht die Spezifität nicht, der erste Anlauf
+  stand davor und wurde wirkungslos überschrieben.
+- **Reihenfolge in „Über" auf Mobil.** Das Bild stand über dem Inhalt. Ursache
+  war die eigene Änderung aus 0.9.0: `.ue-media` bekam `grid-row: 1`, damit die
+  Fortschrittsleiste in derselben Zelle liegt — einspaltig beanspruchte es damit
+  auch mobil Zeile 1 und schob die Inhaltsspalte auf Zeile 2. Jetzt stehen die
+  Zeilen explizit: Inhalt zuerst, Bild darunter (wie in der Referenz, dort
+  `order: -9999`).
+
 ## [0.10.0] – 2026-07-17
 
 ### Behoben
