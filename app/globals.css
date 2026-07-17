@@ -3110,11 +3110,17 @@ button:focus-visible {
   gap: 16px;
 }
 /* gross rechts oben. flex:none ist Pflicht — sonst zieht das SVG als
-   Flex-Item auf die volle Kartenbreite auf. */
+   Flex-Item auf die volle Kartenbreite auf.
+   ACHTUNG bei Groessenaenderungen: das SVG hat viewBox 0 0 32 32, die
+   Strichstaerke steht also in Viewport-Einheiten und skaliert mit. Wer hier
+   die Groesse aendert, muss strokeWidth in Themen.tsx (KindIcon) gegenrechnen,
+   sonst wird der Strich mit dem Icon dicker. Aktuell: 1.3x groesser als
+   urspruenglich (44/4.2vw/66), dafuer strokeWidth 1.25 -> 0.96 — der
+   gerenderte Strich bleibt damit exakt so fein wie vorher. */
 .in-icon {
   flex: none;
-  width: clamp(44px, 4.2vw, 66px);
-  height: clamp(44px, 4.2vw, 66px);
+  width: clamp(57px, 5.45vw, 86px);
+  height: clamp(57px, 5.45vw, 86px);
   color: #fff;
 }
 .in-body {

@@ -21,6 +21,12 @@ Redaktionsfoto.
 ## [0.17.0] – 2026-07-17
 
 ### Geändert
+- **Icons der Insights-Karten 1.3x groesser, Strich unveraendert fein.**
+  `.in-icon` 44/4.2vw/66 -> 57/5.45vw/86. Weil die Strichstaerke im viewBox
+  (0 0 32 32) in Viewport-Einheiten steht, waere sie mitgewachsen; deshalb
+  `strokeWidth` in `Themen.tsx` gegengerechnet: 1.25 -> 0.96 (= 1.25/1.3).
+  Gemessen bei 1500px Viewport: Icon 63px -> 81.8px, gerenderter Strich
+  2.46px -> 2.45px.
 - **Schreibweise der Marke: durchgängig klein — „mischok".** Damit ist die
   Vereinheitlichung auf Versal (0.16.0) bewusst zurückgenommen. Die Konzeption
   schreibt zwar 68× MISCHOK und 0× klein, aber die Marke folgt der

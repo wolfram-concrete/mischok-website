@@ -87,7 +87,10 @@ function KindIcon({ kind }: { kind: string }) {
       viewBox="0 0 32 32"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.25}
+      /* 0.96 statt 1.25, weil .in-icon um Faktor 1.3 gewachsen ist: die
+         Strichstaerke steht in Viewport-Einheiten und waere sonst
+         mitgewachsen. 1.25/1.3 = 0.96 haelt den gerenderten Strich konstant. */
+      strokeWidth={0.96}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
