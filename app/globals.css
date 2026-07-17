@@ -1783,10 +1783,15 @@ button:focus-visible {
   padding: clamp(8px, 1.2vh, 14px) clamp(12px, 1.2vw, 18px) clamp(8px, 1.2vh, 14px)
     clamp(20px, 2vw, 32px);
   background: transparent;
-  border: 1px solid transparent;
+  /* KEIN border — auch kein transparenter. Er war der Grund fuer den Blitzer
+     links und rechts am Mega-Panel: der Bezugsrahmen eines absolut
+     positionierten Kindes ist die PADDING-Box, `left:0` haette also 1px
+     innerhalb der Navikante begonnen und die Kante daneben durchblitzen
+     lassen. Ohne Rand faellt Padding-Box auf Border-Box und das Panel steht
+     exakt buendig. */
   border-radius: 5px;
   box-shadow: none;
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 .hc-nav-brand { display: flex; flex: none; }
 /* Lockup mit Bildmarke: die Wortmarke füllt nur ~45% der Gesamthöhe, deshalb
@@ -1850,16 +1855,17 @@ button:focus-visible {
    Auto-Höhe animierbar), Inhalt faded verzögert + gestaffelt nach. ── */
 /* Bei offenem Mega-Menü wird die Navi selbst zur Kartenfläche, die nahtlos in
    das Panel darunter übergeht (unten offen, kein Radius, keine Kante). */
+/* EINE Flaeche fuer Navizeile und Panel. Vorher trugen beide je einen eigenen
+   Verlauf — die Navi 145deg auf #f3f3f3, das Panel 160deg auf #f3f7fd (blau
+   getoent, was die Palette fuer Flaechen ohnehin ausschliesst). Zwei Verlaeufe
+   koennen an einer Kante nie zusammenfallen: jeder startet in seiner eigenen
+   Box neu. Deshalb hier bewusst FLACH — dann waechst die Navizeile als eine
+   Flaeche nach unten, egal wie hoch das Panel gerade ist. */
+:root {
+  --mega-surface: rgba(252, 252, 252, 0.98);
+}
 .hc-nav.is-mega {
-  /* dieselbe neutrale Keramikfläche wie .hc-surface */
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.97) 0%,
-    rgba(251, 251, 251, 0.95) 45%,
-    rgba(243, 243, 243, 0.92) 100%
-  );
-  border-color: rgba(255, 255, 255, 0.9);
-  border-bottom-color: transparent;
+  background: var(--mega-surface);
   border-radius: 5px 5px 0 0;
   box-shadow: 0 -2px 24px rgba(0, 42, 92, 0.06);
 }
@@ -1880,10 +1886,10 @@ button:focus-visible {
   display: flex;
   gap: clamp(20px, 3vw, 48px);
   padding: clamp(20px, 2.4vw, 40px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  border-top: none;
+  /* kein border: der helle 1px-Rand haette an der Nahtstelle zur Navizeile eine
+     Linie gezogen — genau die Trennung, die hier nicht sein soll */
   border-radius: 0 0 5px 5px;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.99) 0%, rgba(243, 247, 253, 0.98) 100%);
+  background: var(--mega-surface);
   box-shadow: 0 30px 64px rgba(0, 42, 92, 0.16);
 }
 .hc-mega-cols {
@@ -2508,6 +2514,110 @@ button:focus-visible {
 #praxis { --step-x: 38%; }
 #kontakt { --step-x: 52%; }
 #arbeiten { --step-x: 71%; }
+
+/* ===================================================================
+   Kontakt ⇄ Arbeiten — EIN Bildcontainer statt zweier.
+   Das Motiv gehoert #arbeiten. Damit seine Oberkante hinter der Kontakt-Karte
+   liegen kann, steigt #arbeiten um --arb-rise zusaetzlich zur Stufe nach oben
+   und #kontakt legt sich per z-index darueber. Der Papiergrund von #kontakt ist
+   deshalb KEINE Vollflaeche mehr, sondern endet genau dort, wo das Bild
+   ansetzt — sonst wuerde er es verdecken.
+
+   Warum nicht andersherum (Band in #kontakt)? Zwei getrennte Bildcontainer
+   werden von zwei clip-paths beschnitten und der untere laeuft mit Parallaxe;
+   sie koennen an der Sektionsgrenze nicht nahtlos aneinanderstossen.
+   =================================================================== */
+:root {
+  --arb-rise: clamp(120px, 15vw, 210px);
+}
+#kontakt {
+  z-index: 1;
+}
+#arbeiten {
+  z-index: 0;
+  /* Stufe UND Anstieg: die Kerbe bleibt --step-h tief, die Section selbst
+     rueckt zusaetzlich um --arb-rise nach oben. */
+  margin-top: calc(-1 * var(--step-h) - var(--arb-rise));
+}
+/* Papiergrund von #kontakt — endet an der Oberkante des Bildes */
+.kt-ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: var(--arb-rise);
+  z-index: 0;
+  background: var(--paper);
+  pointer-events: none;
+}
+
+/* Arbeiten — helle Kachel auf dem Bild */
+.arb-grid {
+  position: relative;
+  z-index: 1;
+  min-height: 60vh;
+  align-items: center;
+  /* oben Platz lassen: dort laeuft das Bild hinter der Kontakt-Karte durch und
+     darf nicht von der Kachel belegt werden */
+  padding: calc(var(--arb-rise) + clamp(28px, 4vw, 64px)) clamp(20px, 5vw, 64px)
+    clamp(48px, 6vw, 96px);
+  box-sizing: border-box;
+}
+.arb-col {
+  display: flex;
+  justify-content: flex-end;
+}
+/* Die Kachel schwebt: sie fuellt die Spalte bewusst nicht, sondern misst sich
+   an ihrem Inhalt. */
+.arb-tile {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  max-width: 460px;
+  border-radius: 5px;
+  background: var(--snow);
+  box-shadow: 0 2px 6px rgba(20, 28, 40, 0.06), 0 22px 44px rgba(20, 28, 40, 0.16),
+    0 44px 80px rgba(20, 28, 40, 0.12);
+}
+/* Raster wie in „Zusammenarbeit", nur ruhiger: die Kachel ist klein, das
+   Atmen der Maske wuerde auf der Flaeche als Flackern lesen. */
+.arb-raster {
+  animation: none;
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+}
+.arb-tile-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 3vw, 44px);
+}
+.arb-h {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(26px, 2.6vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.005em;
+  color: var(--navy);
+  margin: 0;
+}
+.arb-copy {
+  font-family: var(--sans);
+  font-size: var(--text-copy);
+  line-height: 1.6;
+  color: var(--slate);
+  margin: clamp(16px, 1.8vw, 24px) 0 0;
+}
+@media (max-width: 819px) {
+  .arb-col {
+    justify-content: flex-start;
+  }
+  .arb-tile {
+    max-width: none;
+  }
+}
 
 /* ===================================================================
    Stimme — vollflächiges Zitat auf Bild

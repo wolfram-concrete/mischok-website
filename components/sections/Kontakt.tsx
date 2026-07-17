@@ -35,19 +35,17 @@ export default function Kontakt() {
       style={{
         position: "relative",
         overflow: "hidden",
-        background: "var(--paper)",
+        /* KEINE Vollflaeche: der Papiergrund liegt als eigene Flaeche darin und
+           endet an der Oberkante des Bildes aus „Arbeiten bei MISCHOK", das von
+           unten her hinter diese Section steigt. Als Section-Hintergrund wuerde
+           er das Bild verdecken. */
+        background: "transparent",
         /* seitlich mitwachsend: die globale 64px-Regel greift erst ab 900px,
            ein fester Wert wuerde die Karte auf Mobil zusammenquetschen */
         padding: "clamp(56px,7vw,96px) clamp(20px,5vw,64px)",
       }}
     >
-      {/* Hier lag ein zweites Bildband mit demselben Motiv wie „Arbeiten bei
-          MISCHOK". Es ist entfernt: zwei getrennte Bildcontainer koennen an der
-          Sektionsgrenze nicht nahtlos aneinanderstossen — sie werden von zwei
-          clip-paths beschnitten und der untere laeuft mit Parallaxe, der obere
-          stand still. Uebrig blieb eine sichtbare Naht. Wenn das Motiv wieder
-          hinter die Karte soll, muss es EIN Container sein, der nach oben hinter
-          die Karte reicht — nicht ein zweiter, der davorgesetzt wird. */}
+      <span className="kt-ground" aria-hidden="true" />
 
       <div className="kt-card">
         {/* Links: Ansprechpartner — Bild traegt Name und Rolle, statt sie
@@ -68,7 +66,6 @@ export default function Kontakt() {
                objectPosition landet der Beschnitt in der Bildmitte und
                schneidet das Gesicht an. 42%/40% haelt es im Bild. */
             imgStyle={{ objectPosition: "42% 40%" }}
-            parallax={false}
           />
           <span className="kt-shade" aria-hidden="true" />
           <div className="kt-author">

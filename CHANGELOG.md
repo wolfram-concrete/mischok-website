@@ -18,6 +18,60 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.9.0] – 2026-07-17
+
+### Geändert
+- **Arbeiten bei MISCHOK neu aufgebaut: EIN Bildcontainer.** Das Motiv liegt
+  vollflächig im Hintergrund und steigt über `--arb-rise` nach oben hinter die
+  Kontakt-Karte (gemessen 114px ≈ 24% der Kartenhöhe). Der Papiergrund von
+  Kontakt ist dafür keine Vollfläche mehr, sondern eine eigene Ebene, die genau
+  an der Bildoberkante endet — als Section-Hintergrund würde er das Bild
+  verdecken. `#kontakt` legt sich per `z-index` über `#arbeiten`. Statt des
+  Blur-Panels über der halben Section schwebt rechts eine helle Kachel mit dem
+  Punktraster aus „Zusammenarbeit" und Navy-Text.
+- **Mega-Menü: Navizeile und Panel sind eine Fläche.** Beide trugen je einen
+  eigenen Verlauf (Navi 145deg auf `#f3f3f3`, Panel 160deg auf `#f3f7fd` — blau
+  getönt und damit auch ein Palettenverstoß). Zwei Verläufe können an einer
+  Kante nie zusammenfallen, weil jeder in seiner eigenen Box neu startet; ein
+  gemeinsamer Verlauf ist bei animierter Panelhöhe nicht möglich. Jetzt eine
+  flache Fläche über das Token `--mega-surface`.
+- **Bewegung vervollständigt.** Parallaxe jetzt in jedem Bildcontainer der Home
+  (11 Ebenen), inklusive Ansprechpartner-Foto in Kontakt — dort war sie ohne
+  Grund abgeschaltet, obwohl es ein `cover`-Ausschnitt ist. Die bislang
+  ungenutzte `Reveal`-Komponente ist im Einsatz: Kachel in „Arbeiten" und die
+  drei Footer-Spalten (gestaffelt).
+
+### Behoben
+- **Weisse Naht zwischen Kontakt und „Arbeiten bei MISCHOK".** Ursache waren
+  zwei getrennte Bildcontainer mit demselben Motiv: beide von eigenen clip-paths
+  beschnitten, der untere mit Parallaxe, der obere stillstehend. Sie können an
+  der Sektionsgrenze nicht nahtlos aneinanderstossen. Das Band ist entfallen,
+  das Motiv gehört jetzt ausschliesslich `#arbeiten`.
+- **Blitzer links und rechts am Mega-Panel.** `.hc-nav` hatte einen
+  `1px solid transparent`-Rand. Der Bezugsrahmen eines absolut positionierten
+  Kindes ist die PADDING-Box — `left:0` begann also 1px innerhalb der Navikante
+  und liess sie durchblitzen (gemessen: Navi 0–1485, Panel 1–1484). Ohne Rand
+  fällt Padding- auf Border-Box, beide stehen jetzt auf 0–1485.
+- **Auflösung der Über-Bilderstrecke.** Derselbe Fehler wie zuvor in Kontakt:
+  der Container ist mit ~679×688 nahezu quadratisch, alle Aufnahmen sind
+  3:2-Querformat — `cover` skaliert über die HÖHE und rendert das Bild ~1031
+  CSS-Pixel breit, während `sizes="50vw"` dem Browser nur 750 nannte. Geladen
+  wird jetzt 1080 statt 750. `sizes` ist gestaffelt, weil unter 991px je nach
+  Breite mal die Höhe, mal die Breite bindet.
+- **Zweites Bildband in „Arbeiten" entfernt** — hinter dem Blur-Panel lag eine
+  unscharf gefilterte Kopie desselben Fotos (`width: 200%`) unter einer weissen
+  20%-Fläche.
+
+### Offen
+- **Bewegung ist nicht verifiziert.** Der Renderer der Preview führt weder
+  `requestAnimationFrame` noch `IntersectionObserver` aus (gemessen). Parallaxe,
+  Pin-Scrolls und Reveal hängen an genau diesen beiden APIs — der Audit ist
+  daher rein code-seitig. Im echten Browser prüfen.
+- `/ueber` existiert weiterhin nicht; der CTA „Mehr über uns" läuft auf einen 404.
+- Zusammenarbeit kollidiert auf flachen Fenstern (1440×700) weiterhin um 118px.
+- Die Sektionsstufe von „Arbeiten" ist unsichtbar, seit der Papiergrund von
+  Kontakt sie überdeckt — die Bildoberkante ist eine gerade Linie.
+
 ## [0.8.0] – 2026-07-17
 
 ### Geändert

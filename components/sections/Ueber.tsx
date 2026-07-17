@@ -118,7 +118,16 @@ export default function Ueber() {
                   src={s.src}
                   alt={s.alt}
                   placeholder=""
-                  sizes="(max-width:991px) 100vw, 50vw"
+                  /* NICHT die Containerbreite. Der Container ist mit ~679x688
+                     nahezu quadratisch, alle Aufnahmen sind 3:2-Querformat —
+                     `cover` skaliert also ueber die HOEHE und rendert das Bild
+                     ~1031 CSS-Pixel breit (688 x 1.499), waehrend `50vw` dem
+                     Browser nur 750 nannte. Ergebnis war eine 750er-Variante,
+                     auf Retina fast 3x hochskaliert.
+                     Unter 991px steht die Spalte allein: dort bindet je nach
+                     Breite mal die Hoehe (schmal, hochformatiger Ausschnitt),
+                     mal die Breite — daher gestaffelt. */
+                  sizes="(max-width:600px) 170vw, (max-width:991px) 125vw, 70vw"
                   /* nur das sichtbare Bild priorisieren wäre Micro-Tuning;
                      entscheidend ist, dass die Parallaxe hier ruht — sie würde
                      sich mit dem Pin-Scroll überlagern */

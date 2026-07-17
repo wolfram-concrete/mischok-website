@@ -1,5 +1,6 @@
 import { REFERENZEN } from "@/lib/content";
 import NewsletterBar from "@/components/ui/NewsletterBar";
+import Reveal from "@/components/ui/Reveal";
 
 /**
  * Footer — Aufbau nach Harbor-Referenz, mit MISCHOK-Inhalten:
@@ -74,7 +75,7 @@ export default function Footer() {
 
         {/* Rechts: drei Linkspalten */}
         <div className="ft-cols">
-          <div className="ft-col">
+          <Reveal className="ft-col">
             <div className="ft-label">Navigation</div>
             <div className="ft-linkcol">
               {NAV_LINKS.map((l) => (
@@ -83,9 +84,9 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-          </div>
+          </Reveal>
 
-          <div className="ft-col">
+          <Reveal className="ft-col" delay={0.08}>
             <div className="ft-label">Referenzen</div>
             <div className="ft-linkcol">
               {REFERENZEN.map((r) => (
@@ -98,9 +99,9 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-          </div>
+          </Reveal>
 
-          <div className="ft-col">
+          <Reveal className="ft-col" delay={0.16}>
             <div className="ft-label">Kontakt</div>
             <div className="ft-linkcol">
               <a href="tel:+4982149815881" className="ft-link">
@@ -117,7 +118,7 @@ export default function Footer() {
                 86150 Augsburg
               </address>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
 

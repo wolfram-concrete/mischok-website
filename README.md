@@ -193,12 +193,33 @@ liegen unter `public/schriftarten/`.
   für eine tragende Fläche ist sie das falsche Werkzeug.
 - **Parallaxe** — jeder Bildcontainer bekommt sie automatisch über `ImageFrame`
   (`useParallax` + `.pxf`): ein Listener + ein IntersectionObserver für die ganze
-  Seite, scroll-getrieben. `parallax={false}` bei `object-fit: contain`.
+  Seite, scroll-getrieben. `parallax={false}` nur dort, wo sie schadet:
+  bei `object-fit: contain` (Ansatz-Logokachel — das Motiv würde im Rahmen
+  herumwandern statt einen Ausschnitt zu verschieben) und in der Bilderstrecke
+  von **Über** (sie würde sich mit dem Pin-Scroll überlagern).
 - **Sektionsstufe** (`.sec-step`) — rechtwinklige Stufe an den Sektionsübergängen,
   abgeleitet vom Logorahmen-Cutout (siehe unten).
-- **Reveal** — Scroll-Reveal via `IntersectionObserver`.
+- **Reveal** — Scroll-Reveal (fade + rise) via `IntersectionObserver`, im Einsatz
+  bei der Kachel in „Arbeiten bei MISCHOK" und den drei Footer-Spalten
+  (gestaffelt). **Achtung:** die Komponente rendert serverseitig mit
+  `opacity: 0` und wird erst durch JS sichtbar — sie gehört deshalb nicht um
+  Inhalte, die auch ohne JS stehen müssen.
 
 Alle Animationen respektieren `prefers-reduced-motion: reduce`.
+
+### Bewegung je Sektion (Home)
+
+| Sektion | Bewegung |
+|---|---|
+| HeroCeramic | Bento-Kacheln steigen beim Laden auf · 2 Bilder mit Parallaxe · Icons mit Idle-Animation |
+| Ansatz | Pin-Scroll über 300vh (Conic-Mittelpunkt wandert, 3 Punkte blenden durch) |
+| Stimme | Vollbild-Motiv mit Parallaxe |
+| Themen | Sticky-Headline · Bilder mit Parallaxe |
+| Zusammenarbeit | Pin-Scroll (Karten klappen nacheinander auf) · Parallaxe · atmendes Punktraster |
+| Über | Pin-Scroll (Zitat → 7 Aufnahmen nacheinander) |
+| Kontakt | Ansprechpartner-Foto mit Parallaxe |
+| Arbeiten bei MISCHOK | Vollbild-Motiv mit Parallaxe · Kachel mit Reveal |
+| Footer | Drei Linkspalten mit gestaffeltem Reveal |
 
 `public/video/` enthält noch das komprimierte Hero-Video (WebM ~451 KB, MP4
 ~659 KB, Poster) des abgelegten Video-Heros — aktuell ungenutzt.
