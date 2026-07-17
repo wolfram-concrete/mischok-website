@@ -27,6 +27,25 @@ const GAP = 20;
 const W = COLS * GAP;
 const H = ROWS * GAP;
 
+/**
+ * Die Rasterpunkte sind Rechtecke, keine Kreise — rechtwinklig wie der
+ * Logorahmen. Proportion und Ausmass sind aus der Bildmarke abgeleitet, nicht
+ * geschaetzt:
+ *
+ *  • PROPORTION — die beiden Klammern in
+ *    `public/Logo/MISCHOK_LOGO_L_POS_RGB-neu.svg` spannen zusammen
+ *    258.6 x 220.1 Einheiten auf. Das ist das Seitenverhaeltnis der Marke:
+ *    258.6 / 220.1 = 1.175 (liegend, nicht quadratisch).
+ *  • AUSMASS — die Flaeche entspricht der der frueheren Kreise (r = 1.1,
+ *    Flaeche = pi * 1.1² = 3.80), damit das Raster gleich schwer wiegt:
+ *    b * h = 3.80 und b = 1.175 * h  ->  h = 1.80, b = 2.11.
+ *    Ein Quadrat mit der Kantenlaenge des Kreisdurchmessers haette 27 % mehr
+ *    Flaeche gehabt und das Raster sichtbar zugezogen.
+ */
+const LOGO_RATIO = 258.6 / 220.1;
+const DOT_H = 1.8;
+const DOT_W = +(DOT_H * LOGO_RATIO).toFixed(2);
+
 /* Die Linien folgen den Rasterachsen. --len ist die echte Pfadlänge — bei jeder
    Änderung an `d` mitrechnen, sonst zeichnet die Linie gestrichelt oder
    unvollständig (s. den Kommentar bei .hi-b-line in globals.css). Da alle
@@ -44,13 +63,16 @@ export default function NavyGrid() {
     for (let c = 0; c < COLS; c++) {
       // Diagonale Welle: gleiche Summe (c+r) = gleiche Diagonale = gleicher Takt.
       const delay = ((c + r) / (COLS + ROWS)) * 2.6;
+      // x/y ist die Ecke, nicht die Mitte — deshalb um die halbe Kante zurueck,
+      // damit die Rechtecke auf denselben Rasterachsen sitzen wie zuvor.
       dots.push(
-        <circle
+        <rect
           key={`${r}-${c}`}
           className="ng-dot"
-          cx={c * GAP + GAP / 2}
-          cy={r * GAP + GAP / 2}
-          r={1.1}
+          x={c * GAP + GAP / 2 - DOT_W / 2}
+          y={r * GAP + GAP / 2 - DOT_H / 2}
+          width={DOT_W}
+          height={DOT_H}
           style={{ animationDelay: `${delay.toFixed(2)}s` }}
         />
       );

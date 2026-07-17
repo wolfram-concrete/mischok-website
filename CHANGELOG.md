@@ -44,7 +44,14 @@ Redaktionsfoto.
   „Mischok" nicht vor) und **IT-S NOW** (keine erreichbare belegende Seite
   gefunden). Ein Link dorthin wäre eine Behauptung ohne Beleg.
   JAX und W-JAX zeigen auf dieselbe Seite — jax.de trägt beide Marken.
-- **`NavyGrid`** — Punktraster als Vektor auf dem blauen CTA-Modul im Hero.
+- **`NavyGrid`** — Rasterpunkte als Vektor auf dem blauen CTA-Modul im Hero.
+  Die Punkte sind **Rechtecke, keine Kreise** — rechtwinklig wie der Logorahmen.
+  Proportion und Ausmass sind aus der Bildmarke abgeleitet, nicht geschätzt: die
+  beiden Klammern in `MISCHOK_LOGO_L_POS_RGB-neu.svg` spannen 258.6 × 220.1 auf,
+  daraus das Seitenverhältnis 1.175 (liegend, nicht quadratisch). Die Fläche
+  entspricht der der ursprünglichen Kreise (r = 1.1), damit das Raster gleich
+  schwer wiegt → 2.11 × 1.8. Gemessen gerendert: Verhältnis 1.172 (Abweichung
+  0.003 aus der Rundung).
   Nimmt das Raster der Zusammenarbeit (`.zu-grid`) auf, aber als SVG: 162 Punkte
   blenden in einer diagonalen Welle ein, zwei Linien laufen den Rasterachsen
   entlang und zeichnen sich. Maske rechts kräftig / links schwach, weil links
