@@ -2831,6 +2831,40 @@ button:focus-visible {
   outline: 2px solid rgba(0, 42, 92, 0.55);
   outline-offset: 6px;
 }
+
+/* Ab 900px zieht der Block nach rechts unter den Bildcontainer der Über-Section
+   und fuellt die graue Luecke, die dort sonst leer bleibt.
+   Die 900px sind kein freier Wert: ab da greift die globale Regel
+   `#home-root > div > section { padding: 0 64px }` fuer BEIDE Sections, und
+   erst dann sind ihre Inhaltsboxen deckungsgleich. Frueher angesetzt haette
+   #medien noch sein eigenes clamp-Padding und die Kanten waeren um bis zu 44px
+   auseinandergelaufen.
+   Das Spaltenmass 5fr 1fr 6fr ist aus .ue-grid uebernommen — beide muessen
+   gleich bleiben, sonst bricht die Flucht. */
+@media (min-width: 900px) {
+  .md-inner {
+    display: grid;
+    grid-template-columns: 5fr 1fr 6fr;
+    width: 100%;
+  }
+  .md-block {
+    grid-column: 3;
+  }
+  .md-row {
+    /* zwei Spalten statt umbrechender Reihe: die Logos stehen damit auf zwei
+       festen Achsen, statt je nach Eigenbreite zu flattern */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(18px, 1.9vw, 30px) clamp(24px, 2.6vw, 44px);
+    align-items: center;
+  }
+  .md-item {
+    display: flex;
+    align-items: center;
+    /* haelt die Zeilen auf gleicher Hoehe, auch wenn ein Logo flacher ist */
+    min-height: clamp(24px, 2.3vw, 34px);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .md-item img {
     transition: none;

@@ -20,6 +20,18 @@ Redaktionsfoto.
 
 ## [0.19.0] – 2026-07-17
 
+### Geändert
+- **Die Medienleiste ist ein zweispaltiger Block rechts** statt einer
+  durchlaufenden Reihe über die volle Breite. Sie übernimmt dafür das Raster der
+  Über-Section (`5fr 1fr 6fr`) und sitzt in Spalte 3 — dadurch ist sie **per
+  Konstruktion** linksbündig mit deren Bildcontainer (gemessen: beide bei
+  742.5px, Versatz 0) und füllt die graue Lücke, die dort sonst leer blieb.
+  Kein geschätzter Prozentwert, der beim nächsten Layoutwechsel ausschert.
+  Der Umbruchpunkt ist **900px** und kein freier Wert: erst ab da greift
+  `#home-root > div > section { padding: 0 64px }` für beide Sections, und erst
+  dann sind ihre Inhaltsboxen deckungsgleich. Darunter bleibt alles wie gehabt
+  (Block, umbrechende Reihe).
+
 ### Hinzugefügt
 - **Die Logos der Fachöffentlichkeit sind verlinkt** (`Medien`) — 10 von 12, je
   auf die Seite beim Medium, die den Beleg trägt (Speaker-Profil, Autorenseite

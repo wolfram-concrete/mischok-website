@@ -111,40 +111,49 @@ export default function Medien() {
       data-screen-label="Fachöffentlichkeit"
       className="md-section"
     >
-      <p className="eyebrow md-label">Sie kennen unsere Experten aus</p>
-      <ul className="md-row">
-        {MEDIEN.map((m) => {
-          const logo = (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={`/social/medien/${m.file}`}
-              alt={m.name}
-              loading="lazy"
-              decoding="async"
-            />
-          );
-          return (
-            <li key={m.file} className="md-item">
-              {m.href ? (
-                <a
-                  className="md-link"
-                  href={m.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  /* Der Linktext waere sonst nur das Logo — der Titel sagt,
-                     wohin es geht und warum. */
-                  title={`${m.name} — ${m.beleg}`}
-                  aria-label={`${m.name}: ${m.beleg} (öffnet in neuem Tab)`}
-                >
-                  {logo}
-                </a>
-              ) : (
-                logo
-              )}
-            </li>
-          );
-        })}
-      </ul>
+      {/* Dasselbe Raster wie die Über-Section darüber (5fr 1fr 6fr). Der Block
+          sitzt in Spalte 3 und ist damit per Konstruktion linksbündig mit deren
+          Bildcontainer — kein geschätzter Prozentwert, der beim nächsten
+          Layoutwechsel auseinanderläuft. Er füllt so die grosse graue Lücke
+          rechts unter dem Bild. */}
+      <div className="md-inner">
+        <div className="md-block">
+          <p className="eyebrow md-label">Sie kennen unsere Experten aus</p>
+          <ul className="md-row">
+            {MEDIEN.map((m) => {
+              const logo = (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={`/social/medien/${m.file}`}
+                  alt={m.name}
+                  loading="lazy"
+                  decoding="async"
+                />
+              );
+              return (
+                <li key={m.file} className="md-item">
+                  {m.href ? (
+                    <a
+                      className="md-link"
+                      href={m.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      /* Der Linktext waere sonst nur das Logo — der Titel sagt,
+                         wohin es geht und warum. */
+                      title={`${m.name} — ${m.beleg}`}
+                      aria-label={`${m.name}: ${m.beleg} (öffnet in neuem Tab)`}
+                    >
+                      {logo}
+                    </a>
+                  ) : (
+                    logo
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
     </section>
   );
 }
