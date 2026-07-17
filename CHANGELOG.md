@@ -18,6 +18,19 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.14.1] – 2026-07-17
+
+### Geändert
+- **Harte Kante in der Arbeitsweise wiederhergestellt.** Der Kegelverlauf läuft
+  wieder in einem Zug von SNOW (0deg) ins Markenblau (360deg) — an der 0/360-
+  Achse treffen beide hart aufeinander und ziehen eine scharfe Senkrechte vom
+  Verlaufszentrum nach oben.
+  Ich hatte sie in 0.13.0 als Fehler behandelt und bei 180deg weggespiegelt.
+  Sie war aber ein tragendes Gestaltungselement — nur in SNOW→WEISS (6
+  Helligkeitswerte) unsichtbar und deshalb wie ein Artefakt aussehend. Mit dem
+  Blau ist sie sichtbar und gehört zur rechtwinkligen Sprache des Logorahmens.
+  Der Kommentar im Code sagt das jetzt, damit sie nicht wieder „geglättet" wird.
+
 ## [0.14.0] – 2026-07-17
 
 ### Hinzugefügt

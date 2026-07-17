@@ -106,19 +106,21 @@ export default function Ansatz() {
           display: "flex",
           alignItems: "center",
           /* Grundfarbe = die Hero-Grundfläche (SNOW), damit die Section als deren
-             Fortsetzung liest. Der wandernde Sektor lief vorher von SNOW nach
-             WEISS — 6 Helligkeitswerte Unterschied, praktisch unsichtbar.
-             Jetzt läuft er ins Markenblau (Stärke über --az-wash justierbar).
-             Zwei Dinge stecken darin:
-             • Gespiegelt bei 180deg statt einmal rundum. Ein Kegelverlauf, der
-               bei 0deg anders anfängt als er bei 360deg endet, trifft an dieser
-               Achse HART aufeinander — das war die sichtbare senkrechte Naht
-               über dem Zentrum (Kante bei x≈865 auf 2560px, Zentrum liegt bei
-               34.05% = 872px). Gleicher Start- und Endwert schliesst sie.
-             • Der Verlauf bleibt eine leise Tönung, keine Fläche: das CI-Manual
-               reserviert Vollflächen-Blau für Bühne/Aktion. */
+             Fortsetzung liest. Der wandernde Sektor lief früher von SNOW nach
+             WEISS — 6 Helligkeitswerte Unterschied, praktisch unsichtbar. Jetzt
+             läuft er ins Markenblau (Stärke über --az-wash justierbar), bleibt
+             aber eine Tönung: Vollflächen-Blau ist laut CI-Manual Bühne und
+             Aktion vorbehalten.
+             Die HARTE KANTE bei 0deg ist Absicht. Ein Kegelverlauf, der bei 0deg
+             anders anfängt als er bei 360deg endet, trifft an dieser Achse hart
+             aufeinander — hier trifft SNOW auf den vollen Blauwert und zieht
+             eine scharfe Senkrechte vom Zentrum nach oben. Sie ist die
+             Kantigkeit der Section und gehört zur rechtwinkligen Sprache des
+             Logorahmens; nicht „glattziehen". (Zwischenzeitlich war der Verlauf
+             bei 180deg gespiegelt — damit war die Kante weg und die Fläche
+             beliebig.) */
           background:
-            "conic-gradient(from 0deg at 34.05% var(--ansatz-cy,25.64%), var(--snow) 0deg, var(--az-wash) 180deg, var(--snow) 360deg)",
+            "conic-gradient(from 0deg at 34.05% var(--ansatz-cy,25.64%), var(--snow) 0deg, var(--az-wash) 360deg)",
           padding: "clamp(48px,6vw,96px) clamp(20px,5vw,72px)",
           boxSizing: "border-box",
           justifyContent: "center",
