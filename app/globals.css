@@ -2680,38 +2680,51 @@ button:focus-visible {
      Hoehe. */
   .hc-navy { min-height: 0; }
 
-  /* ── Hero-Snap v2 (mobil) — gestaffelte Pins ───────────────────────────────
-     Ablauf beim Scrollen:
-       • Navi (Logo + Burger) bleibt oben stehen  → sticky top:0, oberste Ebene
-       • Bild bleibt DARUNTER stehen               → sticky top: Navi-Hoehe
-       • Projektlagen 1–5 rattern DAHINTER durch   → z-index unter dem Bild,
-         das opake Bild verdeckt sie beim Hochscrollen
-       • CTA hakt sich UNTER dem Bild fest ein     → sticky top: Navi+Bild
+  /* ── Hero-Snap v3 (mobil) — gestaffelte Pins inkl. Headline ────────────────
+     Der gepinnte Kopf bleibt beim Scrollen KOMPLETT stehen:
+       • Navi (Logo + Burger)  → sticky top:0            (z5)
+       • Headline-Karte        → sticky top: Navi        (z4)
+       • Bild-Karte            → sticky top: Navi+Head    (z3)
+     Darunter rattern die Projektlagen 1–5 durch den Rest-Slot (~276px) und
+     verschwinden mit niedrigerem z-index (z1) HINTER dem opaken Bild „im
+     Nichts". Zuletzt hakt sich die CTA unter dem Bild fest ein
+       • CTA                   → sticky top: Navi+Head+Bild (z2)
      Danach loesen alle Pins (Containing Block = Hero-Grid) und die Seite scrollt
-     normal in die naechste Section — die Pins koennen die Seite NICHT
-     ueberlagern. overflow der .hc-section muss dafuer sichtbar sein.
-     Die Pin-Hoehen kommen aus Messwerten (Navi 58 + gap, Bild 220 + gap) und
-     sind als Variablen tunbar. */
+     normal weiter — kein Ganzseiten-Overlay moeglich. overflow der .hc-section
+     muss dafuer sichtbar sein. Pin-Positionen aus Messwerten (Navi 58, Head 240,
+     Bild 220, je + 6px gap), als Variablen tunbar. */
   #home-root > div > section#hero-ceramic {
     overflow: visible;
-    --hero-nav-h: 64px;
-    --hero-img-h: 226px;
+    /* BUENDIG stapeln (ohne die 6px-Grid-Luecken), sonst blitzt in den Luecken
+       ein durchscrollender Kartentext durch. Werte = kumulierte Modulhoehen:
+       Navi 58, Headline 240, Bild 220. */
+    --pin-head: 58px;   /* flush unter Navi */
+    --pin-img: 298px;   /* flush unter Headline (58 + 240) */
+    --pin-cta: 518px;   /* flush unter Bild (298 + 220) */
   }
   #hero-ceramic .hc-nav {
     position: sticky;
     top: 0;
     z-index: 5;
-    /* deckt die dahinter wegscrollenden Module ab */
     background: var(--snow);
+  }
+  #hero-ceramic .hc-head {
+    position: sticky;
+    top: var(--pin-head);
+    z-index: 4;
+    /* opak: der keramische Verlauf ist nur 97% deckend, sonst scheinen die
+       dahinter durchrattelnden Karten durch (Geistertext). Snow dahinter macht
+       die Karte blickdicht — statisch unveraendert (Section-Grund ist auch Snow). */
+    background-color: var(--snow);
   }
   #hero-ceramic .hc-photo {
     position: sticky;
-    top: var(--hero-nav-h);
+    top: var(--pin-img);
     z-index: 3;
   }
   #hero-ceramic .hc-navy {
     position: sticky;
-    top: calc(var(--hero-nav-h) + var(--hero-img-h));
+    top: var(--pin-cta);
     z-index: 2;
   }
   #hero-ceramic .hc-fields {
