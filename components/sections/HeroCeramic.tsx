@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ImageFrame from "@/components/ui/ImageFrame";
 import NavyGrid from "@/components/ui/NavyGrid";
 import { Icon, FOCUS, NAV } from "@/components/sections/HeroImpact";
@@ -50,8 +50,62 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
   // Bento-Raster kommt je Variante aus is-v2 bzw. is-v3.
   const slim = variant !== 1;
 
+  // Hero-Snap (mobil): die gestaffelten Pins muessen BUENDIG stapeln, damit der
+  // CTA exakt unter dem Bild einrastet. Feste Pixel (58/298/518 in globals.css)
+  // stimmen nur bei einer Headline-Umbruchhoehe von 240px — auf breiteren Phones
+  // bricht sie kuerzer, die Summe wandert und der CTA dockt nicht mehr an.
+  // Deshalb hier live gemessen: --pin-head/-img/-cta = kumulierte Modulhoehen
+  // (Navi, +Headline, +Bild). Neu berechnet bei Resize/Reflow/Font-Load. Nur
+  // mobil; am Desktop bleiben die CSS-Defaults ungenutzt (Media-Query greift dort
+  // nicht). SSR/vor-JS greifen die Pixel-Fallbacks aus globals.css.
+  const sectionRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const mq = window.matchMedia("(max-width: 899px)");
+    const measure = () => {
+      const nav = section.querySelector<HTMLElement>(".hc-nav");
+      const head = section.querySelector<HTMLElement>(".hc-head");
+      const photo = section.querySelector<HTMLElement>(".hc-photo");
+      if (!nav || !head || !photo) return;
+      if (!mq.matches) {
+        section.style.removeProperty("--pin-head");
+        section.style.removeProperty("--pin-img");
+        section.style.removeProperty("--pin-cta");
+        return;
+      }
+      const navH = nav.offsetHeight;
+      const headH = head.offsetHeight;
+      const photoH = photo.offsetHeight;
+      // buendig stapeln: die 6px-Grid-Luecken bewusst NICHT mitrechnen, sonst
+      // blitzt in den Luecken ein durchscrollender Kartentext durch
+      section.style.setProperty("--pin-head", `${navH}px`);
+      section.style.setProperty("--pin-img", `${navH + headH}px`);
+      section.style.setProperty("--pin-cta", `${navH + headH + photoH}px`);
+    };
+    measure();
+    const raf = requestAnimationFrame(measure);
+    const ro = new ResizeObserver(measure);
+    [".hc-nav", ".hc-head", ".hc-photo"].forEach((sel) => {
+      const el = section.querySelector(sel);
+      if (el) ro.observe(el);
+    });
+    window.addEventListener("resize", measure);
+    mq.addEventListener?.("change", measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+      mq.removeEventListener?.("change", measure);
+    };
+  }, []);
+
   return (
-    <section className={`hc-section${slim ? ` is-v${variant}` : ""}`} id="hero-ceramic">
+    <section
+      ref={sectionRef}
+      className={`hc-section${slim ? ` is-v${variant}` : ""}`}
+      id="hero-ceramic"
+    >
       <div className={`hc-grid${slim ? ` is-slim is-v${variant}` : ""}`}>
         {/* Navigations-Modul: Logo, Links (mit Referenzen-Dropdown) und CTA
             zusammengefasst in einem länglichen Bento über die volle Breite. */}
@@ -270,6 +324,13 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
             <span aria-hidden="true" className="hc-cta-arrow">→</span>
           </span>
         </a>
+
+        {/* Dwell-Spacer (nur mobil, s. globals.css): echtes Element hinter dem CTA.
+            Ein padding-bottom am Grid gibt dem LETZTEN Sticky-Kind KEINEN Halt-Raum
+            — der CTA rastete dadurch nie unter dem Bild ein. Dieser Spacer schafft
+            den Scrollweg, ueber den der gepinnte Stapel „wie ein Magnet" haelt,
+            bevor die Pins loesen und die naechste Section aufscrollt. */}
+        <div className="hc-dwell" aria-hidden="true" />
       </div>
 
       {/* Abdunkeln, solange die Mega-Navi offen ist */}

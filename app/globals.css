@@ -1835,6 +1835,10 @@ button:focus-visible {
   grid-template-columns: 1fr;
 }
 
+/* Dwell-Spacer nur im mobilen Hero-Snap aktiv (s. Media-Query); am Desktop
+   darf er keine leere Grid-Zeile erzeugen. */
+.hc-dwell { display: none; }
+
 /* Einheitliche keramische Kartenhaptik */
 /* Keramikfläche — neutral.
    Der Verlauf lief zuvor blaustichig (…249,251,255 → …238,244,252) als Antwort
@@ -2702,12 +2706,17 @@ button:focus-visible {
     --pin-img: 298px;   /* flush unter Headline (58 + 240) */
     --pin-cta: 518px;   /* flush unter Bild (298 + 220) */
   }
-  /* „Einrasten wie ein Magnet": eine Dwell-Strecke am Ende des Hero-Grids haelt
-     den eingerasteten Zustand (Bild gepinnt, CTA buendig darunter, alle Karten
-     dahinter verschwunden) fuer ~55vh Scroll fest, BEVOR die Pins loesen und die
-     naechste Section aufscrollt. Ohne diese Strecke loest die Sequenz sofort und
-     der CTA „rastet" nicht spuerbar ein. Tunbar ueber diesen einen Wert. */
-  #hero-ceramic .hc-grid { padding-bottom: 55vh; }
+  /* „Einrasten wie ein Magnet": eine Dwell-Strecke haelt den eingerasteten
+     Zustand (Bild gepinnt, CTA buendig darunter, alle Karten dahinter
+     verschwunden) fuer ~55vh Scroll fest, BEVOR die Pins loesen und die naechste
+     Section aufscrollt. WICHTIG: als ECHTES Element (.hc-dwell), nicht als
+     padding-bottom am Grid — Padding gibt dem letzten Sticky-Kind (dem CTA)
+     keinen Halt-Raum, dadurch rastete der CTA nie ein. Tunbar ueber die Hoehe. */
+  #hero-ceramic .hc-dwell {
+    display: block;
+    grid-column: 1 / -1;
+    height: 55vh;
+  }
   #hero-ceramic .hc-nav {
     position: sticky;
     top: 0;
