@@ -184,12 +184,16 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
             src="/assets/Mischok_2023_ma_406.jpg"
             alt="mischok — Kajetan Mischok mit dem Team im Workshop"
             placeholder=""
-            /* Das Modul belegt die rechte Haelfte (~50vw). Vorher stand hier
-               40vw — zu niedrig: der Browser lud die 640px-Variante in einen
-               ~700px-Slot und skalierte hoch (sichtbar weich, auf Retina noch
-               staerker). 50vw laesst next/image die passend grosse Stufe
-               waehlen (bei 1x ~828px, bei 2x ~1920px). */
-            sizes="(max-width:900px) 100vw, 50vw"
+            /* Das Modul belegt die rechte Haelfte. 55vw statt 50vw gibt etwas
+               Reserve, damit auf breiteren Desktops immer die naechstgroessere
+               Stufe geladen wird (nie hochskaliert). Die Aufloesung war damit
+               schon gedeckt (bei 1x ~900px, bei 2x ~1920px). */
+            sizes="(max-width:900px) 100vw, 55vw"
+            /* Hero-Bild: hoehere JPEG/AVIF-Qualitaet als der Default (90). Bei
+               diesem prominenten, grossen Motiv macht die geringere Kompression
+               den sichtbaren Unterschied — die 90er-Stufe wirkte in Flaechen
+               (Hemd, Wand) leicht weich. */
+            quality={95}
             /* Querformat (1.5:1) in hochkantem Container: cover beschneidet
                links/rechts. Kajetan (weisses Hemd) steht bei ~62% horizontal,
                das Gesicht bei ~35% Hoehe — der Fokuspunkt haelt ihn im

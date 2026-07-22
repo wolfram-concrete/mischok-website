@@ -18,6 +18,15 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.21.1] – 2026-07-22
+
+### Geändert
+- **Hero-Bild oben rechts schärfer.** Qualitätsstufe des Motivs von 90 auf 95
+  angehoben (geringere Kompression, sichtbar in Flächen wie Hemd/Wand) und
+  `sizes` 50vw → 55vw als Reserve, damit auf breiteren Desktops nie eine zu
+  kleine Stufe geladen wird. `images.qualities` in `next.config.mjs` um 95
+  ergänzt (Next 15 verlangt die Liste der zulässigen Qualitätsstufen).
+
 ## [0.21.0] – 2026-07-22
 
 ### Geändert
