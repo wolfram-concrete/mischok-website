@@ -3715,6 +3715,21 @@ button:focus-visible {
     /* etwas Luft unter dem CTA, bevor die Karten anlaufen */
     padding-bottom: clamp(14px, 3vw, 22px);
   }
+  /* Full-Bleed-Grund hinter dem Kopf: der Kopf ist um den Seiten-Gutter
+     eingerueckt und exakt so breit wie die Karten (20–355). Bei minimalem
+     Repaint-Versatz im Scroll poppte die dahinter tuckernde Karte an den
+     Raendern raus („Links-/Rechtsblitzer"). Dieser Streifen zieht den opaken
+     Snow-Grund bis an die Viewport-Kanten, sodass die Karte immer gedeckt ist. */
+  #themen .in-head::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(-1 * clamp(20px, 5vw, 72px));
+    right: calc(-1 * clamp(20px, 5vw, 72px));
+    background: var(--bg);
+    z-index: -1;
+  }
 
   /* Karten mobil etwas flacher, damit Kopf + oberste Karte auch auf kurzen
      Phones (667px) zusammen in den Viewport passen */
@@ -3919,6 +3934,22 @@ button:focus-visible {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .zu-grid { animation: none; }
+}
+
+/* Mobil: Zusammenarbeit ins Raster + Repaint entlasten.
+   - Seiten-Gutter: die globale 64px-Regel (#home-root > div > section) greift
+     erst ab 900px; darunter hatte .zu-sticky nur vertikales Padding, Headline
+     und Bild liefen bis an die Kante (nicht im Raster). Hier den Standard-Gutter
+     der Mobil-Sections setzen, damit alles buendig zur Seite sitzt.
+   - Die atmende Punkt-Raster-Animation mobil aus: der Dauer-Repaint auf der
+     gepinnten Flaeche (zusammen mit Parallaxe + Backdrop-Filter der Glas-Karten)
+     erzeugt im Scroll Geister-/Doppelkanten. Statisch bleibt das Raster. */
+@media (max-width: 899px) {
+  .zu-sticky {
+    padding-left: clamp(20px, 5vw, 64px);
+    padding-right: clamp(20px, 5vw, 64px);
+  }
   .zu-grid { animation: none; }
 }
 
