@@ -568,6 +568,9 @@ button:focus-visible {
   align-items: baseline;
   gap: 8px;
   width: fit-content;
+  /* Telefon und E-Mail als die konkrete Handlung hervorgehoben — kurze Labels,
+     Fettung ist hier ok (nicht in Zitaten/H1). */
+  font-weight: 700;
 }
 .contact-link::before {
   content: "→";
@@ -590,6 +593,9 @@ button:focus-visible {
   }
   .kt-left {
     width: 100%;
+    /* mobil ~20% flacher als die Basis (clamp 280–420): spart Hoehe im Modul,
+       ohne dass Kajetan zu stark beschnitten wird */
+    min-height: clamp(224px, 58vw, 336px);
   }
 }
 
@@ -2726,6 +2732,10 @@ button:focus-visible {
     top: 0;
     z-index: 5;
     background: var(--snow);
+    /* Burger-Menue + aufgeklappter Kopfbalken mobil VOLL deckend (statt 0.98):
+       sonst scheint die Hero-Headline durch das Menue. .hc-menu und
+       .hc-nav.is-mega::before erben diese Variable. */
+    --mega-surface: #fcfcfc;
   }
   #hero-ceramic .hc-head {
     position: sticky;
@@ -3092,15 +3102,22 @@ button:focus-visible {
      clip-path:none darueber und steht danach, gewinnt also. */
   #stimme.sec-step {
     --reiter-w: clamp(44px, 15vw, 72px);
+    /* die vier vorspringenden Ecken (zwei Reiter-Spitzen + zwei Aussenecken) am
+       --radius gefast — dieselbe marginale Rundung wie alle Module, statt reiner
+       Kante. Die Notch-Innenecken bleiben scharf (die gewollte Kantigkeit). */
     clip-path: polygon(
       0 var(--step-h),
       var(--reiter-w) var(--step-h),
-      var(--reiter-w) 0,
-      100% 0,
+      var(--reiter-w) var(--radius),
+      calc(var(--reiter-w) + var(--radius)) 0,
+      calc(100% - var(--radius)) 0,
+      100% var(--radius),
       100% calc(100% - var(--step-h)),
       calc(100% - var(--reiter-w)) calc(100% - var(--step-h)),
-      calc(100% - var(--reiter-w)) 100%,
-      0 100%
+      calc(100% - var(--reiter-w)) calc(100% - var(--radius)),
+      calc(100% - var(--reiter-w) - var(--radius)) 100%,
+      var(--radius) 100%,
+      0 calc(100% - var(--radius))
     );
   }
 }
@@ -3194,6 +3211,16 @@ button:focus-visible {
 .md-link:focus-visible {
   outline: 2px solid rgba(0, 42, 92, 0.55);
   outline-offset: 6px;
+}
+
+/* Mobil mittelachsig: Eyebrow zentriert, Logo-Raster zentriert. Ab 900px zieht
+   der Block ins Übernahme-Raster (s. unten) und ist dann wieder linksbuendig. */
+@media (max-width: 899px) {
+  .md-label { text-align: center; }
+  .md-row { justify-content: center; }
+  /* Abstand zum Modul darueber (Über-uns) verkleinern — der Block sass mit zu
+     viel Luft unter dem Bildcontainer. */
+  .md-section { padding-top: clamp(24px, 5vw, 44px); }
 }
 
 /* Ab 900px zieht der Block nach rechts unter den Bildcontainer der Über-Section
@@ -4124,8 +4151,12 @@ button:focus-visible {
     100% var(--radius),
     100% calc(100% - var(--radius)),
     calc(100% - var(--radius)) 100%,
-    var(--bulge-x) 100%,
-    var(--bulge-x) calc(100% - var(--bulge-h)),
+    /* Stufe der Ausbuchtung ebenfalls gefast (vorher zwei reine Kanten):
+       untere (konvexe) und obere (konkave) Ecke am --radius. */
+    calc(var(--bulge-x) + var(--radius)) 100%,
+    var(--bulge-x) calc(100% - var(--radius)),
+    var(--bulge-x) calc(100% - var(--bulge-h) + var(--radius)),
+    calc(var(--bulge-x) - var(--radius)) calc(100% - var(--bulge-h)),
     var(--radius) calc(100% - var(--bulge-h)),
     0 calc(100% - var(--bulge-h) - var(--radius))
   );

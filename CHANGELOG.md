@@ -16,7 +16,58 @@ Datenschutz als eigene Seiten (stehen im Footer noch als reiner Text, da die
 Routen fehlen); Bildcontainer für Schritt 02 der Arbeitsweise (es fehlt belegtes
 Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
-Redaktionsfoto.
+Redaktionsfoto; Kontakt-Übergang Reiter→Karte (gerade Kante + weißer Blitzer an
+der Nahtstelle) mobil noch offen; Über-uns-Bildqualität/Kanten-Fragmente prüfen;
+CTA-Vereinheitlichung (Footer-`cta-solid` und Burger-`hc-menu-cta` sollen dieselben
+Kontur-/Hover-Regeln wie die `cta-ghost`-CTAs tragen); Burger-Strichstärke gegen
+die Logo-Rahmenstärke abgleichen.
+
+## [0.24.0] – 2026-07-22
+
+Mobile-Optimierung der Home, Section für Section (Basis: Hero-Variante V2).
+
+### Mobile
+- **Hero-Snap.** Beim Scrollen bleiben Navi, Headline und Foto gestaffelt gepinnt
+  (`position: sticky`), die fünf Projektlagen-Karten laufen hoch und verschwinden
+  hinter dem opaken Foto; zuletzt dockt der CTA bündig unter dem Bild an und hält
+  („Magnet"). Zwei nicht-triviale Ursachen dahinter behoben: die Pin-Höhen werden
+  jetzt in `HeroCeramic` live gemessen (`ResizeObserver`) und als CSS-Variablen
+  gesetzt (feste Pixel stimmten nur bei genau 240 px Headline-Umbruch); und der
+  Dwell-Halt liegt als echtes Spacer-Element (`.hc-dwell`) hinter dem CTA statt als
+  `padding-bottom` — Padding gibt dem letzten Sticky-Kind keinen Halte-Raum,
+  dadurch rastete der CTA nie ein.
+- **Hero: Projektlagen rasten magnetisch ein.** CSS Scroll-Snap — jede Karte dockt
+  mit der Oberkante bündig unter dem Foto an, dann die nächste (Anker-Offset im
+  `scroll-margin` gegengerechnet).
+- **Insights/Themen als Snap-Stapel.** Der Kopf (Label · Headline · Lead · CTA)
+  pinnt als Einheit, die drei Format-Karten stapeln sich darunter und tuckern
+  hinter den Kopf; danach scrollt Zusammenarbeit auf. Kopf-Grund als Full-Bleed
+  (auch nach oben über die Pin-Marke), damit keine Karte an den Rändern oder über
+  der Eyebrow durchblitzt.
+- **Zusammenarbeit.** Akkordeon bleibt (nur die aktive Karte groß), aber
+  entpinnt + tap-gesteuert — so ist jede geöffnete Karte voll scrollbar (der Pin
+  clippte vorher die mittlere). Dunkle Bild-Overlays raus, Foto scharf mit
+  Fokuspunkt je Motiv, Glas-Band navy-getönt (0.5) und einheitlich; ins Raster
+  gerückt.
+- **Über uns.** Ins Raster (Seiten-Gutter), Kennzahlen 2010/35+/Augsburg kleiner
+  (passen ohne an die Kante zu stoßen), Modul in den Viewport verdichtet, sodass
+  der Bild-Slider samt Fortschrittsleiste mitsichtbar ist; Ausbuchtung am
+  Bildcontainer gefast.
+- **Stimme.** Hintergrundbild verschlankt (6000² → 2400 px), Fokuspunkt auf
+  Julius; der Reiter-Winkel-Notch zeigt via Überlappung den getönten Grund der
+  Section darüber (statt hellerem Body-Snow); Reiter-/Außenecken am `--radius`
+  gefast.
+- **Medien/Trust** mittelachsig zentriert, Abstand nach oben verkleinert.
+- **Kontakt.** Telefon und E-Mail gefettet; Kajetan-Bild ~20 % flacher.
+- **Burger-Menü** voll deckend (opak) statt durchscheinend — matcht den Kopfbalken.
+- **Arbeiten bei mischok.** Hintergrundbild-Quelle verschlankt (5000 px/2 MB →
+  2400 px/0,5 MB), lädt jetzt zuverlässig.
+
+### Behoben
+- **Sticky-Einrasten braucht ein echtes Element.** Ein `position: sticky`-Element,
+  das letztes Kind seines Containers ist, rastet nicht ein, wenn der Halte-Weg nur
+  als `padding-bottom` liegt (Padding zählt nicht als Sticky-Range). Gilt für den
+  Hero-CTA — jetzt via Spacer gelöst.
 
 ## [0.23.0] – 2026-07-22
 

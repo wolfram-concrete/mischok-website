@@ -176,9 +176,21 @@ liegen unter `public/schriftarten/`.
 
 ## Interaktionen
 
+> **Mobil (≤ ~819 px)** hat die Home eine eigene Choreografie (Basis Hero V2):
+> Der **Hero** pinnt Navi/Headline/Foto gestaffelt (`position: sticky`), die
+> Projektlagen laufen hoch (CSS Scroll-Snap, rasten unter dem Foto ein) und
+> verschwinden hinter dem opaken Foto; zuletzt dockt der CTA über einen echten
+> Spacer (`.hc-dwell`) bündig darunter an. Die Pin-Höhen misst `HeroCeramic` live
+> (`ResizeObserver`). **Insights/Themen** wird zum Snap-Stapel (Kopf pinnt, Karten
+> stapeln, Full-Bleed-Maske). **Zusammenarbeit** bleibt Akkordeon, aber entpinnt
+> und tap-gesteuert (jede Karte voll scrollbar), Fotos scharf mit Fokuspunkt,
+> Glas-Band navy 0.5. **Über uns** ist so verdichtet, dass der Bild-Slider mit
+> im Screen liegt. Details s. CHANGELOG `[0.24.0]`.
+
 - **Top-Navigation** — sticky, **Burger auf allen Breakpoints** (Links & CTA im
   Panel), Burger-Striche in der Anmutung des „m" (`"use client"`). Auf der
-  Startseite ausgeblendet: Wortmarke & Burger sitzen dort im Hero-Bento.
+  Startseite ausgeblendet: Wortmarke & Burger sitzen dort im Hero-Bento. Das
+  mobile Burger-Panel ist voll deckend (opak) und matcht den Kopfbalken.
 - **Hero — Variante 2** (final). `HeroSwitch` rendert standardmäßig V2; das Umschalt-Widget ist ausgeblendet (`showWidget = false`). V1 und V3 sind archiviert — als `HeroCeramic`-Varianten erhalten und über `?hero=1|3` erreichbar. V2/V3 teilen die schlanke Karten-Optik (`is-slim`).
 - **Hero (`HeroCeramic`)** — Bento-Grid; die fünf Projektlage-Karten sind ein
   horizontales Flex-Accordion (Hover/Klick/Fokus klappt auf), die Icons animieren
