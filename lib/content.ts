@@ -98,6 +98,8 @@ export type AccCard = {
   placeholder: string;
   title: string;
   text: string;
+  /** object-position fuer den Bildausschnitt (Motiv-Fokus), Default center */
+  focus?: string;
 };
 
 /** Zusammenarbeit — ACC (horizontales Accordion) */
@@ -107,6 +109,7 @@ export const ACC: AccCard[] = [
     slot: "acc_1",
     src: "/assets/Mischok_2023_ma_245.jpg",
     placeholder: "Gespräch im Team",
+    focus: "28% 42%",
     title: "Klare Einordnung statt später Korrektur.",
     text: "Ein Projekt wird nicht besser, wenn Risiken zu lange offenbleiben. Wenn ein Ziel technisch, zeitlich oder organisatorisch nicht trägt, muss das früh auf den Tisch. Nicht als Problem, sondern als Grundlage für eine Entscheidung, die später noch Bestand hat.",
   },
@@ -115,6 +118,7 @@ export const ACC: AccCard[] = [
     slot: "acc_2",
     src: "/assets/acc-3.jpg",
     placeholder: "Konzentrierte Analyse",
+    focus: "50% 38%",
     title: "Fachliche Tiefe vor schnellen Antworten.",
     text: "Gewachsene Systeme versteht man nicht aus der Distanz. Wir wollen nachvollziehen, warum etwas so geworden ist, welche Abhängigkeiten bestehen und wo Veränderung realistisch möglich ist. Erst dann lässt sich beurteilen, welcher Weg trägt.",
   },
@@ -123,6 +127,7 @@ export const ACC: AccCard[] = [
     slot: "acc_3",
     src: "/assets/Mischok_2025_ma_156.jpg",
     placeholder: "Team in der Besprechung",
+    focus: "50% 30%",
     title: "Verantwortliche Menschen bleiben sichtbar.",
     text: "Vertrauen entsteht nicht zu Prozessen, sondern zu Menschen. Deshalb bleibt bei uns sichtbar, wer eine Lage einschätzt, Entscheidungen mit vorbereitet und ein Projekt fachlich begleitet. Gerade dann, wenn aus einer ersten Einschätzung echte Verantwortung wird.",
   },

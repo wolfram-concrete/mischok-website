@@ -92,7 +92,10 @@ export default function Zusammenarbeit() {
     let raf = 0;
     const tick = () => {
       const sec = sectionRef.current;
-      if (sec) {
+      // Mobil (<760px) ist die Section nicht gepinnt und wird per Tap gesteuert.
+      // Der scroll-getriebene accOpen wuerde hier die Karten beim Scrollen
+      // groesser/kleiner ziehen — im normalen Fluss ein Layout-Sprung (Jank).
+      if (sec && window.innerWidth >= 760) {
         const rect = sec.getBoundingClientRect();
         const total = sec.offsetHeight - window.innerHeight;
         const scrolled = Math.min(Math.max(-rect.top, 0), total);
@@ -158,6 +161,13 @@ export default function Zusammenarbeit() {
           }}
         >
           {ACC.map((c, i) => {
+            // Akkordeon in BEIDEN Layouts: nur die aktive Karte ist offen
+            // (gross, scharf, Text sichtbar), die anderen schrumpfen zusammen
+            // (klein, Bild + Titel). Mobil wird die Section NICHT mehr gepinnt
+            // (s. globals.css .zu-section/.zu-sticky @max-width 759px) und per
+            // Tap gesteuert (s. onClick/scrollIntoView + tick-Guard) — so bleibt
+            // die geoeffnete Karte voll sichtbar (vorher clippte der Pin die
+            // mittlere Karte), waehrend der Schrumpf-Effekt erhalten bleibt.
             const open = i === accOpen;
             const cardStyle: CSSProperties = {
               position: "relative",
@@ -178,9 +188,15 @@ export default function Zusammenarbeit() {
               position: "absolute",
               inset: 0,
               pointerEvents: "none",
-              background: open
-                ? "linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 34%, rgba(0,0,0,0.55) 74%)"
-                : "linear-gradient(180deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 45%, rgba(0,0,0,0.30) 100%)",
+              /* Mobil KEIN dunkles Bild-Overlay mehr — das Foto steht klar im
+                 Fokus. Die Lesbarkeit des Textes traegt allein das navy-getoente
+                 Glas-Band unten (glassStyle). Am Desktop bleibt der Verlauf, weil
+                 der Text dort direkt auf dem Bild (in der offenen Karte) steht. */
+              background: accStack
+                ? "none"
+                : open
+                  ? "linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 34%, rgba(0,0,0,0.55) 74%)"
+                  : "linear-gradient(180deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 45%, rgba(0,0,0,0.30) 100%)",
               transition: "background .5s ease",
             };
             // Einheitliches Panel: die Geometrie morpht zwischen offen/geschlossen
@@ -191,10 +207,17 @@ export default function Zusammenarbeit() {
               position: "absolute",
               boxSizing: "border-box",
               borderRadius: "5px",
-              background: "rgba(255,255,255,0.10)",
+              /* Mobil navy-getoentes Glas statt hellem: da das dunkle Bild-Overlay
+                 mobil entfaellt (Foto klar), traegt das Band selbst den Kontrast
+                 fuer die weisse Typo. Am Desktop bleibt das helle Glas. */
+              background: accStack
+                ? "rgba(0,42,92,0.34)"
+                : "rgba(255,255,255,0.10)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(255,255,255,0.18)",
+              border: accStack
+                ? "1px solid rgba(255,255,255,0.14)"
+                : "1px solid rgba(255,255,255,0.18)",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -228,7 +251,19 @@ export default function Zusammenarbeit() {
             return (
               <div
                 key={c.slot}
-                onClick={() => setAccOpen(i)}
+                onClick={(e) => {
+                  const el = e.currentTarget;
+                  setAccOpen(i);
+                  // Mobil: die eben geoeffnete (jetzt grosse) Karte mittig in den
+                  // Blick holen — sonst springt sie durch das Kollabieren einer
+                  // darueberliegenden Karte aus dem Sichtfeld.
+                  if (window.innerWidth < 760) {
+                    setTimeout(
+                      () => el.scrollIntoView({ behavior: "smooth", block: "center" }),
+                      80
+                    );
+                  }
+                }}
                 /* Die geschlossene Karte IST das Bedienelement. Vorher hing die
                    Tastaturbedienung allein am Plus-Button; mit dessen Wegfall
                    wäre die Section ohne Maus nicht mehr bedienbar gewesen. */
@@ -250,8 +285,10 @@ export default function Zusammenarbeit() {
                   placeholder={c.placeholder}
                   sizes="(max-width:760px) 100vw, 50vw"
                   imgStyle={{
+                    // mobil immer scharf (jede Karte offen); Fokuspunkt je Motiv
                     filter: open ? "blur(0px)" : "blur(7px)",
                     transform: open ? "scale(1)" : "scale(1.12)",
+                    objectPosition: c.focus ?? "center",
                     transition: "filter .5s ease, transform .6s ease",
                   }}
                 />

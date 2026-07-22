@@ -3723,7 +3723,12 @@ button:focus-visible {
   #themen .in-head::before {
     content: "";
     position: absolute;
-    top: 0;
+    /* auch nach OBEN ueber die Pin-Marke hinaus: der Kopf pinnt ~19px unter der
+       Viewport-Oberkante — in diesem Streifen darueber blitzten sonst die
+       hochlaufenden Karten oberhalb der Eyebrow durch. -34px deckt die Pin-Marke
+       (max 22px) mit Puffer und bleibt innerhalb der Section-Padding-Oberkante
+       (min 48px), ragt also nicht in die Section darueber. */
+    top: -34px;
     bottom: 0;
     left: calc(-1 * clamp(20px, 5vw, 72px));
     right: calc(-1 * clamp(20px, 5vw, 72px));
@@ -3953,6 +3958,20 @@ button:focus-visible {
   .zu-grid { animation: none; }
 }
 
+/* Mobil (<760px, = accStack in Zusammenarbeit.tsx): KEIN Pin-Scroll mehr.
+   Die Section floss bisher als 300vh-Pin, das Accordion clippte die mittlere
+   geoeffnete Karte (nicht vollstaendig ansehbar). Jetzt normale Hoehe, Sticky
+   aufgehoben — alle Karten stehen offen im Fluss und sind voll scrollbar. */
+@media (max-width: 759px) {
+  .zu-section { height: auto; }
+  .zu-sticky {
+    position: static;
+    min-height: 0;
+    overflow: visible;
+    align-items: stretch;
+  }
+}
+
 /* ===================================================================
    Über MISCHOK — Aufbau nach dem Referenzmuster
    Raster 5fr / 1fr Luft / 6fr. Die linke Spalte ist so hoch wie das Bild und
@@ -4036,11 +4055,24 @@ button:focus-visible {
    umbrechend — dafuer feste 3 Spalten, engerer Abstand und kleinere Werte,
    damit auch „Augsburg" in die schmale Spalte passt. */
 @media (max-width: 819px) {
+  /* Seiten-Gutter: die globale 64px-Regel greift erst ab 900px; darunter hatte
+     .ue-sticky nur vertikales Padding — Eyebrow, Headline, Lead und die Kennzahl
+     „Augsburg" liefen bis an die Kante (nicht im Raster, Augsburg rechts
+     abgeschnitten). Standard-Mobil-Gutter setzen. */
+  .ue-sticky {
+    padding-left: clamp(20px, 5vw, 64px);
+    padding-right: clamp(20px, 5vw, 64px);
+  }
   .ue-stats {
     grid-template-columns: repeat(3, 1fr);
     gap: clamp(8px, 2.5vw, 16px);
   }
-  .ue-stat-value { font-size: clamp(20px, 6vw, 30px); }
+  /* kleiner, damit „Augsburg" in die schmale Drittelspalte passt und die
+     Kennzahlen nicht an die Kanten stossen. Mit .ue-stats davor (Spezifitaet
+     0,2,0), weil die Basisregel .ue-stat-value (0,1,0) NACH diesem Media-Query
+     steht und sonst per Quellreihenfolge gewinnt. */
+  .ue-stats .ue-stat-value { font-size: clamp(15px, 4.4vw, 24px); }
+  .ue-stats .ue-stat-label { font-size: 11px; }
 }
 .ue-stat {
   display: flex;
