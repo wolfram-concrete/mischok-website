@@ -18,6 +18,21 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.22.0] – 2026-07-22
+
+### Geändert
+- **Hero final: Variante 2.** V2 ist der Default und wird ausgeliefert. Das
+  V1·V2·V3-Umschalt-Widget ist **ausgeblendet** (`showWidget = false`) — wir
+  verfolgen nur noch V2. V1 und V3 sind **nicht gelöscht, sondern archiviert**:
+  weiterhin als `HeroCeramic`-Varianten vorhanden und über `?hero=1` bzw.
+  `?hero=3` erreichbar.
+- **Mobile-Optimierung gestartet — Pin-Scroll-Sections werden mobil aufgelöst.**
+  Erste Section: **Ansatz**. Am Desktop 300vh mit sticky Innencontainer und
+  scroll-gesteuerter Überblendung der drei Punkte; mobil (`max-width: 819px`)
+  jetzt eine normale, gestapelte Section — Innencontainer statisch, alle drei
+  Punkte sichtbar untereinander, eine Referenzkarte. Höhe dadurch von ~2440px
+  auf ~760px. Über und Zusammenarbeit folgen nach demselben Muster.
+
 ## [0.21.1] – 2026-07-22
 
 ### Geändert

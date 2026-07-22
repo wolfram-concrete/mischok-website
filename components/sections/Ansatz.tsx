@@ -99,6 +99,7 @@ export default function Ansatz() {
     >
       <div
         ref={stickyRef}
+        className="az-sticky"
         style={{
           position: "sticky",
           top: 0,
@@ -194,7 +195,7 @@ export default function Ansatz() {
           {/* Alle Punkte liegen in derselben Grid-Zelle: sie überblenden
               übereinander, der Container misst sich aber am längsten Punkt.
               So kann keine Copy in die Case-Karte darunter laufen. */}
-          <div style={{ display: "grid" }}>
+          <div className="az-points" style={{ display: "grid" }}>
             {POINTS.map((p, i) => {
               const active = i === step;
               const pointStyle: CSSProperties = {
@@ -205,7 +206,7 @@ export default function Ansatz() {
                 pointerEvents: active ? "auto" : "none",
               };
               return (
-                <div key={p.n} style={pointStyle}>
+                <div key={p.n} className="az-point" style={pointStyle}>
                   <div
                     style={{
                       fontFamily: "var(--serif)",
@@ -255,7 +256,7 @@ export default function Ansatz() {
               Element. Wieder ein Grid-Stapel — die Karten liegen in derselben
               Zelle und blenden über. Ohne das würde das Layout springen, weil
               Step 02 keine Karte hat. */}
-          <div style={{ display: "grid" }}>
+          <div className="az-cases" style={{ display: "grid" }}>
             {STEP_CASES.map((c, i) => {
               if (!c) return null;
               const active = i === step;

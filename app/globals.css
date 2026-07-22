@@ -150,6 +150,40 @@ button:focus-visible {
 .foot-cta {
   justify-self: start;
 }
+
+/* ── Ansatz mobil: Pin-Scroll aufgeloest ────────────────────────────────────
+   Am Desktop ist #ansatz 300vh hoch mit sticky Innencontainer; die drei Punkte
+   blenden scroll-gesteuert uebereinander. Mobil ist das eine lange, im
+   Preview nicht renderbare Pin-Strecke — deshalb wird die Section hier zu einer
+   normalen, gestapelten Section: Innencontainer statisch, die drei Punkte
+   stehen alle sichtbar untereinander, und es wird nur die erste (belegte)
+   Referenzkarte gezeigt (die drei Step-Karten wuerden sonst ueberlappen und
+   9 Levels doppeln). */
+@media (max-width: 819px) {
+  /* height/position/overflow stehen als Inline-Styles in den Komponenten —
+     nur mit !important zu ueberschreiben. */
+  #home-root > div > section#ansatz { height: auto !important; }
+  .az-sticky {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+    /* Verlauf einfrieren: ohne Pin wuerde --ansatz-cy beim Scrollen wandern */
+    --ansatz-cy: 40% !important;
+    padding: clamp(48px, 12vw, 72px) clamp(20px, 5vw, 40px);
+  }
+  .az-points { display: block; }
+  .az-point {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+  .az-point + .az-point { margin-top: clamp(40px, 10vw, 64px); }
+  .az-cases { display: block; margin-top: clamp(40px, 10vw, 64px); }
+  .az-cases .az-case { opacity: 1 !important; pointer-events: auto !important; }
+  .az-cases .az-case ~ .az-case { display: none; }
+}
+
 @media (min-width: 820px) {
   .grid-quote {
     grid-template-columns: 0.85fr 1.15fr;

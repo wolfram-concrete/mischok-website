@@ -179,7 +179,7 @@ liegen unter `public/schriftarten/`.
 - **Top-Navigation** — sticky, **Burger auf allen Breakpoints** (Links & CTA im
   Panel), Burger-Striche in der Anmutung des „m" (`"use client"`). Auf der
   Startseite ausgeblendet: Wortmarke & Burger sitzen dort im Hero-Bento.
-- **Hero — drei umschaltbare Varianten** über `HeroSwitch` (Widget V1·V2·V3 nur in der Preview; `?hero=2|3` erzwingt eine Variante, Default V1). V1 volle Bento-Fläche, V2 Foto-dominant mit schmalen Kacheln, V3 saubere Zeilen mit prominentem Kopfbild. V2/V3 teilen die schlanke Karten-Optik (`is-slim`).
+- **Hero — Variante 2** (final). `HeroSwitch` rendert standardmäßig V2; das Umschalt-Widget ist ausgeblendet (`showWidget = false`). V1 und V3 sind archiviert — als `HeroCeramic`-Varianten erhalten und über `?hero=1|3` erreichbar. V2/V3 teilen die schlanke Karten-Optik (`is-slim`).
 - **Hero (`HeroCeramic`)** — Bento-Grid; die fünf Projektlage-Karten sind ein
   horizontales Flex-Accordion (Hover/Klick/Fokus klappt auf), die Icons animieren
   bedeutungsgetrieben (`"use client"`).

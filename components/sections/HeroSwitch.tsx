@@ -8,23 +8,26 @@ import HeroCeramic from "@/components/sections/HeroCeramic";
  * kleinen Umschalter (V1·V2·V3) ein, damit sich die Aufbauten direkt
  * vergleichen lassen.
  *
- * • Default ist Variante 1 (der bestehende Hero) — solange nichts anderes
- *   gewählt ist, ändert sich am Live-Stand nichts.
+ * • **Entschieden: Variante 2** ist der Hero. Sie ist der Default; die Live-
+ *   Seite zeigt V2 ohne Zutun.
+ * • V1 und V3 sind NICHT entfernt — nur archiviert: sie bleiben als
+ *   `HeroCeramic`-Varianten erhalten und sind über `?hero=1` bzw. `?hero=3`
+ *   (oder lokal über das Widget) jederzeit wieder abrufbar.
  * • Die Wahl merkt sich `localStorage`, überlebt also einen Reload.
- * • `?hero=1|2|3` in der URL erzwingt eine Variante direkt.
- * • Das Widget ist aktuell BEWUSST auch in Produktion (Vercel) sichtbar, damit
- *   die Varianten dort durchgeklickt werden können. Vor dem echten Launch
- *   wieder ausbauen — dann `showWidget` z. B. auf
- *   `process.env.NODE_ENV !== "production"` setzen oder HeroSwitch entfernen
- *   und `HeroCeramic` direkt mit der gewählten Variante rendern.
+ * • Das Umschalt-Widget ist AUS — es wird nirgends mehr gerendert (wir
+ *   verfolgen nur noch V2). V1/V3 bleiben trotzdem über `?hero=1` bzw.
+ *   `?hero=3` in der URL erreichbar (Archiv). Zum Reaktivieren des Widgets
+ *   `showWidget` wieder auf `process.env.NODE_ENV !== "production"` setzen.
  */
 type Variant = 1 | 2 | 3;
 const VARIANTS: Variant[] = [1, 2, 3];
 
 export default function HeroSwitch() {
-  const [variant, setVariant] = useState<Variant>(1);
-  // Review-Phase: Umschalter überall sichtbar (auch auf Vercel).
-  const showWidget = true;
+  // V2 ist die gewaehlte Variante (Default). V1/V3 bleiben ueber ?hero=1|3
+  // erreichbar, sind also archiviert, nicht geloescht.
+  const [variant, setVariant] = useState<Variant>(2);
+  // Widget ausgeblendet — nur noch V2 wird verfolgt.
+  const showWidget = false;
 
   // Erst nach dem Mount lesen: URL-Param schlägt gespeicherte Wahl. SSR rendert
   // immer V1, deshalb gibt es keinen Hydration-Mismatch.
