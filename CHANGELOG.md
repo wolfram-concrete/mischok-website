@@ -18,6 +18,15 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.20.1] – 2026-07-22
+
+### Geändert
+- **Hero-Umschalter (V1·V2·V3) jetzt auch in Produktion sichtbar** — damit die
+  Varianten auf der Vercel-Seite direkt durchgeklickt werden können (vorher nur
+  außerhalb von Produktion bzw. per `?hero=`). Bewusst für die Review-Phase; vor
+  dem Launch wieder ausbauen (`showWidget` in `HeroSwitch` gaten oder das Widget
+  entfernen). Default bleibt V1.
+
 ## [0.20.0] – 2026-07-22
 
 ### Hinzugefügt

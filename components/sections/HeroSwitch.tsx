@@ -4,25 +4,27 @@ import { useEffect, useState } from "react";
 import HeroCeramic from "@/components/sections/HeroCeramic";
 
 /**
- * HeroSwitch — rendert den Hero in Variante 1 oder 2 und blendet in der Preview
- * einen kleinen Umschalter ein, damit sich beide Aufbauten direkt vergleichen
- * lassen.
+ * HeroSwitch — rendert den Hero in Variante 1, 2 oder 3 und blendet einen
+ * kleinen Umschalter (V1·V2·V3) ein, damit sich die Aufbauten direkt
+ * vergleichen lassen.
  *
  * • Default ist Variante 1 (der bestehende Hero) — solange nichts anderes
  *   gewählt ist, ändert sich am Live-Stand nichts.
  * • Die Wahl merkt sich `localStorage`, überlebt also einen Reload.
- * • `?hero=2` in der URL erzwingt eine Variante auch dort, wo das Widget nicht
- *   sichtbar ist (Produktions-Build) — praktisch, um V2 auf der Vercel-Preview
- *   zu zeigen, ohne den Umschalter auszuliefern.
- * • Das Widget selbst erscheint nur, wenn NICHT Produktion — auf der fertigen
- *   Seite ist kein Debug-Schalter zu sehen.
+ * • `?hero=1|2|3` in der URL erzwingt eine Variante direkt.
+ * • Das Widget ist aktuell BEWUSST auch in Produktion (Vercel) sichtbar, damit
+ *   die Varianten dort durchgeklickt werden können. Vor dem echten Launch
+ *   wieder ausbauen — dann `showWidget` z. B. auf
+ *   `process.env.NODE_ENV !== "production"` setzen oder HeroSwitch entfernen
+ *   und `HeroCeramic` direkt mit der gewählten Variante rendern.
  */
 type Variant = 1 | 2 | 3;
 const VARIANTS: Variant[] = [1, 2, 3];
 
 export default function HeroSwitch() {
   const [variant, setVariant] = useState<Variant>(1);
-  const showWidget = process.env.NODE_ENV !== "production";
+  // Review-Phase: Umschalter überall sichtbar (auch auf Vercel).
+  const showWidget = true;
 
   // Erst nach dem Mount lesen: URL-Param schlägt gespeicherte Wahl. SSR rendert
   // immer V1, deshalb gibt es keinen Hydration-Mismatch.
