@@ -3640,6 +3640,72 @@ button:focus-visible {
 }
 
 /* ===================================================================
+   Insights/Themen mobil — Snap-Stapel (analog zum Hero-Snap).
+   Zielbild: der Kopf (Label · Headline · Lead · CTA) pinnt als EINE Einheit
+   oben; die drei Format-Karten scrollen von unten hoch und legen sich als
+   Stapel uebereinander (die spaetere deckt die fruehere, ein schmaler Rand
+   der darunterliegenden blitzt durch). Ist die letzte Karte oben angekommen,
+   haelt der Stapel kurz (Dwell) und loest dann — Zusammenarbeit scrollt auf.
+
+   Mechanik wie im Hero: gestaffelte position:sticky. Der Kopf sticky oben,
+   jede Karte sticky an nahezu derselben Marke unter dem Kopf, z-index steigend.
+   Voraussetzungen: kein overflow:hidden an Section/Vorfahren (die sec-step-
+   clip-path ist mobil bereits abgeschaltet) und OPAKE Kartenhintergruende
+   (--navy ist opak, sonst wuerden die Karten durcheinander durchscheinen).
+
+   Achtung Pin-Werte: die Karten-tops sind feste Pixel (Kopfhoehe ~330 + Puffer).
+   Bei stark abweichender Textumbruch-Hoehe kann das um wenige Pixel wandern —
+   bei Bedarf auf JS-gemessene Werte umstellen (wie beim Hero angemerkt). */
+@media (max-width: 819px) {
+  #themen.in-section {
+    /* weniger Luft oben, damit der Kopf frueh die Pin-Marke erreicht */
+    padding-top: clamp(48px, 12vw, 88px);
+    padding-bottom: 0;
+    overflow: visible;
+  }
+  /* Kopf + Liste als EIN Fluss (kein Grid) */
+  #themen .in-grid { display: block; }
+
+  /* Kopf pinnt als Einheit oben */
+  #themen .in-head {
+    position: sticky;
+    top: clamp(12px, 2.4vh, 22px);
+    /* ueber den Karten (opaker Snow-Grund): die hochlaufenden Karten
+       verschwinden HINTER dem Kopf „im Nichts", statt darueber wegzufliegen —
+       dieselbe Logik wie das gepinnte Hero-Bild, hinter das die Kacheln gleiten */
+    z-index: 6;
+    background: var(--bg);
+    /* etwas Luft unter dem CTA, bevor die Karten anlaufen */
+    padding-bottom: clamp(14px, 3vw, 22px);
+  }
+
+  /* Karten mobil etwas flacher, damit Kopf + oberste Karte auch auf kurzen
+     Phones (667px) zusammen in den Viewport passen */
+  #themen .in-list { display: block; }
+  #themen .in-card {
+    min-height: clamp(260px, 38vh, 330px);
+    /* Abstand im Normalfluss = Scrollweg, den jede Karte bis zur Pin-Marke
+       zuruecklegt (sonst gaebe es keinen „Durchlauf") */
+    margin-bottom: clamp(20px, 5vw, 32px);
+  }
+  /* alle an nahezu derselben Marke unter dem Kopf; +10px Versatz pro Karte
+     laesst die darunterliegende als Stapelkante durchblitzen. z-index steigend,
+     damit die spaetere Karte die fruehere deckt. */
+  #themen .in-card:nth-child(1) { position: sticky; top: 372px; z-index: 2; }
+  #themen .in-card:nth-child(2) { position: sticky; top: 382px; z-index: 3; }
+  #themen .in-card:nth-child(3) { position: sticky; top: 392px; z-index: 4; }
+  /* Dwell: den fertigen Stapel kurz halten, bevor er loest und die naechste
+     Section aufscrollt (das „Einrasten" wie beim Hero-CTA). Bewusst knapp —
+     danach tuckern die Karten hinter den Kopf und Zusammenarbeit steigt auf. */
+  #themen .in-list { padding-bottom: 16vh; }
+
+  /* Kopf mobil verdichten: kuerzerer Lead spart Hoehe — der Kopf deckt so
+     weniger, die Karten haben mehr Sichtfläche und der Uebergang wird knapper */
+  #themen .in-h2 { font-size: clamp(28px, 8vw, 34px); }
+  #themen .in-lead { font-size: 15px; line-height: 1.5; }
+}
+
+/* ===================================================================
    Zusammenarbeit — Icon-Slot und Interaktivitäts-Hinweis
    Das Icon sitzt fest oben rechts (dort, wo vorher der Plus-Button war).
    Statt des Plus deutet ein Pfeil unter dem Titel die Bedienbarkeit an:
