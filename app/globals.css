@@ -81,6 +81,13 @@
   --text-copy: clamp(15px, 1.25vw, 17px); /* Standard-Fliesstext */
   --text-meta: clamp(12px, 0.9vw, 13px); /* Kleingedrucktes */
 
+  /* Modul-Eckenrundung — DIE Regel fuer die ganze Seite. Jedes Modul traegt
+     dieselbe, ganz marginale Rundung. Karten/Flaechen nutzen sie als
+     border-radius; die eckigen Module mit clip-path (Sektionsstufe, Ausbuchtung)
+     runden ihre Ecken ueber genau diesen Wert im Polygon, damit das Curving
+     ueberall identisch ist. */
+  --radius: 5px;
+
   /* Zeilenabstand fuer Fliesstext — EINE Stelle fuer die ganze Seite.
      Vorher lagen die Werte verstreut zwischen 1.45 und 1.75; das las sich von
      Section zu Section unterschiedlich luftig. 1.5 ist bewusst gewaehlt: noch
@@ -431,10 +438,15 @@ button:focus-visible {
      Bewusst OHNE den hellen 1px-Rand der Zusammenarbeit-Panels: der liefe auch
      quer unter dem Reiter durch und haette an dessen Fuss eine sichtbare Linie
      hinterlassen. Blur und Transparenz tragen das Glas auch so. */
-  --kt-glass: color-mix(in srgb, var(--navy) 82%, transparent);
+  /* Milchglas im HAUPTTON: reines CI-Blau (--change) mit hoher Deckkraft, damit
+     die Karte als das Markenblau liest — nicht ausgewaschen (zu wenig Deckung)
+     und nicht per Multiply abgedunkelt (das ging unter #002a5c). Die restliche
+     Transparenz + backdrop-blur lassen das Foto dahinter nur weich als Struktur
+     durchscheinen (Milchglas). Reiter (::before) nutzt exakt denselben Wert. */
+  --kt-glass: color-mix(in srgb, var(--change) 90%, transparent);
   background: var(--kt-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px) saturate(1.15);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
   color: var(--on-navy);
 }
 /* Ausbuchtung nach oben an der linken Ecke — dieselbe rechtwinklige
@@ -451,9 +463,11 @@ button:focus-visible {
   width: var(--kt-tab-w);
   bottom: 100%;
   height: var(--kt-tab-h);
+  /* exakt derselbe Wert wie der Kartenkoerper (--kt-glass), damit der Reiter nie
+     heller oder dunkler wirkt als die Karte darunter */
   background: var(--kt-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px) saturate(1.15);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
   border-radius: 5px 5px 0 0;
   pointer-events: none;
 }
@@ -2892,25 +2906,35 @@ button:focus-visible {
   --step-h: clamp(18px, 2.4vw, 44px);
   --step-x: 34%;
   margin-top: calc(-1 * var(--step-h));
-  /* links hoch, rechts auf der alten Kante */
+  /* links hoch, rechts auf der alten Kante. Die vier AUSSEN-Ecken sind am
+     --radius gefast (die Stufe selbst bleibt scharf — sie ist die Kantigkeit).
+     So tragen auch die eckigen Stufen-Module dieselbe marginale Rundung. */
   clip-path: polygon(
-    0 0,
+    0 var(--radius),
+    var(--radius) 0,
     var(--step-x) 0,
     var(--step-x) var(--step-h),
-    100% var(--step-h),
-    100% 100%,
-    0 100%
+    calc(100% - var(--radius)) var(--step-h),
+    100% calc(var(--step-h) + var(--radius)),
+    100% calc(100% - var(--radius)),
+    calc(100% - var(--radius)) 100%,
+    var(--radius) 100%,
+    0 calc(100% - var(--radius))
   );
 }
 /* gespiegelt: rechts hoch, links auf der alten Kante */
 .sec-step.is-right {
   clip-path: polygon(
-    0 var(--step-h),
+    0 calc(var(--step-h) + var(--radius)),
+    var(--radius) var(--step-h),
     var(--step-x) var(--step-h),
     var(--step-x) 0,
-    100% 0,
-    100% 100%,
-    0 100%
+    calc(100% - var(--radius)) 0,
+    100% var(--radius),
+    100% calc(100% - var(--radius)),
+    calc(100% - var(--radius)) 100%,
+    var(--radius) 100%,
+    0 calc(100% - var(--radius))
   );
 }
 
@@ -3767,8 +3791,10 @@ button:focus-visible {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  /* kein border-radius: clip-path wuerde ihn ohnehin ueberschreiben, und die
-     Kantensprache ist rechtwinklig */
+  /* border-radius wuerde vom clip-path ueberschrieben — deshalb sind die vier
+     AUSSEN-Ecken direkt im Polygon am --radius gefast. Die Ausbuchtung selbst
+     bleibt scharf (rechtwinklige Kantensprache). So traegt auch dieses Modul
+     dieselbe marginale Rundung wie alle anderen. */
   min-height: calc(clamp(420px, 46vw, 640px) + var(--bulge-h));
   display: flex;
   align-items: flex-end;
@@ -3776,12 +3802,16 @@ button:focus-visible {
   /* Zitat sitzt ueber der Ausbuchtung, nicht darin */
   padding-bottom: calc(var(--bulge-h) + clamp(24px, 2.6vw, 44px));
   clip-path: polygon(
-    0 0,
-    100% 0,
-    100% 100%,
+    0 var(--radius),
+    var(--radius) 0,
+    calc(100% - var(--radius)) 0,
+    100% var(--radius),
+    100% calc(100% - var(--radius)),
+    calc(100% - var(--radius)) 100%,
     var(--bulge-x) 100%,
     var(--bulge-x) calc(100% - var(--bulge-h)),
-    0 calc(100% - var(--bulge-h))
+    var(--radius) calc(100% - var(--bulge-h)),
+    0 calc(100% - var(--bulge-h) - var(--radius))
   );
 }
 /* Bilderstrecke: alle Aufnahmen liegen uebereinander, nur die aktive ist

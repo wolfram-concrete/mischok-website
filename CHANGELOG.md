@@ -18,6 +18,24 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.21.0] – 2026-07-22
+
+### Geändert
+- **Kontakt-Karte im echten CI-Blau (Milchglas).** Statt einer zu schwachen,
+  halbtransparenten Fuellung (die den Hintergrund durchscheinen liess und das
+  Blau auswusch) liegt jetzt `--change` (#002a5c, Markenblau) mit hoher Deckkraft
+  plus `backdrop-blur` auf der Karte — die Farbe ist der Hauptton, die Rest-
+  Transparenz laesst das Foto als Milchglas durchscheinen. Reiter und
+  Kartenkoerper nutzen exakt denselben Wert (kein Multiply, das die Karte vorher
+  unter #002a5c abgedunkelt hatte).
+- **Einheitliche Modul-Eckenrundung als globale Regel.** Neu `--radius: 5px` in
+  `:root`. Die eckigen Module mit `clip-path` (Sektionsstufe `.sec-step` auf
+  Stimme/Themen/Kontakt/Arbeiten sowie die Ausbuchtung `.ue-media`) hatten bisher
+  scharfe Ecken, weil `clip-path` jeden `border-radius` ueberschreibt. Ihre
+  vier Aussen-Ecken sind jetzt direkt im Polygon am `--radius` gefast — die Stufe
+  bzw. Ausbuchtung bleibt scharf (die gewollte Kantigkeit), die marginale
+  Rundung ist aber ueberall identisch.
+
 ## [0.20.1] – 2026-07-22
 
 ### Geändert
