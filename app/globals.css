@@ -3160,6 +3160,26 @@ button:focus-visible {
      rueckt zusaetzlich um --arb-rise nach oben. */
   margin-top: calc(-1 * var(--step-h) - var(--arb-rise));
 }
+
+/* ── Footer-Reveal (mobil) ──────────────────────────────────────────────────
+   Arbeiten wird beim Herunterscrollen an den unteren Viewport-Rand gepinnt
+   (position: sticky; bottom:0) und bleibt dort stehen. Der Footer folgt in der
+   normalen Flussreihenfolge, liegt aber eine Ebene HOEHER (z-index) und gleitet
+   beim Weiterscrollen ueber das stehende Arbeiten-Bild nach oben — der Footer
+   „kommt zum Vorschein". position steht in der Komponente als Inline-Style,
+   daher !important. Nur mobil; Desktop bleibt unveraendert. */
+@media (max-width: 819px) {
+  #home-root > div > section#arbeiten {
+    position: sticky !important;
+    bottom: 0;
+    /* sticky greift nur, wenn die Section kleiner als der Viewport ist —
+       darum hier die 92vh-Kachelhoehe nicht ueberschreiten */
+  }
+  #home-root > div > footer#footer {
+    position: relative;
+    z-index: 2;
+  }
+}
 /* Papiergrund von #kontakt — endet an der Oberkante des Bildes */
 .kt-ground {
   position: absolute;
