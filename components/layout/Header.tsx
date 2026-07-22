@@ -85,14 +85,14 @@ export default function Header() {
       >
         {/* Wortmarke → Home. Auf der Home oben im Hero-Bento, im Header ab Scroll. */}
         {showLogo && (
-          <a href="/" aria-label="mischok — Startseite" style={{ display: "flex" }}>
+          <a href="/" aria-label="mischok — better. software — Startseite" style={{ display: "flex" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-solo.svg"
-              alt="mischok"
-              width={121}
-              height={24}
-              style={{ display: "block", height: "22px", width: "auto" }}
+              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-claim.svg"
+              alt="mischok — better. software"
+              width={150}
+              height={32}
+              style={{ display: "block", height: "30px", width: "auto" }}
             />
           </a>
         )}

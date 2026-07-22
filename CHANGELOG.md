@@ -18,6 +18,30 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.23.0] – 2026-07-22
+
+### Geändert
+- **Logo global auf die Claim-Version.** Footer, Header (Scroll-Nav) und
+  HeroImpact nutzen jetzt `…-neu-claim` (mischok · better. software_) wie schon
+  der Home-Header — das Logo ist überall dasselbe.
+- **Kontakt-Links interaktiver.** Der `border-left`-Strich der Kontaktkachel ist
+  entfallen; Telefon und E-Mail tragen jetzt einen vorangestellten Pfeil (→,
+  wandert beim Hover), die Adresse rückt bündig auf die Textkante ein. Signalisiert
+  klarer, dass Telefon/E-Mail Aktionen (tel:/mailto:) sind.
+
+### Mobile
+- **Über-Kennzahlen in einer Zeile.** 2010 / 35+ / Augsburg stehen mobil in drei
+  festen Spalten statt umzubrechen (kleinere Werte, engerer Abstand).
+- **Keine schräge sec-step-Kante mehr.** Der gestufte Logorahmen-Absatz
+  (Stimme/Themen/Kontakt/Arbeiten) las auf schmalen Screens als verkantet —
+  mobil jetzt gerade (`clip-path: none`; `.is-right` explizit mit abgedeckt, da
+  spezifischer).
+- **Ansatz bleibt der Slider.** Die frühere mobile Auflösung (die die Punkte
+  übereinanderlegte) ist zurückgenommen — Ansatz ist wieder die Pin-Scroll-
+  Slider-Section.
+- **Hero-CTA** mobil auf Inhaltshöhe (statt Desktop-min-height); **Ansatz-Case-
+  Karte** näher an den Copy-Text gerückt.
+
 ## [0.22.0] – 2026-07-22
 
 ### Geändert

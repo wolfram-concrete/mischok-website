@@ -34,12 +34,12 @@ export default function Footer() {
       <div className="ft-halves" style={{ width: "100%" }}>
         {/* Links: Marke + Claim + CTA */}
         <div className="ft-left">
-          <a href="/" aria-label="mischok — Startseite" style={{ display: "inline-block" }}>
+          <a href="/" aria-label="mischok — better. software — Startseite" style={{ display: "inline-block" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu.svg"
-              alt="mischok"
-              style={{ display: "block", height: "38px", width: "auto" }}
+              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-claim.svg"
+              alt="mischok — better. software"
+              style={{ display: "block", height: "44px", width: "auto" }}
             />
           </a>
           <p

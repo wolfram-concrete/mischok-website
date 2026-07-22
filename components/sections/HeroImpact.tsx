@@ -145,11 +145,11 @@ export default function HeroImpact() {
       <div className="hi-card">
         {/* Brand-Modul: Logo = Home-Button */}
         <div className="hi-cell hi-brand">
-          <a href="/" aria-label="mischok — Startseite" className="hi-brand-link">
+          <a href="/" aria-label="mischok — better. software — Startseite" className="hi-brand-link">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-solo.png"
-              alt="mischok"
+              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-claim.png"
+              alt="mischok — better. software"
               className="hi-wordmark"
             />
           </a>
