@@ -4239,3 +4239,22 @@ button:focus-visible {
   /* Leiste bleibt deckungsgleich ueber dem grauen Streifen des Bildes */
   .ue-dots { grid-column: 1; grid-row: 2; }
 }
+
+/* Mobil (Phone): das gepinnte Über-uns-Modul in den Viewport holen, damit Kopf,
+   Kennzahlen UND der Bild-Slider zusammen sichtbar sind — der Durchsleif-Effekt
+   der Fotos lag sonst unter dem Fold (Grid 878 > 812). Abstaende enger, Bild
+   flacher, Sticky-Polster kleiner: Kennzahlen und Bild ruecken hoch, die
+   Gesamthoehe passt in den Screen. Steht NACH dem 991er-Block, sonst gewaenne
+   dessen .ue-media-min-height per Quellreihenfolge. */
+@media (max-width: 819px) {
+  .ue-sticky {
+    padding-top: clamp(20px, 4vw, 40px);
+    padding-bottom: clamp(20px, 4vw, 40px);
+  }
+  /* Kennzahlen hoch: kleinerer Abstand zwischen Kopf und Stats */
+  .ue-content { gap: clamp(18px, 4vw, 28px); padding-bottom: 0; }
+  /* Bild hoch: kleinerer Abstand zwischen Inhalt und Bild */
+  .ue-grid { gap: clamp(16px, 4vw, 26px); }
+  /* Bild flacher, damit das Modul in den Screen passt */
+  .ue-media { min-height: clamp(272px, 54vw, 340px); }
+}
