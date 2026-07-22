@@ -2447,6 +2447,187 @@ button:focus-visible {
   .hc-navy { grid-area: navy; }
 }
 
+/* ── Hero-Variante 2 — ruhiger, Foto oben rechts dominiert ──────────────────
+   Weniger Module: das untere linke Foto entfaellt (im TSX nicht gerendert),
+   das Foto rechts zieht ueber die Feld-Zeile herunter, die fuenf Projektlagen
+   liegen als schmale Buchruecken links darunter, das CTA schrumpft zu einem
+   kurzen Balken unten rechts. Umschaltbar ueber HeroSwitch. */
+@media (min-width: 900px) {
+  .hc-grid.is-v2 {
+    /* Zeilen: Kopf/Foto oben, dann die Buchruecken-Zeile, unten der CTA-Balken.
+       Das Foto (rechte Haelfte) spannt drei Zeilen und wird so das dominante
+       Modul; der CTA-Balken ist nur die letzte, flache Zeile. */
+    grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 0.62fr);
+    grid-template-areas:
+      "nav    nav    nav    nav    nav    nav"
+      "head   head   head   photo  photo  photo"
+      "head   head   head   photo  photo  photo"
+      "fields fields fields photo  photo  photo"
+      "fields fields fields navy   navy   navy";
+  }
+  /* Fuenf schmale Kacheln nebeneinander. Aufbau je Kachel: Nummer + Icon oben,
+     Titel UNTEN (justify-content: space-between spreizt Kopf und Koerper an die
+     Ober-/Unterkante). Der Titel sitzt so am Modulboden.
+     Hover-Verhalten (Akkordeon): die beruehrte Kachel waechst nach rechts ueber
+     ~zwei Spalten auf (flex-grow), die vier anderen stauchen sich schmaler; im
+     aufgezogenen Feld faehrt der Detailtext ueber dem Titel auf. Auf den
+     gestauchten Kacheln entfaellt die „Projektlage 0X"-Zeile — dafuer ist kein
+     Platz mehr, und der Blick soll auf der aufgezogenen Kachel liegen. */
+  .hc-grid.is-slim .hc-fields { flex-direction: row; }
+  .hc-grid.is-slim .hc-field {
+    flex: 1 1 0;
+    justify-content: space-between;
+    gap: clamp(10px, 1.4vh, 20px);
+    padding: clamp(12px, 1.6vh, 20px) clamp(8px, 0.8vw, 14px);
+    /* leiser: keine erhabene Keramikhaptik, nur eine feine Kante */
+    background: color-mix(in srgb, var(--snow) 70%, transparent);
+    box-shadow: inset 0 0 0 1px rgba(0, 42, 92, 0.06);
+    transition: flex-grow 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+      background 0.3s ease, box-shadow 0.3s ease;
+  }
+  /* Koerper normal gestapelt: Headline zuerst, Copy DIREKT darunter. Der Titel
+     sitzt (durch space-between am Feld) unten am Kartenboden; beim Aufklappen
+     waechst der Block nach oben, die Copy fuellt darunter auf. Kleiner Abstand,
+     damit zwischen Headline und Copy keine Luecke klafft — die Headline ist
+     ein Einzeiler und braucht keinen Zeilenluft-Abstand. */
+  .hc-grid.is-slim .hc-field-body {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3px, 0.5vh, 7px);
+  }
+  /* Icon in den schlanken Kacheln 20% kleiner als in V1. */
+  .hc-grid.is-slim .hc-field-icon .hi-icon {
+    width: clamp(26px, min(3.84vw, 5.92vh), 61px);
+    height: clamp(26px, min(3.84vw, 5.92vh), 61px);
+  }
+  /* Der alte is-open-Zustand (aus V1, per onMouseEnter gesetzt) bleibt ohne
+     Wirkung — das Aufziehen haengt allein am echten :hover, damit es beim
+     Verlassen wieder zugeht und nicht kleben bleibt. */
+  .hc-grid.is-slim .hc-field.is-open { flex-grow: 1; }
+  /* Aufgezogene Karte: WEISS hervorgehoben, mit weicher Tiefe — sie hebt sich
+     klar von den ruhigen, leicht getoenten Nachbarn ab. */
+  .hc-grid.is-slim .hc-field:hover,
+  .hc-grid.is-slim .hc-field:focus-within {
+    flex-grow: 2.6;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px rgba(0, 42, 92, 0.12),
+      0 14px 34px rgba(0, 42, 92, 0.1), 0 3px 10px rgba(0, 42, 92, 0.05);
+  }
+  /* Detailtext: eingeklappt (max-height:0), faehrt nur im aufgezogenen Feld auf.
+     overflow:hidden am Feld schneidet ab, falls es einmal knapp wird. */
+  .hc-grid.is-slim .hc-fdetail {
+    display: block;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    font-size: clamp(12px, 0.82vw, 14px);
+  }
+  .hc-grid.is-slim .hc-field:hover .hc-fdetail,
+  .hc-grid.is-slim .hc-field:focus-within .hc-fdetail {
+    max-height: 22em;
+    opacity: 1;
+  }
+  /* Kopfzeile — Standard (V2): Nummer oben, Icon LINKS DARUNTER, alles
+     linksbuendig gestapelt. Die Nummer bleibt IMMER stehen (auch wenn eine
+     andere Kachel aufgezogen ist) und darf auf zwei Zeilen brechen
+     („Projektlage" oben, Ziffer darunter). V3 dreht die Kopfzeile in eine Reihe
+     mit Icon oben rechts (s. is-v3-Block). */
+  .hc-grid.is-slim .hc-field-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(8px, 1.2vh, 16px);
+  }
+  /* Icon darf nicht schrumpfen, wenn die Nummer zweizeilig wird. */
+  .hc-grid.is-slim .hc-field-icon { flex: none; }
+  .hc-grid.is-slim .hc-ftitle { font-size: clamp(13px, 0.95vw, 16px); }
+  /* CTA-Balken: Label und Zeile uebereinander, beide linksbuendig — „Der
+     naechste Schritt" oben links, „Projektlage klaeren" unten links. Die
+     Verteilung uebernimmt justify-content: space-between, sodass beide in
+     ihre jeweilige Ecke ruecken. */
+  .hc-grid.is-slim .hc-navy {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: clamp(8px, 1.4vh, 16px);
+    padding: clamp(12px, 1.8vh, 22px) clamp(20px, 2.4vw, 36px);
+  }
+
+  /* ── Hero-Variante 3 — wie V2 (schlanke Felder, is-slim), aber als saubere
+     Zeilen-Ordnung statt Foto-ueber-Felder-Bento. Alle Module aus V1 bleiben —
+     nur die Zeilen sind neu proportioniert:
+       Zeile 1 (prominent): Headline links + Bild rechts — traegt das meiste
+         Gewicht (2.6fr).
+       Zeile 2 (niedriger): die fuenf Projektlagen ueber die volle Breite,
+         deutlich flacher als in V2 — es war ohnehin Puffer da.
+       Zeile 3 (klein): unten links das Teamfoto (wieder da), unten rechts der
+         CTA-Balken.
+     Das obere Bild wird NICHT nach unten gezogen; es bleibt neben der Headline. */
+  /* 10 Spalten, damit der untere Bildcontainer exakt zwei Projektlagenkarten
+     breit werden kann (2 von 5 Karten = 40% = 4 von 10 Spalten). Kopf/Foto
+     teilen sich weiter die Haelfte (5/5). */
+  .hc-grid.is-v3 {
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: auto minmax(0, 2.6fr) minmax(0, 1.05fr) minmax(0, 0.62fr);
+    grid-template-areas:
+      "nav    nav    nav    nav    nav    nav    nav    nav    nav    nav"
+      "head   head   head   head   head   photo  photo  photo  photo  photo"
+      "fields fields fields fields fields fields fields fields fields fields"
+      "photoB photoB photoB photoB navy   navy   navy   navy   navy   navy";
+  }
+
+  /* V3-Kopfzeile: als Reihe, Icon oben rechts in der Ecke (V2 hat es links
+     unter der Nummer). Der Rest — Headline unten am Boden, Copy darunter beim
+     Aufklappen — kommt aus is-slim (space-between + column). */
+  .hc-grid.is-v3 .hc-field-head {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: clamp(8px, 0.8vw, 14px);
+  }
+}
+
+/* Preview-Umschalter für die Hero-Variante — nur in der Preview gerendert
+   (s. HeroSwitch). Schwebt unten links, bewusst schlicht und klein. */
+.hero-switch {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgba(0, 42, 92, 0.16), inset 0 0 0 1px rgba(0, 42, 92, 0.08);
+  font-family: var(--realtime, sans-serif);
+}
+.hero-switch-cap {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0, 42, 92, 0.5);
+  padding: 0 6px 0 4px;
+}
+.hero-switch-btn {
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(0, 42, 92, 0.6);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.hero-switch-btn.is-on {
+  background: var(--navy, #002a5c);
+  color: #fff;
+}
+
 /* Tablet/Mobile: Module stapeln; Navi klappt auf den Burger zusammen */
 @media (max-width: 899px) {
   .hc-nav { order: -2; }

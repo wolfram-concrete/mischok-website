@@ -32,14 +32,27 @@ const Chevron = ({ open }: { open: boolean }) => (
  * je Karte eine sehr subtile, aus dem Icon abgeleitete Hintergrundform.
  */
 
-export default function HeroCeramic() {
+/**
+ * `variant` schaltet zwischen zwei Bento-Layouts:
+ *   1 — der bestehende, dichte Aufbau (fünf gleich prominente Felder über die
+ *       volle Breite, zwei Bilder, grosses CTA).
+ *   2 — ruhiger: das Foto oben rechts dominiert und zieht bis über die
+ *       Feld-Zeile herunter, die fünf Projektlagen liegen als schmale
+ *       „Buchrücken" links darunter, das untere linke Foto entfällt, das CTA
+ *       schrumpft zu einem kurzen Balken unten rechts.
+ * Der Umschalter sitzt in HeroSwitch (nur in der Preview sichtbar).
+ */
+export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
   const [active, setActive] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
+  // V2 und V3 teilen sich die schlanke Feld-/CTA-Optik (is-slim); das konkrete
+  // Bento-Raster kommt je Variante aus is-v2 bzw. is-v3.
+  const slim = variant !== 1;
 
   return (
-    <section className="hc-section" id="hero-ceramic">
-      <div className="hc-grid">
+    <section className={`hc-section${slim ? ` is-v${variant}` : ""}`} id="hero-ceramic">
+      <div className={`hc-grid${slim ? ` is-slim is-v${variant}` : ""}`}>
         {/* Navigations-Modul: Logo, Links (mit Referenzen-Dropdown) und CTA
             zusammengefasst in einem länglichen Bento über die volle Breite. */}
         <div
@@ -48,11 +61,11 @@ export default function HeroCeramic() {
           className={`hc-nav${dropOpen || menuOpen ? " is-mega" : ""}`}
           onMouseLeave={() => setDropOpen(false)}
         >
-          <a href="/" aria-label="mischok — Startseite" className="hc-nav-brand">
+          <a href="/" aria-label="mischok — better. software — Startseite" className="hc-nav-brand">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu.png"
-              alt="mischok"
+              src="/Logo/MISCHOK_LOGO_L_POS_RGB-neu-claim.png"
+              alt="mischok — better. software"
               className="hc-wordmark"
             />
           </a>
@@ -168,10 +181,20 @@ export default function HeroCeramic() {
         {/* Bildmodul rechts */}
         <div className="hc-photo hc-surface">
           <ImageFrame
-            src="/assets/Mischok_2023_ma_245.jpg"
-            alt="mischok — Team im Gespräch"
+            src="/assets/Mischok_2023_ma_406.jpg"
+            alt="mischok — Kajetan Mischok mit dem Team im Workshop"
             placeholder=""
-            sizes="(max-width:900px) 100vw, 34vw"
+            /* Das Modul belegt die rechte Haelfte (~50vw). Vorher stand hier
+               40vw — zu niedrig: der Browser lud die 640px-Variante in einen
+               ~700px-Slot und skalierte hoch (sichtbar weich, auf Retina noch
+               staerker). 50vw laesst next/image die passend grosse Stufe
+               waehlen (bei 1x ~828px, bei 2x ~1920px). */
+            sizes="(max-width:900px) 100vw, 50vw"
+            /* Querformat (1.5:1) in hochkantem Container: cover beschneidet
+               links/rechts. Kajetan (weisses Hemd) steht bei ~62% horizontal,
+               das Gesicht bei ~35% Hoehe — der Fokuspunkt haelt ihn im
+               Ausschnitt zentriert. */
+            imgStyle={{ objectPosition: "62% 35%" }}
             priority
           />
         </div>
@@ -213,19 +236,21 @@ export default function HeroCeramic() {
           })}
         </div>
 
-        {/* Unten links: Teamfoto */}
-        <div className="hc-photoB hc-surface">
-          <ImageFrame
-            src="/assets/Mischok_2023_ma_444.jpg"
-            alt="mischok — Zusammenarbeit im Projekt"
-            placeholder=""
-            sizes="(max-width:900px) 100vw, 40vw"
-            /* Das Modul ist ~3.2:1, die Quelle 1.5:1 — es fallen gut 50% der
-               Bildhöhe weg. 22% hält beide Köpfe im Bild; höhere Werte
-               schneiden oben an. */
-            imgStyle={{ objectPosition: "center 22%" }}
-          />
-        </div>
+        {/* Unten links: Teamfoto — in V1 und V3. Nur V2 laesst es weg. */}
+        {variant !== 2 && (
+          <div className="hc-photoB hc-surface">
+            <ImageFrame
+              src="/assets/Mischok_2025_ma_216.jpg"
+              alt="mischok — die Geschäftsführung"
+              placeholder=""
+              sizes="(max-width:900px) 100vw, 40vw"
+              /* Breit-flacher Container, Quelle 1.5:1 — cover beschneidet oben
+                 und unten. Die drei Gesichter liegen bei ~30% Höhe; 28% haelt
+                 sie mittig im Ausschnitt. */
+              imgStyle={{ objectPosition: "center 28%" }}
+            />
+          </div>
+        )}
 
         {/* Unten rechts: dunkelblaues CTA-Modul */}
         {/* Das ganze Modul ist der Link: die blaue Fläche und das Klickziel sind

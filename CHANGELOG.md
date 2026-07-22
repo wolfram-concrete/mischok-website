@@ -18,6 +18,42 @@ Material für WEKA Pilot Online); Sektionsstufe auch an Unterkanten (braucht
 Stapelkontext, s. u.); mittlere Zusammenarbeit-Karte trägt noch ein generisches
 Redaktionsfoto.
 
+## [0.20.0] – 2026-07-22
+
+### Hinzugefügt
+- **Zwei umschaltbare Hero-Varianten (V2, V3) plus Preview-Umschalter.** Neu
+  `HeroSwitch`: rendert `HeroCeramic` in Variante 1, 2 oder 3 und blendet in der
+  Preview ein kleines Widget (V1·V2·V3) unten links ein. Default bleibt V1 —
+  am Live-Stand ändert sich ohne Auswahl nichts. Die Wahl merkt sich
+  `localStorage`; `?hero=2|3` erzwingt eine Variante auch dort, wo das Widget
+  nicht sichtbar ist (Produktions-Build). Das Widget selbst wird nur außerhalb
+  von Produktion gerendert.
+  - **V2** — ruhiger: Foto oben rechts dominiert (spannt drei Zeilen), die fünf
+    Projektlagen liegen als schmale Kacheln, das untere linke Foto entfällt, das
+    CTA ist ein kurzer Balken.
+  - **V3** — saubere Zeilen-Ordnung: Zeile 1 (Headline + Bild) am prominentesten,
+    die Projektlagen-Zeile flacher, unten links ein Foto (auf zwei Kartenbreiten,
+    dafür ein 10-Spalten-Raster) und rechts das kleine CTA.
+- **`variant`-Prop an `HeroCeramic`** (1|2|3); V2/V3 teilen sich die schlanke
+  Karten-Optik (`is-slim`), das Bento-Raster kommt je Variante aus `is-v2`/`is-v3`.
+
+### Geändert
+- **Kopf-Logo mit Claim.** Header nutzt jetzt `…-neu-claim.png`
+  („mischok · better. software_"); `alt`/`aria` entsprechend erweitert.
+- **Hero-Bild oben rechts:** neues Motiv `Mischok_2023_ma_406.jpg` mit Fokus auf
+  Kajetan Mischok (`object-position: 62% 35%`). **Bildqualität behoben:** das
+  `sizes`-Attribut sagte `40vw`, der Container ist aber ~50vw (696px) breit — der
+  Browser lud die 640px-Stufe und skalierte hoch (weich, auf Retina stärker).
+  Jetzt `50vw` → 828px bei 1x, 1920px bei 2x.
+- **Unterer Bildcontainer (V3):** Gründerfoto `Mischok_2025_ma_216.jpg`, Fokus
+  auf Gesichtshöhe (`center 28%`), Breite auf zwei Projektlagenkarten begrenzt.
+- **Karten-Interaktion (V2/V3):** Hover zieht eine Kachel über ~zwei Spalten auf,
+  die anderen stauchen sich; die aufgezogene Karte wird **weiß** hervorgehoben.
+  Nummer („Projektlage 0X") bleibt auf allen Kacheln sichtbar (bricht bei Bedarf
+  zweizeilig um). Headline über der Copy, dicht gesetzt. Icons in den schlanken
+  Kacheln 20 % kleiner. Kopfzeile: V2 Icon links unter der Nummer, V3 Icon oben
+  rechts in der Ecke.
+
 ## [0.19.0] – 2026-07-17
 
 ### Geändert

@@ -1,4 +1,4 @@
-import HeroCeramic from "@/components/sections/HeroCeramic";
+import HeroSwitch from "@/components/sections/HeroSwitch";
 import Ansatz from "@/components/sections/Ansatz";
 import Stimme from "@/components/sections/Stimme";
 import Themen from "@/components/sections/Themen";
@@ -23,7 +23,7 @@ export default function Home() {
             samt Inhalten (PRAXIS in lib/content.ts) und Styles erhalten und
             kann an anderer Stelle wieder eingehängt werden. Siehe den Hinweis
             im Kopf von components/sections/AusDerPraxis.tsx. */}
-        <HeroCeramic />
+        <HeroSwitch />
         <Ansatz />
         <Stimme />
         <Themen />
