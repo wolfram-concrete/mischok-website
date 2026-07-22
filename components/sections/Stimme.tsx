@@ -50,6 +50,12 @@ export default function Stimme() {
           alt=""
           placeholder=""
           sizes="100vw"
+          /* Julius sitzt im Querformat linksseitig; auf dem hochformatigen
+             Mobil-Ausschnitt beschneidet `cover` horizontal und drueckte ihn an
+             den linken Rand. 32% verschiebt das Ausschnittfenster nach links —
+             Julius rueckt in die Bildmitte. Am Desktop (breiter Container,
+             vertikaler Beschnitt) hat der X-Wert keine Wirkung. */
+          imgStyle={{ objectPosition: "32% 50%" }}
         />
       </div>
       {/* Scrim: trägt den Kontrast für die weiße Schrift */}

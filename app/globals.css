@@ -3076,10 +3076,15 @@ button:focus-visible {
      ueber .sec-step (0,1,0) und behaelt seine Stufe. */
   .sec-step,
   .sec-step.is-right { clip-path: none; }
-  /* Ueberlappung nur fuer Stimme/Themen zuruecknehmen — Kontakt/Arbeiten haben
-     eine eigene Bild-Overlap-Logik (--arb-rise), die unangetastet bleibt. */
-  #home-root > div > section#stimme,
+  /* Ueberlappung fuer Themen zuruecknehmen — Kontakt/Arbeiten haben eine eigene
+     Bild-Overlap-Logik (--arb-rise), die unangetastet bleibt. */
   #home-root > div > section#themen { margin-top: 0; }
+  /* Stimme behaelt bewusst die -step-h-Ueberlappung: der Reiter-Winkel-Notch oben
+     links liegt damit UEBER der vorigen Section (Ansatz), und der Ausschnitt zeigt
+     deren getoenten Grund (az-sticky conic-gradient) statt des reinen Body-Snow
+     (249) — sonst blitzte der Notch heller/weiss als das Band darueber. Die
+     Overlap = exakt --step-h = Notch-Hoehe, deckt den Ausschnitt also voll. */
+  #home-root > div > section#stimme { margin-top: calc(-1 * var(--step-h)); }
 
   /* Stimme mobil: die eckigen Reiter-Winkel (Logorahmen-Kantigkeit) wieder rein,
      hier bewusst als zwei kleine Winkel an den DIAGONALEN Ecken — oben links und
