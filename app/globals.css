@@ -2702,6 +2702,12 @@ button:focus-visible {
     --pin-img: 298px;   /* flush unter Headline (58 + 240) */
     --pin-cta: 518px;   /* flush unter Bild (298 + 220) */
   }
+  /* „Einrasten wie ein Magnet": eine Dwell-Strecke am Ende des Hero-Grids haelt
+     den eingerasteten Zustand (Bild gepinnt, CTA buendig darunter, alle Karten
+     dahinter verschwunden) fuer ~55vh Scroll fest, BEVOR die Pins loesen und die
+     naechste Section aufscrollt. Ohne diese Strecke loest die Sequenz sofort und
+     der CTA „rastet" nicht spuerbar ein. Tunbar ueber diesen einen Wert. */
+  #hero-ceramic .hc-grid { padding-bottom: 55vh; }
   #hero-ceramic .hc-nav {
     position: sticky;
     top: 0;
