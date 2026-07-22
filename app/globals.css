@@ -111,8 +111,12 @@
 
 html {
   scroll-behavior: smooth;
-  /* Anker-Sprünge nicht hinter der fixierten Top-Navigation verstecken */
-  scroll-padding-top: 84px;
+  /* Anker-Sprünge nicht hinter der fixierten Top-Navigation verstecken.
+     Als Variable, weil der Hero-Snap (mobil) diesen Offset gegenrechnen muss,
+     damit die Projektlagen-Karten buendig unter dem Foto einrasten statt um
+     diesen Betrag zu tief. */
+  --scroll-pad-top: 84px;
+  scroll-padding-top: var(--scroll-pad-top);
 }
 
 body {
@@ -2745,6 +2749,25 @@ button:focus-visible {
   #hero-ceramic .hc-fields {
     position: relative;
     z-index: 1;
+  }
+
+  /* „Magnetismus" der Projektlagen-Karten: beim Hochscrollen rastet jede Karte
+     mit ihrer Oberkante buendig unter dem Foto ein (scroll-margin-top =
+     --pin-cta = Bild-Unterkante), dann scrollt man weiter und die naechste
+     rastet ein — bevor sie hinter dem Foto verschwindet.
+     scroll-snap-type liegt auf dem Scroll-Root (proximity = sanft, faengt nur
+     nahe eines Snap-Punkts; ausserhalb des Heros gibt es keine Snap-Ziele, also
+     bleibt der Rest der Seite frei). scroll-snap-stop:always verhindert, dass
+     eine Karte bei schnellem Wischen uebersprungen wird — „das Naechste und das
+     Naechste", eins nach dem anderen. Nur mobil, wo der Snap-Stapel greift. */
+  html { scroll-snap-type: y proximity; }
+  #hero-ceramic .hc-field {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    /* Landepunkt = Bild-Unterkante. Der Snapport-Start ist bereits um
+       scroll-padding-top (Anker-Offset) eingerueckt — den ziehen wir hier ab,
+       sonst rastet die Karte um diesen Betrag zu tief unter dem Foto ein. */
+    scroll-margin-top: calc(var(--pin-cta) - var(--scroll-pad-top));
   }
 
   /* Logo und Burger buendig mit den Modulkanten. Die Navi ist ein Grid-Item wie
