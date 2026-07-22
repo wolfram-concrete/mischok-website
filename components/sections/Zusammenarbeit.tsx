@@ -209,9 +209,11 @@ export default function Zusammenarbeit() {
               borderRadius: "5px",
               /* Mobil navy-getoentes Glas statt hellem: da das dunkle Bild-Overlay
                  mobil entfaellt (Foto klar), traegt das Band selbst den Kontrast
-                 fuer die weisse Typo. Am Desktop bleibt das helle Glas. */
+                 fuer die weisse Typo. 0.5 = die dunklere Variante (einheitlich
+                 ueber alle Karten, unabhaengig vom Foto dahinter). Am Desktop
+                 bleibt das helle Glas. */
               background: accStack
-                ? "rgba(0,42,92,0.34)"
+                ? "rgba(0,42,92,0.5)"
                 : "rgba(255,255,255,0.10)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
