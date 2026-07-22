@@ -2680,24 +2680,41 @@ button:focus-visible {
      Hoehe. */
   .hc-navy { min-height: 0; }
 
-  /* ── Hero-Snap v1 (mobil) — Projektlagen gleiten hinter das Foto ───────────
-     Das Foto pinnt beim Scrollen oben (position: sticky; top:0) und bleibt
-     stehen, waehrend die Projektlagen und das CTA mit NIEDRIGEREM z-index nach
-     oben dahinter wegscrollen (das opake Foto verdeckt sie) — zuletzt ist die
-     blaue CTA-Karte das Letzte, was hinter dem Foto verschwindet.
-     WICHTIG (Lehre aus dem Footer-Reveal): das Foto pinnt nur, solange die
-     Hero-Section im Blick ist (sein Containing Block ist die Section), und kann
-     die restliche Seite NICHT ueberlagern. overflow der .hc-section muss dafuer
-     sichtbar sein (sonst greift sticky nicht). Im Ruhezustand (Scroll 0) aendert
-     sich nichts — die Regeln wirken nur beim Scrollen. */
-  #home-root > div > section#hero-ceramic { overflow: visible; }
-  #hero-ceramic .hc-photo {
+  /* ── Hero-Snap v2 (mobil) — gestaffelte Pins ───────────────────────────────
+     Ablauf beim Scrollen:
+       • Navi (Logo + Burger) bleibt oben stehen  → sticky top:0, oberste Ebene
+       • Bild bleibt DARUNTER stehen               → sticky top: Navi-Hoehe
+       • Projektlagen 1–5 rattern DAHINTER durch   → z-index unter dem Bild,
+         das opake Bild verdeckt sie beim Hochscrollen
+       • CTA hakt sich UNTER dem Bild fest ein     → sticky top: Navi+Bild
+     Danach loesen alle Pins (Containing Block = Hero-Grid) und die Seite scrollt
+     normal in die naechste Section — die Pins koennen die Seite NICHT
+     ueberlagern. overflow der .hc-section muss dafuer sichtbar sein.
+     Die Pin-Hoehen kommen aus Messwerten (Navi 58 + gap, Bild 220 + gap) und
+     sind als Variablen tunbar. */
+  #home-root > div > section#hero-ceramic {
+    overflow: visible;
+    --hero-nav-h: 64px;
+    --hero-img-h: 226px;
+  }
+  #hero-ceramic .hc-nav {
     position: sticky;
     top: 0;
+    z-index: 5;
+    /* deckt die dahinter wegscrollenden Module ab */
+    background: var(--snow);
+  }
+  #hero-ceramic .hc-photo {
+    position: sticky;
+    top: var(--hero-nav-h);
     z-index: 3;
   }
-  #hero-ceramic .hc-fields,
   #hero-ceramic .hc-navy {
+    position: sticky;
+    top: calc(var(--hero-nav-h) + var(--hero-img-h));
+    z-index: 2;
+  }
+  #hero-ceramic .hc-fields {
     position: relative;
     z-index: 1;
   }
