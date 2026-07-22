@@ -3042,6 +3042,24 @@ button:focus-visible {
      eine eigene Bild-Overlap-Logik (--arb-rise), die unangetastet bleibt. */
   #home-root > div > section#stimme,
   #home-root > div > section#themen { margin-top: 0; }
+
+  /* Stimme mobil: die eckigen Reiter-Winkel (Logorahmen-Kantigkeit) wieder rein,
+     hier bewusst als zwei kleine Winkel an den DIAGONALEN Ecken — oben links und
+     unten rechts. #stimme.sec-step (1,1,0) ist spezifischer als das
+     clip-path:none darueber und steht danach, gewinnt also. */
+  #stimme.sec-step {
+    --reiter-w: clamp(44px, 15vw, 72px);
+    clip-path: polygon(
+      0 var(--step-h),
+      var(--reiter-w) var(--step-h),
+      var(--reiter-w) 0,
+      100% 0,
+      100% calc(100% - var(--step-h)),
+      calc(100% - var(--reiter-w)) calc(100% - var(--step-h)),
+      calc(100% - var(--reiter-w)) 100%,
+      0 100%
+    );
+  }
 }
 /* ===================================================================
    HeadlineRise — Auftritt der Headlines (s. components/ui/HeadlineRise.tsx).
