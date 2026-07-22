@@ -2680,6 +2680,28 @@ button:focus-visible {
      Hoehe. */
   .hc-navy { min-height: 0; }
 
+  /* ── Hero-Snap v1 (mobil) — Projektlagen gleiten hinter das Foto ───────────
+     Das Foto pinnt beim Scrollen oben (position: sticky; top:0) und bleibt
+     stehen, waehrend die Projektlagen und das CTA mit NIEDRIGEREM z-index nach
+     oben dahinter wegscrollen (das opake Foto verdeckt sie) — zuletzt ist die
+     blaue CTA-Karte das Letzte, was hinter dem Foto verschwindet.
+     WICHTIG (Lehre aus dem Footer-Reveal): das Foto pinnt nur, solange die
+     Hero-Section im Blick ist (sein Containing Block ist die Section), und kann
+     die restliche Seite NICHT ueberlagern. overflow der .hc-section muss dafuer
+     sichtbar sein (sonst greift sticky nicht). Im Ruhezustand (Scroll 0) aendert
+     sich nichts — die Regeln wirken nur beim Scrollen. */
+  #home-root > div > section#hero-ceramic { overflow: visible; }
+  #hero-ceramic .hc-photo {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  }
+  #hero-ceramic .hc-fields,
+  #hero-ceramic .hc-navy {
+    position: relative;
+    z-index: 1;
+  }
+
   /* Logo und Burger buendig mit den Modulkanten. Die Navi ist ein Grid-Item wie
      die Module darunter — ihr eigener Innenabstand hat das Logo 20px nach innen
      und den Burger 12px nach innen geschoben (gemessen: Logo bei 36, Module bei
