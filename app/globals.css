@@ -3188,6 +3188,17 @@ button:focus-visible {
   display: flex;
   justify-content: flex-end;
 }
+/* Mobil: mehr Bild oben, Textkachel weiter unten. Die Section wird hoeher und
+   der Inhalt an den unteren Rand geschoben (align-content: end), sodass der
+   obere Bereich das Motiv zeigt. Die --arb-rise-Overlap-Logik bleibt
+   unangetastet. */
+@media (max-width: 819px) {
+  .arb-grid {
+    align-content: end;
+    min-height: 92vh;
+    padding-bottom: clamp(32px, 8vw, 56px);
+  }
+}
 /* Die Kachel schwebt: sie fuellt die Spalte bewusst nicht, sondern misst sich
    an ihrem Inhalt. */
 .arb-tile {
