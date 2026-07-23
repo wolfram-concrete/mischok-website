@@ -139,10 +139,11 @@ export default function Zusammenarbeit() {
             letterSpacing: "-0.01em",
             color: "var(--navy)",
             margin: "0 0 clamp(32px,4vw,52px)",
-            /* Nicht ueber die volle Gridbreite: der Satz soll als Zweizeiler
-               stehen. ch statt px, damit die Grenze mit der Schriftgroesse
-               mitwaechst. Der harte Umbruch sitzt hinter „Zusammenarbeit". */
-            maxWidth: "24ch",
+            /* Zweizeiler (Umbruch hinter „Zusammenarbeit" per <br>): die
+               max-width muss die erste Zeile „Was uns in der Zusammenarbeit" GANZ
+               fassen, sonst bricht sie zusaetzlich um (war 24ch -> 3 Zeilen). ~34ch
+               (rund zwei Drittel der Gridbreite) haelt Zeile 1 zusammen. */
+            maxWidth: "34ch",
           }}
         >
           <HeadlineRise>
