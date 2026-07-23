@@ -141,6 +141,9 @@ export type Topic = {
   desc: string;
   /** Kartenbild */
   image: string;
+  /** Ziel des Karten-CTA. Interim der Sektionsanker; sobald die Insights-
+   *  Detailseiten stehen, hier auf /insights/<slug> umstellen (s. Megamenue). */
+  href: string;
 };
 
 /** Themen — topics */
@@ -157,6 +160,7 @@ export const TOPICS: Topic[] = [
     title: "Retten oder Reimplementieren?",
     desc: "Julius Mischok spricht darüber, wann bestehende Software weiterentwickelt werden kann — und wann ein Neustart fachlich sinnvoller ist.",
     image: "/assets/Redaktionel/54962038207_917685d4d5_o.jpg",
+    href: "/#themen",
   },
   {
     slot: "topic_2",
@@ -165,6 +169,7 @@ export const TOPICS: Topic[] = [
     title: "STEPS",
     desc: "Eine Veranstaltung von mischok in Augsburg für Menschen aus Mittelstand, Technologie und Unternehmensentwicklung.",
     image: "/assets/Redaktionel/20250710_110909.jpg",
+    href: "/#themen",
   },
   {
     slot: "topic_3",
@@ -173,6 +178,7 @@ export const TOPICS: Topic[] = [
     title: "KI in der Softwareentwicklung",
     desc: "Ein Workshop zum praktischen Einsatz von KI in Entwicklungsprozessen — mit Blick auf Qualität, Verantwortung und konkrete Arbeitsweisen im Team.",
     image: "/assets/Mischok_2023_ma_334.jpg",
+    href: "/#themen",
   },
 ];
 

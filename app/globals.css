@@ -3109,6 +3109,35 @@ button:focus-visible {
 /* #zusammenarbeit hat keine .sec-step-Kante mehr (Pin-Scroll, s. .zu-section) */
 /* #ueber hat keine .sec-step-Kante mehr (Pin-Scroll, s. .ue-section) */
 
+/* Vollflaechige Bild-/Zitat-Sections (Julius-Stimme + Insights) laufen an den
+   VIEWPORT-Raendern bewusst FULLSIZE aus: die 5px-Aussenfase (--radius) liest
+   dort nicht als Modulkante, sondern als kleine Ecke/Fehler, weil die Flaeche
+   bis an den Bildschirmrand geht. Deshalb hier nur der Stufen-Notch scharf,
+   alle vier Aussenecken randlos durchlaufend. Nur Desktop — mobil clippen
+   #stimme/#themen ueber ihre eigene Regel (Reiter-Winkel bzw. none). */
+@media (min-width: 820px) {
+  #stimme.sec-step.is-right {
+    clip-path: polygon(
+      0 var(--step-h),
+      var(--step-x) var(--step-h),
+      var(--step-x) 0,
+      100% 0,
+      100% 100%,
+      0 100%
+    );
+  }
+  #themen.sec-step {
+    clip-path: polygon(
+      0 0,
+      var(--step-x) 0,
+      var(--step-x) var(--step-h),
+      100% var(--step-h),
+      100% 100%,
+      0 100%
+    );
+  }
+}
+
 /* Mobil: keine schraege sec-step-Kante. Der gestufte Logorahmen-Absatz ist am
    Desktop die gewollte Kantigkeit; auf schmalen Screens liest der Notch als
    verkantet und schneidet Module scheinbar schraeg an — deshalb mobil eine
@@ -3729,6 +3758,42 @@ button:focus-visible {
   color: rgba(255, 255, 255, 0.86);
   margin: 0;
   max-width: 52ch;
+}
+/* Text-CTA auf der Karte — bewusst KEIN Kasten (das ist der Ghost-Button), nur
+   ein Textlink mit auslaufendem Unterstrich und Pfeil-Slide, weiss auf dem
+   dunklen Karten-Grund. Fuehrt auf die jeweilige Insights-Landingpage. */
+.in-cta {
+  align-self: flex-start;
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
+  text-decoration: none;
+  transition: gap 0.25s ease;
+}
+.in-cta-label {
+  padding-bottom: 2px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease;
+}
+.in-cta-arrow {
+  transition: transform 0.25s ease;
+}
+.in-cta:hover {
+  gap: 12px;
+}
+.in-cta:hover .in-cta-label {
+  background-size: 100% 1.5px;
+}
+.in-cta:hover .in-cta-arrow {
+  transform: translateX(2px);
 }
 
 @media (max-width: 991px) {

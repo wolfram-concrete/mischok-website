@@ -42,10 +42,48 @@ const Chevron = ({ open }: { open: boolean }) => (
  *       schrumpft zu einem kurzen Balken unten rechts.
  * Der Umschalter sitzt in HeroSwitch (nur in der Preview sichtbar).
  */
+
+/* Insights-Megamenü — analog zum Referenzen-Megamenü. Teaser auf die (geplanten)
+   Insights-Detailseiten; solange die Detail-Routen noch nicht existieren, zeigen
+   die Links auf die Insights-Section der Home (/#themen). n/name/sub wie bei den
+   Referenzen, damit dieselbe Mega-Optik greift. */
+const INSIGHTS_INTRO = {
+  kicker: "Insights",
+  headline: "Themen, über die wir nachdenken",
+  href: "/#themen",
+};
+const INSIGHTS = [
+  { n: "01", name: "Retten oder Reimplementieren?", sub: "Vortrag", href: "/#themen" },
+  { n: "02", name: "STEPS", sub: "Veranstaltung", href: "/#themen" },
+  { n: "03", name: "KI in der Softwareentwicklung", sub: "Workshop", href: "/#themen" },
+  { n: "04", name: "Wann sich der Umbau lohnt – und wann nicht", sub: "Fachbeitrag", href: "/#themen" },
+  { n: "05", name: "Was 8.500 Tests mit Verantwortung zu tun haben", sub: "Fachbeitrag", href: "/#themen" },
+];
+
 export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
   const [active, setActive] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [dropOpen, setDropOpen] = useState(false);
+  // Megamenü: "ref" (Referenzen) | "ins" (Insights) | null (zu)
+  const [openMenu, setOpenMenu] = useState<null | "ref" | "ins">(null);
+  // Daten des aktuell offenen Megamenüs — auf eine gemeinsame Form normalisiert,
+  // damit dasselbe Panel beide Menüs rendert.
+  const mega =
+    openMenu === "ins"
+      ? {
+          intro: INSIGHTS_INTRO,
+          items: INSIGHTS,
+          ctaHref: "/#themen",
+        }
+      : {
+          intro: REFERENZEN_INTRO,
+          items: REFERENZEN.map((r) => ({
+            n: r.n,
+            name: r.name,
+            sub: r.projektlage,
+            href: r.detailHref ?? `/referenzen#${r.slug}`,
+          })),
+          ctaHref: "/referenzen",
+        };
   // V2 und V3 teilen sich die schlanke Feld-/CTA-Optik (is-slim); das konkrete
   // Bento-Raster kommt je Variante aus is-v2 bzw. is-v3.
   const slim = variant !== 1;
@@ -130,8 +168,8 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
         <div
           /* is-mega auch beim Burger-Panel: die Navizeile ist dann dieselbe
              Flaeche, die nach unten weiterwaechst — auf Mobil wie auf Desktop */
-          className={`hc-nav${dropOpen || menuOpen ? " is-mega" : ""}`}
-          onMouseLeave={() => setDropOpen(false)}
+          className={`hc-nav${openMenu || menuOpen ? " is-mega" : ""}`}
+          onMouseLeave={() => setOpenMenu(null)}
         >
           <a href="/" aria-label="mischok — better. software — Startseite" className="hc-nav-brand">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -142,20 +180,27 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
             />
           </a>
 
-          {/* Reihenfolge folgt der Sitemap; „Referenzen" trägt das Mega-Menü */}
+          {/* „Referenzen" UND „Insights" tragen je ein Mega-Menü (dasselbe Panel,
+              Inhalt je nach openMenu). Die uebrigen Links schliessen es. */}
           <nav className="hc-nav-links" aria-label="Hauptnavigation">
-            {NAV.map((n) =>
-              n.label === "Referenzen" ? (
+            {NAV.map((n) => {
+              const key =
+                n.label === "Referenzen"
+                  ? "ref"
+                  : n.label === "Insights"
+                    ? "ins"
+                    : null;
+              return key ? (
                 <div key={n.label} className="hc-nav-item">
                   <button
                     type="button"
                     className="hc-nav-link"
-                    aria-expanded={dropOpen}
-                    onMouseEnter={() => setDropOpen(true)}
-                    onClick={() => setDropOpen((o) => !o)}
+                    aria-expanded={openMenu === key}
+                    onMouseEnter={() => setOpenMenu(key)}
+                    onClick={() => setOpenMenu((o) => (o === key ? null : key))}
                   >
                     {n.label}
-                    <Chevron open={dropOpen} />
+                    <Chevron open={openMenu === key} />
                   </button>
                 </div>
               ) : (
@@ -163,12 +208,12 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
                   key={n.label}
                   href={n.href}
                   className="hc-nav-link"
-                  onMouseEnter={() => setDropOpen(false)}
+                  onMouseEnter={() => setOpenMenu(null)}
                 >
                   {n.label}
                 </a>
-              )
-            )}
+              );
+            })}
           </nav>
 
           <a href="/#kontakt" className="hc-nav-cta">
@@ -198,25 +243,29 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
             </nav>
           )}
 
-          {/* Mega-Panel: zoomt über die volle Navi-Breite nach unten auf */}
-          <div className={`hc-mega${dropOpen ? " is-open" : ""}`} aria-hidden={!dropOpen}>
+          {/* Mega-Panel: zoomt über die volle Navi-Breite nach unten auf. Inhalt
+              (Referenzen oder Insights) kommt aus `mega`, gesteuert von openMenu. */}
+          <div
+            className={`hc-mega${openMenu ? " is-open" : ""}`}
+            aria-hidden={!openMenu}
+          >
             <div className="hc-mega-clip">
               <div className="hc-mega-inner">
                 <div className="hc-mega-cols">
-                  <div className="hc-mega-label">{REFERENZEN_INTRO.kicker}</div>
+                  <div className="hc-mega-label">{mega.intro.kicker}</div>
                   <div className="hc-mega-list">
-                    {REFERENZEN.map((r) => (
+                    {mega.items.map((item) => (
                       <a
-                        key={r.slug}
-                        href={r.detailHref ?? `/referenzen#${r.slug}`}
+                        key={`${item.n}-${item.name}`}
+                        href={item.href}
                         className="hc-mega-link"
-                        tabIndex={dropOpen ? 0 : -1}
-                        onClick={() => setDropOpen(false)}
+                        tabIndex={openMenu ? 0 : -1}
+                        onClick={() => setOpenMenu(null)}
                       >
-                        <span className="hc-mega-n">{r.n}</span>
+                        <span className="hc-mega-n">{item.n}</span>
                         <span className="hc-mega-body">
-                          <span className="hc-mega-name">{r.name}</span>
-                          <span className="hc-mega-sub">{r.projektlage}</span>
+                          <span className="hc-mega-name">{item.name}</span>
+                          <span className="hc-mega-sub">{item.sub}</span>
                         </span>
                       </a>
                     ))}
@@ -224,15 +273,15 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
                 </div>
 
                 <a
-                  href="/referenzen"
+                  href={mega.ctaHref}
                   className="hc-mega-cta"
-                  tabIndex={dropOpen ? 0 : -1}
-                  onClick={() => setDropOpen(false)}
+                  tabIndex={openMenu ? 0 : -1}
+                  onClick={() => setOpenMenu(null)}
                 >
-                  <span className="hc-mega-cta-label">{REFERENZEN_INTRO.kicker}</span>
-                  <span className="hc-mega-cta-h">{REFERENZEN_INTRO.headline}</span>
+                  <span className="hc-mega-cta-label">{mega.intro.kicker}</span>
+                  <span className="hc-mega-cta-h">{mega.intro.headline}</span>
                   <span className="hc-mega-cta-btn">
-                    Alle Referenzen
+                    {openMenu === "ins" ? "Alle Insights" : "Alle Referenzen"}
                     <span aria-hidden="true">→</span>
                   </span>
                 </a>
@@ -356,7 +405,7 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
       </div>
 
       {/* Abdunkeln, solange die Mega-Navi offen ist */}
-      <span className={`hc-scrim${dropOpen ? " is-open" : ""}`} aria-hidden="true" />
+      <span className={`hc-scrim${openMenu ? " is-open" : ""}`} aria-hidden="true" />
     </section>
   );
 }

@@ -151,6 +151,14 @@ export default function Themen() {
               <div className="in-body">
                 <h3 className="in-title">{t.title}</h3>
                 <p className="in-desc">{t.desc}</p>
+                {/* Text-CTA auf die jeweilige Insights-Landingpage (interim
+                    Sektionsanker, s. Topic.href) */}
+                <a href={t.href} className="in-cta">
+                  <span className="in-cta-label">Mehr erfahren</span>
+                  <span aria-hidden="true" className="in-cta-arrow">
+                    →
+                  </span>
+                </a>
               </div>
             </article>
           ))}
