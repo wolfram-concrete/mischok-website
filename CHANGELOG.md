@@ -22,6 +22,22 @@ CTA-Vereinheitlichung (Footer-`cta-solid` und Burger-`hc-menu-cta` sollen diesel
 Kontur-/Hover-Regeln wie die `cta-ghost`-CTAs tragen); Burger-Strichstärke gegen
 die Logo-Rahmenstärke abgleichen.
 
+## [0.26.1] – 2026-07-23
+
+### Geändert
+- **Reveal-/Desktop-Navigation zeigt die volle Navi statt Burger.** Der Header
+  nutzte bisher auf allen Breakpoints das Burger-Icon. Ab **900px** erscheint jetzt
+  die vollständige horizontale Navigation (alle Links + CTA); darunter bleibt der
+  Burger. Damit blendet auf der Home beim Hochscrollen die **komplette** Navi von
+  oben ein, nicht mehr nur der Burger.
+
+### Behoben
+- **Über-Bildcontainer: Ecken waren nach innen gewölbt.** Die `clip-path: shape()`
+  -Rundung defaultet auf `ccw` — das ergab **konkave** (nach innen gezogene) Ecken.
+  Die konvexen Außenecken tragen jetzt explizit `cw` (nur die konkave Innenecke der
+  Ausbuchtung bleibt `ccw`); Radius **5px wie border-radius auf allen anderen
+  Kartenmodulen**, echte Rundung nach außen.
+
 ## [0.26.0] – 2026-07-23
 
 ### Hinzugefügt
