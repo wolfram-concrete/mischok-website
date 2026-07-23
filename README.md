@@ -86,7 +86,12 @@ design-reference/schriftarten/  Haus-Schriften im Original (Calibre, Realtime
   Marke immer klein **„mischok"**.
 - **CTA:** eine Primäraktion (Vollton/Blau), alles Weitere `.cta-ghost` (Kontur).
 - **Kanten:** `--radius: 5px` an allen Außenecken (auch clip-path-Module fasen im
-  Polygon); die Reiter-/Sektionsstufe selbst bleibt scharf.
+  Polygon); die Reiter-/Sektionsstufe selbst bleibt scharf. Zwei Ausnahmen:
+  vollflächige Bild-/Zitat-Sections, die bis an den Viewport-Rand laufen
+  (`#stimme`, `#themen`), laufen an den Außenecken **randlos** aus (die Fase läse
+  dort als Fehler); der Über-uns-Bildcontainer (`.ue-media`) rundet seine
+  Außenecken mit `clip-path: shape()` **echt** (Bogen statt 45°-Fase), Polygon
+  bleibt Fallback.
 
 - **Farbpalette & Farblogik** — `design-reference/COLOR-LOGIC.md` (CI-Manual):
   Navy/Grau/Weiß als Basis, vier Akzentfarben nur für Details.
@@ -218,7 +223,9 @@ liegen unter `public/schriftarten/`.
   ein **Toggle** (offene Karte schließt wieder — v. a. mobil, wo es kein Hover
   gibt). Die geschlossenen „Buchrücken"-Titel werden per JS auf gleiche Höhe
   gebracht (`--hc-ftitle-h`), damit ihre Oberkanten unabhängig von der Zeilenzahl
-  fluchten.
+  fluchten. Die Desktop-Hero-Navi trägt **zwei Megamenüs**: „Referenzen" und
+  „Insights" (verallgemeinert über `openMenu`/das `mega`-Objekt); Insights füllt
+  sich aus den Insights-Detailseiten.
 - **EinsatzfelderGrid** — Hover schärft die Karte; auf Touch-/No-Hover-Geräten
   sind alle Karten dauerhaft scharf (`(hover: hover)`-Erkennung, `"use client"`).
 - **Ansatz** — Pin-Scroll über 300vh mit `requestAnimationFrame`, blendet 3 Punkte durch.

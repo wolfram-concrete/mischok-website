@@ -22,6 +22,32 @@ CTA-Vereinheitlichung (Footer-`cta-solid` und Burger-`hc-menu-cta` sollen diesel
 Kontur-/Hover-Regeln wie die `cta-ghost`-CTAs tragen); Burger-Strichstärke gegen
 die Logo-Rahmenstärke abgleichen.
 
+## [0.26.0] – 2026-07-23
+
+### Hinzugefügt
+- **Insights-Megamenü in der Navi.** Der Navipunkt „Insights" öffnet jetzt — analog
+  zu „Referenzen" — ein Megamenü mit den Insights-Detailseiten. `HeroCeramic`
+  verallgemeinert dafür `dropOpen` → `openMenu` (`null | "ref" | "ins"`) und
+  normalisiert beide Panels über ein `mega`-Objekt (Intro, Items, CTA-Ziel).
+- **Text-CTA je Insights-Karte.** Unter jeder der drei Themen-Karten steht ein
+  „Mehr erfahren →" auf die jeweilige Insights-Landingpage (Ziel über das neue
+  `Topic.href`, interim der Sektionsanker, bis die Detailseiten stehen). Optik
+  1:1 wie der „Referenz ansehen"-CTA (`.az-case-cta`): kleine, **nicht fette**
+  Schrift (13.5px/500), Pfeil dahinter, Gap wandert beim Hover.
+
+### Geändert
+- **Julius-/Insights-Kanten laufen full-bleed aus.** Die vollflächigen
+  Step-Sections `#stimme` (Julius-Zitat) und `#themen` (Insights) trugen an den
+  Viewport-Rändern die 5px-Außenfase (`--radius`) — die las dort nicht als
+  Modulkante, sondern als kleine Ecke/Fehler. Jetzt laufen alle vier Außenecken
+  randlos durch; nur der Stufen-Notch bleibt scharf (Desktop, `min-width:820px`).
+- **Über-uns-Bildcontainer: echtes Curving statt Fase.** Die vier Außenecken
+  hatten per `clip-path: polygon()` nur einen geraden 45°-Schnitt (Polygon kann
+  keine Bögen). Für Browser mit `clip-path: shape()` liegt jetzt eine echte,
+  minimal gerundete Bogen-Variante drüber (`--ue-round`), das Polygon bleibt als
+  Fallback. Die Ausbuchtung bleibt in ihrer rechtwinkligen Sprache erhalten,
+  nur dezent verschliffen.
+
 ## [0.25.0] – 2026-07-23
 
 ### Geändert (Desktop-Hero)

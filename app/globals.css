@@ -3767,10 +3767,12 @@ button:focus-visible {
   margin-top: 4px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  /* 1:1 die Optik des „Referenz ansehen"-CTA (.az-case-cta): kleine, NICHT
+     fette Schrift, Pfeil dahinter, Gap wandert beim Hover. */
+  gap: 7px;
   font-family: var(--sans);
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: 500;
+  font-size: 13.5px;
   color: #fff;
   text-decoration: none;
   transition: gap 0.25s ease;
@@ -4249,6 +4251,10 @@ button:focus-visible {
   padding: clamp(20px, 2.2vw, 36px);
   /* Zitat sitzt ueber der Ausbuchtung, nicht darin */
   padding-bottom: calc(var(--bulge-h) + clamp(24px, 2.6vw, 44px));
+  /* echtes, minimales Curving der vier Aussenecken (nicht die Fase-„Ecke") */
+  --ue-round: clamp(10px, 1vw, 16px);
+  /* Fallback: polygon fast die Ecken nur als 45°-Schnitt (kein Bogen moeglich).
+     Moderne Browser bekommen darunter per clip-path: shape() echte Rundungen. */
   clip-path: polygon(
     0 var(--radius),
     var(--radius) 0,
@@ -4265,6 +4271,29 @@ button:focus-visible {
     var(--radius) calc(100% - var(--bulge-h)),
     0 calc(100% - var(--bulge-h) - var(--radius))
   );
+}
+/* Echte Bogen-Rundung, wo clip-path: shape() verfuegbar ist. Die vier
+   Aussenecken runden mit --ue-round (perceptible), die Ausbuchtungs-Ecken
+   bleiben mit dem kleinen --radius nur ganz leicht verschliffen: konvexe Ecken
+   im Uhrzeigersinn, die konkave Innenecke der Stufe gegen den Uhrzeigersinn. */
+@supports (clip-path: shape(from 0 0, line to 100% 0)) {
+  .ue-media {
+    clip-path: shape(
+      from 0 var(--ue-round),
+      arc to var(--ue-round) 0 of var(--ue-round),
+      line to calc(100% - var(--ue-round)) 0,
+      arc to 100% var(--ue-round) of var(--ue-round),
+      line to 100% calc(100% - var(--ue-round)),
+      arc to calc(100% - var(--ue-round)) 100% of var(--ue-round),
+      line to calc(var(--bulge-x) + var(--radius)) 100%,
+      arc to var(--bulge-x) calc(100% - var(--radius)) of var(--radius),
+      line to var(--bulge-x) calc(100% - var(--bulge-h) + var(--radius)),
+      arc to calc(var(--bulge-x) - var(--radius)) calc(100% - var(--bulge-h)) of var(--radius) ccw,
+      line to var(--ue-round) calc(100% - var(--bulge-h)),
+      arc to 0 calc(100% - var(--bulge-h) - var(--ue-round)) of var(--ue-round),
+      close
+    );
+  }
 }
 /* Bilderstrecke: alle Aufnahmen liegen uebereinander, nur die aktive ist
    sichtbar. Ueberblendung statt Austausch, damit kein Sprung entsteht. */
