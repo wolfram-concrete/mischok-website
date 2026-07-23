@@ -209,15 +209,19 @@ export default function Zusammenarbeit() {
               position: "absolute",
               boxSizing: "border-box",
               borderRadius: "5px",
-              /* Navy-getoentes Glas — jetzt auf Mobil UND Desktop. Da der dunkle
-                 Bild-Layer ueberall raus ist, traegt das Glas selbst den Kontrast
-                 fuer die weisse Typo (0.5 = die dunklere, einheitliche Variante).
-                 Frueher war das Desktop-Glas hell und stuetzte sich auf den
-                 dunklen Rechts-Verlauf — der ist entfallen. */
-              background: "rgba(0,42,92,0.5)",
+              /* Mobil navy-getoentes Glas. Am Desktop KEIN Navy (nicht blau
+                 umfaerben) — aber ein ganz dezenter NEUTRALER Grau-Layer statt des
+                 hellen Glases, damit sich Icon/Schrift minimal besser vom Foto
+                 abheben. Bewusst so schwach wie moeglich (0.22), nur eine leichte
+                 Trennung, keine Abdunklung wie der fruehere schwarze Verlauf. */
+              background: accStack
+                ? "rgba(0,42,92,0.5)"
+                : "rgba(28,32,38,0.22)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(255,255,255,0.14)",
+              border: accStack
+                ? "1px solid rgba(255,255,255,0.14)"
+                : "1px solid rgba(255,255,255,0.18)",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",

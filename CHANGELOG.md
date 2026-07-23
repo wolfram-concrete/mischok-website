@@ -43,8 +43,10 @@ die Logo-Rahmenstärke abgleichen.
   Karte reicht jetzt bis etwa zur Kartenmitte (Copy-max-width 38 → 56ch), damit
   Headline 1–2-zeilig und die Copy in wenigen Zeilen läuft statt in einer schmalen
   Säule. Der dunkle Rechts-Verlauf hinter der Glaskarte ist entfallen (Foto bleibt
-  klar); die Lesbarkeit der weißen Typo trägt jetzt das navy-getönte Glas (0.5,
-  einheitlich mit Mobil).
+  klar). Das Desktop-Glas wird **nicht blau** umgefärbt — es trägt nur einen ganz
+  dezenten **neutralen Grau-Layer** (`rgba(28,32,38,0.22)`), damit sich Icon und
+  weiße Typo minimal besser vom Foto trennen (so wenig Abdunklung wie möglich).
+  Nur das mobile Band ist navy-getönt.
 
 ### Behoben
 - **Erste Projektlagen-Karte stand höher (Desktop).** Die per Default offene
