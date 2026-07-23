@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { REFERENZEN } from "@/lib/content";
 
@@ -39,13 +39,27 @@ const NAV: NavItem[] = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  // Auf der Startseite sitzt die Wortmarke oben im Hero-Bento. Der Header zeigt
-  // sein Logo dort erst, sobald man über den Hero hinausscrollt.
+  // Home: die Navi ist NICHT dauerhaft sticky (oben sitzt sie im Hero-Bento).
+  // Sie blendet sich aber beim HOCHSCROLLEN wieder von oben ein und liegt dann
+  // als leicht milchig-grauer, blurry Balken ueber dem Inhalt.
+  const [revealed, setRevealed] = useState(false);
+  const lastY = useRef(0);
   const isHome = usePathname() === "/";
-  const showLogo = !isHome || scrolled;
+  const showLogo = isHome ? revealed : true;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      // Reveal-Logik nur auf der Home: einblenden beim Hochscrollen, sobald die
+      // Hero-Navi weg ist (> ~80% Viewporthoehe); ausblenden beim Runterscrollen
+      // oder wieder nahe dem Seitenanfang (< 40% — dort uebernimmt die Hero-Navi).
+      const goingUp = y < lastY.current - 2;
+      const goingDown = y > lastY.current + 2;
+      if (goingUp && y > window.innerHeight * 0.8) setRevealed(true);
+      else if (goingDown || y <= window.innerHeight * 0.4) setRevealed(false);
+      lastY.current = y;
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -53,9 +67,6 @@ export default function Header() {
 
   // Menü schließen, sobald ein Link geklickt wird
   const closeMobile = () => setMobileOpen(false);
-
-  // Startseite: keine separate Navigationszeile — Logo & Burger sitzen im Hero-Bento.
-  if (isHome) return null;
 
   return (
     <header
@@ -65,13 +76,26 @@ export default function Header() {
         left: 0,
         right: 0,
         zIndex: 100,
-        background:
-          scrolled || mobileOpen ? "var(--bg)" : "transparent",
-        borderBottom:
-          scrolled || mobileOpen
+        // Home: ausgeblendet (nach oben geschoben), ausser beim Hochscrollen
+        // (revealed) oder wenn das Menue offen ist.
+        transform:
+          isHome && !revealed && !mobileOpen
+            ? "translateY(-100%)"
+            : "translateY(0)",
+        background: isHome
+          ? "rgba(237, 237, 237, 0.72)"
+          : scrolled || mobileOpen
+            ? "var(--bg)"
+            : "transparent",
+        backdropFilter: isHome ? "blur(14px) saturate(1.1)" : undefined,
+        WebkitBackdropFilter: isHome ? "blur(14px) saturate(1.1)" : undefined,
+        borderBottom: isHome
+          ? "1px solid rgba(165, 165, 165, 0.28)"
+          : scrolled || mobileOpen
             ? "1px solid var(--line)"
             : "1px solid transparent",
-        transition: "background .3s ease, border-color .3s ease",
+        transition:
+          "transform .35s cubic-bezier(.4,0,.2,1), background .3s ease, border-color .3s ease",
       }}
     >
       <div
