@@ -22,6 +22,14 @@ CTA-Vereinheitlichung (Footer-`cta-solid` und Burger-`hc-menu-cta` sollen diesel
 Kontur-/Hover-Regeln wie die `cta-ghost`-CTAs tragen); Burger-Strichstärke gegen
 die Logo-Rahmenstärke abgleichen.
 
+## [0.27.2] – 2026-07-23
+
+### Geändert
+- **Footer kompakter.** Der Footer war unnötig hoch (großer Leerraum zwischen
+  Linkspalten und Bottom-Leiste). Mittel-Gap (`.ft-bottom` margin-top) von
+  bis 128px auf max. 56px, Footer-Top-Padding von max. 96px auf 64px reduziert —
+  der Inhalt rückt zusammen, die Bottom-Leiste sitzt näher an den Spalten.
+
 ## [0.27.1] – 2026-07-23
 
 ### Geändert

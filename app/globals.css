@@ -1744,10 +1744,12 @@ button:focus-visible {
   color: var(--slate);
 }
 .ft-bottom {
-  margin-top: clamp(56px, 8vw, 128px);
-  /* untere Abschlusslinie entfernt; dafuer mehr Bodenluft, damit die
-     Copyright-/Impressum-Zeile etwas tiefer sitzt statt am Seitenrand zu kleben */
-  padding: clamp(22px, 2.4vw, 32px) 0 clamp(48px, 5vw, 72px);
+  /* Mittel-Gap deutlich kleiner: der Footer war unnoetig hoch. Die Linkspalten
+     ruecken naeher an die Bottom-Leiste, der Footer wird kompakter. */
+  margin-top: clamp(32px, 3.5vw, 56px);
+  /* untere Abschlusslinie entfernt; dafuer etwas Bodenluft, damit die
+     Copyright-/Impressum-Zeile nicht am Seitenrand klebt */
+  padding: clamp(20px, 2.2vw, 28px) 0 clamp(32px, 3.5vw, 48px);
   border-top: 1px solid var(--line);
   display: flex;
   flex-wrap: wrap;

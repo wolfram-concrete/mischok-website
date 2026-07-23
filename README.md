@@ -250,7 +250,8 @@ liegen unter `public/schriftarten/`.
 - **Footer** — Marke/Claim/Newsletter/CTA links, drei Linkspalten rechts; beim
   Hovern einer Spalte dimmen die übrigen Links (reines CSS). Die Newsletter-Bar
   (`"use client"`) übergibt die Anmeldung mangels Backend als vorbereitete Mail
-  an `info@mischok.de`.
+  an `info@mischok.de`. Kompakte Vertikalabstände (kleiner Mittel-Gap zur
+  Bottom-Leiste); die Bottom-Leiste trägt nur oben eine Linie, keine untere.
 - **PatternBg** — dezente kubische Textur (soft-light) hinter Über- und
   Kontakt-Modul; über `next/image` optimiert, `pointer-events: none`. Die
   Komponente ist bewusst als *leiser Schmuck* ausgelegt (Default `opacity` 0.14);

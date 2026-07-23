@@ -26,7 +26,7 @@ export default function Footer() {
       id="footer"
       style={{
         background: "var(--section)",
-        padding: "clamp(56px,7vw,96px) clamp(20px,5vw,72px) 32px",
+        padding: "clamp(40px,4.5vw,64px) clamp(20px,5vw,72px) 28px",
         overflow: "hidden",
       }}
     >
