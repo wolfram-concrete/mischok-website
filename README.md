@@ -68,6 +68,26 @@ design-reference/schriftarten/  Haus-Schriften im Original (Calibre, Realtime
 
 ## Design-Grundlagen (verbindlich)
 
+> **📐 Gesamt-Regelwerk:** [`design-reference/REGELWERK.md`](design-reference/REGELWERK.md)
+> bündelt alles auf einen Blick — Farben & Flächen-Leiter, Typografie/Formattypen,
+> CTA-Typen, Modulkanten (`--radius` / Reiter-Winkel), Motion, Do/Don't. Das ist
+> das kundenfähige Dokument dafür, **wie weitere Seiten gebaut werden.** Es ist aus
+> der fertig gebauten Home abgeleitet; **Single Source of Truth im Code** ist
+> `app/globals.css` → `:root` (die `tailwind.config.ts` spiegelt dieselben Werte).
+
+**Kurz — die Kernregeln:**
+
+- **Farben:** nur offizielle Palette; abgesetzte Flächen unterscheiden sich **nur
+  über Helligkeit** (PAPER 237 / SNOW 249 / WHITE 255). Blau (`change #002A5C`)
+  bleibt Logo/Navigation/der **einen Aktion** vorbehalten. Vier Akzente nur für
+  Details, nie für Flächen.
+- **Typografie:** Source Serif 4 (H1/H2/**Zitate**, immer 400/ungefettet) · Realtime
+  Rounded (Eyebrows/Labels) · Calibre (Copy). Fettung nur für kurze Handlungs-Labels.
+  Marke immer klein **„mischok"**.
+- **CTA:** eine Primäraktion (Vollton/Blau), alles Weitere `.cta-ghost` (Kontur).
+- **Kanten:** `--radius: 5px` an allen Außenecken (auch clip-path-Module fasen im
+  Polygon); die Reiter-/Sektionsstufe selbst bleibt scharf.
+
 - **Farbpalette & Farblogik** — `design-reference/COLOR-LOGIC.md` (CI-Manual):
   Navy/Grau/Weiß als Basis, vier Akzentfarben nur für Details.
 - **UI/UX-Design-Codes** — `design-reference/DESIGN-CODES.md` (Kickoff-Board):

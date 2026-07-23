@@ -26,19 +26,23 @@ const config: Config = {
         about: "#99CCFF", // Pantone 291 C  — Über uns / Unternehmen
         warning: "#FF6698", // Pantone 190 C  — Hinweise / Warnungen
 
-        // ── Semantische Tokens (auf Palette gemappt) — HANDOFF §6 ──
-        bg: "#F6F6F5", // Seitenhintergrund
-        section: "#E4E3E1", // Sektionsflächen
-        card: "#EDECEA", // Karten (≈ paper)
-        navy: "#002A5C", // Primär / Akzent = change
+        // ── Semantische Tokens (auf Palette gemappt) ──
+        // WICHTIG: Single Source of Truth ist app/globals.css :root. Diese
+        // Tailwind-Werte MÜSSEN damit übereinstimmen. Früher standen hier warme
+        // Freihand-Werte (#F6F6F5/#E4E3E1/#EDECEA), die neben echtem SNOW warm
+        // ausschlugen — angeglichen an die offizielle Palette (Flächen-Leiter
+        // nur über Helligkeit: PAPER 237 / SNOW 249 / WHITE 255).
+        bg: "#F9F9F9", // Seitenhintergrund = snow
+        section: "#EDEDED", // abgesetzte Sektionsflächen = paper
+        card: "#FFFFFF", // Karten = erhabene Fläche = white
+        navy: "#002A5C", // Primär / die eine Aktion = change
         accent: "#002A5C", // Alias für navy
         onNavy: "#EAE8E1", // Text auf Navy
         slate: "#384352", // Fließtext = raven
         ink: "#1A222A", // Zitate = midnight
-        muted: "#8C9198", // Sekundärtext
-        line: "#D5D4D1", // Trennlinien / Rahmen
-        btn: "#E4E2DE",
-        "btn-grad-end": "#D6D6D6", // Button-Verlauf & Panels
+        muted: "#8C9198", // Sekundärtext (zwischen stone & ocean)
+        line: "rgba(165,165,165,0.45)", // Trennlinien / Rahmen (aus stone)
+        btn: "#EDEDED", // = paper
       },
       fontFamily: {
         serif: ["var(--font-serif)", "Georgia", "serif"],
