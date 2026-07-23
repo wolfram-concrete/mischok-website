@@ -39,6 +39,12 @@ die Logo-Rahmenstärke abgleichen.
   Navipunkt, kurzer Mausweg statt weitem Sprung nach links.
 
 ### Behoben
+- **Erste Projektlagen-Karte stand höher (Desktop).** Die per Default offene
+  Karte (`active=0`) bekam über die Basisregel `.hc-field.is-open .hc-fdetail`
+  ein `margin-top` (~14px), das ihren Titel gegenüber den anderen nach oben
+  drückte. Slim klappt nur über `:hover` auf — deshalb das Detail-`margin-top` im
+  Ruhezustand hart auf 0 (erst im aufgezogenen Feld gesetzt). Alle Titel fluchten
+  jetzt exakt.
 - **Projektlagen-Karte schließt wieder (mobil).** Eine geöffnete Karte ließ sich
   per Klick nicht mehr schließen. Klick ist jetzt ein Toggle (`-1` = keine offen);
   `onMouseEnter`/`onFocus` setzen nicht mehr `active` (sonst querte auf Touch das

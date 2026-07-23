@@ -2580,13 +2580,22 @@ button:focus-visible {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    /* WICHTIG: die Basisregel .hc-field.is-open .hc-fdetail setzt margin-top
+       (10–14px). Die per Default offene erste Karte (active=0) bekam dadurch
+       einen Vorschub, der ihren Titel ~14px hochdrueckte — er stand hoeher als
+       die anderen. Slim klappt NICHT ueber is-open auf, sondern ueber :hover;
+       deshalb hier margin-top im Ruhezustand hart auf 0. */
+    margin-top: 0;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease,
+      margin-top 0.45s ease;
     font-size: clamp(12px, 0.82vw, 14px);
   }
   .hc-grid.is-slim .hc-field:hover .hc-fdetail,
   .hc-grid.is-slim .hc-field:focus-within .hc-fdetail {
     max-height: 22em;
     opacity: 1;
+    /* erst im aufgezogenen Feld den Abstand zwischen Titel und Copy geben */
+    margin-top: clamp(8px, 0.8vw, 12px);
   }
   /* Kopfzeile — Standard (V2): Nummer oben, Icon LINKS DARUNTER, alles
      linksbuendig gestapelt. Die Nummer bleibt IMMER stehen (auch wenn eine
