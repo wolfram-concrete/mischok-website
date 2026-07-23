@@ -213,17 +213,16 @@ liegen unter `public/schriftarten/`.
 > im Screen liegt. Details s. CHANGELOG `[0.24.0]`.
 
 - **Hauptnavigation (`MainNav`)** — die EINE Navi der Seite (Wortmarke, Links mit
-  Referenzen-/Insights-Megamenü, „Erstgespräch"-CTA, Mobile-Burger). Läuft an zwei
-  Stellen mit eigenem State: (1) als erstes Modul im Hero-Bento, (2) als
-  einblendende **Reveal-Navi** im `Header`. Auf der Startseite ist der Header
-  ausgeblendet und blendet sich beim **Hochscrollen** von oben ein — dann mit
-  **genau derselben `MainNav`** (nicht mehr einer abweichenden Header-Navi). Der
-  Megamenü-Scrim ist `position: fixed`, damit er in beiden Kontexten (Hero und
-  fixer Header) korrekt deckt. Unter 900px greift der Burger.
-- **Top-Navigation auf Unterseiten** — `Header` mit klassischer horizontaler
-  Navigation (ab 900px, darunter Burger); die Unterseiten nutzen noch nicht
-  `MainNav`. Das mobile Burger-Panel ist voll deckend (opak) und matcht den
-  Kopfbalken.
+  Referenzen-/Insights-Megamenü, „Erstgespräch"-CTA, Mobile-Burger), **überall
+  dieselbe Komponente**. Sie läuft mit eigenem State (1) als erstes Modul im
+  Hero-Bento und (2) im `Header`, der sie auf **jeder Seite** rendert — kein
+  zweiter Navityp mehr. Auf der Startseite ist der Header ausgeblendet und
+  blendet sich beim **Hochscrollen** von oben als milchig-grauer Blur-Balken ein;
+  auf **Unterseiten** ist er dauerhaft sichtbar (oben transparent, ab dem Scrollen
+  mit hellem Grund). Der Megamenü-Scrim ist `position: fixed`, damit er in beiden
+  Kontexten (Hero-Bento und fixer Header) korrekt deckt. Unter 900px greift der
+  Burger. (Die alten `.nav-*`-Klassen in `globals.css` sind damit tot und können
+  bei Gelegenheit raus.)
 - **Hero — Variante 2** (final). `HeroSwitch` rendert standardmäßig V2; das Umschalt-Widget ist ausgeblendet (`showWidget = false`). V1 und V3 sind archiviert — als `HeroCeramic`-Varianten erhalten und über `?hero=1|3` erreichbar. V2/V3 teilen die schlanke Karten-Optik (`is-slim`).
 - **Hero (`HeroCeramic`)** — Bento-Grid; die fünf Projektlage-Karten sind ein
   horizontales Flex-Accordion, die Icons animieren bedeutungsgetrieben

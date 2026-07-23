@@ -22,6 +22,16 @@ CTA-Vereinheitlichung (Footer-`cta-solid` und Burger-`hc-menu-cta` sollen diesel
 Kontur-/Hover-Regeln wie die `cta-ghost`-CTAs tragen); Burger-Strichstärke gegen
 die Logo-Rahmenstärke abgleichen.
 
+## [0.27.1] – 2026-07-23
+
+### Geändert
+- **`MainNav` jetzt auf ALLEN Seiten.** Die Hauptnavigation der Home ist die
+  Benchmark und wird nun auch auf den Unterseiten ausgespielt: der `Header`
+  rendert überall `MainNav` (statt der bisherigen klassischen Header-Navigation).
+  Die alte `nav-desktop`/`nav-burger`/`nav-dropdown`-Implementierung samt `NAV`-
+  Liste ist aus `Header.tsx` entfernt; die zugehörigen `.nav-*`-CSS-Regeln in
+  `globals.css` sind damit ungenutzt (Aufräumen später).
+
 ## [0.27.0] – 2026-07-23
 
 ### Geändert
