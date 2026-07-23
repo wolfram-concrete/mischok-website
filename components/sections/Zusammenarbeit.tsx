@@ -188,15 +188,17 @@ export default function Zusammenarbeit() {
               position: "absolute",
               inset: 0,
               pointerEvents: "none",
-              /* Mobil KEIN dunkles Bild-Overlay mehr — das Foto steht klar im
-                 Fokus. Die Lesbarkeit des Textes traegt allein das navy-getoente
-                 Glas-Band unten (glassStyle). Am Desktop bleibt der Verlauf, weil
-                 der Text dort direkt auf dem Bild (in der offenen Karte) steht. */
+              /* KEIN dunkles Bild-Overlay mehr — weder mobil noch am Desktop. Der
+                 fruehere dunkle Rechts-Verlauf hinter der offenen Glaskarte ist
+                 raus (das Foto bleibt klar); die Lesbarkeit der weissen Typo
+                 traegt jetzt allein das navy-getoente Glas (glassStyle). Die
+                 geschlossenen Karten bleiben unscharf, brauchen aber einen ganz
+                 leichten Fuss-Verlauf, damit der Titel darauf sitzt. */
               background: accStack
                 ? "none"
                 : open
-                  ? "linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 34%, rgba(0,0,0,0.55) 74%)"
-                  : "linear-gradient(180deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 45%, rgba(0,0,0,0.30) 100%)",
+                  ? "none"
+                  : "linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.04) 45%, rgba(0,0,0,0.20) 100%)",
               transition: "background .5s ease",
             };
             // Einheitliches Panel: die Geometrie morpht zwischen offen/geschlossen
@@ -207,19 +209,15 @@ export default function Zusammenarbeit() {
               position: "absolute",
               boxSizing: "border-box",
               borderRadius: "5px",
-              /* Mobil navy-getoentes Glas statt hellem: da das dunkle Bild-Overlay
-                 mobil entfaellt (Foto klar), traegt das Band selbst den Kontrast
-                 fuer die weisse Typo. 0.5 = die dunklere Variante (einheitlich
-                 ueber alle Karten, unabhaengig vom Foto dahinter). Am Desktop
-                 bleibt das helle Glas. */
-              background: accStack
-                ? "rgba(0,42,92,0.5)"
-                : "rgba(255,255,255,0.10)",
+              /* Navy-getoentes Glas — jetzt auf Mobil UND Desktop. Da der dunkle
+                 Bild-Layer ueberall raus ist, traegt das Glas selbst den Kontrast
+                 fuer die weisse Typo (0.5 = die dunklere, einheitliche Variante).
+                 Frueher war das Desktop-Glas hell und stuetzte sich auf den
+                 dunklen Rechts-Verlauf — der ist entfallen. */
+              background: "rgba(0,42,92,0.5)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
-              border: accStack
-                ? "1px solid rgba(255,255,255,0.14)"
-                : "1px solid rgba(255,255,255,0.18)",
+              border: "1px solid rgba(255,255,255,0.14)",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -235,13 +233,11 @@ export default function Zusammenarbeit() {
               left: accStack
                 ? insetClosed
                 : open
-                  /* Untergrenze 360px statt 300px: bei mittleren Fensterbreiten
-                     war das Panel nur ~278px breit, der Fliesstext brauchte
-                     dadurch 10 Zeilen und der Textblock fuellte das Panel bis
-                     hoch ins Icon. Mit 360px sind es 6–8 Zeilen. Mehr als 360px
-                     bringt nichts — dann deckelt die max-width von 38ch die
-                     Textspalte, und das Panel waechst ohne Wirkung. */
-                  ? "calc(100% - clamp(360px,44%,440px))"
+                  /* Breiter: das Panel reicht bis etwa zur Kartenmitte, damit der
+                     Fliesstext nicht in eine schmale Saeule laeuft (Headline 1–2-
+                     zeilig, Copy deutlich weniger Zeilen). Zusammen mit der
+                     hoeheren Copy-max-width (s. p) fuellt der Text die Breite. */
+                  ? "calc(100% - clamp(520px,54%,780px))"
                   : insetClosed,
               padding: open
                 ? "clamp(26px,2.6vw,40px)"
@@ -354,7 +350,10 @@ export default function Zusammenarbeit() {
                           lineHeight: 1.45,
                           color: "rgba(255,255,255,.92)",
                           margin: open ? "20px 0 0" : "0",
-                          maxWidth: "38ch",
+                          /* breiter (war 38ch): das Panel reicht jetzt bis zur
+                             Kartenmitte, der Text soll die Breite nutzen und in
+                             wenigen Zeilen laufen statt in einer schmalen Saeule */
+                          maxWidth: "56ch",
                           overflowWrap: "break-word",
                           maxHeight: open ? "22em" : 0,
                           opacity: open ? 1 : 0,

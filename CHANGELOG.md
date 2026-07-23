@@ -38,6 +38,14 @@ die Logo-Rahmenstärke abgleichen.
   `margin-left:auto` an den blauen Referenz-Kasten — unter den „Referenzen"-
   Navipunkt, kurzer Mausweg statt weitem Sprung nach links.
 
+### Geändert (Desktop-Zusammenarbeit)
+- **Text-/Glaskarte breiter, dunkler Layer raus.** Das Glaspanel der offenen
+  Karte reicht jetzt bis etwa zur Kartenmitte (Copy-max-width 38 → 56ch), damit
+  Headline 1–2-zeilig und die Copy in wenigen Zeilen läuft statt in einer schmalen
+  Säule. Der dunkle Rechts-Verlauf hinter der Glaskarte ist entfallen (Foto bleibt
+  klar); die Lesbarkeit der weißen Typo trägt jetzt das navy-getönte Glas (0.5,
+  einheitlich mit Mobil).
+
 ### Behoben
 - **Erste Projektlagen-Karte stand höher (Desktop).** Die per Default offene
   Karte (`active=0`) bekam über die Basisregel `.hc-field.is-open .hc-fdetail`
