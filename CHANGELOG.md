@@ -22,6 +22,29 @@ CTA-Vereinheitlichung (Footer-`cta-solid` und Burger-`hc-menu-cta` sollen diesel
 Kontur-/Hover-Regeln wie die `cta-ghost`-CTAs tragen); Burger-Strichstärke gegen
 die Logo-Rahmenstärke abgleichen.
 
+## [0.25.0] – 2026-07-23
+
+### Geändert (Desktop-Hero)
+- **Projektlagen-Titel fluchten oben.** Die fünf „Buchrücken"-Titel sitzen unten
+  am Kartenboden; da ihre Zeilenzahl breitenabhängig ist (2–3, auf schmalen
+  Desktops mehr), sprang die Oberkante. `HeroCeramic` misst jetzt den höchsten
+  Titel und gleicht alle über `--hc-ftitle-h` an (oben ausgerichtet), pro Breite
+  neu (ResizeObserver). Aufgezogen fällt die Reserve weg.
+- **Icons in den Projektlagen +25 % und tiefer.** Größer (26→32 … 61→76px) und
+  +30 % Abstand zur „Projektlage 0X"-Zeile. Die Linienstärke wird **nicht**
+  mitskaliert: `stroke-width` 1.25 → 1.0 (= ×0.8, Kehrwert der Vergrößerung) hält
+  den gerenderten Strich exakt konstant.
+- **Megamenü: Referenz-Spalten nach rechts.** Der Referenz-Block rückt per
+  `margin-left:auto` an den blauen Referenz-Kasten — unter den „Referenzen"-
+  Navipunkt, kurzer Mausweg statt weitem Sprung nach links.
+
+### Behoben
+- **Projektlagen-Karte schließt wieder (mobil).** Eine geöffnete Karte ließ sich
+  per Klick nicht mehr schließen. Klick ist jetzt ein Toggle (`-1` = keine offen);
+  `onMouseEnter`/`onFocus` setzen nicht mehr `active` (sonst querte auf Touch das
+  vorgelagerte mouseenter/focus die Karte sofort wieder). Desktop klappt weiter
+  per CSS `:hover`/`:focus-within` auf.
+
 ## [0.24.0] – 2026-07-22
 
 Mobile-Optimierung der Home, Section für Section (Basis: Hero-Variante V2).

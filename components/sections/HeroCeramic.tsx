@@ -64,6 +64,24 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
     if (!section) return;
     const mq = window.matchMedia("(max-width: 899px)");
     const measure = () => {
+      // Titel-Angleich (Desktop, schlanke „Buchruecken"): die Titel sitzen unten
+      // am Kartenboden; da ihre Zeilenzahl breitenabhaengig ist, sprang ihre
+      // Oberkante. Hier den HOECHSTEN Titel messen und alle auf diese Hoehe
+      // bringen (--hc-ftitle-h, oben ausgerichtet via CSS) — Oberkanten fluchten.
+      const titles = [
+        ...section.querySelectorAll<HTMLElement>(".hc-field .hc-ftitle"),
+      ];
+      if (titles.length) {
+        if (window.innerWidth >= 900) {
+          section.style.setProperty("--hc-ftitle-h", "0px"); // Reset -> Naturhoehe
+          let maxH = 0;
+          for (const t of titles) maxH = Math.max(maxH, t.getBoundingClientRect().height);
+          section.style.setProperty("--hc-ftitle-h", `${Math.ceil(maxH)}px`);
+        } else {
+          section.style.removeProperty("--hc-ftitle-h");
+        }
+      }
+
       const nav = section.querySelector<HTMLElement>(".hc-nav");
       const head = section.querySelector<HTMLElement>(".hc-head");
       const photo = section.querySelector<HTMLElement>(".hc-photo");
@@ -275,9 +293,13 @@ export default function HeroCeramic({ variant = 1 }: { variant?: 1 | 2 | 3 }) {
                 role="tab"
                 aria-selected={open}
                 className={`hc-field hc-surface${open ? " is-open" : ""}`}
-                onClick={() => setActive(i)}
-                onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
+                /* Toggle: eine bereits offene Karte schliesst per erneutem Klick
+                   wieder (-1 = keine offen). Wichtig auf Mobil, wo die Karte nur
+                   ueber `active`/is-open aufklappt (kein :hover). onMouseEnter/
+                   onFocus setzen NICHT mehr active — sonst haette auf Touch das
+                   vorgelagerte mouseenter/focus die Karte sofort wieder gequert.
+                   Desktop klappt weiter rein per CSS :hover/:focus-within auf. */
+                onClick={() => setActive(active === i ? -1 : i)}
               >
                 <span className="hc-field-head">
                   <span className="hc-num">Projektlage {String(i + 1).padStart(2, "0")}</span>

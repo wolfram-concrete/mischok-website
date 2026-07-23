@@ -2015,7 +2015,11 @@ button:focus-visible {
   box-shadow: 0 30px 64px rgba(0, 42, 92, 0.16);
 }
 .hc-mega-cols {
-  flex: 1;
+  /* nicht mehr die volle linke Haelfte fuellen: der Referenz-Block rueckt per
+     margin-left:auto nach RECHTS an den blauen Referenz-Kasten — so liegt er
+     unter dem „Referenzen"-Navipunkt und der Weg mit der Maus ist kurz. */
+  flex: 0 1 clamp(460px, 46vw, 640px);
+  margin-left: auto;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -2546,10 +2550,15 @@ button:focus-visible {
     flex-direction: column;
     gap: clamp(3px, 0.5vh, 7px);
   }
-  /* Icon in den schlanken Kacheln 20% kleiner als in V1. */
+  /* Icon in den schlanken Kacheln: +25% ggue. vorher (26/3.84vw/5.92vh/61 -> ). */
   .hc-grid.is-slim .hc-field-icon .hi-icon {
-    width: clamp(26px, min(3.84vw, 5.92vh), 61px);
-    height: clamp(26px, min(3.84vw, 5.92vh), 61px);
+    width: clamp(32px, min(4.8vw, 7.4vh), 76px);
+    height: clamp(32px, min(4.8vw, 7.4vh), 76px);
+    /* Linienfettung NICHT mitskalieren: das Icon-SVG hat viewBox 0 0 32 32, die
+       Strichstaerke (Attribut 1.25) waechst also mit der Groesse mit. 1.25 x 0.8
+       = 1.0 haelt den gerenderten Strich exakt konstant (0.8 = 61/76, der
+       Kehrwert der 25%-Vergroesserung). */
+    stroke-width: 1;
   }
   /* Der alte is-open-Zustand (aus V1, per onMouseEnter gesetzt) bleibt ohne
      Wirkung — das Aufziehen haengt allein am echten :hover, damit es beim
@@ -2587,11 +2596,27 @@ button:focus-visible {
   .hc-grid.is-slim .hc-field-head {
     flex-direction: column;
     align-items: flex-start;
-    gap: clamp(8px, 1.2vh, 16px);
+    /* Icon +30% weiter unter die „Projektlage 0X"-Zeile (8/1.2vh/16 x1.3) */
+    gap: clamp(10px, 1.56vh, 21px);
   }
   /* Icon darf nicht schrumpfen, wenn die Nummer zweizeilig wird. */
   .hc-grid.is-slim .hc-field-icon { flex: none; }
-  .hc-grid.is-slim .hc-ftitle { font-size: clamp(13px, 0.95vw, 16px); }
+  .hc-grid.is-slim .hc-ftitle {
+    font-size: clamp(13px, 0.95vw, 16px);
+    /* Geschlossen fluchten ALLE Titel an derselben Oberkante: der Titel sitzt
+       per space-between unten am Kartenboden und sprang bisher, weil er je nach
+       Breite 2–3 (auf schmalen Desktops mehr) Zeilen hat. --hc-ftitle-h wird in
+       HeroCeramic auf die Hoehe des HOECHSTEN Titels gemessen (pro Breite neu),
+       alle Titel bekommen diese min-height und richten den Text oben aus — die
+       erste Zeile jeder Kachel startet damit auf gleicher Hoehe. Feste CSS-
+       Reserve reichte nicht, weil die Zeilenzahl breitenabhaengig ist.
+       Aufgezogen (hover/focus) faellt die Reserve weg (kein Spalt vor der Copy). */
+    min-height: var(--hc-ftitle-h, 0px);
+  }
+  .hc-grid.is-slim .hc-field:hover .hc-ftitle,
+  .hc-grid.is-slim .hc-field:focus-within .hc-ftitle {
+    min-height: 0;
+  }
   /* CTA-Balken: Label und Zeile uebereinander, beide linksbuendig — „Der
      naechste Schritt" oben links, „Projektlage klaeren" unten links. Die
      Verteilung uebernimmt justify-content: space-between, sodass beide in

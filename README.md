@@ -213,8 +213,12 @@ liegen unter `public/schriftarten/`.
   mobile Burger-Panel ist voll deckend (opak) und matcht den Kopfbalken.
 - **Hero — Variante 2** (final). `HeroSwitch` rendert standardmäßig V2; das Umschalt-Widget ist ausgeblendet (`showWidget = false`). V1 und V3 sind archiviert — als `HeroCeramic`-Varianten erhalten und über `?hero=1|3` erreichbar. V2/V3 teilen die schlanke Karten-Optik (`is-slim`).
 - **Hero (`HeroCeramic`)** — Bento-Grid; die fünf Projektlage-Karten sind ein
-  horizontales Flex-Accordion (Hover/Klick/Fokus klappt auf), die Icons animieren
-  bedeutungsgetrieben (`"use client"`).
+  horizontales Flex-Accordion, die Icons animieren bedeutungsgetrieben
+  (`"use client"`). Desktop klappt per CSS `:hover`/`:focus-within` auf; Klick ist
+  ein **Toggle** (offene Karte schließt wieder — v. a. mobil, wo es kein Hover
+  gibt). Die geschlossenen „Buchrücken"-Titel werden per JS auf gleiche Höhe
+  gebracht (`--hc-ftitle-h`), damit ihre Oberkanten unabhängig von der Zeilenzahl
+  fluchten.
 - **EinsatzfelderGrid** — Hover schärft die Karte; auf Touch-/No-Hover-Geräten
   sind alle Karten dauerhaft scharf (`(hover: hover)`-Erkennung, `"use client"`).
 - **Ansatz** — Pin-Scroll über 300vh mit `requestAnimationFrame`, blendet 3 Punkte durch.
