@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { usePathname } from "next/navigation";
 import { REFERENZEN } from "@/lib/content";
+import MainNav from "@/components/layout/MainNav";
 
 /**
  * Header — sticky Top-Navigation. Struktur aus der Sitemap (Mischok-Website.pdf):
@@ -98,6 +99,24 @@ export default function Header() {
           "transform .35s cubic-bezier(.4,0,.2,1), background .3s ease, border-color .3s ease",
       }}
     >
+      {isHome ? (
+        /* Home: die einblendende Reveal-Navi IST die Main-Navi (dieselbe MainNav
+           wie im Hero-Bento) — kein zweiter Navityp mehr. --hc-pad + Innenpadding
+           halten das Megamenü deckungsgleich zum Rand wie im Hero. */
+        <div
+          className="hdr-mainnav"
+          style={
+            {
+              "--hc-pad": "clamp(16px,4vw,56px)",
+              paddingInline: "var(--hc-pad)",
+              position: "relative",
+            } as CSSProperties
+          }
+        >
+          <MainNav />
+        </div>
+      ) : (
+        <>
       <div
         style={{
           display: "flex",
@@ -241,6 +260,8 @@ export default function Header() {
             Erstgespräch
           </a>
         </nav>
+      )}
+        </>
       )}
     </header>
   );

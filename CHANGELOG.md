@@ -22,6 +22,21 @@ CTA-Vereinheitlichung (Footer-`cta-solid` und Burger-`hc-menu-cta` sollen diesel
 Kontur-/Hover-Regeln wie die `cta-ghost`-CTAs tragen); Burger-Strichstärke gegen
 die Logo-Rahmenstärke abgleichen.
 
+## [0.27.0] – 2026-07-23
+
+### Geändert
+- **Eine Hauptnavigation statt zweier Varianten.** Die einblendende Reveal-Navi
+  auf der Home war eine eigene, abweichende Navigation (Header-`nav-desktop` bzw.
+  vorher Burger). Sie rendert jetzt **dieselbe `MainNav`-Komponente wie die
+  Hero-Bento-Navi** — identische Links, Referenzen-/Insights-Megamenüs, CTA und
+  Scrim. `MainNav` (`components/layout/MainNav.tsx`) ist aus `HeroCeramic`
+  extrahiert und läuft an beiden Stellen mit eigenem State. Der Scrim ist dafür
+  von `position: absolute` auf `fixed` umgestellt (deckt beide Kontexte). Die
+  Unterseiten tragen weiterhin die klassische Header-Navigation.
+- **Footer: unterste Abschlusslinie entfernt.** Der Copyright-/Impressum-Riegel
+  hatte oben UND unten eine Linie; die untere ist raus, dafür mehr Bodenluft
+  (`padding-bottom`), damit die Zeile etwas tiefer sitzt statt am Rand zu kleben.
+
 ## [0.26.1] – 2026-07-23
 
 ### Geändert

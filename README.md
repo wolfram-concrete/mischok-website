@@ -212,12 +212,17 @@ liegen unter `public/schriftarten/`.
 > Glas-Band navy 0.5. **Über uns** ist so verdichtet, dass der Bild-Slider mit
 > im Screen liegt. Details s. CHANGELOG `[0.24.0]`.
 
-- **Top-Navigation** — sticky. Ab **900px die vollständige horizontale
-  Navigation** (alle Links + CTA), darunter der **Burger** (Links & CTA im Panel),
-  Burger-Striche in der Anmutung des „m" (`"use client"`). Auf der Startseite ist
-  der Header ausgeblendet (Wortmarke & Navi sitzen im Hero-Bento) und blendet sich
-  beim **Hochscrollen** von oben ein — dann mit der vollen Navi (Desktop) bzw. dem
-  Burger (Mobil). Das mobile Burger-Panel ist voll deckend (opak) und matcht den
+- **Hauptnavigation (`MainNav`)** — die EINE Navi der Seite (Wortmarke, Links mit
+  Referenzen-/Insights-Megamenü, „Erstgespräch"-CTA, Mobile-Burger). Läuft an zwei
+  Stellen mit eigenem State: (1) als erstes Modul im Hero-Bento, (2) als
+  einblendende **Reveal-Navi** im `Header`. Auf der Startseite ist der Header
+  ausgeblendet und blendet sich beim **Hochscrollen** von oben ein — dann mit
+  **genau derselben `MainNav`** (nicht mehr einer abweichenden Header-Navi). Der
+  Megamenü-Scrim ist `position: fixed`, damit er in beiden Kontexten (Hero und
+  fixer Header) korrekt deckt. Unter 900px greift der Burger.
+- **Top-Navigation auf Unterseiten** — `Header` mit klassischer horizontaler
+  Navigation (ab 900px, darunter Burger); die Unterseiten nutzen noch nicht
+  `MainNav`. Das mobile Burger-Panel ist voll deckend (opak) und matcht den
   Kopfbalken.
 - **Hero — Variante 2** (final). `HeroSwitch` rendert standardmäßig V2; das Umschalt-Widget ist ausgeblendet (`showWidget = false`). V1 und V3 sind archiviert — als `HeroCeramic`-Varianten erhalten und über `?hero=1|3` erreichbar. V2/V3 teilen die schlanke Karten-Optik (`is-slim`).
 - **Hero (`HeroCeramic`)** — Bento-Grid; die fünf Projektlage-Karten sind ein
